@@ -1,3 +1,12 @@
+### Git flow
+
+1. Fork repository thorugh github
+2. `git clone` to create local files
+3. Edit code
+4. Push to github
+5. Create a pull request through github
+6. Use `git pull` for updating local repo. Repeat starting from step 3
+
 ### iBake Laravel Setup
 
 1. Clone the repo
