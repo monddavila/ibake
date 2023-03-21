@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,9 +20,12 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('home');
 });
+*/
+
+route::get('/',[HomeController::class,'index']);
 
 Route::get("/home",[HomeController::class,"index"]);
 /* Route::get('/', 'IndexController@index'); */
@@ -34,3 +42,10 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+route::get('/redirect',[HomeController::class,'redirect']);
+
+/*Logout*/
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('logout');

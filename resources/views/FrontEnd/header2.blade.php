@@ -7,9 +7,24 @@
                         <!-- Login-Register -->
                         <div class="login-register">
                         @if (Route::has('login'))
-                                    
+                                    <!-- will redirect to assigned views once a user is logged in -->
                                     @auth
                                         <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Dashboard</a>
+
+                                        <!-- logout -->
+                                        <a href="{{ route('logout') }}"
+                                         onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+
+
+                                        
+
                                     @else
                                         <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
 
@@ -20,10 +35,10 @@
                                
                             @endif
                         </div>
-    
-                        <!-- Shoppping Cart -->
+
+        <!-- Shoppping Cart --> 
                         
-                        <div class="cart-btn">
+        <div class="cart-btn">
                             
                             <a href="shopping-cart.html"><i class="icon flaticon-commerce"></i> <span class="count">2</span></a>
 
@@ -57,8 +72,9 @@
                         <!-- Search Btn -->
                         <div class="search-box">
                             <button class="search-btn"><i class="fa fa-search"></i></button>
-                        </div>
-                   
+                        </div>                
+                        
+                    
     </div>
 
         <!-- Sticky Header  -->
