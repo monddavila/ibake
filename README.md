@@ -7,6 +7,15 @@
 5. Create a pull request through github
 6. Use `git pull` for updating local repo. Repeat starting from step 3
 
+### Git flow
+
+1. Fork repository thorugh github
+2. `git clone` to create local files
+3. Edit code
+4. Push to github
+5. Create a pull request through github
+6. Use `git pull` for updating local repo. Repeat starting from step 3
+
 ### iBake Laravel Setup
 
 1. Clone the repo
@@ -17,6 +26,10 @@
 6. Run `php artisan key:generate` in cli
 7. Run `php artisan serve`
 8. Check on browser if running properly
+
+### Setup Errors
+
+-   If `SQLSTATE[HY000] [1049] Unknown database 'laravel'` is the output after setup, run `php artisan config:cache` then `php artisan migrate`
 
 ### Debugbar
 
