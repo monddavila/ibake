@@ -1,6 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-@include('partials.head')
+
+<head>
+    <meta charset="utf-8">
+    <title>iBake - Tier's of Joy | About Us</title>
+    @include('partials.head')
+</head>
 
 <body>
 

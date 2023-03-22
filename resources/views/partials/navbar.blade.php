@@ -15,9 +15,10 @@
                     <!-- Left Navbar -->
                     <div class="collapse navbar-collapse clearfix" id="navbarSupportedContent">
                         <ul class="navigation menu-left clearfix">
-                            <li class="current dropdown"><a href="{{ route('home') }}">Home</a> </li>
-                            <li class="dropdown"><a href="{{ route('home') }}">Cake Customization</a> </li>
-                            <li class="dropdown"><a href="{{ route('about_us') }}">About Us</a></li>
+                            <li class="{{ currentNav('/') }}"><a href="{{ route('home') }}">Home</a> </li>
+                            <li class="dropdown"><a href="{{ route('home') }}">Customization</a> </li>
+                            <li class="{{ currentNav('/about_us') }}"><a href="{{ route('about_us') }}">About Us</a>
+                            </li>
                             <li class="dropdown"><a href="portfolio-masonry.html">Portfolio</a>
                                 <ul>
                                     <li><a href="portfolio-masonry.html">Masonry</a></li>

@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-@include('partials.head')
+
+<head>
+    <meta charset="utf-8">
+    <title>iBake - Tier's of Joy | Home</title>
+    @include('partials.head')
+</head>
 
 <body>
-
     <div class="page-wrapper">
-
         <!-- Homepage loading screen -->
         @include('partials.preloader')
 
         <!-- Navbar -->
         @include('partials.navbar')
-
         <!--Main Slider-->
         @include('partials.homepage.hero_header')
 
