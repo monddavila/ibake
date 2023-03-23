@@ -49,3 +49,20 @@ route::get('/redirect',[HomeController::class,'redirect']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
+
+
+ /**Will modify this routes , can be included in controllers or use slugs in database to check pages for better performance and process.
+  For the moment we will use this step to modify and update the web pages
+   **/   
+/*Contact Page */
+Route::get('/contact', function () {
+    return view('pages.contact');
+})->name('contact');
+/*About Page */
+Route::get('/about', function () {
+    return view('pages.about');
+})->name('about');
+/*Staff Page */
+Route::get('/staff', function () {
+    return view('pages.staff');
+})->name('staff');
