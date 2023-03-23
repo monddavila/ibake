@@ -5,7 +5,18 @@
 3. Edit code
 4. Push to github
 5. Create a pull request through github
-6. Use `git pull` for updating local repo. Repeat starting from step 3
+
+### Updating local repository
+1. Change branch to master branch `git checkout master`
+2. Run `git remote add upstream https://github.com/teammed2022/iBake.git`
+3. Run `git fetch upstream`
+4. Run `git merge upstream/master master`.
+NOTE!
+Just stage `git add .` then commit if `Your branch is ahead of 'origin/master` appears.
+Commit message can be "Fetched updates". Example: `git commit -m "Fetched updates"`
+5. Merge fetched files with master branch with `git rebase upstream/master`
+6. Optional: Merge fetched files with your branch `git checkout (YOUR BRANCH)` then `git merge master`
+
 
 ### iBake Laravel Setup
 
