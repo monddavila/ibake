@@ -9,11 +9,11 @@
 @include('FrontEnd.header2')
 
     <!--Page Title-->
-    <section class="page-title" style="background-image:url(https://via.placeholder.com/1920x400)">
+    <section class="page-title" style="background-image:url(images/background/background-6.jpg)">
         <div class="auto-container">
             <h1>About Us</h1>
             <ul class="page-breadcrumb">
-                <li><a href="index.html">home</a></li>
+                <li><a href="/">home</a></li>
                 <li>About Us</li>
             </ul>
         </div>
@@ -21,7 +21,7 @@
     <!--End Page Title-->
 
     <!-- About Section Two -->
-    <section class="about-section-two alternate" style="background-image: url(https://via.placeholder.com/1920x800);">
+    <section class="about-section-two alternate" style="background-image: url(images/background/background-7.png);">
         <div class="auto-container">
             <div class="sec-title text-center">
                 <div class="divider"><img src="images/icons/divider_1.png" alt=""></div>
@@ -29,7 +29,8 @@
             </div>
             <div class="content-box">
                 <span class="devider_icon_one"></span>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi et dolor ornare pellentesque. Nullam porttitor, odio id facilisis dapibus, mauris dolor rhoncus elit, ultricies nulla eros at dui. In suscipit leo sagittis aliquam. Integer tristique tempus urna. et pharetra dui urna volutpat elit odio at.</p>
+                <p>iBake - Tiers of Joy was founded in 2016 by Mr. Jan Kevin Camacho, a passionate baker who wanted to share his love for pastry and cakes with the world. From the very beginning, we have been committed to producing high-quality products that delight our customers' taste buds and bring joy to their special occasions.<br></p>
+                <p>Over the years, we have grown from a small pastry shop in Brgy. Sta. Rosa, Bayombong, Nueva Vizcaya to a thriving business that serves the local community and beyond. With a focus on customer service, innovation, and quality, we have gained a loyal following of customers who trust us to make their celebrations unforgettable. Whether it's a customized cake, a delicious pastry, or a fresh loaf of bread, we take pride in every product we make and every smile we create.</p>
             </div>
             <div class="btn-box text-center">
                 <a href="#" class="theme-btn btn-style-two regular"><span></span>Our Services<span></span></a>
@@ -41,13 +42,13 @@
     <!-- Features Section -->
     <div class="features-section style-two">
         <div class="shape_wrapper shape_one">
-            <div class="shape_inner shape_two" style="background-image: url(https://via.placeholder.com/1920x1080);"><div class="overlay"></div></div>
+            <div class="shape_inner shape_two" style="background-image: url(images/background/background-8.png);"><div class="overlay"></div></div>
         </div>
 
         <div class="auto-container">
             <div class="sec-title text-center light">
                 <h2>Our Mission</h2>
-                <div class="text">Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent molestie eu turpis nec<br> molestie. Nam auctor magna mauris.</div>
+                <div class="text">To deliver joy and delight to our customers through high-quality, customized cakes, pastries, bread, and sandwiches. We are committed to providing excellent customer service, using only the finest ingredients, and maintaining a passion for our craft. Our goal is to create unforgettable experiences for our customers' special occasions while remaining affordable and accessible to all.</div>
             </div>
             <div class="row">
                 <!-- Feature Block -->
@@ -60,8 +61,8 @@
                             <!-- cake img -->
                             <div class="icon flaticon-technology"></div>
                         </div>
-                        <h3>Tradition</h3>
-                        <p>Lorem ipsum dolor amet, consectetur adipiscing elit. Nam consectetur facilisis aliquet.</p>
+                        <h3>Service</h3>
+                        <p>Committed to providing friendly, efficient, and personalized service to every customer who walks through our doors or places an order online.</p>
                     </div>
                 </div>
 
@@ -76,7 +77,7 @@
                             <div class="icon flaticon-food-7"></div>
                         </div>
                         <h3>Quality</h3>
-                        <p>Amet interdum, diam molestie fusce natoque, nascetur laoreet mattis cras hendrerit.</p>
+                        <p>Dedicated to delivering consistently high-quality baked goods that exceed our customers' expectations.</p>
                     </div>
                 </div>
 
@@ -90,8 +91,8 @@
                             <!-- cake img -->
                             <div class="icon flaticon-strawberry"></div>
                         </div>
-                        <h3>Creatuvity</h3>
-                        <p>Ullamcorper phasellus per vestibulum, lacus curabitur, rutrum mi fringilla.</p>
+                        <h3>Creativity</h3>
+                        <p>Known for its creative and innovative approach to customized cakes and pastries, turning our customers' ideas and visions into edible works of art."</p>
                     </div>
                 </div>
 
@@ -106,7 +107,7 @@
                             <div class="icon flaticon-food-1"></div>
                         </div>
                         <h3>Passion</h3>
-                        <p>Leo sem, justo hymenaeos torquent tristique aliquam et id, ante eu nascetur dis sit enim.</p>
+                        <p>Driven by our passion for baking and our commitment to providing our customers with delicious, high-quality baked goods that they can enjoy and share with their loved ones.</p>
                     </div>
                 </div>                
             </div>
@@ -115,7 +116,7 @@
     <!-- End Features Section -->
 
     <!-- Chef Section -->
-    <section class="chef-section" style="background-image: url(https://via.placeholder.com/1920x1080);">
+    <section class="chef-section" style="background-image: url(images/background/background-chef.png);">
         <div class="auto-container">
             <div class="row">
                 <div class="content-column col-lg-6 col-md-12 col-sm-12 order-2">
@@ -123,11 +124,12 @@
                         <div class="content">
                             <div class="sec-title text-center">
                                 <div class="divider"><img src="images/icons/divider_1.png" alt=""></div>
-                                <h2>Alex Doe</h2>
+                                <h2>Jan Kevin</h2>
                             </div>
                             <h4>Masterchef</h4>
                             <div class="divider"><img src="images/icons/icon-devider.png" alt=""></div>
-                            <p>Maria is a Roman-born pastry chef who spent 15 years in his city Rome perfecting his craft and exceptional creations. Vestibulum rhoncus ornare tincidunt. Etiam pretium metus sit amet est aliquet vulputate. Fusce et cursus ligula. Sed accumsan dictum porta. Aliquam rutrum ullamcorper velit hendrerit convallis.</p>
+                            <p>Meet Mr. Jan Kevin Camacho: The Passionate Baker Behind iBake - Tiers of Joy</p>
+                            <p>Mr. Jan Kevin Camacho is the founder and sole owner of iBake - Tiers of Joy, a thriving pastry and cake shop in Nueva Vizcaya. With over five years of experience, he is known for his dedication to producing high-quality, customized cakes and pastries that delight his customers' taste buds and bring joy to their special occasions. He maintains a passion for his craft, and provides excellent customer service to every person who walks through the door. If you're looking for a pastry chef who truly cares about his work and his customers, look no further than Mr. Jan Kevin Camacho of iBake - Tiers of Joy.</p>
                             <div class="btn-box">
                                 <a href="#" class="theme-btn btn-style-two regular alt"><span></span>Our Services<span></span></a>
                             </div>
@@ -137,7 +139,7 @@
 
                 <div class="image-column col-lg-6 col-md-12 col-sm-12">
                     <div class="inner-column">
-                        <figure class="image"><img src="https://via.placeholder.com/600x860" alt=""></figure>
+                        <figure class="image"><img src="images/profile/jankevin-1.png" alt=""></figure>
                     </div>
                 </div>
             </div>
@@ -148,7 +150,7 @@
     <!-- Testimonial Section -->
     <section class="testimonial-section style-two">
         <div class="shape_wrapper shape_one">
-            <div class="shape_inner shape_two" style="background-image: url(https://via.placeholder.com/1920x1080);"><div class="overlay"></div></div>
+            <div class="shape_inner shape_two" style="background-image: url(images/background/background-9.png);"><div class="overlay"></div></div>
         </div>
 
         <div class="auto-container">
@@ -161,21 +163,21 @@
                 <!-- Testimonial Block -->
                 <div class="testimonial-block">
                     <div class="inner-box">
-                        <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel sem imperdiet, venenatis eros ac,mattis mauris. Nam ac purus justo. Vivamus non hendrerit velit.</div>
+                        <div class="text">At iBake - Tiers of Joy, we are passionate about creating delicious and beautiful cakes that exceed our customers' expectations.</div>
                     </div>
                 </div>
 
                 <!-- Testimonial Block -->
                 <div class="testimonial-block">
                     <div class="inner-box">
-                        <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel sem imperdiet, venenatis eros ac,mattis mauris. Nam ac purus justo. Vivamus non hendrerit velit.</div>
+                        <div class="text">Our bakery offers a wide range of products, including customized cakes, pastries, bread, sandwiches, and cupcakes, all made with high-quality ingredients.</div>
                     </div>
                 </div>
 
                 <!-- Testimonial Block -->
                 <div class="testimonial-block">
                     <div class="inner-box">
-                        <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel sem imperdiet, venenatis eros ac,mattis mauris. Nam ac purus justo. Vivamus non hendrerit velit.</div>
+                        <div class="text">iBake - Tiers of Joy is dedicated to providing excellent customer service and delivering high-quality baked goods at a reasonable cost.</div>
                     </div>
                 </div>
             </div>
@@ -184,25 +186,25 @@
     <!--End Testimonial Section -->
 
     <!-- Our Standards -->
-    <section class="our-standards" style="background-image: url(https://via.placeholder.com/1920x800);">
+    <section class="our-standards" style="background-image: url(images/background/background-10.png);">
         <div class="auto-container">
             <div class="row">
                 <div class="content-column col-lg-6 col-md-12 col-sm-12">              
                     <div class="content">
                         <div class="sec-title text-center">
                             <div class="divider"><img src="images/icons/divider_1.png" alt=""></div>
-                            <h2>Our Standarts</h2>
+                            <h2>Our Standards</h2>
                         </div>
                         <div class="divider"><img src="images/icons/icon-devider.png" alt=""></div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit suspendisse</p>
+                        <p>We use only the finest and freshest ingredients in our baked goods.</p>
                         <span class="icon fa fa-heart"></span>
-                        <p>Nullam porttitor, odio id facilisis dapibus, mauris dolor rhoncus elit</p>
+                        <p>Our bakery follows strict hygiene and sanitation protocols to ensure the safety of our products.</p>
                         <span class="icon fa fa-heart"></span>
-                        <p>In suscipit hendrerit leo sagittis aliquam. Integer tristique tempus urna</p>
+                        <p>We continuously innovate and improve our recipes to offer the best possible taste and quality.</p>
                         <span class="icon fa fa-heart"></span>
-                        <p>Proin id enim euismod ultricies magna sed ultrices mauris</p>
+                        <p>Our customized cakes and pastries are carefully designed and crafted to meet our customers' specific preferences and requirements.</p>
                         <span class="icon fa fa-heart"></span>
-                        <p>Proin interdum enim ac placerat egestas mauris massa scelerisque</p>
+                        <p>We strive to provide exceptional customer service and ensure that every customer leaves satisfied with their experience at our bakery.</p>
                     </div>
                 </div>
             </div>
