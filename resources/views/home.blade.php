@@ -323,7 +323,7 @@
     <!-- Features Section -->
     <div class="features-section">
         <div class="shape_wrapper shape_one">
-            <div class="shape_inner shape_two" style="background-image: url(images/background/background-3.jpg);"><div class="overlay"></div></div>
+            <div class="shape_inner shape_two" style="background-image: url(images/background/background-9.png);"><div class="overlay"></div></div>
         </div>
 
         <div class="auto-container">
@@ -338,8 +338,8 @@
                             <!-- cake img -->
                             <div class="icon flaticon-technology"></div>
                         </div>
-                        <h3>Tradition</h3>
-                        <p>Lorem ipsum dolor amet, consectetur adipiscing elit. Nam consectetur facilisis aliquet.</p>
+                        <h3>Service</h3>
+                        <p>Committed to providing friendly, efficient, and personalized service to every customer who walks through our doors or places an order online.</p>
                     </div>
                 </div>
 
@@ -354,7 +354,7 @@
                             <div class="icon flaticon-food-7"></div>
                         </div>
                         <h3>Quality</h3>
-                        <p>Amet interdum, diam molestie fusce natoque, nascetur laoreet mattis cras hendrerit.</p>
+                        <p>Dedicated to delivering consistently high-quality baked goods that exceed our customers' expectations.</p>
                     </div>
                 </div>
 
@@ -369,7 +369,7 @@
                             <div class="icon flaticon-strawberry"></div>
                         </div>
                         <h3>Creativity</h3>
-                        <p>Ullamcorper phasellus per vestibulum, lacus curabitur, rutrum mi fringilla.</p>
+                        <p>Known for its creative and innovative approach to customized cakes and pastries, turning our customers' ideas and visions into edible works of art.</p>
                     </div>
                 </div>
 
@@ -384,13 +384,13 @@
                             <div class="icon flaticon-food-1"></div>
                         </div>
                         <h3>Passion</h3>
-                        <p>Leo sem, justo hymenaeos torquent tristique aliquam et id, ante eu nascetur dis sit enim.</p>
+                        <p>Driven by our passion for baking and our commitment to providing our customers with delicious, high-quality baked goods that they can enjoy and share with their loved ones.</p>
                     </div>
                 </div>                
             </div>
 
             <div class="btn-box">
-                <a href="#" class="theme-btn btn-style-two large"><span></span>Know Us Better<span></span></a>
+                <a href="{{ route('about') }}" class="theme-btn btn-style-two large"><span></span>Know Us Better<span></span></a>
             </div>
         </div>
     </div>
