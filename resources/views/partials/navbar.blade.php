@@ -72,42 +72,21 @@
                 <!-- Main Menu End-->
 
                 <div class="outer-box clearfix">
-                    <!-- Shoppping Car -->
-                    <div class="cart-btn">
-                        <a href="shopping-cart.html"><i class="icon flaticon-commerce"></i> <span
-                                class="count">2</span></a>
+                    <div class="login-register">
+                        @if (Route::has('login'))
 
-                        <div class="shopping-cart">
-                            <ul class="shopping-cart-items">
-                                <li class="cart-item">
-                                    <img src="https://via.placeholder.com/300x300" alt="#" class="thumb" />
-                                    <span class="item-name">Birthday Cake</span>
-                                    <span class="item-quantity">1 x <span class="item-amount">$84.00</span></span>
-                                    <a href="shop-single.html" class="product-detail"></a>
-                                    <button class="remove-item"><span class="fa fa-times"></span></button>
-                                </li>
+                            @auth
+                                <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Dashboard</a>
+                            @else
+                                <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
 
-                                <li class="cart-item">
-                                    <img src="https://via.placeholder.com/300x300" alt="#" class="thumb" />
-                                    <span class="item-name">French Macaroon</span>
-                                    <span class="item-quantity">1 x <span class="item-amount">$13.00</span></span>
-                                    <a href="shop-single.html" class="product-detail"></a>
-                                    <button class="remove-item"><span class="fa fa-times"></span></button>
-                                </li>
-                            </ul>
+                                @if (Route::has('register'))
+                                    <a href="{{ route('register') }}"
+                                        class="ml-4 text-sm text-gray-700 underline">Register</a>
+                                @endif
+                            @endauth
 
-                            <div class="cart-footer">
-                                <div class="shopping-cart-total"><strong>Subtotal:</strong> $97.00</div>
-                                <a href="cart.html" class="theme-btn">View Cart</a>
-                                <a href="checkout.html" class="theme-btn">Checkout</a>
-                            </div>
-                        </div>
-                        <!--end shopping-cart -->
-                    </div>
-
-                    <!-- Search Btn -->
-                    <div class="search-box">
-                        <button class="search-btn"><i class="fa fa-search"></i></button>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -162,8 +141,7 @@
             <button class="close-search"><span class="fa fa-times"></span></button>
             <form method="post" action="blog-showcase.html">
                 <div class="form-group">
-                    <input type="search" name="search-field" value="" placeholder="Search..."
-                        required="">
+                    <input type="search" name="search-field" value="" placeholder="Search..." required="">
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </div>
             </form>
