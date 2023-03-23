@@ -81,7 +81,7 @@
         <div class="footer-bottom">
             <div class="auto-container">
                 <div class="copyright-text">
-                    <p> &copy; <?php echo date("Y"); ?> iBake "Tiers of Joy" - Captivating Cakes & other</p>
+                    <p> &copy; <?php echo date("Y"); ?> iBake "Tiers of Joy" - Captivating Cakes & other Sweet Necessities</p>
                 </div>
             </div>
         </div>
