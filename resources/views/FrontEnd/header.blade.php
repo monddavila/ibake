@@ -54,7 +54,7 @@
         <!-- Main box -->
         <div class="main-box">
             <div class="menu-box">
-                <div class="logo"><a href="index.php"><img src="images/logo.png" alt="" title=""></a></div>
+                <div class="logo"><a href="\"><img src="images/logo.png" alt="" title=""></a></div>
 
                 <!--Nav Box-->
                 <div class="nav-outer clearfix">
@@ -62,26 +62,15 @@
                     <nav class="main-menu navbar-expand-md navbar-light">
                         <div class="collapse navbar-collapse clearfix" id="navbarSupportedContent">
                             <ul class="navigation menu-left clearfix">
-                                <li class="current dropdown"><a href="index.php">Home</a>
-                                    <ul>
-                                        <li class="current"><a href="index.html">Cakes</a></li>
-                                        <li><a href="index-2.html">Lollipop</a></li>
-                                        <li><a href="index-3.html">Wedding</a></li>
-                                        <li><a href="index-4.html">Coffee</a></li>
-                                        <li><a href="index-5.html">Ice-Cream</a></li>
-                                        <li><a href="index-6.html">Macaron</a></li>
-                                        <li><a href="index-7.html">Shop</a></li>
-                                        <li><a href="index-8.html">Landing</a></li>
-                                    </ul>
+                                <li class="current dropdown"><a href="\">Home</a>
                                 </li>
-                                <li><a href="contact.html">Customize</a></li>
-                                <li class="dropdown"><a href="about-us.html">Pages</a>
+
+                                <li><a href="\">Customize</a></li>
+
+                                <li class="dropdown"><a href="{{ route('about') }}">About Us</a>
                                     <ul>
-                                        <li><a href="about-us.html">About Us</a></li>
-                                        <li><a href="our-staff.html">Our Staff</a></li>
-                                        <li><a href="pricing-tables.html">Pricing Tables</a></li>
-                                        <li><a href="content-elements.html">Content Elements</a></li>
-                                        <li><a href="recipes-list.html">Recipes Grid</a></li>
+                                        <li><a href="{{ route('about') }}">About Us</a></li>
+                                        <li><a href="{{ route('staff') }}">Our Staff</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a href="portfolio-masonry.html">Portfolio</a>
@@ -128,7 +117,8 @@
                                     </ul>
                                 </li>
                                 <li><a href="contact.html">Track Order</a></li>
-                                <li><a href="contact.html">Contacts</a></li>
+                                <li><a href="{{ route('contact') }}">Contacts</a></li>
+                                
                             </ul>
                         </div>
                     </nav>
