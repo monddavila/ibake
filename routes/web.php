@@ -29,8 +29,12 @@ Route::get('/about_us', [AboutUsController::class, 'index'])->name('about_us');
 // Login
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 
+// Logout
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
 // Register page
 Route::get('/register', [RegisterController::class, 'create'])->name('register')->withoutMiddleware('auth');
+
 // For storing new account to database
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
