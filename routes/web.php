@@ -20,7 +20,8 @@ use App\Http\Controllers\HomeController;
 
 
 // Homepage
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
 // About Us page
 Route::get('/about_us', [AboutUsController::class, 'index'])->name('about_us');

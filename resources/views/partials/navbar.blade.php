@@ -72,7 +72,7 @@
                 <!-- Main Menu End-->
 
                 <div class="outer-box clearfix">
-                    <div class="login-register">
+                    <div class="auth-container">
                         @auth
                             <a href="{{ url('/dashboard') }}" style="margin-right:10px;"
                                 class="text-sm text-gray-700 underline">Dashboard</a>
@@ -82,9 +82,8 @@
                                 <button class="theme-btn" type="submit">Logout</button>
                             </form>
                         @else
-                            <a href="{{ route('login') }}" style="margin-right:10px;"
-                                class="text-sm text-gray-700 underline">Log in</a>
-                            <a href="{{ route('register') }}" class="text-sm text-gray-700 underline">Register</a>
+                            <a href="{{ route('login') }}" style="margin-right:10px;" class="theme-btn auth-btn">Log in</a>
+                            <a href="{{ route('register') }}" class="theme-btn auth-btn">Register</a>
                         @endauth
                     </div>
                 </div>
