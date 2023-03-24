@@ -73,20 +73,19 @@
 
                 <div class="outer-box clearfix">
                     <div class="login-register">
-                        @if (Route::has('login'))
-
-                            @auth
-                                <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Dashboard</a>
-                            @else
-                                <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
-
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}"
-                                        class="ml-4 text-sm text-gray-700 underline">Register</a>
-                                @endif
-                            @endauth
-
-                        @endif
+                        @auth
+                            <a href="{{ url('/dashboard') }}" style="margin-right:10px;"
+                                class="text-sm text-gray-700 underline">Dashboard</a>
+                            {{-- Logout only works in a form --}}
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button class="theme-btn" type="submit">Logout</button>
+                            </form>
+                        @else
+                            <a href="{{ route('login') }}" style="margin-right:10px;"
+                                class="text-sm text-gray-700 underline">Log in</a>
+                            <a href="{{ route('register') }}" class="text-sm text-gray-700 underline">Register</a>
+                        @endauth
                     </div>
                 </div>
             </div>
