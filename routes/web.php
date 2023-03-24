@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
@@ -20,32 +23,33 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 |
 */
 
-/*Route::get('/', function () {
-    return view('home');
-});
-*/
 
-route::get('/',[HomeController::class,'index']);
+// Homepage
+Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
-Route::get("/home",[HomeController::class,"index"]);
-/* Route::get('/', 'IndexController@index'); */
+// About Us page
+Route::get('/about_us', [AboutUsController::class, 'index'])->name('about_us');
 
+// Login
+Route::get('/login', [LoginController::class, 'login'])->name('login');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Logout
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Register page
+Route::get('/register', [RegisterController::class, 'create'])->name('register')->withoutMiddleware('auth');
+
+// For storing new account to database
+Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+
 
 Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
+  'auth:sanctum',
+  config('jetstream.auth_session'),
+  'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+  Route::get('/dashboard', function () {
+    return view('dashboard');
+  })->name('dashboard');
 });
-
-route::get('/redirect',[HomeController::class,'redirect']);
-
-/*Logout*/
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-    ->middleware('auth')
-    ->name('logout');
