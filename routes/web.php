@@ -27,13 +27,11 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('/about_us', [AboutUsController::class, 'index'])->name('about_us');
 
 // Login
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-// Login
-Route::match(['get', 'post'], '/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/login', [LoginController::class, 'login'])->name('login');
 
-// Register
+// Register page
 Route::get('/register', [RegisterController::class, 'create'])->name('register')->withoutMiddleware('auth');
-// Submit registration form
+// For storing new account to database
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
 

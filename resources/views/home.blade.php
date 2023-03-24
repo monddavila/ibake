@@ -9,6 +9,12 @@
 
 <body>
     <div class="page-wrapper">
+        {{-- 
+          Disected different sections for easy editing.
+          Sections that are in the homepage partials folder can be
+          added here again after finalizing.
+          --}}
+
         <!-- Homepage loading screen -->
         @include('partials.preloader')
 
@@ -52,9 +58,14 @@
 
     </div><!-- End Page Wrapper -->
 
-    <!-- Scroll To Top -->
+    <!-- Scroll To Top button -->
     @include('partials.scroll_to_up')
 
+
+    {{-- 
+      Did not include scipts in the partials as there are
+      different scripts needed for other pages. - Gian
+      --}}
     <script src="js/jquery.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

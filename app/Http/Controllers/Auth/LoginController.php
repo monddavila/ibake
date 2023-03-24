@@ -41,28 +41,36 @@ class LoginController extends Controller
     $this->middleware('guest')->except('logout');
   }
 
-  public function index()
+  /**
+   * Display the Login Page
+   */
+  public function login()
   {
     return view('auth.login');
   }
 
+  /**
+   * User log in method.
+   * Created accounts are set to Admin as as now which will be redirected to
+   * the dashboard.
+   * 'usertype' value determines if the user is an admin or not.
+   * usertype with a value of 0 is a Customer.
+   * usertype with a value of 1 is an Admin.
+   * Customers will be redirected to the homepage later in the development.
+   * 
+   */
   public function redirect()
   {
-
-    /**Admin Account**/
-    // usertype === 0 -> Customer
-    // usertype === 1 -> Admin
     if (!empty(Auth::user()) && Auth::user()->usertype == 1) {
 
       return view('admin.home');
     }
     return redirect(route('home'));
-
-    // $usertype = Auth::user()->usertype;
-
-    /**Other Accounts - will include guest, manager and bakers separately**/
   }
 
+  /**
+   * User log in method
+   */
   public function logout(Request $request)
   {
     Auth::logout();

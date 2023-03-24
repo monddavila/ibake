@@ -46,50 +46,28 @@ class RegisterController extends Controller
   }
 
   /**
-   * Get a validator for an incoming registration request.
-   *
-   * @param  array  $data
-   *  'name',
-   *  'email',
-   *  'phone',
-   *  'address',
-   *  'password',
-   * @return \Illuminate\Contracts\Validation\Validator
-   */
-  protected function validator(array $data)
-  {
-    return Validator::make($data, [
-      'name' => ['required', 'string', 'max:255'],
-      'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-      'phone' => ['required', 'string', 'min:11', 'max:11', 'confirmed'],
-      'address' => ['required', 'string', 'max:255', 'confirmed'],
-      'password' => ['required', 'string', 'min:8', 'confirmed'],
-    ]);
-  }
-
-  /**
-   * Create a new user instance after a valid registration.
+   * Display the Registration Page
    */
   public function create()
   {
     return view('auth.register');
   }
 
+  /**
+   *  Store a newly created user in storage.
+   */
   public function store(Request $request)
   {
-    // $data = $request->all();
-    // return view('displaydata', compact('data'));
-
     // Validate user input
     $request->validate([
       'name' => 'required|string|max:255',
       'email' => 'required|string|email|max:255|unique:users',
       'phone' => 'required|string|max:11|min:11|unique:users',
-      'address' => 'required|string|max:255',
+      'address' => 'required|string|max:255|unique:users',
       'password' => 'required|string|min:8|confirmed',
     ]);
 
-    // Create new User
+    // Create new user then adds it to the database.
     $user = User::create([
       'name' => $request->name,
       'email' => $request->email,
@@ -98,7 +76,7 @@ class RegisterController extends Controller
       'address' => $request->address,
     ]);
 
-    // Redirect after successful registration
+    // Redirect to login after successful registration
     return redirect(route('login'));
   }
 }

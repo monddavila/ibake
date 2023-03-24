@@ -1,3 +1,8 @@
+{{-- 
+  links and metas in the head tag after the opening
+  HTML tag and before the opening body tag 
+  --}}
+
 <!-- Stylesheets -->
 <!-- Stylesheets -->
 <link href="css/bootstrap.css" rel="stylesheet">

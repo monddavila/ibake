@@ -64,7 +64,7 @@
                                     <li><a href="login.html">My account</a></li>
                                 </ul>
                             </li>
-                            <li><a href="contact.html">Contacts</a></li>
+                            <li><a href="{{ route('contact') }}">Contacts</a></li>
                         </ul>
                         <!-- Right Navbar End -->
                     </div>
@@ -75,11 +75,11 @@
                     <div class="auth-container">
                         @auth
                             <a href="{{ url('/dashboard') }}" style="margin-right:10px;"
-                                class="text-sm text-gray-700 underline">Dashboard</a>
+                                class="theme-btn auth-btn">Dashboard</a>
                             {{-- Logout only works in a form --}}
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button class="theme-btn" type="submit">Logout</button>
+                                <button class="theme-btn auth-btn" type="submit">Logout</button>
                             </form>
                         @else
                             <a href="{{ route('login') }}" style="margin-right:10px;" class="theme-btn auth-btn">Log in</a>

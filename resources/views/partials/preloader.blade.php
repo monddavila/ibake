@@ -1,3 +1,8 @@
+{{-- 
+  Loading Screen.
+  Spinning gear wheels.
+  --}}
+
 <div class="preloader">
     <div class="loader_overlay"></div>
     <div class="loader_cogs">
