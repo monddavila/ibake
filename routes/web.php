@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PortfolioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,9 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
 // About Us page
 Route::get('/about_us', [AboutUsController::class, 'index'])->name('about_us');
+
+// About Us page
+Route::get('/portfolio', [PortfolioController::class, 'portfolio'])->name('portfolio');
 
 // Login
 Route::get('/login', [LoginController::class, 'login'])->name('login');

@@ -10,6 +10,11 @@
 
     <div class="page-wrapper">
 
+      {{-- 
+        There are comments about style="background-image:url()"
+        The comments was used for image size basis.
+        --}}
+        
         <!-- Preloader -->
         @include('partials.preloader')
 
@@ -77,7 +82,7 @@
                                     </svg>
                                 </div>
 
-                                <!-- cake img -->
+                                <!-- Cake img -->
                                 <div class="icon flaticon-technology"></div>
                             </div>
                             <h3>Tradition</h3>

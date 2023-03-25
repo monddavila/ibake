@@ -12,19 +12,7 @@
     <div class="page-wrapper">
         @include('partials.navbar')
 
-        <!--Page Title-->
-        <section class="page-title" style="background-image:url(https://via.placeholder.com/1920x400)">
-            <div class="auto-container">
-                <h1>My account</h1>
-                <ul class="page-breadcrumb">
-                    <li><a href="{{ route('home') }}">Home</a></li>
-                    <li>My account</li>
-                </ul>
-            </div>
-        </section>
-        <!--End Page Title-->
-
-        <!--Login Section-->
+        <!--Regiter Section-->
 
         @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600">
@@ -34,10 +22,10 @@
 
         <section class="login-section">
             <div class="auto-container">
-                <!-- Login Form -->
+                <!-- Regiter Form -->
                 <div class="login-form">
                     <h2>Create Account</h2>
-                    <!--Login Form-->
+                    <!--Regiter Form-->
                     <form action="{{ route('register.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
@@ -89,10 +77,10 @@
                         </div>
                     </form>
                 </div>
-                <!--End Login Form -->
+                <!--End Regiter Form -->
             </div>
         </section>
-        <!--End Login Section-->
+        <!--End Regiter Section-->
 
         <!-- Footer Section -->
         @include('partials.footer')

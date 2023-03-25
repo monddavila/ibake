@@ -17,54 +17,16 @@
                         <ul class="navigation menu-left clearfix">
                             <li class="{{ currentNav('/') }}"><a href="{{ route('home') }}">Home</a> </li>
                             <li class="dropdown"><a href="{{ route('home') }}">Customization</a> </li>
-                            <li class="{{ currentNav('/about_us') }}"><a href="{{ route('about_us') }}">About Us</a>
-                            </li>
-                            <li class="dropdown"><a href="portfolio-masonry.html">Portfolio</a>
-                                <ul>
-                                    <li><a href="portfolio-masonry.html">Masonry</a></li>
-                                    <li><a href="portfolio-masonry-wide.html">Masonry Wide</a></li>
-                                    <li><a href="portfolio-wide.html">Wide</a></li>
-                                    <li><a href="portfolio-with-filter.html">With Filter</a></li>
-                                    <li><a href="portfolio-two-column.html">Two Columns</a></li>
-                                    <li><a href="portfolio-with-sidebar.html">With Sidebar</a></li>
-                                    <li><a href="portfolio-square.html">Square</a></li>
-                                    <li><a href="portfolio-single.html">single Post</a></li>
-                                </ul>
-                            </li>
+                            <li class="dropdown"><a href="{{ route('portfolio') }}">Portfolio</a></li>
                         </ul>
                         <!-- Left Navbar End -->
 
                         <!-- Right Navbar -->
                         <ul class="navigation menu-right clearfix">
-                            <li class="dropdown"><a href="blog-showcase.html">Blog</a>
-                                <ul>
-                                    <li><a href="blog-showcase.html">Checkerboard</a></li>
-                                    <li><a href="blog-standard.html">Standard</a></li>
-                                    <li><a href="blog-masonry.html">Masonry</a></li>
-                                    <li><a href="blog-masonry-full-width.html">Masonry Full Width</a></li>
-                                    <li><a href="blog-two-column.html">Two Columns Grid</a></li>
-                                    <li><a href="blog-three-column-wide.html">Three Columns Wide</a></li>
-                                    <li class="dropdown"><a href="#">Post Types</a>
-                                        <ul>
-                                            <li><a href="blog-single.html">Standard Post</a></li>
-                                            <li><a href="blog-single-2.html">Gallery Post</a></li>
-                                            <li><a href="blog-single-3.html">Video Post</a></li>
-                                            <li><a href="blog-single-4.html">Audio Post</a></li>
-                                            <li><a href="blog-single-5.html">Quote Post</a></li>
-                                            <li><a href="blog-single-6.html">Link Post</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                            <li class="dropdown"><a href="shop.html">Shop</a></li>
+                            <li class="{{ currentNav('/about_us') }}"><a href="{{ route('about_us') }}">About Us</a>
                             </li>
-                            <li class="dropdown"><a href="shop.html">Shop</a>
-                                <ul>
-                                    <li><a href="shop.html">Shop</a></li>
-                                    <li><a href="shopping-cart.html">Cart</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="login.html">My account</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="{{ route('contact') }}">Contacts</a></li>
+                            <li class="{{ currentNav('/contact') }}"><a href="{{ route('contact') }}">Contacts</a></li>
                         </ul>
                         <!-- Right Navbar End -->
                     </div>

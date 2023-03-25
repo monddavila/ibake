@@ -1,6 +1,6 @@
         <footer class="main-footer">
             <div class="shape_wrapper shape_one">
-                <div class="shape_inner" style="background-image: url(https://via.placeholder.com/1920x1080);">
+                <div class="shape_inner"">
                     <div class="overlay"></div>
                 </div>
             </div>
