@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PortfolioController;
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

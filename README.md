@@ -22,9 +22,11 @@
 
 -   If `SQLSTATE[HY000] [1049] Unknown database 'laravel'` is the output after setup, run `php artisan config:cache` then `php artisan migrate`
 
-### Debugbar
+### Setup Errors
 
-#### Optional
+-   If `SQLSTATE[HY000] [1049] Unknown database 'laravel'` is the output after setup, run `php artisan config:cache` then `php artisan migrate`
+
+### Debugbar (Optional)
 
 -   [Laravel Debugbar Link](https://github.com/barryvdh/laravel-debugbar)
 -   [Laravel Debugbar Tutorial](https://youtu.be/2mqsVzgsV_c?t=1975)
