@@ -22,7 +22,8 @@
         @include('partials.navbar')
 
         <!--Page Title-->
-        <section class="page-title" style="background-image:url(https://via.placeholder.com/1920x400)">
+        {{-- <section class="page-title" style="background-image:url(https://via.placeholder.com/1920x400)"> --}}
+        <section class="page-title" style="background-image:url(/images/background/about_us/bread.jpg)">
             <div class="auto-container">
                 <h1>Portfolio Masonry</h1>
                 <ul class="page-breadcrumb">

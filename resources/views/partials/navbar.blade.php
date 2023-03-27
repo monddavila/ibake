@@ -5,7 +5,8 @@
     <!-- Main box -->
     <div class="main-box">
         <div class="menu-box">
-            <div class="logo"><a href="{{ route('home') }}"><img src="images/logo.png" alt="" title=""></a>
+            <div class="logo"><a href="{{ route('home') }}"><img src="images/logo/iBake-logo-small.png" alt=""
+                        title=""></a>
             </div>
 
             <!--Nav Box-->
@@ -17,7 +18,8 @@
                         <ul class="navigation menu-left clearfix">
                             <li class="{{ currentNav('/') }}"><a href="{{ route('home') }}">Home</a> </li>
                             <li class="dropdown"><a href="{{ route('home') }}">Customization</a> </li>
-                            <li class="dropdown"><a href="{{ route('portfolio') }}">Portfolio</a></li>
+                            <li class="{{ currentNav('/portfolio') }}"><a href="{{ route('portfolio') }}">Portfolio</a>
+                            </li>
                         </ul>
                         <!-- Left Navbar End -->
 
