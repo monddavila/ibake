@@ -1,1 +1,0 @@
-added test file to check add, commit, pull request and merge in cmd/gitbash.
