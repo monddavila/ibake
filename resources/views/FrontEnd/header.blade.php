@@ -70,7 +70,7 @@
                                 <li class="dropdown"><a href="{{ route('about') }}">About Us</a>
                                     <ul>
                                         <li><a href="{{ route('about') }}">About Us</a></li>
-                                        <li><a href="{{ route('staff') }}">Our Staff</a></li>
+                                        <li><a href="{{ route('chef') }}">The Passionate Baker</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a href="portfolio-masonry.html">Portfolio</a>

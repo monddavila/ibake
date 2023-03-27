@@ -63,6 +63,6 @@ Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
 /*Staff Page */
-Route::get('/staff', function () {
-    return view('pages.staff');
-})->name('staff');
+Route::get('/chef', function () {
+    return view('pages.chef');
+})->name('chef');

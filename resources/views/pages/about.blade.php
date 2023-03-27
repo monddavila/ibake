@@ -131,7 +131,7 @@
                             <p>Meet Mr. Jan Kevin Camacho: The Passionate Baker Behind iBake - Tiers of Joy</p>
                             <p>Mr. Jan Kevin Camacho is the founder and sole owner of iBake - Tiers of Joy, a thriving pastry and cake shop in Nueva Vizcaya. With over five years of experience, he is known for his dedication to producing high-quality, customized cakes and pastries that delight his customers' taste buds and bring joy to their special occasions. He maintains a passion for his craft, and provides excellent customer service to every person who walks through the door. If you're looking for a pastry chef who truly cares about his work and his customers, look no further than Mr. Jan Kevin Camacho of iBake - Tiers of Joy.</p>
                             <div class="btn-box">
-                                <a href="#" class="theme-btn btn-style-two regular alt"><span></span>Our Services<span></span></a>
+                                <a href="{{ route('chef') }}" class="theme-btn btn-style-two regular alt"><span></span>Know More<span></span></a>
                             </div>
                         </div>
                     </div>
