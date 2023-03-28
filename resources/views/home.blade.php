@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>iBake - Tier's of Joy | Home </title>
+    <title>iBake | Home</title>
 
     <!-- Header Section -->
     @include('partials.head')
@@ -16,7 +16,7 @@
         <!-- Preloader -->
         @include('partials.preloader')
 
-        <!-- Navbea -->
+        <!-- Navbar -->
         @include('partials.navbar')
 
         <!-- Slider Section -->
