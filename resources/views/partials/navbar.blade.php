@@ -5,7 +5,8 @@
     <!-- Main box -->
     <div class="main-box">
         <div class="menu-box">
-            <div class="logo"><a href="\"><img src="images/logo.png" alt="" title=""></a></div>
+            <div class="logo"><a href="\"><img src="images/ibake-logo/logo-small.png" alt="" title=""></a>
+            </div>
 
             <!--Nav Box-->
             <div class="nav-outer clearfix">
