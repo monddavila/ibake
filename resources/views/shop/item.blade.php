@@ -301,7 +301,42 @@
                     </div>
 
                     <!--Sidebar Side-->
-                    @include('partials.shop-')
+                    <div class="sidebar-side sticky-container col-lg-3 col-md-12 col-sm-12">
+                        <aside class="sidebar theiaStickySidebar">
+                            <div class="sticky-sidebar">
+                                <!-- Search Widget -->
+                                <div class="sidebar-widget search-widget">
+                                    <form method="post" action="contact.html">
+                                        <div class="form-group">
+                                            <input type="search" name="search-field" value=""
+                                                placeholder="Search products…" required>
+                                            <button type="submit"><span class="icon fa fa-search"></span></button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <!-- Cart Widget -->
+                                @auth
+                                    @include('shop.cart-widget')
+                                @endauth
+
+                                <!-- Tags Widget -->
+                                <div class="sidebar-widget tags-widget">
+                                    <h3 class="widget-title">Tags</h3>
+                                    <ul class="tag-list clearfix">
+                                        <li><a href="#">Bars</a></li>
+                                        <li><a href="#">Caramels</a></li>
+                                        <li><a href="#">Chocolate</a></li>
+                                        <li><a href="#">Fruit</a></li>
+                                        <li><a href="#">Nuts</a></li>
+                                        <li><a href="#">Toffees</a></li>
+                                        <li><a href="#">Top Rated</a></li>
+                                        <li><a href="#">Truffles</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
                 </div>
             </div>
         </div>
@@ -313,19 +348,19 @@
     </div><!-- End Page Wrapper -->
 
     <!-- Scroll To Top -->
-    @include('partials.scroll_to_up')
+    @include('partials.scroll-to-top')
 
-    <script src="js/jquery.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.fancybox.js"></script>
-    <script src="js/owl.js"></script>
-    <script src="js/wow.js"></script>
-    <script src="js/appear.js"></script>
-    <script src="js/select2.min.js"></script>
-    <script src="js/sticky_sidebar.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.fancybox.js') }}"></script>
+    <script src="{{ asset('js/owl.js') }}"></script>
+    <script src="{{ asset('js/wow.js') }}"></script>
+    <script src="{{ asset('js/appear.js') }}"></script>
+    <script src="{{ asset('js/select2.min.js') }}"></script>
+    <script src="{{ asset('js/sticky_sidebar.min.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
 </body>
 
 </html>

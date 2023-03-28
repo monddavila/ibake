@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ShopController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,10 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/chef', [HomeController::class, 'chef'])->name('chef');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 route::get('/redirect', [HomeController::class, 'redirect'])->name('redirect');
+Route::group(['prefix' => 'shop'], function () {
+  Route::get('/', [ShopController::class, 'shop'])->name('shop');
+  Route::get('/item', [ShopController::class, 'item'])->name('item');
+});
 
 
 /**
