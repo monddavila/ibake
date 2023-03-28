@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>iBake | About Us</title>
+    <title>iBake - Tier's of Joy | About Us</title>
 
     <!-- Header Section -->
     @include('partials.head')

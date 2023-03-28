@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>iBake | Register</title>
+    <title>iBake - Tier's of Joy | Register</title>
     @include('partials.head')
 </head>
 
@@ -21,7 +21,7 @@
         @endif
 
         <!--Page Title-->
-        <section class="page-title" style="background-image:url(https://via.placeholder.com/1920x400)">
+        <section class="page-title" style="background-image:url(images/background/background-6.jpg)">
             <div class="auto-container">
                 <h1>Create an account</h1>
                 <ul class="page-breadcrumb">

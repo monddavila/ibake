@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>iBake - Tier's of Joy | Login </title>
+    <title>iBake - Tier's of Joy | Login</title>
 
     <!-- Header Section -->
     @include('partials.head')
@@ -20,7 +20,7 @@
         @include('partials.navbar')
 
         <!--Page Title-->
-        <section class="page-title" style="background-image:url(https://via.placeholder.com/1920x400)">
+        <section class="page-title" style="background-image:url(images/background/background-6.jpg)">
             <div class="auto-container">
                 <h1>My account</h1>
                 <ul class="page-breadcrumb">
