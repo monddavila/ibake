@@ -18,7 +18,27 @@ use App\Http\Controllers\Auth\LoginController;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+/**
+ * Customer side Pages.
+ * Will modify this routes. can be included in controllers or use slugs in database
+ * to check pages for better performance and process.
+ * For the moment we will use this step to modify and update the web pages
+ */
+
+Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/chef', [HomeController::class, 'chef'])->name('chef');
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+route::get('/redirect', [HomeController::class, 'redirect'])->name('redirect');
+
+
+/**
+ * Login and Register Routes
+ */
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/register', [LoginController::class, 'create'])->name('register')->withoutMiddleware('auth');
+// For storing new account to database
+Route::post('/register', [LoginController::class, 'store'])->name('register.store');
 
 Route::middleware([
   'auth:sanctum',
@@ -29,31 +49,3 @@ Route::middleware([
     return view('dashboard');
   })->name('dashboard');
 });
-
-route::get('/redirect', [HomeController::class, 'redirect']);
-
-// Login
-Route::get('/login', [LoginController::class, 'login'])->name('login');
-
-// Register page
-Route::get('/register', [LoginController::class, 'create'])->name('register')->withoutMiddleware('auth');
-// For storing new account to database
-Route::post('/register', [LoginController::class, 'store'])->name('register.store');
-
-
-/**Will modify this routes , can be included in controllers or use slugs in database
- * to check pages for better performance and process.
- * For the moment we will use this step to modify and update the web pages
- **/
-/*Contact Page */
-Route::get('/contact', function () {
-  return view('pages.contact');
-})->name('contact');
-/*About Page */
-Route::get('/about', function () {
-  return view('pages.about');
-})->name('about');
-/*Staff Page */
-Route::get('/chef', function () {
-  return view('pages.chef');
-})->name('chef');
