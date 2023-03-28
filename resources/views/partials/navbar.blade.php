@@ -62,9 +62,9 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="dropdown"><a href="shop.html">Shop</a>
+                            <li class="{{ currentNav('/shop') }} dropdown"><a href="{{ route('shop') }}">Shop</a>
                                 <ul>
-                                    <li><a href="shop.html">Shop</a></li>
+                                    <li><a href="{{ route('shop') }}">Shop</a></li>
                                     <li><a href="shopping-cart.html">Cart</a></li>
                                     <li><a href="checkout.html">Checkout</a></li>
                                     <li><a href="login.html">My account</a></li>
