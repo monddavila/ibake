@@ -11,27 +11,39 @@ use App\Models\User;
 class HomeController extends Controller
 {
 
-    public function index()
-    {
-        return view("home");
+  public function home()
+  {
+    return view("home");
+  }
+
+  function contact()
+  {
+    return view('pages.contact');
+  }
+
+  function about()
+  {
+    return view('pages.about');
+  }
+
+  function chef()
+  {
+    return view('pages.chef');
+  }
+
+
+  public function redirect()
+  {
+    $usertype = Auth::user()->usertype;
+
+    /**Admin Account**/
+    if ($usertype == '1') {
+      return view('admin.home');
     }
-    
 
-    public function redirect()
-    {
-        $usertype=Auth::user()->usertype;
-
-        /**Admin Account**/
-        if($usertype=='1')
-        {
-            return view('admin.home');
-        }
-
-        /**Other Accounts - will include guest, manager and bakers separately**/
-        else
-        {
-            return view('home');
-        }
+    /**Other Accounts - will include guest, manager and bakers separately**/
+    else {
+      return view('home');
     }
-
+  }
 }

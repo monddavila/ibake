@@ -70,7 +70,7 @@
                 <div class="footer-column col-lg-4 col-md-12 col-sm-12">
                     <!--Footer Column-->
                     <div class="footer-widget logo-widget">
-                        <figure class="footer-logo"><img src="images/footer-logo.png" alt="">
+                        <figure class="footer-logo"><img src="images/ibake-logo/logo-big.png" alt="">
                         </figure>
                     </div>
                 </div>

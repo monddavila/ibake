@@ -5,7 +5,8 @@
     <!-- Main box -->
     <div class="main-box">
         <div class="menu-box">
-            <div class="logo"><a href="\"><img src="images/logo.png" alt="" title=""></a></div>
+            <div class="logo"><a href="\"><img src="images/ibake-logo/logo-small.png" alt="" title=""></a>
+            </div>
 
             <!--Nav Box-->
             <div class="nav-outer clearfix">
@@ -13,18 +14,18 @@
                 <nav class="main-menu navbar-expand-md navbar-light">
                     <div class="collapse navbar-collapse clearfix" id="navbarSupportedContent">
                         <ul class="navigation menu-left clearfix">
-                            <li class="current dropdown"><a
-                                    href="\">Home</a>
-                                </li>
-
-                                <li><a href="\">Customize</a>
+                            <li class="{{ currentNav('/') }} dropdown"><a href="{{ route('home') }}">Home</a>
                             </li>
 
-                            <li class="dropdown"><a href="{{ route('about') }}">About Us</a>
-                                <ul>
-                                    <li><a href="{{ route('about') }}">About Us</a></li>
-                                    <li><a href="{{ route('chef') }}">The Passionate Baker</a></li>
-                                </ul>
+                            <li><a href="\">Customize</a>
+                            </li>
+
+                            <li class="{{ currentNav('/about') || currentNav('/chef') ? 'current' : '' }}
+                                    dropdown"><a href="{{ route('about') }}">About Us</a>
+                                    <ul>
+                                        <li><a href="{{ route('about') }}">About Us</a></li>
+                                        <li><a href="{{ route('chef') }}">The Passionate Baker</a></li>
+                                    </ul>
                             </li>
                             <li class="dropdown"><a href="portfolio-masonry.html">Portfolio</a>
                                 <ul>
@@ -76,14 +77,11 @@
                     </div>
                 </nav>
                 <!-- Main Menu End-->
-                <!-- Header 2 - Cart,login etc.-->
 
-
-
-
+                <!-- Login/Register Start-->
                 <div class="outer-box clearfix">
-                    <!-- Login-Register -->
                     @auth
+                        <!-- Logged in -->
                         <a href="{{ url('/dashboard') }}" style="margin-right:10px;"
                             class="theme-btn auth-btn">Dashboard</a>
                         {{-- Logout only works in a form --}}
@@ -92,61 +90,21 @@
                             <button class="theme-btn auth-btn" type="submit">Logout</button>
                         </form>
                     @else
+                        <!-- Not Logged in -->
                         <a href="{{ route('login') }}" style="margin-right:10px;" class="theme-btn auth-btn">Log in</a>
                         <a href="{{ route('register') }}" class="theme-btn auth-btn">Register</a>
                     @endauth
                 </div>
-
-                <!-- Shoppping Cart -->
-
-                <div class="cart-btn">
-
-                    <a href="shopping-cart.html"><i class="icon flaticon-commerce"></i> <span
-                            class="count">2</span></a>
-
-                    <div class="shopping-cart">
-                        <ul class="shopping-cart-items">
-                            <li class="cart-item">
-                                <img src="https://via.placeholder.com/300x300" alt="#" class="thumb" />
-                                <span class="item-name">Birthday Cake</span>
-                                <span class="item-quantity">1 x <span class="item-amount">$84.00</span></span>
-                                <a href="shop-single.html" class="product-detail"></a>
-                                <button class="remove-item"><span class="fa fa-times"></span></button>
-                            </li>
-
-                            <li class="cart-item">
-                                <img src="https://via.placeholder.com/300x300" alt="#" class="thumb" />
-                                <span class="item-name">French Macaroon</span>
-                                <span class="item-quantity">1 x <span class="item-amount">$13.00</span></span>
-                                <a href="shop-single.html" class="product-detail"></a>
-                                <button class="remove-item"><span class="fa fa-times"></span></button>
-                            </li>
-                        </ul>
-
-                        <div class="cart-footer">
-                            <div class="shopping-cart-total"><strong>Subtotal:</strong> $97.00</div>
-                            <a href="cart.html" class="theme-btn">View Cart</a>
-                            <a href="checkout.html" class="theme-btn">Checkout</a>
-                        </div>
-                    </div>
-                    <!--end shopping-cart -->
-                </div>
-
-                <!-- Search Btn -->
-                <div class="search-box">
-                    <button class="search-btn"><i class="fa fa-search"></i></button>
-                </div>
-
-
+                <!-- Login/Register section-->
             </div>
+            <!-- Nav Box End -->
 
             <!-- Sticky Header  -->
             <div class="sticky-header">
                 <div class="auto-container clearfix">
                     <!--Logo-->
                     <div class="logo">
-                        <a href="#" title="Sticky Logo"><img src="images/logo-small.png"
-                                alt="Sticky Logo"></a>
+                        <a href="#" title="Sticky Logo"><img src="images/logo-small.png" alt="Sticky Logo"></a>
                     </div>
 
                     <!--Nav Outer-->

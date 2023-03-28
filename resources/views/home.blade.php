@@ -1137,6 +1137,7 @@
     <!-- Scroll To Top -->
     @include('partials.scroll-to-top')
 
+
     <script src="js/jquery.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
