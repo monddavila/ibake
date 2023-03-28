@@ -9,22 +9,12 @@
     @include('partials.head')
 </head>
 
-<body>
-
-    <div class="page-wrapper">
-
-        <!-- Preloader -->
-        @include('partials.preloader')
-
-        <!-- Navbea -->
-        @include('partials.navbar')
-
-        <!--Page Title-->
-        <section class="page-title" style="background-image:url(images/background/background-6.jpg)">
-            <div class="auto-container">
-                <h1>My account</h1>
-                <ul class="page-breadcrumb">
-                    <li><a href="\">home</a></li>
+    <!--Page Title-->
+    <section class="page-title" style="background-image:url(images/background/background-6.jpg)">
+        <div class="auto-container">
+            <h1>My account</h1>
+            <ul class="page-breadcrumb">
+                <li><a href="\">home</a></li>
                 <li>My account</li>
             </ul>
         </div>
