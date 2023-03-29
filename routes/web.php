@@ -29,6 +29,8 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/chef', [HomeController::class, 'chef'])->name('chef');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+Route::get('/customize', [HomeController::class, 'customize'])->name('customize');
+Route::get('/portfolio', [HomeController::class, 'portfolio'])->name('portfolio');
 route::get('/redirect', [HomeController::class, 'redirect'])->name('redirect');
 
 
