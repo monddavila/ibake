@@ -9,6 +9,9 @@
     @include('partials.head')
 </head>
 
+    <!-- Nabvar Section -->
+    @include('partials.navbar')
+
     <!--Page Title-->
     <section class="page-title" style="background-image:url(images/background/background-6.jpg)">
         <div class="auto-container">
