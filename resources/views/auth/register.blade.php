@@ -4,13 +4,18 @@
 <head>
     <meta charset="utf-8">
     <title>iBake - Tier's of Joy | Register</title>
+
+    <!-- Header Section -->
     @include('partials.head')
 </head>
+
+    <!-- Nabvar Section -->
+    @include('partials.navbar')
 
 <body>
 
     <div class="page-wrapper">
-        @include('partials.navbar')
+        
 
         <!--Regiter Section-->
 
