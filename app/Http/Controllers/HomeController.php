@@ -31,6 +31,16 @@ class HomeController extends Controller
     return view('pages.chef');
   }
 
+  function customize()
+  {
+    return view('pages.customize');
+  }
+
+  function portfolio()
+  {
+    return view('pages.portfolio');
+  }
+
 
   public function redirect()
   {

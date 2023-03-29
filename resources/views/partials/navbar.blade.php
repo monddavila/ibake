@@ -17,7 +17,7 @@
                             <li class="{{ currentNav('/') }} dropdown"><a href="{{ route('home') }}">Home</a>
                             </li>
 
-                            <li><a href="\">Customize</a>
+                            <li><a href="{{ route('customize') }}">Customize</a>
                             </li>
 
                             <li class="{{ currentNav('/about') || currentNav('/chef') ? 'current' : '' }}
@@ -27,7 +27,7 @@
                                         <li><a href="{{ route('chef') }}">The Passionate Baker</a></li>
                                     </ul>
                             </li>
-                            <li class="dropdown"><a href="portfolio-masonry.html">Portfolio</a>
+                            <li class="dropdown"><a href="{{ route('portfolio') }}">Portfolio</a>
                                 <ul>
                                     <li><a href="portfolio-masonry.html">Masonry</a></li>
                                     <li><a href="portfolio-masonry-wide.html">Masonry Wide</a></li>
