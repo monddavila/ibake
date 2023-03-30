@@ -19,6 +19,7 @@
         @include('partials.navbar')
         <!--End Main Header -->
 
+
         <!--Page Title-->
         <section class="page-title" style="background-image:url(https://via.placeholder.com/1920x400)">
             <div class="auto-container">
@@ -40,7 +41,7 @@
                     <div class="content-side col-lg-9 col-md-12 col-sm-12">
                         <div class="our-shop">
                             <div class="shop-upper-box clearfix">
-                                <div class="items-label">Showing all 12 results</div>
+                                <div class="items-label">Showing all {{ count($shopItems) }} results</div>
                                 <div class="orderby">
                                     <select name="orderby" class="sortby-select select2-offscreen">
                                         <option value="popularity">Sort by popularity</option>
@@ -54,58 +55,29 @@
 
                             <div class="row clearfix">
 
-
-                                <div class="shop-item col-lg-4 col-md-6 col-sm-12">
-                                    <div class="inner-box">
-                                        <div class="image-box">
-                                            <figure class="image"><a href="shop-single.html"><img
-                                                        src="https://via.placeholder.com/300x300" alt=""></a>
-                                            </figure>
-                                            <div class="btn-box"><a href="shopping-cart.html">Add to cart</a></div>
-                                        </div>
-                                        <div class="lower-content">
-                                            <h4 class="name"><a href="shop-single.html">Birthday Cake</a></h4>
-                                            <div class="rating"><span class="fa fa-star"></span><span
-                                                    class="fa fa-star"></span><span class="fa fa-star"></span><span
-                                                    class="fa fa-star"></span><span class="fa fa-star light"></span>
+                                @foreach ($shopItems as $shopItem)
+                                    <div class="shop-item col-lg-4 col-md-6 col-sm-12">
+                                        <div class="inner-box">
+                                            <div class="image-box">
+                                                <figure class="image"><a
+                                                        href="{{ route('item', $shopItem->item_id) }}"><img
+                                                            src="https://via.placeholder.com/300x300"
+                                                            alt=""></a>
+                                                </figure>
+                                                <div class="btn-box"><a href="shopping-cart.html">Add to cart</a></div>
                                             </div>
-                                            <div class="price">$84.00</div>
+                                            <div class="lower-content">
+                                                <h4 class="name"><a href="shop-single.html">{{ $shopItem->name }}</a>
+                                                </h4>
+                                                <div class="rating"><span class="fa fa-star"></span><span
+                                                        class="fa fa-star"></span><span class="fa fa-star"></span><span
+                                                        class="fa fa-star"></span><span class="fa fa-star light"></span>
+                                                </div>
+                                                <div class="price">Php {{ $shopItem->price }}</div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                <!-- Shop Item -->
-                                @include('shop.shop-item-card')
-
-                                <!-- Shop Item -->
-                                @include('shop.shop-item-card')
-
-                                <!-- Shop Item -->
-                                @include('shop.shop-item-card')
-
-                                <!-- Shop Item -->
-                                @include('shop.shop-item-card')
-
-                                <!-- Shop Item -->
-                                @include('shop.shop-item-card')
-
-                                <!-- Shop Item -->
-                                @include('shop.shop-item-card')
-
-                                <!-- Shop Item -->
-                                @include('shop.shop-item-card')
-
-                                <!-- Shop Item -->
-                                @include('shop.shop-item-card')
-
-                                <!-- Shop Item -->
-                                @include('shop.shop-item-card')
-
-                                <!-- Shop Item -->
-                                @include('shop.shop-item-card')
-
-                                <!-- Shop Item -->
-                                @include('shop.shop-item-card')
+                                @endforeach
                             </div>
                         </div>
                     </div>

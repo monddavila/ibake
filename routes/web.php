@@ -34,8 +34,8 @@ Route::get('/customize', [HomeController::class, 'customize'])->name('customize'
 Route::get('/portfolio', [HomeController::class, 'portfolio'])->name('portfolio');
 route::get('/redirect', [HomeController::class, 'redirect'])->name('redirect');
 Route::group(['prefix' => 'shop'], function () {
-  Route::get('/', [ShopController::class, 'shop'])->name('shop');
-  Route::get('/item', [ShopController::class, 'item'])->name('item');
+  Route::get('/', [ShopController::class, 'index'])->name('shop');
+  Route::get('/item/{id}', [ShopController::class, 'show'])->name('item');
 });
 
 
