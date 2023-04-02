@@ -57,28 +57,24 @@
                                 <form method="post" action="{{ route('shop') }}">
                                     @csrf
                                     <div class="orderby">
-                                        <select name="sort-order" class="sortby-select select2-offscreen"
-                                            onchange="this.form.submit()">
-                                            {{-- <option value="popularity"
-                                                {{ session('sort-order') == 'popularity' ? 'selected' : '' }}>
-                                                Sort by popularity
-                                            </option>
+                                        <select name="sort-order" class="sortby-select" onchange="this.form.submit()">
+                                            <option value="" disabled
+                                                {{ empty(session('sort-order')) ? 'selected' : '' }}>Sort by</option>
+                                            <option value="popularity"
+                                                {{ session('sort-order') == 'popularity' ? 'selected' : '' }}>Sort by
+                                                popularity</option>
                                             <option value="rating"
-                                                {{ session('sort-order') == 'rating' ? 'selected' : '' }}>
-                                                Sort by average rating
-                                            </option>
+                                                {{ session('sort-order') == 'rating' ? 'selected' : '' }}>Sort by
+                                                average rating</option>
                                             <option value="date"
-                                                {{ session('sort-order') == 'date' ? 'selected' : '' }}>
-                                                Sort by newness
-                                            </option> --}}
+                                                {{ session('sort-order') == 'date' ? 'selected' : '' }}>Sort by newness
+                                            </option>
                                             <option value="price-asc"
-                                                {{ session('sort-order') == 'price-asc' ? 'selected' : '' }}>
-                                                Sort by price: low to high
-                                            </option>
+                                                {{ session('sort-order') == 'price-asc' ? 'selected' : '' }}>Sort by
+                                                price: low to high</option>
                                             <option value="price-desc"
-                                                {{ session('sort-order') == 'price-desc' ? 'selected' : '' }}>
-                                                Sort by price: high to low
-                                            </option>
+                                                {{ session('sort-order') == 'price-desc' ? 'selected' : '' }}>Sort by
+                                                price: high to low</option>
                                         </select>
 
                                         <noscript>
@@ -152,7 +148,8 @@
                                                     <div class="pull-left input-box">
                                                         <!-- Max Price Filter -->
                                                         <div class="form-group">
-                                                            <x-label for="min-price" value="{{ __('Min. Price: ') }}" />
+                                                            <x-label for="min-price"
+                                                                value="{{ __('Min. Price: ') }}" />
                                                             <x-input id="min-price" class="block mt-1 w-full"
                                                                 type="text" name="min-price"
                                                                 value="{{ old('min-price', session('minPrice', 0)) }}" />

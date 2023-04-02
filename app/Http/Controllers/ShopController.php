@@ -18,8 +18,8 @@ class ShopController extends Controller
   {
     // Store the minimum and maximum price values in session variables
     session([
-      'minPrice' => $request->input('min-price', 0),
-      'maxPrice' => $request->input('max-price', 1000),
+      'minPrice' => $request->input('min-price', session('minPrice', 0)),
+      'maxPrice' => $request->input('max-price', session('maxPrice', 1000)),
     ]);
 
     // Get the price value from the session variable
@@ -68,12 +68,16 @@ class ShopController extends Controller
     session(['sortOrder' => $sortOrder]);
 
     // Retrieve the shop items with the selected criteria
-    $shopItems = DB::table('shop_item_tests')
-      ->whereBetween('price', [$minPrice, $maxPrice]);
     if ($orderBy !== '') {
-      $shopItems = $shopItems->orderBy($orderBy, $sortOrder);
+      $shopItems = DB::table('shop_item_tests')
+        ->whereBetween('price', [$minPrice, $maxPrice])
+        ->orderBy($orderBy, $sortOrder)
+        ->get();
+    } else {
+      $shopItems = DB::table('shop_item_tests')
+        ->whereBetween('price', [$minPrice, $maxPrice])
+        ->get();
     }
-    $shopItems = $shopItems->get();
 
     // Render the shop view with the filtered and sorted shop items
     return view('shop.shop', compact('shopItems', 'sortOrder', 'result'))
