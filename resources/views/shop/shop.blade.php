@@ -110,15 +110,38 @@
                                         <div class="range-slider-one clearfix">
                                             <div class="price-range-slider"></div>
                                             <div class="clearfix">
-                                                <div class="pull-left input-box">
-                                                    <div class="title">Price:</div>
-                                                    <div class="input"><input type="text" class="property-amount"
-                                                            name="field-name" readonly></div>
-                                                </div>
-                                                <div class="pull-right btn-box">
-                                                    <a href="#" class="theme-btn"><span
-                                                            class="btn-title">Filtter</span></a>
-                                                </div>
+                                                <form method="get" action="{{ route('shop') }}">
+                                                    @csrf
+                                                    <div class="pull-left input-box">
+                                                        <!-- Max Price Filter -->
+                                                        <div class="form-group">
+                                                            <x-label for="min-price" value="{{ __('Min. Price: ') }}" />
+                                                            <x-input id="min-price" class="block mt-1 w-full"
+                                                                type="text" name="min-price"
+                                                                value="{{ $minPrice }}" />
+                                                        </div>
+
+                                                        <!-- Max Price Filter -->
+                                                        <div class="form-group">
+                                                            <x-label for="max-price" value="{{ __('Max Price: ') }}" />
+                                                            <x-input id="max-price" class="block mt-1 w-full"
+                                                                type="text" name="max-price"
+                                                                value="{{ $maxPrice }}" />
+                                                        </div>
+                                                    </div>
+
+                                                    {{-- Show an error if the min/max price entered is not numeric --}}
+                                                    @if ($errors->has('max-price') || $errors->has('min-price'))
+                                                        <span class="text-red-500">Please enter a numeric value</span>
+                                                    @endif
+                                                    <div
+                                                        class="pull-right
+                                                                btn-box">
+                                                        <button href="{{ route('shop') }}" class="theme-btn"
+                                                            type="submit"><span
+                                                                class="btn-title">Filtter</span></button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
