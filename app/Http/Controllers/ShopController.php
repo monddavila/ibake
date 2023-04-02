@@ -8,33 +8,81 @@ use Illuminate\Support\Facades\DB;
 
 class ShopController extends Controller
 {
-  public function index()
+  /**
+   * Display the shop page with items filtered by price range and sorted by the selected order.
+   *
+   * @param  Request  $request
+   * @return \Illuminate\View\View
+   */
+  public function index(Request $request)
   {
-    // Set default values
-    $minPrice = 0;
-    $maxPrice = 1000;
-
-    // Check if there is a GET request with min-price parameter
-    if (request()->has('min-price')) {
-      $minPrice = request('min-price');
-    }
-    // Check if there is a GET request with max-price parameter
-    if (request()->has('max-price')) {
-      $maxPrice = request('max-price');
-    }
-
-    $shopItems = DB::table('shop_item_tests')->get()->whereBetween('price', [$minPrice, $maxPrice]);
-
-    $validatedData = request()->validate([
-      'min-price' => 'numeric',
-      'max-price' => 'numeric'
+    // Store the minimum and maximum price values in session variables
+    session([
+      'minPrice' => $request->input('min-price', 0),
+      'maxPrice' => $request->input('max-price', 1000),
     ]);
 
-    $minPrice = $validatedData['min-price'] ?? $minPrice;
-    $maxPrice = $validatedData['max-price'] ?? $maxPrice;
+    // Get the price value from the session variable
+    $minPrice = session('minPrice', 0);
+    $maxPrice = session('maxPrice', 1000);
 
-    return view('shop.shop', compact('shopItems', 'minPrice', 'maxPrice'));
+    // Check if there is a GET request with orderby parameter
+    $orderBy = '';
+    $sortOrder = session('sortOrder', '');
+    $result = '';
+    if (request()->has('sort-order')) {
+      switch (request('sort-order')) {
+        case 'popularity':
+          $orderBy = 'popularity';
+          $sortOrder = 'desc';
+          $result = 'Most Popular';
+          break;
+        case 'rating':
+          $orderBy = 'rating';
+          $sortOrder = 'desc';
+          $result = 'Highest Rated';
+          break;
+        case 'recent':
+          $orderBy = 'created_at';
+          $sortOrder = 'desc';
+          $result = 'Most Recent';
+          break;
+        case 'price-asc':
+          $orderBy = 'price';
+          $sortOrder = 'asc';
+          $result = 'Price Low to High';
+          break;
+        case 'price-desc':
+          $orderBy = 'price';
+          $sortOrder = 'desc';
+          $result = 'Price High to Low';
+          break;
+        default:
+          $orderBy = '';
+          $sortOrder = '';
+          $result = '';
+      }
+    }
+
+    // Store the sort order value in session variable
+    session(['sortOrder' => $sortOrder]);
+
+    // Retrieve the shop items with the selected criteria
+    $shopItems = DB::table('shop_item_tests')
+      ->whereBetween('price', [$minPrice, $maxPrice]);
+    if ($orderBy !== '') {
+      $shopItems = $shopItems->orderBy($orderBy, $sortOrder);
+    }
+    $shopItems = $shopItems->get();
+
+    // Render the shop view with the filtered and sorted shop items
+    return view('shop.shop', compact('shopItems', 'sortOrder', 'result'))
+      ->with([
+        'minPrice' => $minPrice,
+        'maxPrice' => $maxPrice,
+      ]);
   }
+
 
   public function show($id)
   {

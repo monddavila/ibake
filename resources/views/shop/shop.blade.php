@@ -37,24 +37,61 @@
             <div class="auto-container">
                 <div class="row clearfix">
 
+                    {{-- <option value="popularity"
+                                                {{ session('sort-order') == 'popularity' ? 'selected' : '' }}>
+                                                Sort by popularity
+                                            </option>
+                                            <option value="rating"
+                                                {{ session('sort-order') == 'rating' ? 'selected' : '' }}>
+                                                Sort by average rating
+                                            </option>
+                                            <option value="date"
+                                                {{ session('sort-order') == 'date' ? 'selected' : '' }}>
+                                                Sort by newness
+                                            </option> --}}
                     <!--Content Side-->
                     <div class="content-side col-lg-9 col-md-12 col-sm-12">
                         <div class="our-shop">
                             <div class="shop-upper-box clearfix">
                                 <div class="items-label">Showing all {{ count($shopItems) }} results</div>
-                                <div class="orderby">
-                                    <select name="orderby" class="sortby-select select2-offscreen">
-                                        <option value="popularity">Sort by popularity</option>
-                                        <option value="rating">Sort by average rating</option>
-                                        <option value="date">Sort by newness</option>
-                                        <option value="price">Sort by price: low to high</option>
-                                        <option value="price-desc">Sort by price: high to low</option>
-                                    </select>
-                                </div>
+                                <form method="post" action="{{ route('shop') }}">
+                                    @csrf
+                                    <div class="orderby">
+                                        <select name="sort-order" class="sortby-select select2-offscreen"
+                                            onchange="this.form.submit()">
+                                            {{-- <option value="popularity"
+                                                {{ session('sort-order') == 'popularity' ? 'selected' : '' }}>
+                                                Sort by popularity
+                                            </option>
+                                            <option value="rating"
+                                                {{ session('sort-order') == 'rating' ? 'selected' : '' }}>
+                                                Sort by average rating
+                                            </option>
+                                            <option value="date"
+                                                {{ session('sort-order') == 'date' ? 'selected' : '' }}>
+                                                Sort by newness
+                                            </option> --}}
+                                            <option value="price-asc"
+                                                {{ session('sort-order') == 'price-asc' ? 'selected' : '' }}>
+                                                Sort by price: low to high
+                                            </option>
+                                            <option value="price-desc"
+                                                {{ session('sort-order') == 'price-desc' ? 'selected' : '' }}>
+                                                Sort by price: high to low
+                                            </option>
+                                        </select>
+
+                                        <noscript>
+                                            <input type="submit" value="Sort" />
+                                        </noscript>
+                                    </div>
+                                </form>
+
+
                             </div>
 
-                            <div class="row clearfix">
 
+                            <div class="row clearfix">
                                 @foreach ($shopItems as $shopItem)
                                     <div class="shop-item col-lg-4 col-md-6 col-sm-12">
                                         <div class="inner-box">
@@ -64,7 +101,8 @@
                                                             src="https://via.placeholder.com/300x300"
                                                             alt=""></a>
                                                 </figure>
-                                                <div class="btn-box"><a href="shopping-cart.html">Add to cart</a></div>
+                                                <div class="btn-box"><a href="shopping-cart.html">Add to cart</a>
+                                                </div>
                                             </div>
                                             <div class="lower-content">
                                                 <h4 class="name"><a href="shop-single.html">{{ $shopItem->name }}</a>
@@ -108,9 +146,8 @@
                                         <h3 class="widget-title">Price Filter</h3>
 
                                         <div class="range-slider-one clearfix">
-                                            <div class="price-range-slider"></div>
                                             <div class="clearfix">
-                                                <form method="get" action="{{ route('shop') }}">
+                                                <form method="post" action="{{ route('shop') }}">
                                                     @csrf
                                                     <div class="pull-left input-box">
                                                         <!-- Max Price Filter -->
@@ -118,7 +155,7 @@
                                                             <x-label for="min-price" value="{{ __('Min. Price: ') }}" />
                                                             <x-input id="min-price" class="block mt-1 w-full"
                                                                 type="text" name="min-price"
-                                                                value="{{ $minPrice }}" />
+                                                                value="{{ old('min-price', session('minPrice', 0)) }}" />
                                                         </div>
 
                                                         <!-- Max Price Filter -->
@@ -126,14 +163,17 @@
                                                             <x-label for="max-price" value="{{ __('Max Price: ') }}" />
                                                             <x-input id="max-price" class="block mt-1 w-full"
                                                                 type="text" name="max-price"
-                                                                value="{{ $maxPrice }}" />
+                                                                value="{{ old('max-price', session('maxPrice', 1000)) }}" />
                                                         </div>
                                                     </div>
 
                                                     {{-- Show an error if the min/max price entered is not numeric --}}
                                                     @if ($errors->has('max-price') || $errors->has('min-price'))
-                                                        <span class="text-red-500">Please enter a numeric value</span>
+                                                        <span class="text-red-500">Please enter a numeric
+                                                            value</span>
                                                     @endif
+
+
                                                     <div
                                                         class="pull-right
                                                                 btn-box">
@@ -168,6 +208,9 @@
             </div>
         </div>
         <!--End Sidebar Page Container-->
+
+        <pre>{{ htmlspecialchars(json_encode(session()->all(), JSON_PRETTY_PRINT)) }}</pre>
+
 
         <!-- Main Footer -->
         @include('shop.shop-footer')
