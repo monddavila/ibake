@@ -58,8 +58,8 @@
                                     @csrf
                                     <div class="orderby">
                                         <select name="sort-order" class="sortby-select" onchange="this.form.submit()">
-                                            <option value="" disabled
-                                                {{ empty(session('sort-order')) ? 'selected' : '' }}>Sort by</option>
+                                            {{-- <option value="" disabled
+                                                {{ empty(session('sort-order')) ? 'selected' : '' }}>Sort by</option> --}}
                                             <option value="popularity"
                                                 {{ session('sort-order') == 'popularity' ? 'selected' : '' }}>Sort by
                                                 popularity</option>

@@ -16,11 +16,15 @@ class ShopItemTestFactory extends Factory
    */
   public function definition()
   {
+    $categories = ['Cakes', 'Cupcakes', 'Tub Cakes', 'Cookies', 'Cake Pops'];
     return [
-      'name' => $this->faker->unique()->sentence(3),
+      'name' => $this->faker->unique()->sentence(2),
       'price' => $this->faker->numberBetween(100, 1000),
       'item_description' => $this->faker->sentence(50),
-      'category' => $this->faker->realText(10)
+      'category' => $this->faker->randomElement($categories),
+      'rating' => $this->faker->numberBetween(1, 5),
+      'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
+      'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
     ];
   }
 }

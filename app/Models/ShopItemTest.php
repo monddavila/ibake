@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ShopItemTest extends Model
 {
   use HasFactory;
-  public $timestamps = false;
 
   protected $fillable = [
     'item_id',
