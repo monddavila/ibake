@@ -172,10 +172,16 @@
 
 
                                                     <div
+                                                        class="pull-left
+                                                                btn-box">
+                                                        <button class="theme-btn" name="view-all" type="submit"><span
+                                                                class="btn-title">View
+                                                                All</span></button>
+                                                    </div>
+                                                    <div
                                                         class="pull-right
                                                                 btn-box">
-                                                        <button href="{{ route('shop') }}" class="theme-btn"
-                                                            type="submit"><span
+                                                        <button class="theme-btn" name="filter" type="submit"><span
                                                                 class="btn-title">Filtter</span></button>
                                                     </div>
                                                 </form>
@@ -206,7 +212,6 @@
         </div>
         <!--End Sidebar Page Container-->
 
-        <pre>{{ htmlspecialchars(json_encode(session()->all(), JSON_PRETTY_PRINT)) }}</pre>
 
 
         <!-- Main Footer -->

@@ -26,6 +26,21 @@ class ShopController extends Controller
     $minPrice = session('minPrice', 0);
     $maxPrice = session('maxPrice', 1000);
 
+    if ($request->has('view-all')) {
+      session()->forget(['minPrice', 'maxPrice']);
+      $minPrice = session('minPrice', 0);
+      $maxPrice = session('maxPrice', 1000);
+      $shopItems = DB::table('shop_item_tests')
+        ->whereBetween('price', [$minPrice, $maxPrice])
+        ->get();
+      return view('shop.shop', compact('shopItems'))
+        ->with([
+          'minPrice' => $minPrice,
+          'maxPrice' => $maxPrice,
+        ]);
+    }
+
+
     // Check if there is a GET request with orderby parameter
     $orderBy = '';
     $sortOrder = session('sortOrder', '');
@@ -79,8 +94,10 @@ class ShopController extends Controller
         ->get();
     }
 
+
+
     // Render the shop view with the filtered and sorted shop items
-    return view('shop.shop', compact('shopItems', 'sortOrder', 'result'))
+    return view('shop.shop', compact('shopItems', 'sortOrder'))
       ->with([
         'minPrice' => $minPrice,
         'maxPrice' => $maxPrice,
