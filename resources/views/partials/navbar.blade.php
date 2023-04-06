@@ -20,12 +20,14 @@
                             <li><a href="{{ route('customize') }}">Customize</a>
                             </li>
 
-                            <li class="{{ currentNav('/about') || currentNav('/chef') ? 'current' : '' }}
-                                    dropdown"><a href="{{ route('about') }}">About Us</a>
-                                    <ul>
-                                        <li><a href="{{ route('about') }}">About Us</a></li>
-                                        <li><a href="{{ route('chef') }}">The Passionate Baker</a></li>
-                                    </ul>
+                            <li
+                                class="{{ currentNav('/about') || currentNav('/chef') ? 'current' : '' }}
+                                    dropdown">
+                                <a href="{{ route('about') }}">About Us</a>
+                                <ul>
+                                    <li><a href="{{ route('about') }}">About Us</a></li>
+                                    <li><a href="{{ route('chef') }}">The Passionate Baker</a></li>
+                                </ul>
                             </li>
                             <li class="dropdown"><a href="{{ route('portfolio') }}">Portfolio</a>
                                 <ul>
@@ -63,14 +65,18 @@
                                 </ul>
                             </li>
                             <li class="{{ currentNav('/shop') }} dropdown"><a href="{{ route('shop') }}">Shop</a>
-                                <ul>
-                                    <li><a href="{{ route('shop') }}">Shop</a></li>
-                                    <li><a href="shopping-cart.html">Cart</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="login.html">My account</a></li>
-                                </ul>
+                                @auth
+                                    <ul>
+                                        <li><a href="{{ route('shop') }}">Shop</a></li>
+                                        <li><a href="shopping-cart.html">Cart</a></li>
+                                        <li><a href="checkout.html">Checkout</a></li>
+                                        <li><a href="login.html">My account</a></li>
+                                    </ul>
+                                @endauth
                             </li>
-                            <li><a href="contact.html">Track Order</a></li>
+                            @auth
+                                <li><a href="contact.html">Track Order</a></li>
+                            @endauth
                             <li><a href="{{ route('contact') }}">Contacts</a></li>
 
                         </ul>
@@ -131,8 +137,8 @@
             <!-- Mobile Menu  -->
             <div class="mobile-menu">
                 <nav class="menu-box">
-                    <div class="nav-logo"><a href="index.html"><img src="images/logo-small.png" alt=""
-                                title=""></a></div>
+                    <div class="nav-logo"><a href="{{ route('home') }}"><img src="images/ibake-logo/logo-small.png"
+                                alt="" title=""></a></div>
                     <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
                 </nav>
             </div><!-- End Mobile Menu -->

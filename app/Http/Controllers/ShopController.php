@@ -83,8 +83,11 @@ class ShopController extends Controller
     }
 
     // Store the sort order value in session variable
-    session(['orderBy' => $orderBy]);
-    session(['sortOrder' => $sortOrder]);
+    session([
+      'orderBy' => $orderBy,
+      'sortOrder' => $sortOrder,
+    ]);
+
 
     // Retrieve the shop items with the selected criteria
     $shopItems = DB::table('shop_item_tests')
