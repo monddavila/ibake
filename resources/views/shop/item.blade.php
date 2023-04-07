@@ -67,10 +67,14 @@
                                             </div>
 
                                             <div class="other-options clearfix">
-                                                <div class="item-quantity">Quantity <input class="qty" type="number"
-                                                        value="1" name="quantity"></div>
-                                                <button type="button" class="theme-btn add-to-cart"><span
-                                                        class="btn-title">Add To Cart</span></button>
+                                                <form action="{{ route('addToCart') }}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="product_id" value="{{ $shopItem->id }}">
+                                                    <div class="item-quantity">Quantity <input class="quantity"
+                                                            type="number" value="1" name="quantity"></div>
+                                                    <button type="submit" class="theme-btn add-to-cart"><span
+                                                            class="btn-title">Add To Cart</span></button>
+                                                </form>
                                                 <ul class="product-meta">
                                                     <li class="posted_in">Category: <a
                                                             href="#">{{ $shopItem->category }}</a></li>

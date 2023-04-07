@@ -92,11 +92,11 @@
                                     <div class="shop-item col-lg-4 col-md-6 col-sm-12">
                                         <div class="inner-box">
                                             <div class="image-box">
-                                                <figure class="image"><a
-                                                        href="{{ route('item', $shopItem->item_id) }}"><img
+                                                <figure class="image"><a href="{{ route('item', $shopItem->id) }}"><img
                                                             src="https://via.placeholder.com/300x300"
                                                             alt=""></a>
                                                 </figure>
+
                                                 <div class="btn-box"><a href="shopping-cart.html">Add to cart</a>
                                                 </div>
                                             </div>
@@ -132,9 +132,9 @@
                                 </div>
 
                                 <!-- Cart Widget -->
-                                @auth
+                                @if (auth()->check() && auth()->user()->cart !== null)
                                     @include('shop.cart-widget')
-                                @endauth
+                                @endif
 
                                 <!-- Range Slider Widget -->
                                 <div class="sidebar-widget rangeslider-widget">

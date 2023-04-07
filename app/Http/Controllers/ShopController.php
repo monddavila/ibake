@@ -107,7 +107,7 @@ class ShopController extends Controller
   public function show($id)
   {
     return view('shop.item', [
-      'shopItem' => ShopItemTest::where('item_id', $id)->first()
+      'shopItem' => ShopItemTest::where('id', $id)->first()
     ]);
   }
 }

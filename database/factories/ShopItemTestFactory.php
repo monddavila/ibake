@@ -28,3 +28,9 @@ class ShopItemTestFactory extends Factory
     ];
   }
 }
+/* 
+php artisan make:model CartTest -a
+php artisan make:model CarItemsTest -a
+php artisan make:model OrdersTest -a
+php artisan make:model OrdersItemsTest -a
+*/
