@@ -25,7 +25,7 @@
                 <ul class="page-breadcrumb">
                     <li><a href="{{ route('home') }}">home</a></li>
                     <li><a href="{{ route('shop') }}">Products</a></li>
-                    <li>{{ $shopItem->name }}</li>
+                    <li>{{ $product->name }}</li>
                 </ul>
             </div>
         </section>
@@ -52,7 +52,7 @@
                                         </div>
                                         <div class="info-column col-md-6 col-sm-12">
                                             <div class="details-header">
-                                                <h4>{{ $shopItem->name }}</h4>
+                                                <h4>{{ $product->name }}</h4>
                                                 <div class="rating">
                                                     <span class="fa fa-star"></span>
                                                     <span class="fa fa-star"></span>
@@ -61,23 +61,29 @@
                                                     <span class="fa fa-star"></span>
                                                 </div>
                                                 <a class="reviews" href="#">(2 Customer Reviews)</a>
-                                                <div class="item-price">Php {{ $shopItem->price }}</div>
+                                                <div class="item-price">Php {{ $product->price }}</div>
                                                 {{-- Short item description beside item image --}}
-                                                <div class="text">{{ $shopItem->item_description }}</div>
+                                                <div class="text">{{ $product->item_description }}</div>
                                             </div>
 
                                             <div class="other-options clearfix">
                                                 <form action="{{ route('addToCart') }}" method="post">
                                                     @csrf
-                                                    <input type="hidden" name="product_id" value="{{ $shopItem->id }}">
+                                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
                                                     <div class="item-quantity">Quantity <input class="quantity"
                                                             type="number" value="1" name="quantity"></div>
                                                     <button type="submit" class="theme-btn add-to-cart"><span
                                                             class="btn-title">Add To Cart</span></button>
                                                 </form>
+                                                @if (session('message'))
+                                                    <div class="alert alert-danger">
+                                                        {{ session('message') }}
+                                                    </div>
+                                                @endif
+
                                                 <ul class="product-meta">
                                                     <li class="posted_in">Category: <a
-                                                            href="#">{{ $shopItem->category }}</a></li>
+                                                            href="#">{{ $product->category }}</a></li>
                                                     <li class="tagged_as">Tag: <a href="#">Nuts</a></li>
                                                 </ul>
                                             </div>
@@ -105,7 +111,7 @@
                                                 <h2 class="title">Descripton</h2>
                                                 <div class="content">
                                                     {{-- Long item description ner review tab --}}
-                                                    <p>{{ $shopItem->item_description }}</p>
+                                                    <p>{{ $product->item_description }}</p>
                                                 </div>
                                             </div>
 

@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+
+use App\Models\Carts;
+use App\Policies\CartsPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -15,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
    */
   protected $policies = [
     // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+    Carts::class => CartsPolicy::class
 
   ];
 
@@ -28,11 +32,6 @@ class AuthServiceProvider extends ServiceProvider
   public function boot()
   {
     $this->registerPolicies();
-
-    Gate::define('create-cart-item', function ($user) {
-      // your authorization logic here
-      return true; // or false, depending on the user's authorization status
-    });
     //
   }
 }

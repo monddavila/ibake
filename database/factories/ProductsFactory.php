@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ShopItemTest>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Products>
  */
-class ShopItemTestFactory extends Factory
+class ProductsFactory extends Factory
 {
   /**
    * Define the model's default state.
@@ -28,9 +28,3 @@ class ShopItemTestFactory extends Factory
     ];
   }
 }
-/* 
-php artisan make:model CartTest -a
-php artisan make:model CarItemsTest -a
-php artisan make:model OrdersTest -a
-php artisan make:model OrdersItemsTest -a
-*/

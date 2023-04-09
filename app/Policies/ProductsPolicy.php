@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\CartsTest;
+use App\Models\Products;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CartsTestPolicy
+class ProductsPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class CartsTestPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CartsTest  $cartsTest
+     * @param  \App\Models\Products  $products
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, CartsTest $cartsTest)
+    public function view(User $user, Products $products)
     {
         //
     }
@@ -48,10 +48,10 @@ class CartsTestPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CartsTest  $cartsTest
+     * @param  \App\Models\Products  $products
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, CartsTest $cartsTest)
+    public function update(User $user, Products $products)
     {
         //
     }
@@ -60,10 +60,10 @@ class CartsTestPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CartsTest  $cartsTest
+     * @param  \App\Models\Products  $products
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, CartsTest $cartsTest)
+    public function delete(User $user, Products $products)
     {
         //
     }
@@ -72,10 +72,10 @@ class CartsTestPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CartsTest  $cartsTest
+     * @param  \App\Models\Products  $products
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, CartsTest $cartsTest)
+    public function restore(User $user, Products $products)
     {
         //
     }
@@ -84,10 +84,10 @@ class CartsTestPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CartsTest  $cartsTest
+     * @param  \App\Models\Products  $products
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, CartsTest $cartsTest)
+    public function forceDelete(User $user, Products $products)
     {
         //
     }

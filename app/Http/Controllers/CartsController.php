@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CartsTest;
-use App\Models\CartItemsTest;
-use App\Models\ShopItemTest;
+use App\Models\Carts;
+use App\Http\Requests\StoreCartsRequest;
+use App\Http\Requests\UpdateCartsRequest;
+use App\Models\CartItems;
+use App\Models\Products;
 use Illuminate\Http\Request;
 
-class CartsTestController extends Controller
+class CartsController extends Controller
 {
   /**
    * Display a listing of the resource.
    *
    * @return \Illuminate\Http\Response
    */
-
-  protected $fillable = ['user_id'];
-
   public function index()
   {
     //
@@ -30,7 +29,7 @@ class CartsTestController extends Controller
   public function create($userId)
   {
     //
-    $cart = new CartsTest();
+    $cart = new Carts();
     $cart->user_id = $userId;
     $cart->save();
     return $cart;
@@ -39,24 +38,29 @@ class CartsTestController extends Controller
   /**
    * Store a newly created resource in storage.
    *
-   * @param  \App\Http\Requests\StoreCartsTestRequest  $request
+   * @param  \App\Http\Requests\StoreCartsRequest  $request
    * @return \Illuminate\Http\Response
    */
   public function store(Request $request)
   {
-    $product = ShopItemTest::findOrFail($request->input('product_id'));
+    //
+    $product = Products::findOrFail($request->input('product_id'));
     $quantity = $request->input('quantity');
 
-    $cart = CartsTest::where('user_id', auth()->id())->first();
+    $cart = Carts::where('user_id', auth()->id())->first();
+    if (!auth()->check()) {
+      $message = 'You need to log in to add items to the cart. Please log in or create an account.';
+      return redirect()->back()->with('message', $message);
+    }
     $this->authorize('create-cart-item', $cart); // check if user is authorized to add a new cart item
 
     if (!$cart) {
-      $cart = new CartsTest();
+      $cart = new Carts();
       $cart->user_id = auth()->id();
       $cart->save();
     }
 
-    $cartItem = new CartItemsTest();
+    $cartItem = new CartItems(); // Change CartItemsTest
     $cartItem->cart_id = $cart->id;
     $cartItem->product_id = $product->id;
     $cartItem->quantity = $quantity;
@@ -68,10 +72,10 @@ class CartsTestController extends Controller
   /**
    * Display the specified resource.
    *
-   * @param  \App\Models\CartsTest  $cartsTest
+   * @param  \App\Models\Carts  $carts
    * @return \Illuminate\Http\Response
    */
-  public function show(CartsTest $cartsTest)
+  public function show(Carts $carts)
   {
     //
   }
@@ -79,10 +83,10 @@ class CartsTestController extends Controller
   /**
    * Show the form for editing the specified resource.
    *
-   * @param  \App\Models\CartsTest  $cartsTest
+   * @param  \App\Models\Carts  $carts
    * @return \Illuminate\Http\Response
    */
-  public function edit(CartsTest $cartsTest)
+  public function edit(Carts $carts)
   {
     //
   }
@@ -90,11 +94,11 @@ class CartsTestController extends Controller
   /**
    * Update the specified resource in storage.
    *
-   * @param  \App\Http\Requests\UpdateCartsTestRequest  $request
-   * @param  \App\Models\CartsTest  $cartsTest
+   * @param  \App\Http\Requests\UpdateCartsRequest  $request
+   * @param  \App\Models\Carts  $carts
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, CartsTest $cartsTest)
+  public function update(UpdateCartsRequest $request, Carts $carts)
   {
     //
   }
@@ -102,10 +106,10 @@ class CartsTestController extends Controller
   /**
    * Remove the specified resource from storage.
    *
-   * @param  \App\Models\CartsTest  $cartsTest
+   * @param  \App\Models\Carts  $carts
    * @return \Illuminate\Http\Response
    */
-  public function destroy(CartsTest $cartsTest)
+  public function destroy(Carts $carts)
   {
     //
   }
@@ -117,10 +121,4 @@ class CartsTestController extends Controller
   {
     return $this->belongsTo(User::class);
   }
-
-
-
-  /**
-   * Get the the cart items.
-   */
 }

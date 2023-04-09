@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\CartItemsTest;
+use App\Models\CartItems;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CartItemsTestPolicy
+class CartItemsPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class CartItemsTestPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CartItemsTest  $cartItemsTest
+     * @param  \App\Models\CartItems  $cartItems
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, CartItemsTest $cartItemsTest)
+    public function view(User $user, CartItems $cartItems)
     {
         //
     }
@@ -48,10 +48,10 @@ class CartItemsTestPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CartItemsTest  $cartItemsTest
+     * @param  \App\Models\CartItems  $cartItems
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, CartItemsTest $cartItemsTest)
+    public function update(User $user, CartItems $cartItems)
     {
         //
     }
@@ -60,10 +60,10 @@ class CartItemsTestPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CartItemsTest  $cartItemsTest
+     * @param  \App\Models\CartItems  $cartItems
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, CartItemsTest $cartItemsTest)
+    public function delete(User $user, CartItems $cartItems)
     {
         //
     }
@@ -72,10 +72,10 @@ class CartItemsTestPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CartItemsTest  $cartItemsTest
+     * @param  \App\Models\CartItems  $cartItems
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, CartItemsTest $cartItemsTest)
+    public function restore(User $user, CartItems $cartItems)
     {
         //
     }
@@ -84,10 +84,10 @@ class CartItemsTestPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CartItemsTest  $cartItemsTest
+     * @param  \App\Models\CartItems  $cartItems
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, CartItemsTest $cartItemsTest)
+    public function forceDelete(User $user, CartItems $cartItems)
     {
         //
     }

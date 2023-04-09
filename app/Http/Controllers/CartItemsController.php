@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CartItemsTest;
-use App\Http\Requests\StoreCartItemsTestRequest;
-use App\Http\Requests\UpdateCartItemsTestRequest;
+use App\Models\CartItems;
+use App\Http\Requests\StoreCartItemsRequest;
+use App\Http\Requests\UpdateCartItemsRequest;
 
-class CartItemsTestController extends Controller
+class CartItemsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +31,10 @@ class CartItemsTestController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCartItemsTestRequest  $request
+     * @param  \App\Http\Requests\StoreCartItemsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCartItemsTestRequest $request)
+    public function store(StoreCartItemsRequest $request)
     {
         //
     }
@@ -42,10 +42,10 @@ class CartItemsTestController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CartItemsTest  $cartItemsTest
+     * @param  \App\Models\CartItems  $cartItems
      * @return \Illuminate\Http\Response
      */
-    public function show(CartItemsTest $cartItemsTest)
+    public function show(CartItems $cartItems)
     {
         //
     }
@@ -53,10 +53,10 @@ class CartItemsTestController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CartItemsTest  $cartItemsTest
+     * @param  \App\Models\CartItems  $cartItems
      * @return \Illuminate\Http\Response
      */
-    public function edit(CartItemsTest $cartItemsTest)
+    public function edit(CartItems $cartItems)
     {
         //
     }
@@ -64,11 +64,11 @@ class CartItemsTestController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateCartItemsTestRequest  $request
-     * @param  \App\Models\CartItemsTest  $cartItemsTest
+     * @param  \App\Http\Requests\UpdateCartItemsRequest  $request
+     * @param  \App\Models\CartItems  $cartItems
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCartItemsTestRequest $request, CartItemsTest $cartItemsTest)
+    public function update(UpdateCartItemsRequest $request, CartItems $cartItems)
     {
         //
     }
@@ -76,10 +76,10 @@ class CartItemsTestController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CartItemsTest  $cartItemsTest
+     * @param  \App\Models\CartItems  $cartItems
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CartItemsTest $cartItemsTest)
+    public function destroy(CartItems $cartItems)
     {
         //
     }

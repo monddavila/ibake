@@ -7,14 +7,13 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
   /**
-   * Cart Items
    * Run the migrations.
    *
    * @return void
    */
   public function up()
   {
-    Schema::create('cart_items_tests', function (Blueprint $table) {
+    Schema::create('cart_items', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('cart_id');
       $table->unsignedBigInteger('product_id');
@@ -33,6 +32,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('cart_items_tests');
+    Schema::dropIfExists('cart_items');
   }
 };

@@ -4,7 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\ShopItemTest;
+use App\Models\Products;
+// use App\Models\ShopItemTest;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,7 +17,10 @@ class DatabaseSeeder extends Seeder
    */
   public function run()
   {
-    ShopItemTest::factory(50)->create();
+    // ShopItemTest::factory(50)->create();
+    Products::factory(50)->create();
+
+
     // \App\Models\User::factory(10)->create();
 
     // \App\Models\User::factory()->create([

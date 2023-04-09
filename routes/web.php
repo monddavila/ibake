@@ -6,9 +6,8 @@ use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\CartsTestController;
+use App\Http\Controllers\CartsController;
 use App\Http\Controllers\ShopController;
-use App\Models\CartsTest;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,11 +34,12 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('/customize', [HomeController::class, 'customize'])->name('customize');
 Route::get('/portfolio', [HomeController::class, 'portfolio'])->name('portfolio');
 route::get('/redirect', [HomeController::class, 'redirect'])->name('redirect');
+
 Route::group(['prefix' => 'shop'], function () {
   Route::get('/', [ShopController::class, 'index'])->name('shop');
   Route::post('/', [ShopController::class, 'index'])->name('shop');
   Route::get('/item/{id}', [ShopController::class, 'show'])->name('item');
-  Route::post('/add-to-cart', [CartsTestController::class, 'store'])->name('addToCart');
+  Route::post('/add-to-cart', [CartsController::class, 'store'])->name('addToCart');
 });
 
 

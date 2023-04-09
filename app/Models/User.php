@@ -63,6 +63,6 @@ class User extends Authenticatable
 
   public function cart()
   {
-    return $this->hasOne(CartsTest::class);
+    return $this->hasOne(Carts::class);
   }
 }

@@ -7,22 +7,22 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
   /**
-   * Carts
    * Run the migrations.
    *
    * @return void
    */
   public function up()
   {
-    Schema::create('carts_tests', function (Blueprint $table) {
+    Schema::create('products', function (Blueprint $table) {
       $table->id();
-      $table->unsignedBigInteger('user_id');
-      $table->timestamps();
-
-      $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+      $table->string('name')->unique();
+      $table->integer('price');
+      $table->text('item_description');
+      $table->text('category');
+      $table->float('rating')->default(0);
+      $table->timestamps(); // Adds created_at and updated_at columns
     });
   }
-
 
   /**
    * Reverse the migrations.
@@ -31,6 +31,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('carts_tests');
+    Schema::dropIfExists('products');
   }
 };

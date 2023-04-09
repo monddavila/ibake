@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\ShopItemTest;
+use App\Models\Products;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ShopItemTestSeeder extends Seeder
+class ProductsSeeder extends Seeder
 {
   /**
    * Run the database seeds.
@@ -15,15 +15,16 @@ class ShopItemTestSeeder extends Seeder
    */
   public function run()
   {
-    $shopItem = [
+    //
+    $product = [
       'name' => 'Item 1',
       'price' => 123,
       'item_description' => 'Item 1 Description',
       'category' => 'Item Category',
     ];
 
-    foreach ($shopItem as $key => $value) {
-      ShopItemTest::create($value);
+    foreach ($product as $key => $value) {
+      Products::create($value);
     }
   }
 }

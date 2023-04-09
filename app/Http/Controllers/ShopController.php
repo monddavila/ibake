@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Products;
 use App\Models\ShopItemTest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -44,8 +45,8 @@ class ShopController extends Controller
     if ($request->has('view-all')) {
       session()->forget(['minPrice', 'maxPrice', 'orderBy', 'sortOrder']);
       [$minPrice, $maxPrice, $orderBy, $sortOrder] = $this->getSessionData();
-      $shopItems = DB::table('shop_item_tests')->get();
-      return view('shop.shop', compact('shopItems'))
+      $products = DB::table('products')->get();
+      return view('shop.shop', compact('products'))
         ->with([
           'minPrice' => $minPrice,
           'maxPrice' => $maxPrice,
@@ -90,13 +91,13 @@ class ShopController extends Controller
 
 
     // Retrieve the shop items with the selected criteria
-    $shopItems = DB::table('shop_item_tests')
+    $products = DB::table('products')
       ->whereBetween('price', [$minPrice, $maxPrice])
       ->orderBy($orderBy, $sortOrder)
       ->get();
 
     // Render the shop view with the filtered and sorted shop items
-    return view('shop.shop', compact('shopItems', 'sortOrder'))
+    return view('shop.shop', compact('products', 'sortOrder'))
       ->with([
         'minPrice' => $minPrice,
         'maxPrice' => $maxPrice,
@@ -107,7 +108,7 @@ class ShopController extends Controller
   public function show($id)
   {
     return view('shop.item', [
-      'shopItem' => ShopItemTest::where('id', $id)->first()
+      'product' => Products::where('id', $id)->first()
     ]);
   }
 }

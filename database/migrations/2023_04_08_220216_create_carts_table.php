@@ -13,14 +13,12 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('shop_item_tests', function (Blueprint $table) {
+    Schema::create('carts', function (Blueprint $table) {
       $table->id();
-      $table->string('name')->unique();
-      $table->integer('price');
-      $table->text('item_description');
-      $table->text('category');
-      $table->float('rating')->default(0);
-      $table->timestamps(); // Adds created_at and updated_at columns
+      $table->unsignedBigInteger('user_id');
+      $table->timestamps();
+
+      $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
     });
   }
 
@@ -31,6 +29,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('shop_item_tests');
+    Schema::dropIfExists('carts');
   }
 };
