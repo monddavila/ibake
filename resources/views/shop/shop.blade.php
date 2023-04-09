@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Bellaria - a Delicious Cakes and Bakery HTML Template | Shop</title>
+    <title>iBake - Tiers of Joy | Shop</title>
 
     @include('partials.head')
 </head>
