@@ -47,12 +47,17 @@ class CartsController extends Controller
     $product = Products::findOrFail($request->input('product_id'));
     $quantity = $request->input('quantity');
 
-    $cart = Carts::where('user_id', auth()->id())->first();
+    $cart = Carts::where('user_id', auth()->user())->first();
     if (!auth()->check()) {
       $message = 'You need to log in to add items to the cart. Please log in or create an account.';
       return redirect()->back()->with('message', $message);
+    } else {
+      $user = auth()->id();
+      $message = $user . $cart;
+      return redirect()->back()->with('message', auth()->id());
     }
-    $this->authorize('create-cart-item', $cart); // check if user is authorized to add a new cart item
+
+    $this->authorize('create', $cart); // check if user is authorized to add a new cart item
 
     if (!$cart) {
       $cart = new Carts();
@@ -66,7 +71,7 @@ class CartsController extends Controller
     $cartItem->quantity = $quantity;
     $cartItem->save();
 
-    return redirect()->back()->with('success', 'Item added to cart successfully!');
+    return redirect()->back()->with('message', 'Item added to cart successfully!');
   }
 
   /**

@@ -20,8 +20,8 @@ return new class extends Migration
       $table->integer('quantity');
       $table->timestamps();
 
-      $table->foreign('cart_id')->references('id')->on('carts_tests')->onDelete('cascade');
-      $table->foreign('product_id')->references('id')->on('shop_item_tests')->onDelete('cascade');
+      $table->foreign('cart_id')->references('id')->on('carts')->onDelete('cascade');
+      $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
     });
   }
 
