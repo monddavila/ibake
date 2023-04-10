@@ -76,6 +76,15 @@ class CartItemsController extends Controller
     //
   }
 
+  public function showCartWidget($cartId)
+  {
+    //
+    $items = CartItems::where('cart_id', $cartId)->take(2)->get();
+    $remaining = CartItems::count() - 2;
+
+    return [$items, $remaining];
+  }
+
   /**
    * Show the form for editing the specified resource.
    *
@@ -85,6 +94,8 @@ class CartItemsController extends Controller
   public function edit(CartItems $cartItems)
   {
     //
+
+
   }
 
   /**

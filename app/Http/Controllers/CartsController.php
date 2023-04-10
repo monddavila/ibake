@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCartsRequest;
 use App\Models\Carts;
 use App\Models\Products;
 use App\Http\Controllers\CartItemsController as CartItemsCtrl;
+use App\Models\CartItems;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,9 +42,7 @@ class CartsController extends Controller
 
     $cartItem = new CartItemsCtrl();
     $cartItem->index($cartId, $productId, $quantity);
-    // $cartItem->index($cartId, $productId, $quantity);
 
-    // Redirect back with a success message
     return redirect()->back()->with('message', 'Item added to cart successfully!');
   }
 
@@ -68,6 +67,7 @@ class CartsController extends Controller
    */
   public function store(Request $request)
   {
+    //
   }
 
 
@@ -105,7 +105,7 @@ class CartsController extends Controller
     //
   }
 
-  /**
+  /**.
    * Remove the specified resource from storage.
    *
    * @param  \App\Models\Carts  $carts
@@ -116,8 +116,25 @@ class CartsController extends Controller
     //
   }
 
+  public function userCartWidget()
+  {
+    $userCart = Carts::where('user_id', auth()->user()->id)
+      ->first();
+
+    $cartProductIds = CartItems::where('cart_id', $userCart->id)
+      ->pluck('product_id')
+      ->take(2)
+      ->toArray();
+
+    $cartProductIds = CartItems::where('cart_id', $userCart->id)
+      ->pluck('product_id')
+      ->take(2);
+
+    return $cartProductIds;
+  }
+
   /**
-   * Get the user that owns the cart.
+   * Implement datbase relationship
    */
   public function user()
   {
