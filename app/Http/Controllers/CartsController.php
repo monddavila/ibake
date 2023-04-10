@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Carts;
 use App\Http\Requests\StoreCartsRequest;
 use App\Http\Requests\UpdateCartsRequest;
 use App\Models\CartItems;
+use App\Models\Carts;
 use App\Models\Products;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartsController extends Controller
 {
@@ -16,9 +17,36 @@ class CartsController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
+
+  public function index(Request $request)
   {
     //
+    // Check if user is logged in, if not redirect back with an error message
+    if (!Auth::check()) {
+      $message = 'You need to log in to add items to the cart. Please log in or create an account.';
+      return redirect()->back()->with('message', $message);
+    }
+
+    // Get the user's cart, or create a new one if it doesn't exist
+    $cart = Carts::where('user_id', auth()->user()->id)->first();
+    if (!$cart) {
+      $userId = auth()->user()->id;
+      $cart = $this->create($userId);
+    }
+
+    // Get the product and quantity from the request
+    $cartId = $cart->id;
+    $productId = Products::findOrFail($request->input('product_id'))->id;
+    $quantity = intval($request->input('quantity'));
+
+    CartItems::create([
+      'cart_id' => $cartId,
+      'product_id' => $productId,
+      'quantity' => $quantity
+    ]);
+
+    // Redirect back with a success message
+    return redirect()->back()->with('message', 'Item added to cart successfully!');
   }
 
   /**
@@ -29,10 +57,9 @@ class CartsController extends Controller
   public function create($userId)
   {
     //
-    $cart = new Carts();
-    $cart->user_id = $userId;
-    $cart->save();
-    return $cart;
+    return Carts::create([
+      'user_id' => $userId,
+    ]);
   }
 
   /**
@@ -43,36 +70,8 @@ class CartsController extends Controller
    */
   public function store(Request $request)
   {
-    //
-    $product = Products::findOrFail($request->input('product_id'));
-    $quantity = $request->input('quantity');
-
-    $cart = Carts::where('user_id', auth()->user())->first();
-    if (!auth()->check()) {
-      $message = 'You need to log in to add items to the cart. Please log in or create an account.';
-      return redirect()->back()->with('message', $message);
-    } else {
-      $user = auth()->id();
-      $message = $user . $cart;
-      return redirect()->back()->with('message', auth()->id());
-    }
-
-    $this->authorize('create', $cart); // check if user is authorized to add a new cart item
-
-    if (!$cart) {
-      $cart = new Carts();
-      $cart->user_id = auth()->id();
-      $cart->save();
-    }
-
-    $cartItem = new CartItems(); // Change CartItemsTest
-    $cartItem->cart_id = $cart->id;
-    $cartItem->product_id = $product->id;
-    $cartItem->quantity = $quantity;
-    $cartItem->save();
-
-    return redirect()->back()->with('message', 'Item added to cart successfully!');
   }
+
 
   /**
    * Display the specified resource.

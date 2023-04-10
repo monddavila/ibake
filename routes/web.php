@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CartItemsController;
 use App\Http\Controllers\CartsController;
 use App\Http\Controllers\ShopController;
 
@@ -39,7 +40,7 @@ Route::group(['prefix' => 'shop'], function () {
   Route::get('/', [ShopController::class, 'index'])->name('shop');
   Route::post('/', [ShopController::class, 'index'])->name('shop');
   Route::get('/item/{id}', [ShopController::class, 'show'])->name('item');
-  Route::post('/add-to-cart', [CartsController::class, 'store'])->name('addToCart');
+  Route::middleware(['auth'])->post('/add-to-cart', [CartsController::class, 'index'])->name('addToCart');
 });
 
 

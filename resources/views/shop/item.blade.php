@@ -316,9 +316,9 @@
                                 </div>
 
                                 <!-- Cart Widget -->
-                                @auth
+                                @if (auth()->check() && auth()->user()->cart)
                                     @include('shop.cart-widget')
-                                @endauth
+                                @endif
 
                                 <!-- Tags Widget -->
                                 <div class="sidebar-widget tags-widget">

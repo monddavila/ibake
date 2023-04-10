@@ -8,79 +8,92 @@ use App\Http\Requests\UpdateCartItemsRequest;
 
 class CartItemsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+  /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+  public function index()
+  {
+    //
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreCartItemsRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreCartItemsRequest $request)
-    {
-        //
-    }
+  /**
+   * Show the form for creating a new resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function create($cartId, $productId, $quantity)
+  {
+    //
+    return CartItems::create(
+      [
+        'cart_id' => $cartId,
+        'product_id' => $productId,
+        'quantity' => $quantity,
+      ]
+    );
+  }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\CartItems  $cartItems
-     * @return \Illuminate\Http\Response
-     */
-    public function show(CartItems $cartItems)
-    {
-        //
-    }
+  /**
+   * Store a newly created resource in storage.
+   *
+   * @param  \App\Http\Requests\StoreCartItemsRequest  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function store($cartId, $productId, $quantity)
+  {
+    //
+    $cartItem = new CartItems();
+    $cartId->cart_id = $cartId;
+    $productId->product_id = $productId;
+    $quantity->quantity = $quantity;
+    $cartItem->save();
+  }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\CartItems  $cartItems
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(CartItems $cartItems)
-    {
-        //
-    }
+  /**
+   * Display the specified resource.
+   *
+   * @param  \App\Models\CartItems  $cartItems
+   * @return \Illuminate\Http\Response
+   */
+  public function show(CartItems $cartItems)
+  {
+    //
+  }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateCartItemsRequest  $request
-     * @param  \App\Models\CartItems  $cartItems
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateCartItemsRequest $request, CartItems $cartItems)
-    {
-        //
-    }
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param  \App\Models\CartItems  $cartItems
+   * @return \Illuminate\Http\Response
+   */
+  public function edit(CartItems $cartItems)
+  {
+    //
+  }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\CartItems  $cartItems
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(CartItems $cartItems)
-    {
-        //
-    }
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \App\Http\Requests\UpdateCartItemsRequest  $request
+   * @param  \App\Models\CartItems  $cartItems
+   * @return \Illuminate\Http\Response
+   */
+  public function update(UpdateCartItemsRequest $request, CartItems $cartItems)
+  {
+    //
+  }
+
+  /**
+   * Remove the specified resource from storage.
+   *
+   * @param  \App\Models\CartItems  $cartItems
+   * @return \Illuminate\Http\Response
+   */
+  public function destroy(CartItems $cartItems)
+  {
+    //
+  }
 }
