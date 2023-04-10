@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCartsRequest;
 use App\Http\Requests\UpdateCartsRequest;
-use App\Models\CartItems;
 use App\Models\Carts;
 use App\Models\Products;
+use App\Http\Controllers\CartItemsController as CartItemsCtrl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,11 +39,9 @@ class CartsController extends Controller
     $productId = Products::findOrFail($request->input('product_id'))->id;
     $quantity = intval($request->input('quantity'));
 
-    CartItems::create([
-      'cart_id' => $cartId,
-      'product_id' => $productId,
-      'quantity' => $quantity
-    ]);
+    $cartItem = new CartItemsCtrl();
+    $cartItem->index($cartId, $productId, $quantity);
+    // $cartItem->index($cartId, $productId, $quantity);
 
     // Redirect back with a success message
     return redirect()->back()->with('message', 'Item added to cart successfully!');

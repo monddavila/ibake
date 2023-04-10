@@ -14,9 +14,22 @@ class CartItemsController extends Controller
    * @return \Illuminate\Http\Response
    */
 
-  public function index()
+  public function index($cartId, $productId, $quantity)
   {
     //
+    $itemExists = CartItems::where('cart_id', $cartId)
+      ->where('product_id', $productId)
+      ->exists();
+
+    $item = CartItems::where('cart_id', $cartId)
+      ->where('product_id', $productId)
+      ->first();
+
+    if ($itemExists) {
+      return $this->update($item, $quantity);
+    } else {
+      return $this->create($cartId, $productId, $quantity);
+    }
   }
 
   /**
@@ -45,11 +58,11 @@ class CartItemsController extends Controller
   public function store($cartId, $productId, $quantity)
   {
     //
-    $cartItem = new CartItems();
-    $cartId->cart_id = $cartId;
-    $productId->product_id = $productId;
-    $quantity->quantity = $quantity;
-    $cartItem->save();
+    return CartItems::create([
+      'cart_id' => $cartId,
+      'product_id' => $productId,
+      'quantity' => $quantity
+    ]);
   }
 
   /**
@@ -81,9 +94,11 @@ class CartItemsController extends Controller
    * @param  \App\Models\CartItems  $cartItems
    * @return \Illuminate\Http\Response
    */
-  public function update(UpdateCartItemsRequest $request, CartItems $cartItems)
+  public function update($item, $quantity)
   {
     //
+    $newQuantity = $item->quantity + $quantity;
+    $item->update(['quantity' => $newQuantity]);
   }
 
   /**
