@@ -100,32 +100,31 @@ class ShopController extends Controller
 
     // Show items in cart widget
     $userCart = new CartsController();
-    $widgetProductIds = $userCart->userCartWidget();
-    $cartWidgetProducts = Products::wherein('id', $widgetProductIds)->get();
-    $cartItemCount = Products::wherein('id', $widgetProductIds)->count() - 2;
+    $userCartWidget = $userCart->userCartWidget();
 
     // Render the shop view with the filtered and sorted shop items
     return view('shop.shop', compact('products', 'sortOrder'))
       ->with([
         'minPrice' => $minPrice,
         'maxPrice' => $maxPrice,
-        'cartWidgetProducts' => $cartWidgetProducts,
-        'cartItemCount' => $cartItemCount
+        'userCartWidget' => $userCartWidget->take(2),
+        'userCartCount' => $userCartWidget->count()
       ]);
   }
 
 
   public function show($id)
   {
+    // New Cart Instance
     $userCart = new CartsController();
-    $widgetProductIds = $userCart->userCartWidget();
-    $cartWidgetProducts = Products::wherein('id', $widgetProductIds)->get();
-    $cartItemCount = Products::wherein('id', $widgetProductIds)->count() - 2;
+    // Show 
+    $userCartWidget = $userCart->userCartWidget();
+
     return view('shop.item', [
       'product' => Products::where('id', $id)->first()
     ])->with([
-      'cartWidgetProducts' => $cartWidgetProducts,
-      'cartItemCount' => $cartItemCount
+      'userCartWidget' => $userCartWidget->take(2),
+      'userCartCount' => $userCartWidget->count()
     ]);
   }
 }

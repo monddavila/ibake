@@ -21,7 +21,6 @@ class CartsController extends Controller
 
   public function index(Request $request)
   {
-    //
     // Check if user is logged in, if not redirect back with an error message
     if (!Auth::check()) {
       $message = 'You need to log in to add items to the cart. Please log in or create an account.';
@@ -118,19 +117,15 @@ class CartsController extends Controller
 
   public function userCartWidget()
   {
-    $userCart = Carts::where('user_id', auth()->user()->id)
-      ->first();
+    // Get the user's cart Id
+    $cartId = Carts::where('user_id', auth()->user()->id)->first()->id;
+    // Get product name, price, and quantity of the user's cart
+    $userCart = CartItems::where('cart_id', $cartId)
+      ->join('products', 'cart_items.product_id', '=', 'products.id')
+      ->select('cart_items.quantity', 'products.name', 'products.price')
+      ->get();
 
-    $cartProductIds = CartItems::where('cart_id', $userCart->id)
-      ->pluck('product_id')
-      ->take(2)
-      ->toArray();
-
-    $cartProductIds = CartItems::where('cart_id', $userCart->id)
-      ->pluck('product_id')
-      ->take(2);
-
-    return $cartProductIds;
+    return $userCart;
   }
 
   /**

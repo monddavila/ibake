@@ -3,14 +3,13 @@
         <h3 class="widget-title">Cart</h3>
 
         <div class="shopping-cart">
-            {{-- <h1>{{ $cartWidget }}</h1> --}}
             <ul class="shopping-cart-items">
-                @foreach ($cartWidgetProducts as $widgetProduct)
+                @foreach ($userCartWidget as $widgetItem)
                     <li class="cart-item">
                         <img src="https://via.placeholder.com/300x300" alt="#" class="thumb" />
-                        <span class="item-name">{{ $widgetProduct->name }}</span>
-                        <span class="item-quantity">1 x <span class="item-amount">Php
-                                {{ $widgetProduct->price }}</span></span>
+                        <span class="item-name">{{ $widgetItem->name }}</span>
+                        <span class="item-quantity">{{ $widgetItem->quantity }} x <span class="item-amount">Php
+                                {{ $widgetItem->price }}</span></span>
                         <a href="shop-single.html" class="product-detail"></a>
                         <button class="remove-item"><span class="fa fa-times"></span></button>
                     </li>
