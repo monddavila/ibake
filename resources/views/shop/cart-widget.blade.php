@@ -18,7 +18,7 @@
 
             <div class="cart-footer">
                 {{-- <div class="shopping-cart-total">There are {{ cartItems->remaining }} items more in the cart.</div> --}}
-                <a href="cart.html" class="theme-btn">View Cart</a>
+                <a href="{{ route('showCart') }}" class="theme-btn">View Cart</a>
                 <a href="checkout.html" class="theme-btn">Checkout</a>
             </div>
         </div>

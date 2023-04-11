@@ -21,28 +21,6 @@ class CartsController extends Controller
 
   public function index(Request $request)
   {
-    // Check if user is logged in, if not redirect back with an error message
-    if (!Auth::check()) {
-      $message = 'You need to log in to add items to the cart. Please log in or create an account.';
-      return redirect()->back()->with('message', $message);
-    }
-
-    // Get the user's cart, or create a new one if it doesn't exist
-    $cart = Carts::where('user_id', auth()->user()->id)->first();
-    if (!$cart) {
-      $userId = auth()->user()->id;
-      $cart = $this->create($userId);
-    }
-
-    // Get the product and quantity from the request
-    $cartId = $cart->id;
-    $productId = Products::findOrFail($request->input('product_id'))->id;
-    $quantity = intval($request->input('quantity'));
-
-    $cartItem = new CartItemsCtrl();
-    $cartItem->index($cartId, $productId, $quantity);
-
-    return redirect()->back()->with('message', 'Item added to cart successfully!');
   }
 
   /**
@@ -67,6 +45,28 @@ class CartsController extends Controller
   public function store(Request $request)
   {
     //
+    // Check if user is logged in, if not redirect back with an error message
+    if (!Auth::check()) {
+      $message = 'You need to log in to add items to the cart. Please log in or create an account.';
+      return redirect()->back()->with('message', $message);
+    }
+
+    // Get the user's cart, or create a new one if it doesn't exist
+    $cart = Carts::where('user_id', auth()->user()->id)->first();
+    if (!$cart) {
+      $userId = auth()->user()->id;
+      $cart = $this->create($userId);
+    }
+
+    // Get the product and quantity from the request
+    $cartId = $cart->id;
+    $productId = Products::findOrFail($request->input('product_id'))->id;
+    $quantity = intval($request->input('quantity'));
+
+    $cartItem = new CartItemsCtrl();
+    $cartItem->index($cartId, $productId, $quantity);
+
+    return redirect()->back()->with('message', 'Item added to cart successfully!');
   }
 
 
@@ -79,6 +79,10 @@ class CartsController extends Controller
   public function show(Carts $carts)
   {
     //
+    $cartItems = $this->userCartWidget();
+    return view('shop.shopping-cart')->with([
+      'cartItems' => $cartItems
+    ]);
   }
 
   /**
@@ -127,6 +131,8 @@ class CartsController extends Controller
 
     return $userCart;
   }
+
+
 
   /**
    * Implement datbase relationship

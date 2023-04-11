@@ -69,7 +69,7 @@
                                 @auth
                                     <ul>
                                         <li><a href="{{ route('shop') }}">Shop</a></li>
-                                        <li><a href="shopping-cart.html">Cart</a></li>
+                                        <li><a href="{{ route('showCart') }}">Cart</a></li>
                                         <li><a href="checkout.html">Checkout</a></li>
                                         <li><a href="login.html">My account</a></li>
                                     </ul>

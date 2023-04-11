@@ -40,7 +40,11 @@ Route::group(['prefix' => 'shop'], function () {
   Route::get('/', [ShopController::class, 'index'])->name('shop');
   Route::post('/', [ShopController::class, 'index'])->name('shop');
   Route::get('/item/{id}', [ShopController::class, 'show'])->name('item');
-  Route::middleware(['auth'])->post('/add-to-cart', [CartsController::class, 'index'])->name('addToCart');
+});
+
+Route::group(['prefix' => 'cart'], function () {
+  Route::middleware(['auth'])->get('/', [CartsController::class, 'show'])->name('showCart');
+  Route::middleware(['auth'])->post('/add-to-cart', [CartsController::class, 'store'])->name('addToCart');
 });
 
 
