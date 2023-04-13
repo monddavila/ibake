@@ -4,12 +4,12 @@
 
         <div class="shopping-cart">
             <ul class="shopping-cart-items">
-                @foreach ($userCartWidget as $widgetItem)
+                @foreach ($userCart as $userCartItem)
                     <li class="cart-item">
                         <img src="https://via.placeholder.com/300x300" alt="#" class="thumb" />
-                        <span class="item-name">{{ $widgetItem->name }}</span>
-                        <span class="item-quantity">{{ $widgetItem->quantity }} x <span class="item-amount">Php
-                                {{ $widgetItem->price }}</span></span>
+                        <span class="item-name">{{ $userCartItem->name }}</span>
+                        <span class="item-quantity">{{ $userCartItem->quantity }} x <span class="item-amount">Php
+                                {{ $userCartItem->price }}</span></span>
                         <a href="shop-single.html" class="product-detail"></a>
                         <button class="remove-item"><span class="fa fa-times"></span></button>
                     </li>

@@ -76,10 +76,10 @@ class CartsController extends Controller
    * @param  \App\Models\Carts  $carts
    * @return \Illuminate\Http\Response
    */
-  public function show(Carts $carts)
+  public function show()
   {
     //
-    $cartItems = $this->userCartWidget();
+    $cartItems = $this->userCart();
     return view('shop.shopping-cart')->with([
       'cartItems' => $cartItems
     ]);
@@ -119,14 +119,20 @@ class CartsController extends Controller
     //
   }
 
-  public function userCartWidget()
+  public function userCart()
   {
     // Get the user's cart Id
     $cartId = Carts::where('user_id', auth()->user()->id)->first()->id;
     // Get product name, price, and quantity of the user's cart
     $userCart = CartItems::where('cart_id', $cartId)
       ->join('products', 'cart_items.product_id', '=', 'products.id')
-      ->select('cart_items.quantity', 'products.name', 'products.price')
+      ->select(
+        'cart_items.cart_id',
+        'cart_items.product_id',
+        'cart_items.quantity',
+        'products.name',
+        'products.price'
+      )
       ->get();
 
     return $userCart;

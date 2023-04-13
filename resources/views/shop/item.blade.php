@@ -318,7 +318,7 @@
                                 </div>
 
                                 <!-- Cart Widget -->
-                                @if (auth()->check() && auth()->user()->cart)
+                                @if (auth()->check() && $hasCart)
                                     @include('shop.cart-widget')
                                 @endif
 

@@ -61,10 +61,18 @@
                                                     class="qty" name="quantityty" value="{{ $cartItem->quantity }}">
                                             </div>
                                         </td>
-                                        <td class="product-subtotal"><span
-                                                class="amount">{{ $cartItem->quantity * $cartItem->price }}</span></td>
-                                        <td class="product-remove"> <a href="#" class="remove"><span
-                                                    class="fa fa-times"></span></a></td>
+                                        <td class="product-subtotal"><span class="amount">Php
+                                                {{ $cartItem->quantity * $cartItem->price }}</span></td>
+                                        <td class="product-remove">
+                                            <form
+                                                action="{{ route('removeItem', [$cartItem->product_id, $cartItem->cart_id]) }}"
+                                                method="post">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="remove"><span
+                                                        class="fa fa-times"></span></button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

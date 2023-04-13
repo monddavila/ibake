@@ -56,7 +56,9 @@ class ShopController extends Controller
     }
 
 
-    // Check if there is a GET request with orderby parameter
+    // Check if there is a GET request with
+    // orderby parameter and sorts the
+    // items accordingly
     if (request()->has('sort-order')) {
       switch (request('sort-order')) {
           /* case 'popularity':
@@ -98,33 +100,78 @@ class ShopController extends Controller
       ->orderBy($orderBy, $sortOrder)
       ->get();
 
-    // Show items in cart widget
-    $userCart = new CartsController();
-    $userCartWidget = $userCart->userCartWidget();
+    // Display for users that are not logged in
+    if (!auth()->check()) {
+      return view('shop.shop', compact('products'))
+        ->with([
+          'minPrice' => $minPrice,
+          'maxPrice' => $maxPrice,
+        ]);
+    }
+
+    // Display for users are not logged in
+    // but have no cart items
+    // True = user has cart items
+    // False = user has no cart items
+    $hasCart = Carts::where('user_id', auth()->user()->id)->exists();
+    if (!$hasCart) {
+      return view('shop.shop', compact('products', 'sortOrder'))
+        ->with([
+          'minPrice' => $minPrice,
+          'maxPrice' => $maxPrice,
+          'hasCart' => $hasCart
+        ]);
+    }
+
+    // Display for users are logged in
+    // and have cart items
+    $cart = new CartsController();
+    $userCart = $cart->userCart();
 
     // Render the shop view with the filtered and sorted shop items
     return view('shop.shop', compact('products', 'sortOrder'))
       ->with([
         'minPrice' => $minPrice,
         'maxPrice' => $maxPrice,
-        'userCartWidget' => $userCartWidget->take(2),
-        'userCartCount' => $userCartWidget->count()
+        'hasCart' => $hasCart,
+        'userCart' => $userCart->take(2),
+        'userCartCount' => $userCart->count()
       ]);
   }
 
 
   public function show($id)
   {
-    // New Cart Instance
-    $userCart = new CartsController();
-    // Show 
-    $userCartWidget = $userCart->userCartWidget();
+    // Display for users that are not logged in
+    if (!auth()->check()) {
+      return view('shop.item')
+        ->with([
+          'product' => Products::where('id', $id)->first()
+        ]);
+    }
 
-    return view('shop.item', [
-      'product' => Products::where('id', $id)->first()
-    ])->with([
-      'userCartWidget' => $userCartWidget->take(2),
-      'userCartCount' => $userCartWidget->count()
-    ]);
+    // Display for users are not logged in
+    // but have no cart items
+    $hasCart = Carts::where('user_id', auth()->user()->id)->exists();
+    if (!$hasCart) {
+      return view('shop.item',)
+        ->with([
+          'product' => Products::where('id', $id)->first(),
+          'hasCart' => $hasCart
+        ]);
+    }
+
+    // Display for users are logged in
+    // and have cart items
+    $cart = new CartsController();
+    $userCart = $cart->userCart();
+
+    return view('shop.item')
+      ->with([
+        'product' => Products::where('id', $id)->first(),
+        'hasCart' => $hasCart,
+        'userCart' => $userCart->take(2),
+        'userCartCount' => $userCart->count()
+      ]);
   }
 }
