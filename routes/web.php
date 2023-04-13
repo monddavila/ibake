@@ -6,6 +6,8 @@ use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CartItemsController;
+use App\Http\Controllers\CartsController;
 use App\Http\Controllers\ShopController;
 
 /*
@@ -33,9 +35,19 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('/customize', [HomeController::class, 'customize'])->name('customize');
 Route::get('/portfolio', [HomeController::class, 'portfolio'])->name('portfolio');
 route::get('/redirect', [HomeController::class, 'redirect'])->name('redirect');
+
 Route::group(['prefix' => 'shop'], function () {
-  Route::get('/', [ShopController::class, 'shop'])->name('shop');
-  Route::get('/item', [ShopController::class, 'item'])->name('item');
+  Route::get('/', [ShopController::class, 'index'])->name('shop');
+  Route::post('/', [ShopController::class, 'index'])->name('shop');
+  Route::get('/item/{id}', [ShopController::class, 'show'])->name('item');
+});
+
+Route::group(['prefix' => 'cart'], function () {
+  Route::middleware(['auth'])->get('/', [CartsController::class, 'show'])->name('showCart');
+  Route::middleware(['auth'])->post('/add-to-cart', [CartsController::class, 'store'])->name('addToCart');
+  Route::middleware(['auth'])
+    ->delete('/removeItem/{$productId}/cart/{$cartId}', [CartItemsController::class, 'destroy'])
+    ->name('removeItem');
 });
 
 
@@ -43,6 +55,7 @@ Route::group(['prefix' => 'shop'], function () {
  * Login and Register Routes
  */
 Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/logout', [LoginController::class, 'logout'])->name('loout');
 Route::get('/register', [LoginController::class, 'create'])->name('register')->withoutMiddleware('auth');
 // For storing new account to database
 Route::post('/register', [LoginController::class, 'store'])->name('register.store');

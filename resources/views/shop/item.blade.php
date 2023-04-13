@@ -25,11 +25,13 @@
                 <ul class="page-breadcrumb">
                     <li><a href="{{ route('home') }}">home</a></li>
                     <li><a href="{{ route('shop') }}">Products</a></li>
-                    <li>Birthday Cake</li>
+                    <li>{{ $product->name }}</li>
                 </ul>
             </div>
         </section>
         <!--End Page Title-->
+
+
 
         <!--Sidebar Page Container-->
         <div class="sidebar-page-container">
@@ -52,7 +54,7 @@
                                         </div>
                                         <div class="info-column col-md-6 col-sm-12">
                                             <div class="details-header">
-                                                <h4>Birthday Cake</h4>
+                                                <h4>{{ $product->name }}</h4>
                                                 <div class="rating">
                                                     <span class="fa fa-star"></span>
                                                     <span class="fa fa-star"></span>
@@ -61,20 +63,29 @@
                                                     <span class="fa fa-star"></span>
                                                 </div>
                                                 <a class="reviews" href="#">(2 Customer Reviews)</a>
-                                                <div class="item-price">$84.00</div>
-                                                <div class="text">Accumsan lectus, consectetuer et sagittis et
-                                                    commodo, massa et, sed facilisi mi, sit diam. Ultrices facilisi
-                                                    convallis nullam duis. Aliquam lacinia orci convallis erat ac, vitae
-                                                    neque in class.</div>
+                                                <div class="item-price">Php {{ $product->price }}</div>
+                                                {{-- Short item description beside item image --}}
+                                                <div class="text">{{ $product->item_description }}</div>
                                             </div>
 
                                             <div class="other-options clearfix">
-                                                <div class="item-quantity">Quantity <input class="qty" type="number"
-                                                        value="1" name="quantity"></div>
-                                                <button type="button" class="theme-btn add-to-cart"><span
-                                                        class="btn-title">Add To Cart</span></button>
+                                                <form action="{{ route('addToCart') }}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                    <div class="item-quantity">Quantity <input class="quantity"
+                                                            type="number" value="1" name="quantity"></div>
+                                                    <button type="submit" class="theme-btn add-to-cart"><span
+                                                            class="btn-title">Add To Cart</span></button>
+                                                </form>
+                                                @if (session('message'))
+                                                    <div class="alert alert-danger">
+                                                        {{ session('message') }}
+                                                    </div>
+                                                @endif
+
                                                 <ul class="product-meta">
-                                                    <li class="posted_in">Category: <a href="#">Cake</a></li>
+                                                    <li class="posted_in">Category: <a
+                                                            href="#">{{ $product->category }}</a></li>
                                                     <li class="tagged_as">Tag: <a href="#">Nuts</a></li>
                                                 </ul>
                                             </div>
@@ -101,17 +112,8 @@
                                             <div class="tab" id="prod-details">
                                                 <h2 class="title">Descripton</h2>
                                                 <div class="content">
-                                                    <p>Accumsan lectus, consectetuer et sagittis et commodo, massa et,
-                                                        sed facilisi mi, sit diam. Ultrices facilisi convallis nullam
-                                                        duis. Aliquam lacinia orci convallis erat ac, vitae neque in
-                                                        class. Suscipit vel, rhoncus est quis nibh netus, aenean
-                                                        eleifend et viverra, neque accumsan maecenas nec in. Morbi
-                                                        bibendum non ullamcorper aliquam natoque, tortor dui, vestibulum
-                                                        vulputate pulvinar iaculis magna lectus ut, facilisis id mollis
-                                                        risus lorem. Massa nulla cum nunc litora ac amet, accumsan
-                                                        faucibus integer, vestibulum turpis cras, ante imperdiet
-                                                        tincidunt accumsan, vivamus lacinia bibendum augue maiores
-                                                        mauris.</p>
+                                                    {{-- Long item description ner review tab --}}
+                                                    <p>{{ $product->item_description }}</p>
                                                 </div>
                                             </div>
 
@@ -316,9 +318,9 @@
                                 </div>
 
                                 <!-- Cart Widget -->
-                                @auth
+                                @if (auth()->check() && $hasCart)
                                     @include('shop.cart-widget')
-                                @endauth
+                                @endif
 
                                 <!-- Tags Widget -->
                                 <div class="sidebar-widget tags-widget">

@@ -25,7 +25,6 @@
         @include('partials.mainslider')
 
 
-
         <!-- Services Section -->
         <section class="services-section" style="background-image: url(images/background/background-1.jpg);">
             <div class="auto-container">
@@ -46,11 +45,13 @@
                                         </path>
                                     </svg></div>
                                 <!-- cake img -->
-                                <figure class="image"><img src="{{ asset('images/resource/custom.png') }}" alt="Custom Cake">
+                                <figure class="image"><img src="{{ asset('images/resource/custom.png') }}"
+                                        alt="Custom Cake">
                                 </figure>
                             </div>
                             <h3>Custom Cakes</h3>
-                            <p>Personalized and uniquely designed cakes that cater to specific preferences, occasions, and themes.</p>
+                            <p>Personalized and uniquely designed cakes that cater to specific preferences, occasions,
+                                and themes.</p>
                         </div>
                     </div>
 
@@ -64,7 +65,8 @@
                                         </path>
                                     </svg></div>
                                 <!-- cake img -->
-                                <figure class="image"><img src="{{ asset('images/resource/occasion.png') }}" alt="Occasion Cake">
+                                <figure class="image"><img src="{{ asset('images/resource/occasion.png') }}"
+                                        alt="Occasion Cake">
                                 </figure>
                             </div>
                             <h3>Occasion Cakes</h3>
@@ -82,11 +84,13 @@
                                         </path>
                                     </svg></div>
                                 <!-- cake img -->
-                                <figure class="image"><img src="{{ asset('images/resource/wedding.png') }}" alt="Wedding Cake">
+                                <figure class="image"><img src="{{ asset('images/resource/wedding.png') }}"
+                                        alt="Wedding Cake">
                                 </figure>
                             </div>
                             <h3>Wedding Cakes</h3>
-                            <p>Expertly designed and beautifully crafted to add an elegant and memorable touch to your special day.</p>
+                            <p>Expertly designed and beautifully crafted to add an elegant and memorable touch to your
+                                special day.</p>
                         </div>
                     </div>
 
@@ -100,11 +104,13 @@
                                         </path>
                                     </svg></div>
                                 <!-- cake img -->
-                                <figure class="image"><img src="{{ asset('images/resource/small.png') }}" alt="Small Cake">
+                                <figure class="image"><img src="{{ asset('images/resource/small.png') }}"
+                                        alt="Small Cake">
                                 </figure>
                             </div>
                             <h3>Small Cakes</h3>
-                            <p>Perfect for intimate gatherings or as a delightful treat, offering a burst of flavors in every bite.</p>
+                            <p>Perfect for intimate gatherings or as a delightful treat, offering a burst of flavors in
+                                every bite.</p>
                         </div>
                     </div>
 
@@ -122,7 +128,8 @@
                                 </figure>
                             </div>
                             <h3>Tub Cakes</h3>
-                            <p>Delightful indulgence, available in a variety of flavors to satisfy any sweet craving.</p>
+                            <p>Delightful indulgence, available in a variety of flavors to satisfy any sweet craving.
+                            </p>
                         </div>
                     </div>
 
@@ -136,7 +143,8 @@
                                         </path>
                                     </svg></div>
                                 <!-- cake img -->
-                                <figure class="image"><img src="{{ asset('images/resource/cakepop.png') }}" alt="Cake Pop">
+                                <figure class="image"><img src="{{ asset('images/resource/cakepop.png') }}"
+                                        alt="Cake Pop">
                                 </figure>
                             </div>
                             <h3>Cake Pops</h3>
@@ -154,11 +162,13 @@
                                         </path>
                                     </svg></div>
                                 <!-- cake img -->
-                                <figure class="image"><img src="{{ asset('images/resource/cupcake.png') }}" alt="Cupcake">
+                                <figure class="image"><img src="{{ asset('images/resource/cupcake.png') }}"
+                                        alt="Cupcake">
                                 </figure>
                             </div>
                             <h3>Cupcakes</h3>
-                            <p>Perfect bite-sized treats for any occasion, made with high-quality ingredients and decorated to perfection.</p>
+                            <p>Perfect bite-sized treats for any occasion, made with high-quality ingredients and
+                                decorated to perfection.</p>
                         </div>
                     </div>
 
@@ -172,7 +182,8 @@
                                         </path>
                                     </svg></div>
                                 <!-- cake img -->
-                                <figure class="image"><img src="{{ asset('images/resource/cookies.png') }}" alt="Cookies">
+                                <figure class="image"><img src="{{ asset('images/resource/cookies.png') }}"
+                                        alt="Cookies">
                                 </figure>
                             </div>
                             <h3>Cookies</h3>
@@ -190,11 +201,13 @@
                                         </path>
                                     </svg></div>
                                 <!-- cake img -->
-                                <figure class="image"><img src="{{ asset('images/resource/dessert.png') }}" alt="Dessert">
+                                <figure class="image"><img src="{{ asset('images/resource/dessert.png') }}"
+                                        alt="Dessert">
                                 </figure>
                             </div>
                             <h3>Desserts</h3>
-                            <p>Mouthwatering desserts made with the freshest ingredients and highest quality standards.</p>
+                            <p>Mouthwatering desserts made with the freshest ingredients and highest quality standards.
+                            </p>
                         </div>
                     </div>
 
@@ -224,9 +237,13 @@
                         <div class="icon icon_heart"></div>
                     </div>
                     <h1>Customize Cake</h1>
-                    <p>With our cutting-edge "Customize Your Cake" feature, you can create a personalized cake that perfectly fits your occasion and taste, right from the comfort of your own device. Design your dream cake with ease and let us bring it to life with our high-quality ingredients and expert craftsmanship. Order now and experience the ultimate level of customization with our bakery.</p>
+                    <p>With our cutting-edge "Customize Your Cake" feature, you can create a personalized cake that
+                        perfectly fits your occasion and taste, right from the comfort of your own device. Design your
+                        dream cake with ease and let us bring it to life with our high-quality ingredients and expert
+                        craftsmanship. Order now and experience the ultimate level of customization with our bakery.</p>
                     <div class="btn-box">
-                        <a href="#" class="theme-btn btn-style-one large"><span></span>Create Your Own<span></span></a>
+                        <a href="#" class="theme-btn btn-style-one large"><span></span>Create Your
+                            Own<span></span></a>
                     </div>
                 </div>
             </div>
