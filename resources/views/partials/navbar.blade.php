@@ -6,7 +6,7 @@
     <div class="main-box">
         <div class="menu-box">
             <div class="logo"><a href="{{ route('home') }}"><img src="{{ asset('images/ibake-logo/logo-small.png') }}"
-                        alt="" title=""></a>
+                        alt="ibake" title="ibake"></a>
             </div>
 
             <!--Nav Box-->
@@ -104,6 +104,8 @@
                 </div>
                 <!-- Login/Register section-->
             </div>
+        </div>    
+    </div>       
             <!-- Nav Box End -->
 
             <!-- Sticky Header  -->
