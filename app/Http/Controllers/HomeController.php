@@ -36,9 +36,19 @@ class HomeController extends Controller
     return view('pages.customize');
   }
 
+  function gallery()
+  {
+    return view('pages.gallery');
+  }
+
   function portfolio()
   {
     return view('pages.portfolio');
+  }
+
+  function blog()
+  {
+    return view('pages.blog');
   }
 
 

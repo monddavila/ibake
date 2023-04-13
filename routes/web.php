@@ -33,7 +33,9 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/chef', [HomeController::class, 'chef'])->name('chef');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('/customize', [HomeController::class, 'customize'])->name('customize');
+Route::get('/gallery', [HomeController::class, 'gallery'])->name('gallery');
 Route::get('/portfolio', [HomeController::class, 'portfolio'])->name('portfolio');
+Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
 route::get('/redirect', [HomeController::class, 'redirect'])->name('redirect');
 
 Route::group(['prefix' => 'shop'], function () {
