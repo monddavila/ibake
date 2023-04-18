@@ -49,32 +49,41 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($cartItems as $cartItem)
+                                @if (!$cartItems)
                                     <tr class="cart-item">
-                                        <td class="product-thumbnail"><a href="shop-single.html"><img
-                                                    src="https://via.placeholder.com/300x300" alt=""></a></td>
-                                        <td class="product-name"><a href="shop-single.html">{{ $cartItem->name }}</a>
-                                        </td>
-                                        <td class="product-price">Php {{ $cartItem->price }}</td>
-                                        <td class="product-quantity">
-                                            <div class="quantity"><label>Quantity</label><input type="number"
-                                                    class="qty" name="quantityty" value="{{ $cartItem->quantity }}">
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal"><span class="amount">Php
-                                                {{ $cartItem->quantity * $cartItem->price }}</span></td>
-                                        <td class="product-remove">
-                                            <form
-                                                action="{{ route('removeItem', [$cartItem->product_id, $cartItem->cart_id]) }}"
-                                                method="post">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button type="submit" class="remove"><span
-                                                        class="fa fa-times"></span></button>
-                                            </form>
-                                        </td>
+                                        <h1>No Items yet</h1>
                                     </tr>
-                                @endforeach
+                                @else
+                                    @foreach ($cartItems as $cartItem)
+                                        <tr class="cart-item">
+                                            <td class="product-thumbnail"><a href="shop-single.html"><img
+                                                        src="https://via.placeholder.com/300x300" alt=""></a>
+                                            </td>
+                                            <td class="product-name"><a
+                                                    href="shop-single.html">{{ $cartItem->name }}</a>
+                                            </td>
+                                            <td class="product-price">Php {{ $cartItem->price }}</td>
+                                            <td class="product-quantity">
+                                                <div class="quantity"><label>Quantity</label><input type="number"
+                                                        class="qty" name="quantityty"
+                                                        value="{{ $cartItem->quantity }}">
+                                                </div>
+                                            </td>
+                                            <td class="product-subtotal"><span class="amount">Php
+                                                    {{ $cartItem->quantity * $cartItem->price }}</span></td>
+                                            <td class="product-remove">
+                                                <form
+                                                    action="{{ route('removeItem', [$cartItem->product_id, $cartItem->cart_id]) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="remove"><span
+                                                            class="fa fa-times"></span></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>

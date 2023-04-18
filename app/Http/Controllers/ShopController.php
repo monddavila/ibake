@@ -43,6 +43,9 @@ class ShopController extends Controller
     // Get the price value from the session variable
     [$minPrice, $maxPrice, $orderBy, $sortOrder] = $this->getSessionData();
 
+    // Product Tags
+    $productTags = Products::select('category')->distinct()->get();
+
     // Reset Filter
     if ($request->has('view-all')) {
       session()->forget(['minPrice', 'maxPrice', 'orderBy', 'sortOrder']);
@@ -50,6 +53,7 @@ class ShopController extends Controller
       $products = DB::table('products')->get();
       return view('shop.shop', compact('products'))
         ->with([
+          'productTags' => $productTags,
           'minPrice' => $minPrice,
           'maxPrice' => $maxPrice,
         ]);
@@ -104,6 +108,7 @@ class ShopController extends Controller
     if (!auth()->check()) {
       return view('shop.shop', compact('products'))
         ->with([
+          'productTags' => $productTags,
           'minPrice' => $minPrice,
           'maxPrice' => $maxPrice,
         ]);
@@ -117,6 +122,7 @@ class ShopController extends Controller
     if (!$hasCart) {
       return view('shop.shop', compact('products', 'sortOrder'))
         ->with([
+          'productTags' => $productTags,
           'minPrice' => $minPrice,
           'maxPrice' => $maxPrice,
           'hasCart' => $hasCart
@@ -131,6 +137,7 @@ class ShopController extends Controller
     // Render the shop view with the filtered and sorted shop items
     return view('shop.shop', compact('products', 'sortOrder'))
       ->with([
+        'productTags' => $productTags,
         'minPrice' => $minPrice,
         'maxPrice' => $maxPrice,
         'hasCart' => $hasCart,
@@ -142,10 +149,13 @@ class ShopController extends Controller
 
   public function show($id)
   {
+    // Product Tags
+    $productTags = Products::select('category')->distinct()->get();
     // Display for users that are not logged in
     if (!auth()->check()) {
       return view('shop.item')
         ->with([
+          'productTags' => $productTags,
           'product' => Products::where('id', $id)->first()
         ]);
     }
@@ -156,6 +166,7 @@ class ShopController extends Controller
     if (!$hasCart) {
       return view('shop.item',)
         ->with([
+          'productTags' => $productTags,
           'product' => Products::where('id', $id)->first(),
           'hasCart' => $hasCart
         ]);
@@ -168,6 +179,7 @@ class ShopController extends Controller
 
     return view('shop.item')
       ->with([
+        'productTags' => $productTags,
         'product' => Products::where('id', $id)->first(),
         'hasCart' => $hasCart,
         'userCart' => $userCart->take(2),

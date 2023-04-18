@@ -118,7 +118,7 @@ class CartItemsController extends Controller
    * @param  \App\Models\CartItems  $cartItems
    * @return \Illuminate\Http\Response
    */
-  public function destroy($cartId, $productId)
+  public function destroy($productId, $cartId)
   {
     //
     CartItems::where('cart_id', $cartId)

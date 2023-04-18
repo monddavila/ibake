@@ -46,7 +46,7 @@ Route::group(['prefix' => 'cart'], function () {
   Route::middleware(['auth'])->get('/', [CartsController::class, 'show'])->name('showCart');
   Route::middleware(['auth'])->post('/add-to-cart', [CartsController::class, 'store'])->name('addToCart');
   Route::middleware(['auth'])
-    ->delete('/removeItem/{$productId}/cart/{$cartId}', [CartItemsController::class, 'destroy'])
+    ->delete('/remove/{productId}/cart/{cartId}', [CartItemsController::class, 'destroy'])
     ->name('removeItem');
 });
 
