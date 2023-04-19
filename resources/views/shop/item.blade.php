@@ -326,15 +326,9 @@
                                 <div class="sidebar-widget tags-widget">
                                     <h3 class="widget-title">Tags</h3>
                                     <ul class="tag-list clearfix">
-                                        <li><a href="#">Bars</a></li>
-                                        <li><a href="#">Caramels</a></li>
-                                        <li><a href="#">Chocolate</a></li>
-                                        <li><a href="#">Fruit</a></li>
-                                        <li><a href="#">Nuts</a></li>
-                                        <li><a href="#">Toffees</a></li>
-                                        <li><a href="#">Top Rated</a></li>
-                                        <li><a href="#">Truffles</a></li>
-                                    </ul>
+                                        @foreach ($productTags as $productTag)
+                                            <li><a href="#">{{ $productTag->category }}</a></li>
+                                        @endforeach
                                 </div>
                             </div>
                         </aside>

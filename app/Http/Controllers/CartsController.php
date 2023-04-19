@@ -79,9 +79,21 @@ class CartsController extends Controller
   public function show()
   {
     //
+    if (!Carts::where('user_id', auth()->user()->id)->exists()) {
+      return view('shop.shopping-cart')->with([
+        'cartItems' => false
+      ]);
+    }
+
     $cartItems = $this->userCart();
+    $totalPrice = 0;
+    foreach ($cartItems as $cartItem) {
+      # code...
+      $totalPrice += ($cartItem->price * $cartItem->quantity);
+    }
     return view('shop.shopping-cart')->with([
-      'cartItems' => $cartItems
+      'cartItems' => $cartItems,
+      'totalPrice' => $totalPrice
     ]);
   }
 

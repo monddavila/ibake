@@ -49,32 +49,48 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($cartItems as $cartItem)
+                                @if (!$cartItems)
                                     <tr class="cart-item">
-                                        <td class="product-thumbnail"><a href="shop-single.html"><img
-                                                    src="https://via.placeholder.com/300x300" alt=""></a></td>
-                                        <td class="product-name"><a href="shop-single.html">{{ $cartItem->name }}</a>
-                                        </td>
-                                        <td class="product-price">Php {{ $cartItem->price }}</td>
-                                        <td class="product-quantity">
-                                            <div class="quantity"><label>Quantity</label><input type="number"
-                                                    class="qty" name="quantityty" value="{{ $cartItem->quantity }}">
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal"><span class="amount">Php
-                                                {{ $cartItem->quantity * $cartItem->price }}</span></td>
-                                        <td class="product-remove">
-                                            <form
-                                                action="{{ route('removeItem', [$cartItem->product_id, $cartItem->cart_id]) }}"
-                                                method="post">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button type="submit" class="remove"><span
-                                                        class="fa fa-times"></span></button>
-                                            </form>
-                                        </td>
+                                        <h1>No Items yet</h1>
                                     </tr>
-                                @endforeach
+                                @else
+                                    @foreach ($cartItems as $cartItem)
+                                        <tr class="cart-item">
+                                            <td class="product-thumbnail"><a href="shop-single.html"><img
+                                                        src="https://via.placeholder.com/300x300" alt=""></a>
+                                            </td>
+                                            <td class="product-name"><a
+                                                    href="shop-single.html">{{ $cartItem->name }}</a>
+                                            </td>
+                                            <td class="product-price">Php {{ $cartItem->price }}</td>
+                                            <td class="product-quantity">
+                                                <div class="quantity"><label>Quantity</label>
+                                                    <input type="number" class="qty" name="quantity"
+                                                        value="{{ $cartItem->quantity }}"
+                                                        data-cartId="{{ $cartItem->cart_id }}"
+                                                        data-productId="{{ $cartItem->product_id }}"
+                                                        data-productPrice="{{ $cartItem->price }}"
+                                                        data-token="{{ csrf_token() }}"
+                                                        onchange="updateQuantity(this)">
+                                                </div>
+                                            </td>
+                                            <td class="product-subtotal"><span class="amount item-total-price"
+                                                    data-cartId="{{ $cartItem->cart_id }}"
+                                                    data-productId="{{ $cartItem->product_id }}">Php
+                                                    {{ $cartItem->quantity * $cartItem->price }}</span></td>
+                                            <td class="product-remove">
+                                                <form
+                                                    action="{{ route('removeItem', [$cartItem->product_id, $cartItem->cart_id]) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="remove"><span
+                                                            class="fa fa-times"></span></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -104,10 +120,12 @@
                             <li>
                                 <h3>Cart Totals</h3>
                             </li>
-                            <li class="clearfix"><span class="col">Subtotal</span><span
-                                    class="col price">$186.00</span></li>
-                            <li class="clearfix"><span class="col">Total</span><span
-                                    class="col total-price">$186.00</span></li>
+                            <li class="clearfix"><span class="col">Subtotal</span><span class="col price">Php
+                                    {{ $totalPrice }}</span>
+                            </li>
+                            <li class="clearfix"><span class="col">Total</span><span class="col total-price">Php
+                                    {{ $totalPrice }}</span>
+                            </li>
                             <li class="text-right"><button type="submit" class="theme-btn proceed-btn">Proceed to
                                     Checkout</button></li>
                         </ul>
