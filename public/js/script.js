@@ -727,7 +727,13 @@ function updateQuantity(e) {
     var quantity = $(e).val();
     var productId = $(e).data("productid");
     var cartId = $(e).data("cartid");
+    var productPrice = $(e).data("productprice");
     var token = $(e).data("token");
+
+    var total = quantity * productPrice;
+    console.log("quantity: " + typeof quantity);
+    console.log("product price: " + typeof productPrice);
+    console.log("total: " + typeof total);
 
     // Update cart item quantity
     $.ajax({
@@ -740,6 +746,13 @@ function updateQuantity(e) {
             _token: token,
         },
         success: function (response) {
+            $(
+                'span.item-total-price[data-cartId="' +
+                    cartId +
+                    '"][data-productId="' +
+                    productId +
+                    '"]'
+            ).text("Php " + total);
             console.log(response);
         },
         error: function (xhr) {

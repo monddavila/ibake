@@ -69,19 +69,14 @@
                                                         value="{{ $cartItem->quantity }}"
                                                         data-cartId="{{ $cartItem->cart_id }}"
                                                         data-productId="{{ $cartItem->product_id }}"
+                                                        data-productPrice="{{ $cartItem->price }}"
                                                         data-token="{{ csrf_token() }}"
                                                         onchange="updateQuantity(this)">
                                                 </div>
-
-                                                {{-- 
-                                            <td class="product-quantity">
-                                                <div class="quantity"><label>Quantity</label><input type="number"
-                                                        class="qty" name="qty" value="1"> </div>
                                             </td>
-                                            --}}
-
-                                            </td>
-                                            <td class="product-subtotal"><span class="amount">Php
+                                            <td class="product-subtotal"><span class="amount item-total-price"
+                                                    data-cartId="{{ $cartItem->cart_id }}"
+                                                    data-productId="{{ $cartItem->product_id }}">Php
                                                     {{ $cartItem->quantity * $cartItem->price }}</span></td>
                                             <td class="product-remove">
                                                 <form
