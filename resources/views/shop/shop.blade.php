@@ -21,7 +21,7 @@
 
 
         <!--Page Title-->
-        <section class="page-title" style="background-image:url(https://via.placeholder.com/1920x400)">
+        <section class="page-title" style="background-image:url(images/background/background-6.jpg)">
             <div class="auto-container">
                 <h1>Shop</h1>
                 <ul class="page-breadcrumb">

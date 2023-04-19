@@ -93,7 +93,7 @@
                 <div class="auto-container clearfix">
                     <!--Logo-->
                     <div class="logo">
-                        <a href="{{ route('home') }}" title="Sticky Logo"><img src="images/ibake-logo/logo-small.png"
+                        <a href="{{ route('home') }}" title="Sticky Logo"><img src="images/logo-small.png"
                                 alt="Sticky Logo"></a>
                     </div>
 
