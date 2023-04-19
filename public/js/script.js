@@ -722,18 +722,22 @@
     });
 })(window.jQuery);
 
+/**
+ *  For updating the quantity of an itme
+ * in the user cart page.
+ * Updates the item quantity and
+ * total item price
+ */
 function updateQuantity(e) {
     // Get cart item information
-    var quantity = $(e).val();
-    var productId = $(e).data("productid");
-    var cartId = $(e).data("cartid");
-    var productPrice = $(e).data("productprice");
-    var token = $(e).data("token");
+    let quantity = $(e).val();
+    let productId = $(e).data("productid");
+    let cartId = $(e).data("cartid");
+    let productPrice = $(e).data("productprice");
+    let token = $(e).data("token");
+    let total = quantity * productPrice;
 
-    var total = quantity * productPrice;
-    console.log("quantity: " + typeof quantity);
-    console.log("product price: " + typeof productPrice);
-    console.log("total: " + typeof total);
+    let totalPrice = 0;
 
     // Update cart item quantity
     $.ajax({
@@ -753,7 +757,13 @@ function updateQuantity(e) {
                     productId +
                     '"]'
             ).text("Php " + total);
-            console.log(response);
+            $("span.amount").each(function () {
+                let amount = parseInt($(this).text().replace("Php", "").trim());
+                totalPrice += amount;
+            });
+            $("span.col.price").text("Php " + totalPrice);
+            $("span.col.total-price").text("Php " + totalPrice);
+            console.log(totalPrice);
         },
         error: function (xhr) {
             // Handle error response

@@ -86,8 +86,14 @@ class CartsController extends Controller
     }
 
     $cartItems = $this->userCart();
+    $totalPrice = 0;
+    foreach ($cartItems as $cartItem) {
+      # code...
+      $totalPrice += ($cartItem->price * $cartItem->quantity);
+    }
     return view('shop.shopping-cart')->with([
-      'cartItems' => $cartItems
+      'cartItems' => $cartItems,
+      'totalPrice' => $totalPrice
     ]);
   }
 
