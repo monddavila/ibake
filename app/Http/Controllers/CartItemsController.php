@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CartItems;
 use App\Http\Requests\StoreCartItemsRequest;
 use App\Http\Requests\UpdateCartItemsRequest;
+use Illuminate\Http\Request;
 
 class CartItemsController extends Controller
 {
@@ -96,6 +97,23 @@ class CartItemsController extends Controller
     //
 
 
+  }
+
+  public function updateQuantity(Request $request)
+  {
+    // Get request parameters
+    $cartId = $request->cartId;
+    $productId = $request->productId;
+    $quantity = $request->quantity;
+
+    // Update cart item quantity
+    CartItems::where('cart_id', $cartId)
+      ->where('product_id', $productId)
+      ->update(['quantity' => $quantity]);
+
+    return response()->json([
+      'success' => true
+    ]);
   }
 
   /**

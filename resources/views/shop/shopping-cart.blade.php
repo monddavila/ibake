@@ -64,10 +64,22 @@
                                             </td>
                                             <td class="product-price">Php {{ $cartItem->price }}</td>
                                             <td class="product-quantity">
-                                                <div class="quantity"><label>Quantity</label><input type="number"
-                                                        class="qty" name="quantityty"
-                                                        value="{{ $cartItem->quantity }}">
+                                                <div class="quantity"><label>Quantity</label>
+                                                    <input type="number" class="qty" name="quantity"
+                                                        value="{{ $cartItem->quantity }}"
+                                                        data-cartId="{{ $cartItem->cart_id }}"
+                                                        data-productId="{{ $cartItem->product_id }}"
+                                                        data-token="{{ csrf_token() }}"
+                                                        onchange="updateQuantity(this)">
                                                 </div>
+
+                                                {{-- 
+                                            <td class="product-quantity">
+                                                <div class="quantity"><label>Quantity</label><input type="number"
+                                                        class="qty" name="qty" value="1"> </div>
+                                            </td>
+                                            --}}
+
                                             </td>
                                             <td class="product-subtotal"><span class="amount">Php
                                                     {{ $cartItem->quantity * $cartItem->price }}</span></td>
