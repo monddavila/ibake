@@ -22,10 +22,10 @@
                         </div>
 
                         <div class="text-box">
-                            <p>250 Biscayne Blvd. (North) 11st Floor <br>New World Tower Miami, Florida 33148
+                            <p>35 National Road, Brgy. Sta. Rosa, <br>Bayombong, Nueva Vizcaya, 3700
                             </p>
-                            <p><a href="tel:305-333-5522">(305) 333-5522</a></p>
-                            <p><a href="mailto:info@your-site.com">info@your-site.com</a></p>
+                            <p><a href="tel:+639064300383">+63 9064300383</a></p>
+                            <p><a href="mailto:info@ibake.com">info@ibake.com</a></p>
                         </div>
 
                         <div class="social-box">
@@ -135,7 +135,8 @@
     <div class="footer-bottom">
         <div class="auto-container">
             <div class="copyright-text">
-                <p>Bellaria - A Delicious Cakes and Bakery WordPress Theme</p>
+                <p> &copy; <?php echo date('Y'); ?> iBake "Tiers of Joy" - Captivating Cakes & other Sweet
+                    Necessities</p>
             </div>
         </div>
     </div>
