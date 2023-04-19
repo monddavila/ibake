@@ -727,6 +727,7 @@
  * in the user cart page.
  * Updates the item quantity and
  * total item price
+ *
  */
 function updateQuantity(e) {
     // Get cart item information
@@ -771,21 +772,3 @@ function updateQuantity(e) {
         },
     });
 }
-
-/* $(document).ready(function () {
-    $("#update-cart-quantity").submit(function (event) {
-        event.preventDefault();
-        var formData = $(this).serializeArray();
-        $.ajax({
-            url: "cart/updateCartQuantity",
-            type: "PUT",
-            data: formData,
-            success: function (response) {
-                // Handle success response
-            },
-            error: function (xhr) {
-                // Handle error response
-            },
-        });
-    });
-}); */
