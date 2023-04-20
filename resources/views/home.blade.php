@@ -539,12 +539,12 @@
         </div>
         <!-- End Features Section -->
 
-        <!-- Recipes Section  -->
+        <!-- Services Section  -->
         <section class="recipes-section" style="background-image: url(images/background/background-4.jpg);">
             <div class="auto-container">
                 <div class="sec-title text-center">
                     <div class="divider"><img src="images/icons/divider_1.png" alt=""></div>
-                    <h2>Recipes For You</h2>
+                    <h2>Sweet Services For You</h2>
                 </div>
 
                 <!-- Recipes Carousel -->
@@ -566,7 +566,7 @@
                 </div>
             </div>
         </section>
-        <!-- End Recipes Section  -->
+        <!-- End Services Section  -->
 
         <!-- Testimonial Section -->
         <section class="testimonial-section">

@@ -51,6 +51,11 @@ class HomeController extends Controller
     return view('pages.blog');
   }
 
+  function track()
+  {
+    return view('pages.track');
+  }
+
 
   public function redirect()
   {

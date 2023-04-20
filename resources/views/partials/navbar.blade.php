@@ -54,7 +54,7 @@
                                 @endauth
                             </li>
                             @auth
-                                <li><a href="#">Track Order</a></li>
+                            <li class="{{ currentNav('/track') }}"><a href="{{ route('track') }}">Track Order</a></li>
                             @endauth
                             <li class="{{ currentNav('/contact') }}"><a href="{{ route('contact') }}">Contacts</a></li>
 
