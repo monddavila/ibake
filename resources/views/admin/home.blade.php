@@ -1,21 +1,27 @@
-<x-app-layout>
- 
-</x-app-layout>
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iBake - Admin</title>
-</head>
-<body>
-  
+  <head>
+    <!-- Required meta tags -->
+        @include('admin.css')
+  </head>
+  <body>
+    <div class="container-scroller">
 
+        <!-- partial:sidebar -->
+        @include('admin.sidebar')
+        <!-- partial -->
 
+        <!-- partial:navbar -->
+        @include('admin.navbar')
+        <!-- partial -->
 
+        <!-- partial:body-content -->
+        @include('admin.body')
+        <!-- partial -->
 
-
-</body>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+        @include('admin.script')
+    <!-- End custom js for this page -->
+  </body>
 </html>
