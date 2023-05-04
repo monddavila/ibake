@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
-        @include('admin.css')
+        @include('admin.partials.head')
   </head>
   <body>
     <div class="container-scroller">
-
-        <!-- partial:sidebar -->
-        @include('admin.sidebar')
-        <!-- partial -->
-
+      
+     @include('admin.partials.sidebar')
+     
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
         <!-- partial:navbar -->
-        @include('admin.navbar')
-        <!-- partial -->
-
-        <!-- partial:body-content -->
-        @include('admin.body')
-        <!-- partial -->
-
-    <!-- container-scroller -->
+        @include('admin.partials.navbar')
+        <!-- partial:dashboard -->
+        @include('admin.pages.dashboard')
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    
     <!-- plugins:js -->
-        @include('admin.script')
-    <!-- End custom js for this page -->
+        @include('admin.partials.script')
+        
   </body>
 </html>
