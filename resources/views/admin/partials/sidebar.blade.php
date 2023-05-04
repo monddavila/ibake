@@ -12,7 +12,9 @@
                   <span class="count bg-success"></span>
                 </div>
                 <div class="profile-name">
-                  <h5 class="mb-0 font-weight-normal">Juan Delacruz</h5>
+                @if (auth()->check())
+                <h5 class="mb-0 font-weight-normal">{{ auth()->user()->name }}</h5>
+                @endif
                   <span>Adminstrator</span>
                 </div>
               </div>
