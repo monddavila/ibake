@@ -42,6 +42,7 @@
                 <!-- Regiter Form -->
                 <div class="login-form">
                     <h2>Create Account</h2>
+                    <h7>(*) indicates required fields.</h7>
                     <!--Regiter Form-->
                     <form action="{{ route('register.store') }}" method="POST" enctype="multipart/form-data">
                         <div class="row clearfix">
@@ -50,44 +51,51 @@
                                 <div class="inner-column">
                                     @csrf
 
-                                    {{-- User Name --}}
+                                    {{-- First Name --}}
                                     <div class="form-group">
-                                        <x-label for="name" value="{{ __('Name') }}" />
-                                        <x-input id="name" class="block mt-1 w-full" type="text" name="name"
-                                            :value="old('name')" required autofocus />
+                                        <x-label for="firstname" value="{{ __('First Name*') }}" />
+                                        <x-input id="firstname" class="block mt-1 w-full" type="text" name="firstname"
+                                            :value="old('firstname')" required autofocus />
+                                    </div>
+
+                                    {{-- Last Name --}}
+                                    <div class="form-group">
+                                        <x-label for="lastname" value="{{ __('Last Name*') }}" />
+                                        <x-input id="lastname" class="block mt-1 w-full" type="text" name="lastname"
+                                            :value="old('lastname')" required autofocus />
                                     </div>
 
                                     {{-- User email --}}
                                     <div class="form-group">
-                                        <x-label for="email" value="{{ __('Email') }}" />
+                                        <x-label for="email" value="{{ __('Email*') }}" />
                                         <x-input id="email" class="block mt-1 w-full" type="email" name="email" required
                                             autofocus />
                                     </div>
 
                                     {{-- User Passsword --}}
                                     <div class="form-group">
-                                        <x-label for="password" value="{{ __('Password') }}" />
+                                        <x-label for="password" value="{{ __('Password*') }}" />
                                         <x-input id="password" class="block mt-1 w-full" type="password" name="password"
                                             required />
                                     </div>
 
                                     {{-- Password Confirmation --}}
                                     <div class="form-group">
-                                        <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
+                                        <x-label for="password_confirmation" value="{{ __('Confirm Password*') }}" />
                                         <x-input id="password_confirmation" class="block mt-1 w-full" type="password"
                                             name="password_confirmation" required />
                                     </div>
 
                                     {{-- User Phone --}}
                                     <div class="form-group">
-                                        <x-label for="phone" value="{{ __('Phone') }}" />
+                                        <x-label for="phone" value="{{ __('Phone*') }}" />
                                         <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" required
                                             autofocus />
                                     </div>
 
                                     {{-- User Address --}}
                                     <div class="form-group">
-                                        <x-label for="" value="{{ __('Address') }}" />
+                                        <x-label for="" value="{{ __('Address*') }}" />
                                         <x-input id="address" class="block mt-1 w-full" type="text" name="address" required
                                             autofocus />
                                     </div>
@@ -96,6 +104,10 @@
                                     <div class="form-group">
                                         <input class="theme-btn" type="submit" name="submit-form" value="register">
                                     </div>
+
+                                    <p class="sign-up text-center">Already have an Account?<a href="{{ route('login') }}"> Sign In</a></p>
+                                    <p class="terms">By creating an account you are accepting our<a href="#"> Terms & Conditions</a></p>
+
                                 </div>
                             </div>
                         </div>    

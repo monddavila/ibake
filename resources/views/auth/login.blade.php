@@ -63,7 +63,7 @@
                                     <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
                                 </label>
                             </div>
-
+                            <p class="sign-up">Don't have an Account?<a href="{{ route('register') }}"> Sign Up</a></p>
                             <div class="form-group pass">
                                 @if (Route::has('password.request'))
                                     <a href="{{ route('password.request') }}"

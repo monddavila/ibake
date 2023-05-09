@@ -13,7 +13,7 @@
                 </div>
                 <div class="profile-name">
                 @if (auth()->check())
-                <h5 class="mb-0 font-weight-normal">{{ auth()->user()->name }}</h5>
+                <h5 class="mb-0 font-weight-normal">{{ auth()->user()->firstname }}</h5>
                 @endif
                   <span>Adminstrator</span>
                 </div>
