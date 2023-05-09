@@ -55,35 +55,55 @@ class CartsController extends Controller
       $cartItem->price = $request->product_price;
 
       // retrieve current session data
-      $userCart = session()->get('notAuthCart', []);
+      $sessionCart = session()->get('notAuthCart', []);
 
       // Check if item is in cart
-      foreach ($userCart as $item) {
-        if ($item->productId == $cartItem->productId) {
-          // Item already exists, return error response
-          $item->quantity += $cartItem->quantity;
+      if (!empty($sessionCart)) {
+        foreach ($sessionCart as $item) {
+          if ($item->productId == $cartItem->productId) {
+            $item->quantity += $cartItem->quantity;
 
-          // Return cart widget partial with data
-          $cartWidget = view('shop.cart-widget')->with(['userCart' => $userCart])->render();
-          return response()->json([
-            'cartWidget' => $cartWidget,
-            'userCart' => $userCart
-          ]);
+            $userCart = count($sessionCart) > 2 ? array_slice(
+              $sessionCart,
+              0,
+              2
+            ) : $sessionCart;
+
+            $cartWidget = view('shop.cart-widget')
+              ->with([
+                'userCart' => $userCart,
+                'cartItemCount' => count($sessionCart)
+              ])
+              ->render();
+
+            // Return cart widget partial with updated data
+            return response()->json([
+              'cartWidget' => $cartWidget
+            ]);
+          }
         }
       }
 
       // Store cart item in session
-      $userCart[] = $cartItem;
-      session(['notAuthCart' => $userCart]);
+      $sessionCart[] = $cartItem;
+      session(['notAuthCart' => $sessionCart]);
 
-      $cartWidget = view('shop.cart-widget', $userCart)->with(['userCart' => $userCart])->render();
+      $userCart = count($sessionCart)  > 2 ? array_slice(
+        $sessionCart,
+        0,
+        2
+      ) : $sessionCart;
+
+      $cartWidget = view('shop.cart-widget')
+        ->with([
+          'userCart' => $userCart,
+          'cartItemCount' => count($sessionCart)
+        ])
+        ->render();
 
       return response()->json([
         'cartWidget' => $cartWidget,
-        'userCart' => $userCart
       ]);
-      // $message = 'You need to log in to add items to the cart. Please log in or create an account.';
-      // return redirect()->back()->with('message', $message);
     }
 
     // Get the user's cart, or create a new one if it doesn't exist
@@ -95,13 +115,24 @@ class CartsController extends Controller
 
     // Get the product and quantity from the request
     $cartId = $cart->id;
-    $productId = Products::findOrFail($request->input('product_id'))->id;
-    $quantity = intval($request->input('quantity'));
+    $productId = Products::findOrFail($request->product_id)->id;
+    $quantity = $request->qty;
 
     $cartItem = new CartItemsCtrl();
     $cartItem->index($cartId, $productId, $quantity);
 
-    return redirect()->back()->with('message', 'Item added to cart successfully!');
+    $userCart = $this->userCart();
+
+    $cartWidget = view('shop.cart-widget')
+      ->with([
+        'userCart' => $userCart->take(2),
+        'cartItemCount' => count($userCart)
+      ])
+      ->render();
+
+    return response()->json([
+      'cartWidget' => $cartWidget
+    ]);
   }
 
 

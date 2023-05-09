@@ -106,11 +106,15 @@ class ShopController extends Controller
 
     // Display for users that are not logged in
     if (!auth()->check()) {
+      $sessionCart = session()->get('notAuthCart', []);
+      $userCart = count($sessionCart)  >= 2 ? array_slice($sessionCart, 0, 2) : $sessionCart;
       return view('shop.shop', compact('products'))
         ->with([
           'productTags' => $productTags,
           'minPrice' => $minPrice,
           'maxPrice' => $maxPrice,
+          'userCart' => $userCart,
+          'cartItemCount' => count($sessionCart)
         ]);
     }
 
@@ -142,7 +146,7 @@ class ShopController extends Controller
         'maxPrice' => $maxPrice,
         'hasCart' => $hasCart,
         'userCart' => $userCart->take(2),
-        'userCartCount' => $userCart->count()
+        'cartItemCount' => $userCart->count()
       ]);
   }
 
@@ -153,11 +157,14 @@ class ShopController extends Controller
     $productTags = Products::select('category')->distinct()->get();
     // Display for users that are not logged in
     if (!auth()->check()) {
+      $sessionCart = session()->get('notAuthCart', []);
+      $userCart = count($sessionCart)  >= 2 ? array_slice($sessionCart, 0, 2) : $sessionCart;
       return view('shop.item')
         ->with([
           'productTags' => $productTags,
           'product' => Products::where('id', $id)->first(),
-          'userCart' => session()->get('notAuthCart')
+          'userCart' => $userCart,
+          'cartItemCount' => count($sessionCart)
         ]);
     }
 
@@ -184,7 +191,7 @@ class ShopController extends Controller
         'product' => Products::where('id', $id)->first(),
         'hasCart' => $hasCart,
         'userCart' => $userCart->take(2),
-        'userCartCount' => $userCart->count()
+        'cartItemCount' => $userCart->count()
       ]);
   }
 }

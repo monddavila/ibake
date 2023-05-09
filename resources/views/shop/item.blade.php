@@ -79,15 +79,13 @@
                                                         value="{{ $product->price }}">
                                                     <div class="item-quantity">Quantity <input class="quantity"
                                                             type="number" value="1" name="qty"></div>
+                                                    <div class="cart-msg-container pt-5">
+                                                    </div>
                                                     <button type="submit" class="theme-btn add-to-cart"><span
                                                             class="btn-title" data-token="{{ csrf_token() }}">Add To
                                                             Cart</span></button>
                                                 </form>
-                                                @if (session('message'))
-                                                    <div class="alert alert-danger">
-                                                        {{ session('message') }}
-                                                    </div>
-                                                @endif
+
 
                                                 <ul class="product-meta">
                                                     <li class="posted_in">Category: <a
@@ -325,9 +323,9 @@
 
                                 <!-- Cart Widget -->
                                 <div id="cart-widget-container">
-                                    {{-- @if ((Auth::check() && $hasCart) || session('notAuthCart') !== [])
-                                    @include('shop.cart-widget')
-                                @endif --}}
+                                    @if ((Auth::check() && $hasCart) || session('notAuthCart') != [])
+                                        @include('shop.cart-widget')
+                                    @endif
                                 </div>
 
                                 <!-- Tags Widget -->

@@ -133,9 +133,11 @@
                                 </div>
 
                                 <!-- Cart Widget -->
-                                @if (auth()->check() && $hasCart)
-                                    @include('shop.cart-widget')
-                                @endif
+                                <div id="cart-widget-container">
+                                    @if ((Auth::check() && $hasCart) || session('notAuthCart') != [])
+                                        @include('shop.cart-widget')
+                                    @endif
+                                </div>
 
                                 <!-- Range Slider Widget -->
                                 <div class="sidebar-widget rangeslider-widget">
