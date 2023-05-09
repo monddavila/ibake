@@ -13,7 +13,6 @@ class HomeController extends Controller
 
   public function home()
   {
-    session()->forget('notAuthCart');
     return view("home");
   }
 
