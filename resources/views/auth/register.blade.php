@@ -44,54 +44,61 @@
                     <h2>Create Account</h2>
                     <!--Regiter Form-->
                     <form action="{{ route('register.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
+                        <div class="row clearfix">
 
-                        {{-- User Name --}}
-                        <div class="form-group">
-                            <x-label for="name" value="{{ __('Name') }}" />
-                            <x-input id="name" class="block mt-1 w-full" type="text" name="name"
-                                :value="old('email')" required autofocus />
-                        </div>
+                            <div class="column col-lg-6 col-md-12 col-sm-12">
+                                <div class="inner-column">
+                                    @csrf
 
-                        {{-- User email --}}
-                        <div class="form-group">
-                            <x-label for="email" value="{{ __('Email') }}" />
-                            <x-input id="email" class="block mt-1 w-full" type="email" name="email" required
-                                autofocus />
-                        </div>
+                                    {{-- User Name --}}
+                                    <div class="form-group">
+                                        <x-label for="name" value="{{ __('Name') }}" />
+                                        <x-input id="name" class="block mt-1 w-full" type="text" name="name"
+                                            :value="old('name')" required autofocus />
+                                    </div>
 
-                        {{-- User Passsword --}}
-                        <div class="form-group">
-                            <x-label for="password" value="{{ __('Password') }}" />
-                            <x-input id="password" class="block mt-1 w-full" type="password" name="password"
-                                required />
-                        </div>
+                                    {{-- User email --}}
+                                    <div class="form-group">
+                                        <x-label for="email" value="{{ __('Email') }}" />
+                                        <x-input id="email" class="block mt-1 w-full" type="email" name="email" required
+                                            autofocus />
+                                    </div>
 
-                        {{-- Password Confirmation --}}
-                        <div class="form-group">
-                            <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                            <x-input id="password_confirmation" class="block mt-1 w-full" type="password"
-                                name="password_confirmation" required />
-                        </div>
+                                    {{-- User Passsword --}}
+                                    <div class="form-group">
+                                        <x-label for="password" value="{{ __('Password') }}" />
+                                        <x-input id="password" class="block mt-1 w-full" type="password" name="password"
+                                            required />
+                                    </div>
 
-                        {{-- User Phone --}}
-                        <div class="form-group">
-                            <x-label for="phone" value="{{ __('Phone') }}" />
-                            <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" required
-                                autofocus />
-                        </div>
+                                    {{-- Password Confirmation --}}
+                                    <div class="form-group">
+                                        <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
+                                        <x-input id="password_confirmation" class="block mt-1 w-full" type="password"
+                                            name="password_confirmation" required />
+                                    </div>
 
-                        {{-- User Address --}}
-                        <div class="form-group">
-                            <x-label for="" value="{{ __('Address') }}" />
-                            <x-input id="address" class="block mt-1 w-full" type="text" name="address" required
-                                autofocus />
-                        </div>
+                                    {{-- User Phone --}}
+                                    <div class="form-group">
+                                        <x-label for="phone" value="{{ __('Phone') }}" />
+                                        <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" required
+                                            autofocus />
+                                    </div>
 
-                        {{-- Submit button/Register Account --}}
-                        <div class="form-group">
-                            <input class="theme-btn" type="submit" name="submit-form" value="register">
-                        </div>
+                                    {{-- User Address --}}
+                                    <div class="form-group">
+                                        <x-label for="" value="{{ __('Address') }}" />
+                                        <x-input id="address" class="block mt-1 w-full" type="text" name="address" required
+                                            autofocus />
+                                    </div>
+
+                                    {{-- Submit button/Register Account --}}
+                                    <div class="form-group">
+                                        <input class="theme-btn" type="submit" name="submit-form" value="register">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
                     </form>
                 </div>
                 <!--End Regiter Form -->

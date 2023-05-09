@@ -12,7 +12,9 @@
                   <span class="count bg-success"></span>
                 </div>
                 <div class="profile-name">
-                  <h5 class="mb-0 font-weight-normal">Juan Delacruz</h5>
+                @if (auth()->check())
+                <h5 class="mb-0 font-weight-normal">{{ auth()->user()->name }}</h5>
+                @endif
                   <span>Adminstrator</span>
                 </div>
               </div>
@@ -40,7 +42,7 @@
                   </div>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item preview-item">
+                <a class="dropdown-item preview-item" a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                   <div class="preview-thumbnail">
                     <div class="preview-icon bg-dark rounded-circle">
                       <i class="mdi mdi-logout-variant"></i>
@@ -50,6 +52,10 @@
                     <p class="preview-subject ellipsis mb-1 text-small">Logout</p>
                   </div>
                 </a>
+                <!-- Form - logout function-->
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+                </form>
               </div>
             </div>
           </li>
@@ -70,14 +76,13 @@
               <span class="menu-icon">
                 <i class="mdi mdi-account"></i>
               </span>
-              <span class="menu-title">Users</span>
+              <span class="menu-title">User Management</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="users">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="">Users List</a></li>
+                <li class="nav-item"> <a class="nav-link" href="">Users</a></li>
                 <li class="nav-item"> <a class="nav-link" href="">Add User</a></li>
-                <li class="nav-item"> <a class="nav-link" href="">Edit User</a></li>
               </ul>
             </div>
           </li>
