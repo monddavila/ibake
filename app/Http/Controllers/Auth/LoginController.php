@@ -95,7 +95,8 @@ class LoginController extends Controller
   {
     // Validate user input
     $request->validate([
-      'name' => 'required|string|max:255',
+      'firstname' => 'required|string|max:255',
+      'lastname' => 'required|string|max:255',
       'email' => 'required|string|email|max:255|unique:users',
       'phone' => 'required|string|max:11|min:11|unique:users',
       'address' => 'required|string|max:255|unique:users',
@@ -104,7 +105,8 @@ class LoginController extends Controller
 
     // Create new user then adds it to the database.
     $user = User::create([
-      'name' => $request->name,
+      'firstname' => $request->firstname,
+      'lastname' => $request->lastname,
       'email' => $request->email,
       'password' => Hash::make($request->password),
       'phone' => $request->phone,

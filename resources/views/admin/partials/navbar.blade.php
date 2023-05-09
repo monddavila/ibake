@@ -60,7 +60,9 @@
         <a class="nav-link" id="profileDropdown" href="#" data-bs-toggle="dropdown">
           <div class="navbar-profile">
             <img class="img-xs rounded-circle" src="admin/assets/images/faces/face.jpg" alt="">
-            <p class="mb-0 d-none d-sm-block navbar-profile-name">Admin</p>
+            @if (auth()->check())
+            <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ auth()->user()->firstname }}</p>
+            @endif
             <i class="mdi mdi-menu-down d-none d-sm-block"></i>
           </div>
         </a>
