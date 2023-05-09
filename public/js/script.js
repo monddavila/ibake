@@ -730,6 +730,7 @@
  *
  */
 function updateQuantity(e) {
+    e.preventDefault();
     // Get cart item information
     let quantity = $(e).val();
     let productId = $(e).data("productid");
@@ -742,7 +743,7 @@ function updateQuantity(e) {
 
     // Update cart item quantity
     $.ajax({
-        url: "/cart/updateCartQuantity",
+        url: "/cart/update-cart-quantity",
         type: "PUT",
         data: {
             quantity: quantity,
@@ -772,3 +773,28 @@ function updateQuantity(e) {
         },
     });
 }
+
+$(document).ready(function () {
+    $("#addToCartForm").on("submit", function (e) {
+        e.preventDefault();
+        let form_data = $(this).serialize();
+
+        $.ajax({
+            url: "/cart/add-to-cart",
+            type: "POST",
+            data: form_data,
+            success: function (response) {
+                console.log(`response\n` + JSON.stringify(response));
+                $("#cart-widget-container").html(response.cartWidget);
+
+                // Handle the response from the server
+            },
+            error: function (xhr, status, error) {
+                // Handle error response
+                console.log(xhr.responseJSON);
+                console.log("status: " + status);
+                console.log("error: " + error);
+            },
+        });
+    });
+});

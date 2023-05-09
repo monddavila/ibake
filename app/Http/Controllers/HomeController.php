@@ -13,6 +13,7 @@ class HomeController extends Controller
 
   public function home()
   {
+    session()->forget('items');
     return view("home");
   }
 

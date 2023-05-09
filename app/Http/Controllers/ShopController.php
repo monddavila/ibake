@@ -156,7 +156,8 @@ class ShopController extends Controller
       return view('shop.item')
         ->with([
           'productTags' => $productTags,
-          'product' => Products::where('id', $id)->first()
+          'product' => Products::where('id', $id)->first(),
+          'userCart' => session()->get('notAuthCart')
         ]);
     }
 

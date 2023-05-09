@@ -10,6 +10,7 @@ use App\Http\Controllers\CartItemsController as CartItemsCtrl;
 use App\Models\CartItems;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use stdClass;
 
 class CartsController extends Controller
 {
@@ -44,11 +45,45 @@ class CartsController extends Controller
    */
   public function store(Request $request)
   {
-    //
     // Check if user is logged in, if not redirect back with an error message
     if (!Auth::check()) {
-      $message = 'You need to log in to add items to the cart. Please log in or create an account.';
-      return redirect()->back()->with('message', $message);
+      // Make new cart item object and add cart data
+      $cartItem = new stdClass();
+      $cartItem->quantity = $request->qty;
+      $cartItem->productId = $request->product_id;
+      $cartItem->name = $request->product_name;
+      $cartItem->price = $request->product_price;
+
+      // retrieve current session data
+      $userCart = session()->get('notAuthCart', []);
+
+      // Check if item is in cart
+      foreach ($userCart as $item) {
+        if ($item->productId == $cartItem->productId) {
+          // Item already exists, return error response
+          $item->quantity += $cartItem->quantity;
+
+          // Return cart widget partial with data
+          $cartWidget = view('shop.cart-widget')->with(['userCart' => $userCart])->render();
+          return response()->json([
+            'cartWidget' => $cartWidget,
+            'userCart' => $userCart
+          ]);
+        }
+      }
+
+      // Store cart item in session
+      $userCart[] = $cartItem;
+      session(['notAuthCart' => $userCart]);
+
+      $cartWidget = view('shop.cart-widget', $userCart)->with(['userCart' => $userCart])->render();
+
+      return response()->json([
+        'cartWidget' => $cartWidget,
+        'userCart' => $userCart
+      ]);
+      // $message = 'You need to log in to add items to the cart. Please log in or create an account.';
+      // return redirect()->back()->with('message', $message);
     }
 
     // Get the user's cart, or create a new one if it doesn't exist

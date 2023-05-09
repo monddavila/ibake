@@ -22,7 +22,7 @@
                             </li>
 
                             <li
-                                class="{{ currentNav('/about') || currentNav('/chef') ? 'current' : '' }}
+                                class="{{ currentNav('/about') || currentNav('/chef') }}
                                     dropdown">
                                 <a href="{{ route('about') }}">About Us</a>
                                 <ul>
@@ -30,7 +30,8 @@
                                     <li><a href="{{ route('chef') }}">The Passionate Baker</a></li>
                                 </ul>
                             </li>
-                            <li class="{{ currentNav('/gallery') || currentNav('/portfolio') ? 'current' : '' }}
+                            <li
+                                class="{{ currentNav('/gallery') || currentNav('/portfolio') }}
                                     dropdown">
                                 <a href="{{ route('gallery') }}">Gallery</a>
                                 <ul>
@@ -41,7 +42,7 @@
                         </ul>
 
                         <ul class="navigation menu-right clearfix">
-                        <li class="{{ currentNav('/blog') }}"><a href="{{ route('blog') }}">Blog</a></li>
+                            <li class="{{ currentNav('/blog') }}"><a href="{{ route('blog') }}">Blog</a></li>
 
                             <li class="{{ currentNav('/shop') }} dropdown"><a href="{{ route('shop') }}">Shop</a>
                                 @auth
@@ -56,7 +57,8 @@
                             @auth
                                 <li><a href="#">Track Order</a></li>
                             @endauth
-                            <li class="{{ currentNav('/contact') }}"><a href="{{ route('contact') }}">Contacts</a></li>
+                            <li class="{{ currentNav('/contact') }}"><a href="{{ route('contact') }}">Contacts</a>
+                            </li>
 
                         </ul>
                     </div>
@@ -83,65 +85,64 @@
                 <!-- Login/Register End-->
             </div>
             <!-- Nav Box End -->
-        </div>    
-    </div> 
-    <!-- Main box End-->      
-            
+        </div>
+    </div>
+    <!-- Main box End-->
 
-            <!-- Sticky Header  -->
-            <div class="sticky-header">
-                <div class="auto-container clearfix">
-                    <!--Logo-->
-                    <div class="logo">
-                        <a href="{{ route('home') }}" title="Sticky Logo"><img src="images/logo-small.png"
-                                alt="Sticky Logo"></a>
-                    </div>
 
-                    <!--Nav Outer-->
-                    <div class="nav-outer">
-                        <!-- Main Menu -->
-                        <nav class="main-menu">
-                            <!--Keep This Empty / Menu will come through Javascript-->
-                        </nav><!-- Main Menu End-->
-                    </div>
-                </div>
-            </div><!-- End Sticky Menu -->
+    <!-- Sticky Header  -->
+    <div class="sticky-header">
+        <div class="auto-container clearfix">
+            <!--Logo-->
+            <div class="logo">
+                <a href="{{ route('home') }}" title="Sticky Logo"><img src="images/logo-small.png"
+                        alt="Sticky Logo"></a>
+            </div>
 
-            <!-- Mobile Header -->
-            <div class="mobile-header">
-                <div class="logo"><a href="{{ route('home') }}"><img src="images/logo-small.png" alt=""
-                            title=""></a></div>
-
-                <!--Nav Box-->
-                <div class="nav-outer clearfix">
+            <!--Nav Outer-->
+            <div class="nav-outer">
+                <!-- Main Menu -->
+                <nav class="main-menu">
                     <!--Keep This Empty / Menu will come through Javascript-->
-                </div>
+                </nav><!-- Main Menu End-->
             </div>
+        </div>
+    </div><!-- End Sticky Menu -->
 
-            <!-- Mobile Menu  -->
-            <div class="mobile-menu">
-                <nav class="menu    -box">
-                    <div class="nav-logo"><a href="{{ route('home') }}"><img src="images/ibake-logo/logo-small.png"
-                                alt="" title=""></a></div>
-                    <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
-                </nav>
-            </div><!-- End Mobile Menu -->
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <div class="logo"><a href="{{ route('home') }}"><img src="images/logo-small.png" alt=""
+                    title=""></a></div>
 
-            <!-- Header Search -->
-            <div class="search-popup">
-                <span class="search-back-drop"></span>
+        <!--Nav Box-->
+        <div class="nav-outer clearfix">
+            <!--Keep This Empty / Menu will come through Javascript-->
+        </div>
+    </div>
 
-                <div class="search-inner">
-                    <button class="close-search"><span class="fa fa-times"></span></button>
-                    <form method="post" action="blog-showcase.html">
-                        <div class="form-group">
-                            <input type="search" name="search-field" value="" placeholder="Search..."
-                                required="">
-                            <button type="submit"><i class="fa fa-search"></i></button>
-                        </div>
-                    </form>
+    <!-- Mobile Menu  -->
+    <div class="mobile-menu">
+        <nav class="menu    -box">
+            <div class="nav-logo"><a href="{{ route('home') }}"><img src="images/ibake-logo/logo-small.png"
+                        alt="" title=""></a></div>
+            <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
+        </nav>
+    </div><!-- End Mobile Menu -->
+
+    <!-- Header Search -->
+    <div class="search-popup">
+        <span class="search-back-drop"></span>
+
+        <div class="search-inner">
+            <button class="close-search"><span class="fa fa-times"></span></button>
+            <form method="post" action="blog-showcase.html">
+                <div class="form-group">
+                    <input type="search" name="search-field" value="" placeholder="Search..." required="">
+                    <button type="submit"><i class="fa fa-search"></i></button>
                 </div>
-            </div>
-            <!-- End Header Search -->
+            </form>
+        </div>
+    </div>
+    <!-- End Header Search -->
 
 </header>
