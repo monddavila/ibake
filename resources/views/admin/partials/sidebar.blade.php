@@ -15,7 +15,21 @@
                 @if (auth()->check())
                 <h5 class="mb-0 font-weight-normal">{{ auth()->user()->firstname }}</h5>
                 @endif
-                  <span>Adminstrator</span>
+                
+                  <span>
+                  @php
+                      $userType = auth()->user()->usertype;
+                  @endphp
+
+                  @if($userType == '1')
+                      <p>Adminstrator</p>
+                  @elseif($userType == '2')
+                      <p>Manager</p>
+                  @else
+                      <p>Staff</p>
+                  @endif
+                  </span>
+                  
                 </div>
               </div>
               <a href="#" id="profile-dropdown" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
