@@ -67,21 +67,25 @@
                                                 {{-- Short item description beside item image --}}
                                                 <div class="text">{{ $product->item_description }}</div>
                                             </div>
+                                            {{-- {{ dd($product) }} --}}
 
                                             <div class="other-options clearfix">
-                                                <form action="{{ route('addToCart') }}" method="post">
+                                                <form id="addToCartForm">
                                                     @csrf
                                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                    <input type="hidden" name="product_name"
+                                                        value="{{ $product->name }}">
+                                                    <input type="hidden" name="product_price"
+                                                        value="{{ $product->price }}">
                                                     <div class="item-quantity">Quantity <input class="quantity"
-                                                            type="number" value="1" name="quantity"></div>
-                                                    <button type="submit" class="theme-btn add-to-cart"><span
-                                                            class="btn-title">Add To Cart</span></button>
-                                                </form>
-                                                @if (session('message'))
-                                                    <div class="alert alert-danger">
-                                                        {{ session('message') }}
+                                                            type="number" value="1" name="qty"></div>
+                                                    <div class="cart-msg-container pt-5">
                                                     </div>
-                                                @endif
+                                                    <button type="submit" class="theme-btn add-to-cart"><span
+                                                            class="btn-title" data-token="{{ csrf_token() }}">Add To
+                                                            Cart</span></button>
+                                                </form>
+
 
                                                 <ul class="product-meta">
                                                     <li class="posted_in">Category: <a
@@ -318,9 +322,11 @@
                                 </div>
 
                                 <!-- Cart Widget -->
-                                @if (auth()->check() && $hasCart)
-                                    @include('shop.cart-widget')
-                                @endif
+                                <div id="cart-widget-container">
+                                    @if ((Auth::check() && $hasCart) || session('notAuthCart') != [])
+                                        @include('shop.cart-widget')
+                                    @endif
+                                </div>
 
                                 <!-- Tags Widget -->
                                 <div class="sidebar-widget tags-widget">

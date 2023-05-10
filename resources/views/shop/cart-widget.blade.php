@@ -4,12 +4,13 @@
 
         <div class="shopping-cart">
             <ul class="shopping-cart-items">
-                @foreach ($userCart as $userCartItem)
+
+                @foreach ($userCart as $cartItem)
                     <li class="cart-item">
                         <img src="https://via.placeholder.com/300x300" alt="#" class="thumb" />
-                        <span class="item-name">{{ $userCartItem->name }}</span>
-                        <span class="item-quantity">{{ $userCartItem->quantity }} x <span class="item-amount">Php
-                                {{ $userCartItem->price }}</span></span>
+                        <span class="item-name">{{ $cartItem->name }}</span>
+                        <span class="item-quantity">{{ $cartItem->quantity }} x <span class="item-amount">Php
+                                {{ $cartItem->price }}</span></span>
                         <a href="shop-single.html" class="product-detail"></a>
                         <button class="remove-item"><span class="fa fa-times"></span></button>
                     </li>
@@ -17,8 +18,11 @@
             </ul>
 
             <div class="cart-footer">
-                {{-- <div class="shopping-cart-total">There are {{ cartItems->remaining }} items more in the cart.</div> --}}
-                <a href="{{ route('showCart') }}" class="theme-btn">View Cart</a>
+                @if ($cartItemCount > 2)
+                    <div class="shopping-cart-total">There are {{ $cartItemCount - 2 }} item(s) more in the cart.
+                    </div>
+                @endif
+                <a href="{{ url('/cart') }}" class="theme-btn">View Cart</a>
                 <a href="checkout.html" class="theme-btn">Checkout</a>
             </div>
         </div>
