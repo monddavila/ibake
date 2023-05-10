@@ -98,9 +98,9 @@ class LoginController extends Controller
       'firstname' => 'required|string|max:255',
       'lastname' => 'required|string|max:255',
       'email' => 'required|string|email|max:255|unique:users',
-      'phone' => 'required|string|max:11|min:11|unique:users',
+      'phone' => 'required|string|unique:users',
       'address' => 'required|string|max:255|unique:users',
-      'password' => 'required|string|min:8|confirmed',
+      'password' => 'required|string|confirmed',
     ]);
 
     // Create new user then adds it to the database.
