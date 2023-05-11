@@ -29,38 +29,44 @@
               <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Basic Table</h4>
-                    <p class="card-description"> Add class <code>.table</code>
+                    <h4 class="card-title">User List</h4>
+                    <p class="card-description"> All User List
                     </p>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
                           <tr>
+                            <th>No.</th>
                             <th>Profile</th>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <th>VatNo.</th>
+                            <th>Email</th>
+                            <th>Contact No.</th>
                             <th>Created</th>
                             <th>Status</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
+                            <td>1</td>
                             <td class="py-1">
                               <img src="{{ asset('admin/assets/images/faces-clipart/pic-1.png') }}"/>
                             </td>
                             <td>Jacob</td>
                             <td>Daniels</td>
+                            <td>jd@gmail.com</td>
                             <td>53275531</td>
                             <td>12 May 2017</td>
                             <td><label class="badge badge-danger">Pending</label></td>
                           </tr>
                           <tr>
+                            <td>1</td>
                             <td class="py-1">
-                                <img src="{{ asset('admin/assets/images/faces-clipart/pic-1.png') }}"/>
+                              <img src="{{ asset('admin/assets/images/faces-clipart/pic-1.png') }}"/>
                             </td>
                             <td>Jacob</td>
                             <td>Daniels</td>
+                            <td>jd@gmail.com</td>
                             <td>53275531</td>
                             <td>12 May 2017</td>
                             <td><label class="badge badge-danger">Pending</label></td>

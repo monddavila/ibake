@@ -12,6 +12,7 @@
                   <span class="count bg-success"></span>
                 </div>
                 <div class="profile-name">
+                
                 @if (auth()->check())
                 <h5 class="mb-0 font-weight-normal">{{ auth()->user()->firstname }}</h5>
                 @endif
@@ -95,8 +96,8 @@
             </a>
             <div class="collapse" id="users">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{ url('view_users')}}">Users</a></li>
-                <li class="nav-item"> <a class="nav-link" href="">Add User</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ url('view-users')}}">Users</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ url('add-user')}}">Add User</a></li>
               </ul>
             </div>
           </li>
