@@ -1,94 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-        @include('admin.partials.head')
-  </head>
-  <body>
-    <div class="container-scroller">
-         <!-- partial:sidebar -->
-        @include('admin.partials.sidebar')
-     
-        <!-- partial:navbar -->
-        @include('admin.partials.navbar')
+<head>
+  @include('admin.partials.head')
+</head>
+<body>
+  <div class="container-scroller">
+    <!-- partial:sidebar -->
+    @include('admin.partials.sidebar')
 
-        <!-- users main panel -content-->
-        <div class="main-panel">
-          <div class="content-wrapper">
+    <!-- partial:navbar -->
+    @include('admin.partials.navbar')
 
-            <!-- page breadcrumb-->
-            <div class="page-header">
-              <h3 class="page-title"> Users </h3>
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item">User Management</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Users</li>
-                </ol>
-              </nav>
-            </div>
+    <!-- users main panel -content-->
+    <div class="main-panel">
+      <div class="content-wrapper">
 
-              <div class="col-lg-6 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">User List</h4>
-                    <p class="card-description"> All User List
-                    </p>
-                    <div class="table-responsive">
-                      <table class="table">
-                        <thead>
-                          <tr>
-                            <th>No.</th>
-                            <th>Profile</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Contact No.</th>
-                            <th>Created</th>
-                            <th>Status</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td class="py-1">
-                              <img src="{{ asset('admin/assets/images/faces-clipart/pic-1.png') }}"/>
-                            </td>
-                            <td>Jacob</td>
-                            <td>Daniels</td>
-                            <td>jd@gmail.com</td>
-                            <td>53275531</td>
-                            <td>12 May 2017</td>
-                            <td><label class="badge badge-danger">Pending</label></td>
-                          </tr>
-                          <tr>
-                            <td>1</td>
-                            <td class="py-1">
-                              <img src="{{ asset('admin/assets/images/faces-clipart/pic-1.png') }}"/>
-                            </td>
-                            <td>Jacob</td>
-                            <td>Daniels</td>
-                            <td>jd@gmail.com</td>
-                            <td>53275531</td>
-                            <td>12 May 2017</td>
-                            <td><label class="badge badge-danger">Pending</label></td>
-                          </tr>
-                          
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+        <!-- page breadcrumb-->
+        <div class="page-header">
+          <h3 class="page-title"> Users </h3>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">User Management</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Users</li>
+            </ol>
+          </nav>
+        </div>
+
+        <div class="col-lg-6 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">User List</h4>
+              <p class="card-description"> All User List </p>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>Profile</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Email</th>
+                      <th>Contact No.</th>
+                      <th>Created</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @php
+                      // Assuming you have a $users variable containing the user data retrieved from the database
+                      $users = \App\Models\User::all();
+                      $count = 1;
+                    @endphp
+                    @foreach ($users as $user)
+                      <tr>
+                        <td>{{ $count++ }}</td>
+                        <td class="py-1">
+                          <img src="{{ asset('admin/assets/images/faces-clipart/pic-1.png') }}"/>
+                        </td>
+                        <td>{{ $user->firstname }}</td>
+                        <td>{{ $user->lastname }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->phone }}</td>
+                        <td>{{ $user->created_at->format('d M Y') }}</td>
+                        <td><label class="badge badge-danger">Pending</label></td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
               </div>
-
+            </div>
           </div>
-        <!-- main-panel ends -->
-        </div>   
+        </div>
 
-        
-      <!-- page-body-wrapper ends -->
+      </div>
+      <!-- content-wrapper ends -->
     </div>
-    
-    <!-- plugins:js -->
-        @include('admin.partials.script')
-        
-  </body>
+    <!-- main-panel ends -->
+  </div>
+
+  <!-- plugins:js -->
+  @include('admin.partials.script')
+</body>
 </html>
