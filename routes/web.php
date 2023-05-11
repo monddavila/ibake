@@ -11,6 +11,7 @@ use App\Http\Controllers\CartItemsController;
 use App\Http\Controllers\CartsController;
 use App\Http\Controllers\ShopController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,11 +43,15 @@ Route::get('/redirect', [HomeController::class, 'redirect'])->name('redirect');
 
 /**Admin Panel Pages **/
   /*Display users page*/
-Route::get('/view-users', [AdminController::class, 'view_users'])->name('view-users');
+  Route::group(['prefix' => 'user'], function () {
+    Route::get('/list', [AdminController::class, 'viewUsers'])->name('user.list');
 
-Route::get('/add-user', [AdminController::class, 'showAddUsersForm'])->name('create-account');
-  /*Post data to users  table*/
-Route::post('/add_user', [AdminController::class, 'add_user'])->name('add_user');
+    Route::get('/add', [AdminController::class, 'showAddUsersForm'])->name('user.form');
+  
+    Route::post('/add-user', [AdminController::class, 'addUser'])->name('user.add');
+});
+
+
 
 
 
