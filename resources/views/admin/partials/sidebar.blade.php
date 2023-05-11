@@ -29,7 +29,7 @@
                       <p>Staff</p>
                   @endif
                   </span>
-                  
+
                 </div>
               </div>
               <a href="#" id="profile-dropdown" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
@@ -95,7 +95,7 @@
             </a>
             <div class="collapse" id="users">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="">Users</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ url('view_users')}}">Users</a></li>
                 <li class="nav-item"> <a class="nav-link" href="">Add User</a></li>
               </ul>
             </div>

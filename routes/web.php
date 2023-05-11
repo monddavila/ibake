@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\LoginController;
@@ -37,7 +38,11 @@ Route::get('/gallery', [HomeController::class, 'gallery'])->name('gallery');
 Route::get('/portfolio', [HomeController::class, 'portfolio'])->name('portfolio');
 Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
 Route::get('/track', [HomeController::class, 'track'])->name('track');
-route::get('/redirect', [HomeController::class, 'redirect'])->name('redirect');
+Route::get('/redirect', [HomeController::class, 'redirect'])->name('redirect');
+
+/**Admin Panel Pages **/
+Route::get('/view_users', [AdminController::class, 'view_users'])->name('view_users');
+
 
 Route::group(['prefix' => 'shop'], function () {
   Route::get('/', [ShopController::class, 'index'])->name('shop');
