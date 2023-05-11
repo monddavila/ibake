@@ -1,6 +1,6 @@
 <nav class="navbar p-0 fixed-top d-flex flex-row">
           <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo-mini" href="/"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
+            <a class="navbar-brand brand-logo-mini" href="/"><img src="{{ asset('assets/images/logo-mini.svg') }}" alt="logo" /></a>
           </div>
 
           <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
@@ -61,7 +61,7 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link" id="profileDropdown" href="#" data-bs-toggle="dropdown">
                     <div class="navbar-profile">
-                      <img class="img-xs rounded-circle" src="admin/assets/images/faces/face.jpg" alt="">
+                      <img class="img-xs rounded-circle" src="{{ asset('admin/assets/images/faces/face.jpg') }}" alt="">
                       @if (auth()->check())
                       <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ auth()->user()->firstname }}</p>
                       @endif

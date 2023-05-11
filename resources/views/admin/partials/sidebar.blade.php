@@ -1,14 +1,14 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand brand-logo" href="/"><img src="admin/assets/images/logo.png" alt="logo" /></a>
-          <a class="sidebar-brand brand-logo-mini" href="/redirect"><img src="admin/assets/images/logo.png" alt="logo" /></a>
+          <a class="sidebar-brand brand-logo" href="/"><img src="{{ asset('admin/assets/images/logo.png') }}" alt="logo" /></a>
+          <a class="sidebar-brand brand-logo-mini" href="/redirect"><img src="{{ asset('admin/assets/images/logo.png') }}" alt="logo" /></a>
         </div>
         <ul class="nav">
           <li class="nav-item profile">
             <div class="profile-desc">
               <div class="profile-pic">
                 <div class="count-indicator">
-                  <img class="img-xs rounded-circle " src="admin/assets/images/faces/face.jpg" alt="">
+                  <img class="img-xs rounded-circle " src="{{ asset('admin/assets/images/faces/face.jpg') }}" alt="">
                   <span class="count bg-success"></span>
                 </div>
                 <div class="profile-name">
@@ -96,8 +96,8 @@
             </a>
             <div class="collapse" id="users">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{ url('view-users')}}">Users</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ url('add-user')}}">Add User</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('user.list')}}">Users</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('user.form') }}">Add User</a></li>
               </ul>
             </div>
           </li>
