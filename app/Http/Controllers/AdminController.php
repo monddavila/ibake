@@ -51,7 +51,7 @@ class AdminController extends Controller
         ]);
 
         // Dump and die to inspect the created user
-        dd('test');
+        //dd('test');
 
         return redirect()->back()->with('success', 'User added successfully.');
     }

@@ -26,11 +26,14 @@
           </nav>
         </div>
 
-        <div class="col-lg-6 grid-margin stretch-card">
+        <div class="col-lg-12 grid-margin stretch-card">
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">User List</h4>
-              <p class="card-description"> All User List </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="card-description"> All User List </p>
+                <a href="{{ route('user.form') }}" class="btn btn-primary btn-fw">+ Add User</a>
+              </div>
               <div class="table-responsive">
                 <table class="table">
                   <thead>
@@ -43,6 +46,7 @@
                       <th>Contact No.</th>
                       <th>Created</th>
                       <th>Status</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -63,6 +67,16 @@
                         <td>{{ $user->phone }}</td>
                         <td>{{ $user->created_at->format('d M Y') }}</td>
                         <td><label class="badge badge-danger">Pending</label></td>
+                        <td>
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
+                            <div class="dropdown-menu">
+                              <a class="dropdown-item" href="#">Profile</a>
+                              <a class="dropdown-item" href="#">Edit</a>
+                              <a class="dropdown-item" href="#">Delete</a>
+                            </div>
+                          </div>
+                        </td>
                       </tr>
                     @endforeach
                   </tbody>
