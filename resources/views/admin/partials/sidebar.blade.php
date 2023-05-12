@@ -103,6 +103,23 @@
           </li>
 
           <li class="nav-item menu-items">
+            <a class="nav-link" data-bs-toggle="collapse" href="#orders" aria-expanded="false" aria-controls="orders">
+              <span class="menu-icon">
+                <i class="mdi mdi-basket"></i>
+              </span>
+              <span class="menu-title">Orders</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="orders">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="">Active Order</a></li>
+                <li class="nav-item"> <a class="nav-link" href="">Order History</a></li>
+                <li class="nav-item"> <a class="nav-link" href="">Add Order</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item menu-items">
             <a class="nav-link" data-bs-toggle="collapse" href="#products" aria-expanded="false" aria-controls="products">
               <span class="menu-icon">
                 <i class="mdi mdi-view-list"></i>
