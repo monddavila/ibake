@@ -19,7 +19,7 @@ $(document).ready(function () {
                 // Handle the response from the server
             },
             error: function (xhr, status, error) {
-                $(".form-submit-msg").html(failedMsg);
+                $("#form-submit-msg").html(failedMsg);
                 // Handle error response
                 console.log(xhr.responseJSON);
                 console.log("status: " + status);
