@@ -20,13 +20,10 @@
 
         <!-- page breadcrumb-->
         <div class="page-header">
-          <h3 class="page-title">Products</h3>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item">Products List</li>
-              <li class="breadcrumb-item active" aria-current="page">Products</li>
-            </ol>
-          </nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item custom-breadcrumb">Products</li>
+            <li class="breadcrumb-item custom-breadcrumb" aria-current="page">View Products</li>
+          </ol>
         </div>
 
         <div class="col-lg-11 grid-margin stretch-card mx-auto">

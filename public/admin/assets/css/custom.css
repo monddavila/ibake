@@ -1,0 +1,23 @@
+/* Custom CSS */
+.custom-breadcrumb {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+.custom-breadcrumb svg {
+    margin-right: 5px;
+}
+
+.custom-breadcrumb:first-child {
+    font-size: 1.5rem;
+}
+
+.uploadprod-img-btn {
+    display: flex;
+    text-align: center;
+}
+
+.add-product-message {
+    margin-top: 20px;
+}

@@ -20,68 +20,69 @@
 
         <!-- page breadcrumb-->
         <div class="page-header">
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item active font-large" aria-current="page">Home</li>
-              <li class="breadcrumb-item">Library</li>
-              <li class="breadcrumb-item">Data</li>
-            </ol>
-          </nav>
-          {{-- <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-              <h3 class="page-title">Products</h3>
-            </li>
-            <li class="breadcrumb-item active">Products List</li>
-          </ol> --}}
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item custom-breadcrumb">Products</li>
+            <li class="breadcrumb-item custom-breadcrumb" aria-current="page">Add a product</li>
+          </ol>
         </div>
 
 
         <div class="col-lg-11 grid-margin stretch-card mx-auto">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Basic form elements</h4>
-              <p class="card-description"> Basic form elements </p>
-              <form class="forms-sample">
-                <div class="form-group">
-                  <label for="exampleInputName1">Name</label>
-                  <input type="text" class="form-control" id="exampleInputName1" placeholder="Name">
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail3">Email address</label>
-                  <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword4">Password</label>
-                  <input type="password" class="form-control" id="exampleInputPassword4" placeholder="Password">
-                </div>
-                <div class="form-group">
-                  <label for="exampleSelectGender">Gender</label>
-                  <select class="form-control" id="exampleSelectGender">
-                    <option>Male</option>
-                    <option>Female</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>File upload</label>
-                  <input type="file" name="img[]" class="file-upload-default">
-                  <div class="input-group col-xs-12">
-                    <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                    <span class="input-group-append" style="display: flex;">
-                      <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                    </span>
+              <h4 class="card-title">Add a new product to the menu</h4>
+
+              <!-- Form  Start -->
+              <form class="admin-add-product">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="productName">Product Name</label>
+                      <input type="text" class="form-control" id="productName" placeholder="Product Name">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="productCategory">Category</label>
+                      <input type="email" class="form-control" id="productCategory" placeholder="Category">
+                    </div>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label for="exampleInputCity1">City</label>
-                  <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="productPrice">Price</label>
+                      <input type="text" class="form-control" id="productPrice" placeholder="Price">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>File upload</label>
+                      <input type="file" name="img[]" class="file-upload-default">
+                      <div class="input-group col-xs-12">
+                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                        <span class="input-group-append uploadprod-img-btn">
+                          <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+
                 <div class="form-group">
-                  <label for="exampleTextarea1">Textarea</label>
-                  <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
+                  <label for="productDescription">Textarea</label>
+                  <textarea class="form-control" id="productDescription" rows="5"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mr-2">Submit</button>
                 <button class="btn btn-dark">Cancel</button>
               </form>
+              <!-- Form End -->
+              <div class="add-product-message col-md-3">
+                <div class="alert alert-success" role="alert">
+                  This is a success alert—check it out!
+                </div>
+              </div>
             </div>
           </div>
         </div>
