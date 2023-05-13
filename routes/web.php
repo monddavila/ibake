@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminProductsController;
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\LoginController;
@@ -51,22 +52,28 @@ Route::group(['prefix' => 'user'], function () {
   Route::post('/add-user', [AdminController::class, 'addUser'])->name('user.add');
 });
 
-/* Products page*/
+/**
+ * Products Section in Admin Dashboard
+ */
 Route::group(['prefix' => 'products'], function () {
-  Route::get('/list', [AdminController::class, 'viewProductsList'])->name('admin.productsList');
+  Route::get('/list', [AdminProductsController::class, 'viewProductsList'])->name('admin.viewProducts');
+  Route::get('/add', [AdminProductsController::class, 'viewAddProducts'])->name('admin.viewAddProducts');
+  Route::post('/add', [AdminProductsController::class, 'addProducts'])->name('admin.addProducts');
 });
 
 
-
-
-
-
+/**
+ * Shop/Products Section in Customer side
+ */
 Route::group(['prefix' => 'shop'], function () {
   Route::get('/', [ShopController::class, 'index'])->name('shop');
   Route::post('/', [ShopController::class, 'index'])->name('shop');
   Route::get('/item/{id}', [ShopController::class, 'show'])->name('item');
 });
 
+/**
+ * Cart Section in Customer side
+ */
 Route::group(['prefix' => 'cart'], function () {
   Route::middleware(['auth'])
     ->get('/', [CartsController::class, 'show'])

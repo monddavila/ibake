@@ -52,13 +52,4 @@ class AdminController extends Controller
 
     return redirect()->back()->with('success', 'User added successfully.');
   }
-
-  function viewProductsList()
-  {
-    $products = DB::table('products')->get();
-
-    return view('admin.pages.products-list')->with(
-      ['products' => $products]
-    );
-  }
 }

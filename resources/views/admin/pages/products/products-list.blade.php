@@ -29,26 +29,6 @@
           </nav>
         </div>
 
-        {{-- <tr>
-          <th>Product Name</th>
-          <th>Price</th>
-          <th>Category</th>
-          <th>Description</th>
-          <th>Rating</th>
-          <th>Availability</th>
-        </tr>
-
-        @foreach ($products as $product)
-        <tr>
-          <td>{{ $product->name }}</td>
-          <td>{{ $product->price }}</td>
-          <td>{{ $product->category }}</td>
-          <td style="max-width: 400px;" class="text-truncate">{{ $product->item_description }}</td>
-          <td>{{ $product->rating }}</td>
-          <td>TBD</td>
-        </tr>
-        @endforeach --}}
-
         <div class="col-lg-11 grid-margin stretch-card mx-auto">
           <div class="card">
             <div class="card-body">
