@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminProductsController;
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\LoginController;
@@ -42,25 +43,37 @@ Route::get('/track', [HomeController::class, 'track'])->name('track');
 Route::get('/redirect', [HomeController::class, 'redirect'])->name('redirect');
 
 /**Admin Panel Pages **/
-  /*Display users page*/
-  Route::group(['prefix' => 'user'], function () {
-    Route::get('/list', [AdminController::class, 'viewUsers'])->name('user.list');
+/*Display users page*/
+Route::group(['prefix' => 'user'], function () {
+  Route::get('/list', [AdminController::class, 'viewUsers'])->name('user.list');
   /*Display create user form*/
-    Route::get('/add', [AdminController::class, 'showAddUsersForm'])->name('user.form');
+  Route::get('/add', [AdminController::class, 'showAddUsersForm'])->name('user.form');
   /*Post data from form to database- create new user*/
-    Route::post('/add-user', [AdminController::class, 'addUser'])->name('user.add');
+  Route::post('/add-user', [AdminController::class, 'addUser'])->name('user.add');
+});
+
+/**
+ * Products Section in Admin Dashboard
+ */
+Route::group(['prefix' => 'products'], function () {
+  Route::get('/list', [AdminProductsController::class, 'viewProductsList'])->name('admin.viewProducts');
+  Route::get('/add', [AdminProductsController::class, 'viewAddProducts'])->name('admin.viewAddProducts');
+  Route::post('/add', [AdminProductsController::class, 'addProducts'])->name('admin.addProducts');
 });
 
 
-
-
-
+/**
+ * Shop/Products Section in Customer side
+ */
 Route::group(['prefix' => 'shop'], function () {
   Route::get('/', [ShopController::class, 'index'])->name('shop');
   Route::post('/', [ShopController::class, 'index'])->name('shop');
   Route::get('/item/{id}', [ShopController::class, 'show'])->name('item');
 });
 
+/**
+ * Cart Section in Customer side
+ */
 Route::group(['prefix' => 'cart'], function () {
   Route::middleware(['auth'])
     ->get('/', [CartsController::class, 'show'])

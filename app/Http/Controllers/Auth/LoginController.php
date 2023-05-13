@@ -66,7 +66,6 @@ class LoginController extends Controller
     if (
       !empty(Auth::user()) && Auth::user()->usertype == 1
     ) {
-
       return view('admin.home');
     }
     return redirect(route('home'));
@@ -103,7 +102,7 @@ class LoginController extends Controller
       'address' => 'required|string|max:255',
       'password' => 'required|string|confirmed',
     ]);
-    
+
     // Create new user then adds it to the database.
     $user = User::create([
       'firstname' => $request->firstname,
