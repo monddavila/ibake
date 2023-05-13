@@ -26,37 +26,44 @@
           </ol>
         </div>
 
-
         <div class="col-lg-11 grid-margin stretch-card mx-auto">
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">Add a new product to the menu</h4>
 
               <!-- Form  Start -->
-              <form class="admin-add-product">
+              <form class="admin-add-product" id="admin-add-product">
+                @csrf
                 <div class="row">
+                  <!-- Product Name -->
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="productName">Product Name</label>
-                      <input type="text" class="form-control" id="productName" placeholder="Product Name">
+                      <label for="product_name">Product Name</label>
+                      <input type="text" class="form-control" id="product_name" name="product_name"
+                        placeholder="Product Name">
                     </div>
                   </div>
                   <div class="col-md-6">
+                    <!-- Product Category -->
                     <div class="form-group">
-                      <label for="productCategory">Category</label>
-                      <input type="email" class="form-control" id="productCategory" placeholder="Category">
+                      <label for="product_category">Category</label>
+                      <input type="text" class="form-control" id="product_category" name="product_category"
+                        placeholder="Category">
                     </div>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="col-md-6">
+                    <!-- Product Price -->
                     <div class="form-group">
-                      <label for="productPrice">Price</label>
-                      <input type="text" class="form-control" id="productPrice" placeholder="Price">
+                      <label for="product_price">Price</label>
+                      <input type="text" class="form-control" id="product_price" name="product_price"
+                        placeholder="Price">
                     </div>
                   </div>
                   <div class="col-md-6">
+                    <!-- Product Image-->
                     <div class="form-group">
                       <label>File upload</label>
                       <input type="file" name="img[]" class="file-upload-default">
@@ -67,21 +74,22 @@
                         </span>
                       </div>
                     </div>
+                    <!-- Product Image End -->
                   </div>
                 </div>
 
+                <!-- Product Description -->
                 <div class="form-group">
-                  <label for="productDescription">Textarea</label>
-                  <textarea class="form-control" id="productDescription" rows="5"></textarea>
+                  <label for="product_description">Textarea</label>
+                  <textarea class="form-control" id="product_description" name="product_description"
+                    rows="5"></textarea>
                 </div>
+                <!-- Product Submit -->
                 <button type="submit" class="btn btn-primary mr-2">Submit</button>
                 <button class="btn btn-dark">Cancel</button>
               </form>
               <!-- Form End -->
-              <div class="add-product-message col-md-3">
-                <div class="alert alert-success" role="alert">
-                  This is a success alert—check it out!
-                </div>
+              <div class="add-product-message col-md-3" id="form-submit-msg">
               </div>
             </div>
           </div>
@@ -95,6 +103,7 @@
 
   <!-- plugins:js -->
   @include('admin.partials.script')
+  <script src="{{ asset('admin/assets/js/admin-products.js') }}"></script>
 </body>
 
 </html>

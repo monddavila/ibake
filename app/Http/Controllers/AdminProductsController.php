@@ -22,4 +22,9 @@ class AdminProductsController extends Controller
   {
     return view('admin.pages.products.products-add');
   }
+
+  function addProducts(Request $request)
+  {
+    return response()->json(['asd' => $request->all()]);
+  }
 }
