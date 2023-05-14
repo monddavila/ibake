@@ -2,7 +2,6 @@ $(document).ready(function () {
     $("#admin-add-product").on("submit", function (e) {
         e.preventDefault();
         let formData = $(this).serialize();
-        console.log(formData);
         let successMsg =
             '<div class="alert alert-success" role="alert">Product successfully added!</div>';
         let failedMsg =
@@ -21,6 +20,37 @@ $(document).ready(function () {
             error: function (xhr, status, error) {
                 $("#form-submit-msg").html(failedMsg);
                 // Handle error response
+                console.log(xhr.responseJSON);
+                console.log("status: " + status);
+                console.log("error: " + error);
+            },
+        });
+    });
+
+    $(".edit-product-btn").on("click", function (e) {
+        console.log(e);
+        let productId = $(this).data("productid");
+        console.log("edit product id: " + productId);
+    });
+
+    $(".delete-product-btn").on("click", function () {
+        var tableRow = $(this).closest("tr");
+        let id = $(this).data("id");
+        console.log("deleted");
+        $.ajax({
+            url: "/products/remove/" + id,
+            type: "DELETE",
+            data: {
+                id: id,
+                _token: $(this).data("token"),
+            },
+            success: function (response) {
+                tableRow.remove();
+                $("#product-list-msg").html(response.successMsg);
+            },
+            error: function (xhr, status, error) {
+                // Handle error response
+                $("#product-list-msg").html(response.failedMsg);
                 console.log(xhr.responseJSON);
                 console.log("status: " + status);
                 console.log("error: " + error);

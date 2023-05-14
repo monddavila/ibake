@@ -18,6 +18,7 @@
       <div class="content-wrapper">
 
 
+
         <!-- page breadcrumb-->
         <div class="page-header">
           <ol class="breadcrumb">
@@ -31,12 +32,13 @@
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Products List</h4>
-                <a href="#" class="btn btn-primary btn-fw">+ Add Product</a>
+                <a href="{{ route('admin.addProducts') }}" class="btn btn-primary btn-fw">+ Add Product</a>
               </div>
               <div class="col-lg-2">
                 <form class="mt-2 mt-md-0 d-none d-lg-flex search">
                   <input type="text" class="form-control" placeholder="Search products">
                 </form>
+                <div class="mt-2id=" product-list-msg"></div>
               </div>
               <div class="table-responsive">
                 <table class="table">
@@ -53,14 +55,16 @@
                   </thead>
                   <tbody>
                     @foreach ($products as $product)
-                    <tr>
+                    <tr id="product-{{ $product->id }}">
                       <td>{{ $product->name }}</td>
                       <td>{{ $product->price }}</td>
                       <td>{{ $product->category }}</td>
                       <td>{{ $product->rating }}</td>
                       <td>TBD</td>
-                      <td><button class="btn btn-md btn-inverse-success">Edit</button></td>
-                      <td><button class="btn btn-md btn-inverse-danger">Delete</button></td>
+                      <td><button class="btn btn-md btn-inverse-success edit-product-btn"
+                          data-productId="{{ $product->id }}">Edit</button></td>
+                      <td><button class="btn btn-md btn-inverse-danger delete-product-btn" data-id="{{ $product->id }}"
+                          data-token="{{ csrf_token() }}">Delete</button></td>
                       </td>
                     </tr>
                     @endforeach
@@ -80,6 +84,7 @@
 
   <!-- plugins:js -->
   @include('admin.partials.script')
+  <script src="{{ asset('admin/assets/js/admin-products.js') }}"></script>
 </body>
 
 </html>
