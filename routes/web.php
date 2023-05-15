@@ -63,6 +63,7 @@ Route::group(['prefix' => 'products'], function () {
   Route::get('/add', [AdminProductsController::class, 'viewAddProducts'])->name('admin.viewAddProducts');
   Route::post('/add', [ProductsController::class, 'create'])->name('admin.addProducts');
   Route::delete('/remove/{id}', [ProductsController::class, 'destroy'])->name('admin.deleteProducts');
+  Route::get('/search', [ProductsController::class, 'search'])->name('admin.searchProducts');
 });
 
 

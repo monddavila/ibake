@@ -34,40 +34,31 @@
                 <h4 class="card-title">Products List</h4>
                 <a href="{{ route('admin.addProducts') }}" class="btn btn-primary btn-fw">+ Add Product</a>
               </div>
-              <div class="col-lg-2">
-                <form class="mt-2 mt-md-0 d-none d-lg-flex search">
-                  <input type="text" class="form-control" placeholder="Search products">
-                </form>
+              <div class="col-lg-3">
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" id="product-search-input" placeholder="Search"
+                    aria-label="Search" aria-describedby="search-button">
+                  <button class="btn btn-outline-secondary" type="button" id="product-search-btn"
+                    data-token="{{ csrf_token() }}">Search</button>
+                </div>
                 <div class="mt-2id=" product-list-msg"></div>
               </div>
               <div class="table-responsive">
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>Product Name <i class="mdi mdi-arrow-down"></i></th>
+                      <th class="col-lg-3">Product Name <i class="mdi mdi-arrow-down"></i></th>
                       <th>Price <i class="mdi mdi-arrow-down"></i></th>
                       <th>Category <i class="mdi mdi-arrow-down"></i></th>
                       <th>Rating <i class="mdi mdi-arrow-down"></i></th>
                       <th>Availability <i class="mdi mdi-arrow-down"></i></th>
                       <th></th>
                       <th></th>
+                      <th></th>
                     </tr>
                   </thead>
-                  <tbody>
-                    @foreach ($products as $product)
-                    <tr id="product-{{ $product->id }}">
-                      <td>{{ $product->name }}</td>
-                      <td>{{ $product->price }}</td>
-                      <td>{{ $product->category }}</td>
-                      <td>{{ $product->rating }}</td>
-                      <td>TBD</td>
-                      <td><button class="btn btn-md btn-inverse-success edit-product-btn"
-                          data-productId="{{ $product->id }}">Edit</button></td>
-                      <td><button class="btn btn-md btn-inverse-danger delete-product-btn" data-id="{{ $product->id }}"
-                          data-token="{{ csrf_token() }}">Delete</button></td>
-                      </td>
-                    </tr>
-                    @endforeach
+                  <tbody id='product-table-body'>
+                    @include('admin.pages.products.products-list-table')
                   </tbody>
                 </table>
               </div>

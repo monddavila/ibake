@@ -11,8 +11,8 @@ $(document).ready(function () {
             url: "/products/add",
             type: "POST",
             data: formData,
-            success: function (response) {
-                console.log(`response\n` + JSON.stringify(response));
+            success: function (res) {
+                console.log(`response\n` + JSON.stringify(res));
                 $("#form-submit-msg").html(successMsg);
 
                 // Handle the response from the server
@@ -44,13 +44,38 @@ $(document).ready(function () {
                 id: id,
                 _token: $(this).data("token"),
             },
-            success: function (response) {
+            success: function (res) {
                 tableRow.remove();
-                $("#product-list-msg").html(response.successMsg);
+                $("#product-list-msg").html(res.successMsg);
             },
             error: function (xhr, status, error) {
                 // Handle error response
                 $("#product-list-msg").html(response.failedMsg);
+                console.log(xhr.responseJSON);
+                console.log("status: " + status);
+                console.log("error: " + error);
+            },
+        });
+    });
+
+    $("#product-search-btn").click(function () {
+        var searchInput = $("#product-search-input").val();
+
+        $.ajax({
+            url: "/products/search",
+            type: "GET",
+            data: {
+                searchInput: searchInput,
+                _token: $(this).data("token"),
+            },
+            success: function (res) {
+                // Handle the data returned from the server
+                $("#product-table-body").html(res.html);
+                console.log(res.html);
+            },
+            error: function (xhr, status, error) {
+                // Handle error response
+                // $("#product-list-msg").html(response.failedMsg);
                 console.log(xhr.responseJSON);
                 console.log("status: " + status);
                 console.log("error: " + error);

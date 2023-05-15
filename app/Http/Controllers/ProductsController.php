@@ -96,8 +96,16 @@ class ProductsController extends Controller
     return response()->json([
       'successMsg' => $successMsg,
       'failedMsg' => $failedMsg,
-      'asd' => $request->all(),
-      'asd' => $request->id
     ]);
+  }
+
+  public function search(Request $request)
+  {
+    $searchInput = $request->input('searchInput');
+    $results = Products::where('name', 'LIKE', '%' . $searchInput . '%')->get();
+    $html = view('admin.pages.products.products-list-table')->with(
+      ['products' => $results]
+    )->render();
+    return response()->json(['html' => $html]);
   }
 }
