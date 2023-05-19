@@ -32,7 +32,7 @@
               <h4 class="card-title">User List</h4>
               <div class="d-flex justify-content-between align-items-center">
                 <p class="card-description"> All User List </p>
-                <a href="{{ route('user.form') }}" class="btn btn-primary btn-fw">+ Add User</a>
+                <a href="{{ route('user.form') }}" class="btn btn-primary me-2">+ Add User</a>
               </div>
               <div class="table-responsive">
                 <table class="table">

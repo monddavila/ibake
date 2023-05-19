@@ -34,17 +34,18 @@ class AdminController extends Controller
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'usertype' => 'required',
             'phone' => 'required|string|unique:users',
             'address' => 'required|string|max:255',
             'password' => 'required|string|confirmed',
         ]);
-
         
         
         $user = User::create([
             'firstname' => $request->input('firstname'),
             'lastname' => $request->input('lastname'),
             'email' => $request->input('email'),
+            'usertype' => $request->input('usertype'),
             'password' => Hash::make($request->input('password')),
             'phone' => $request->input('phone'),
             'address' => $request->input('address'),

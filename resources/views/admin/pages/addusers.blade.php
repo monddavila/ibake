@@ -63,6 +63,15 @@
                                                name="password_confirmation" placeholder="Confirm Password">
                                     </div>
                                     <div class="form-group">
+                                      <label for="account">Account Role</label>
+                                      <select class="form-control" id="account" name="usertype" style="width:30%">
+                                        <option value="0">Customer</option>
+                                        <option value="1">Admin</option>
+                                        <option value="2">Manager</option>
+                                        <option value="3">Staff</option>
+                                      </select>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="phone">Phone</label>
                                         <input type="text" class="form-control" id="phone" name="phone"
                                                placeholder="11 Digit Phone Number">
@@ -74,6 +83,7 @@
                                     </div>
 
                                     <button type="submit" class="btn btn-primary me-2">Save</button>
+                                    <a href="{{ route('user.list') }}" class="btn btn-dark">Cancel</a>
                                 </form>
                             </div>
                         </div>
