@@ -93,27 +93,24 @@ class LoginController extends Controller
    */
   public function store(Request $request)
   {
-    // Validate user input
     $request->validate([
-      'firstname' => 'required|string|max:255',
-      'lastname' => 'required|string|max:255',
-      'email' => 'required|string|email|max:255|unique:users',
-      'phone' => 'required|string|unique:users',
-      'address' => 'required|string|max:255',
-      'password' => 'required|string|confirmed',
+        'firstname' => 'required|string|max:255',
+        'lastname' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'phone' => 'required|string|max:11|unique:users',
+        'address' => 'required|string|max:255',
+        'password' => 'required|string|confirmed',
     ]);
 
-    // Create new user then adds it to the database.
     $user = User::create([
-      'firstname' => $request->firstname,
-      'lastname' => $request->lastname,
-      'email' => $request->email,
-      'password' => Hash::make($request->password),
-      'phone' => $request->phone,
-      'address' => $request->address,
+        'firstname' => $request->firstname,
+        'lastname' => $request->lastname,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'phone' => $request->phone,
+        'address' => $request->address,
     ]);
 
-    // Redirect to login after successful registration
-    return redirect(route('login'));
+    return redirect(route('login'))->with('success', 'Registered successfully! You can now login with your credentials.');
   }
 }
