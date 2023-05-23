@@ -38,8 +38,7 @@
                 <div class="input-group mb-3">
                   <input type="text" class="form-control" id="product-search-input" placeholder="Search"
                     aria-label="Search" aria-describedby="search-button">
-                  <button class="btn btn-outline-secondary" type="button" id="product-search-btn"
-                    data-token="{{ csrf_token() }}">Search</button>
+                  <button class="btn btn-outline-secondary" type="button" id="reset-search-btn">Reset</button>
                 </div>
                 <div class="mt-2id=" product-list-msg"></div>
               </div>
@@ -47,11 +46,11 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th class="col-lg-3">Product Name <i class="mdi mdi-arrow-down"></i></th>
-                      <th>Price <i class="mdi mdi-arrow-down"></i></th>
-                      <th>Category <i class="mdi mdi-arrow-down"></i></th>
-                      <th>Rating <i class="mdi mdi-arrow-down"></i></th>
-                      <th>Availability <i class="mdi mdi-arrow-down"></i></th>
+                      <th class="sortable col-lg-3" id="sort-name" data-sort="name">Product Name</th>
+                      <th class="sortable" id="sort-price" data-sort="price">Price</th>
+                      <th class="sortable" id="sort-category" data-sort="category">Category</th>
+                      <th class="sortable" id="sort-rate" data-sort="rating">Rating</th>
+                      <th class="sortable" id="sort-available" data-sort="availability">Availability</th>
                       <th></th>
                       <th></th>
                       <th></th>

@@ -101,11 +101,24 @@ class ProductsController extends Controller
 
   public function search(Request $request)
   {
-    $searchInput = $request->input('searchInput');
-    $results = Products::where('name', 'LIKE', '%' . $searchInput . '%')->get();
+
+    $query = $request->input('query');
+    $sortBy = $request->input('sortBy');
+    $sortDirection = $request->input('sortDirection');
+
+    // Perform the necessary database query based on the search query and sorting options
+    // Example query for item search and sorting:
+    $results = Products::where('name', 'like', '%' . $query . '%')
+      ->orderBy($sortBy, $sortDirection)
+      ->get();
+
     $html = view('admin.pages.products.products-list-table')->with(
       ['products' => $results]
     )->render();
+
     return response()->json(['html' => $html]);
+
+    /* $searchInput = $request->input('searchInput');
+    $results = Products::where('name', 'LIKE', '%' . $searchInput . '%')->get(); */
   }
 }

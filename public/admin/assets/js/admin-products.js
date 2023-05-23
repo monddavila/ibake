@@ -1,4 +1,43 @@
 $(document).ready(function () {
+    // Handle search input changes
+    $("#product-search-input").on("input", function () {
+        // console.log($("#product-search-input").val());
+        loadData();
+    });
+
+    // Handle sorting
+    $(".sortable").on("click", function () {
+        // Remove sorting and indicator classes from all sortable columns
+        $(".sortable")
+            .not($(this))
+            .removeClass("ascending descending current-sort text-white")
+            .find(".sort-icon")
+            .remove();
+
+        $(this).addClass("current-sort text-white");
+
+        // Toggle the ascending/descending classes
+        if ($(this).hasClass("sort-asc")) {
+            $(this).removeClass("sort-asc").addClass("sort-desc");
+        } else if ($(this).hasClass("sort-desc")) {
+            $(this).removeClass("sort-desc").addClass("sort-asc");
+        } else {
+            // If no class is present, default to ascending
+            $(this).addClass("sort-asc");
+        }
+
+        // Determine the sort direction based on the current state of the column
+        let sortDirection = $(this).hasClass("sort-asc") ? "asc" : "desc";
+
+        $(this).find(".sort-icon").remove();
+        let sortIcon =
+            sortDirection === "asc" ? "mdi mdi-arrow-up" : "mdi mdi-arrow-down";
+        $(this).append(' <i class="sort-icon ' + sortIcon + '"></i>');
+
+        // Load data with the selected sort option
+        loadData($(this).data("sort"), sortDirection);
+    });
+
     $("#admin-add-product").on("submit", function (e) {
         e.preventDefault();
         let formData = $(this).serialize();
@@ -12,31 +51,26 @@ $(document).ready(function () {
             type: "POST",
             data: formData,
             success: function (res) {
-                console.log(`response\n` + JSON.stringify(res));
-                $("#form-submit-msg").html(successMsg);
-
                 // Handle the response from the server
+                $("#form-submit-msg").html(successMsg);
             },
-            error: function (xhr, status, error) {
+            error: function (xhr, status, err) {
                 $("#form-submit-msg").html(failedMsg);
                 // Handle error response
                 console.log(xhr.responseJSON);
                 console.log("status: " + status);
-                console.log("error: " + error);
+                console.log("error: " + err);
             },
         });
     });
 
     $(".edit-product-btn").on("click", function (e) {
-        console.log(e);
         let productId = $(this).data("productid");
-        console.log("edit product id: " + productId);
     });
 
     $(".delete-product-btn").on("click", function () {
         var tableRow = $(this).closest("tr");
         let id = $(this).data("id");
-        console.log("deleted");
         $.ajax({
             url: "/products/remove/" + id,
             type: "DELETE",
@@ -45,41 +79,48 @@ $(document).ready(function () {
                 _token: $(this).data("token"),
             },
             success: function (res) {
+                // Handle the response from the server
                 tableRow.remove();
                 $("#product-list-msg").html(res.successMsg);
             },
-            error: function (xhr, status, error) {
+            error: function (xhr, status, err) {
                 // Handle error response
                 $("#product-list-msg").html(response.failedMsg);
                 console.log(xhr.responseJSON);
                 console.log("status: " + status);
-                console.log("error: " + error);
+                console.log("error: " + err);
             },
         });
     });
 
-    $("#product-search-btn").click(function () {
-        var searchInput = $("#product-search-input").val();
-
-        $.ajax({
-            url: "/products/search",
-            type: "GET",
-            data: {
-                searchInput: searchInput,
-                _token: $(this).data("token"),
-            },
-            success: function (res) {
-                // Handle the data returned from the server
-                $("#product-table-body").html(res.html);
-                console.log(res.html);
-            },
-            error: function (xhr, status, error) {
-                // Handle error response
-                // $("#product-list-msg").html(response.failedMsg);
-                console.log(xhr.responseJSON);
-                console.log("status: " + status);
-                console.log("error: " + error);
-            },
-        });
+    $("#reset-search-btn").on("click", function () {
+        // Remove sorting and indicator classes from all sortable columns
+        $(".sortable")
+            .not($(this))
+            .removeClass("ascending descending current-sort text-white")
+            .find(".sort-icon")
+            .remove();
+        $("#product-search-input").val("");
+        location.reload();
     });
 });
+
+function loadData(sortBy = "updated_at", sortDirection = "asc") {
+    const searchQuery = $("#product-search-input").val();
+
+    $.ajax({
+        url: "/products/search",
+        method: "GET",
+        data: {
+            query: searchQuery,
+            sortBy: sortBy,
+            sortDirection: sortDirection,
+        },
+        success: function (res) {
+            $("#product-table-body").html(res.html);
+        },
+        error: function (err) {
+            console.error(err);
+        },
+    });
+}
