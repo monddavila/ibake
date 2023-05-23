@@ -90,22 +90,6 @@
     </li>
 
     <li class="nav-item menu-items">
-      <a class="nav-link" data-bs-toggle="collapse" href="#users" aria-expanded="false" aria-controls="users">
-        <span class="menu-icon">
-          <i class="mdi mdi-account"></i>
-        </span>
-        <span class="menu-title">User Management</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="users">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="{{ route('user.list') }}">Users</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{ route('user.form') }}">Add User</a></li>
-        </ul>
-      </div>
-    </li>
-
-    <li class="nav-item menu-items">
       <a class="nav-link" data-bs-toggle="collapse" href="#orders" aria-expanded="false" aria-controls="orders">
         <span class="menu-icon">
           <i class="mdi mdi-basket"></i>
@@ -118,6 +102,22 @@
           <li class="nav-item"> <a class="nav-link" href="">Active Order</a></li>
           <li class="nav-item"> <a class="nav-link" href="">Order History</a></li>
           <li class="nav-item"> <a class="nav-link" href="">Add Order</a></li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="nav-item menu-items">
+      <a class="nav-link" data-bs-toggle="collapse" href="#users" aria-expanded="false" aria-controls="users">
+        <span class="menu-icon">
+          <i class="mdi mdi-account"></i>
+        </span>
+        <span class="menu-title">User Management</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="users">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="{{ route('user.list') }}">Users</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('user.form') }}">Add User</a></li>
         </ul>
       </div>
     </li>

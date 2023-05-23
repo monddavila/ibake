@@ -17,13 +17,10 @@
 
         <!-- page breadcrumb-->
         <div class="page-header">
-          <h3 class="page-title"> Users </h3>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item">User Management</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Users</li>
-            </ol>
-          </nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item custom-breadcrumb">User Management</li>
+                    <li class="breadcrumb-item custom-breadcrumb" aria-current="page">User List</li>
+                </ol>
         </div>
 
         <div class="col-lg-12 grid-margin stretch-card">
@@ -73,7 +70,7 @@
                             <div class="dropdown-menu">
                               <a class="dropdown-item" href="#">Profile</a>
                               <a class="dropdown-item" href="#">Edit</a>
-                              <a class="dropdown-item" href="#">Delete</a>
+                              <a class="dropdown-item" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')" href="{{ route('user.delete', ['id' => $user->id]) }}">Delete</a>
                             </div>
                           </div>
                         </td>

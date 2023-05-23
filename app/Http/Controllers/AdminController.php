@@ -23,8 +23,8 @@ class AdminController extends Controller
     return view('admin.pages.addusers');
   }
 
-    public function addUser(Request $request)
-    {
+  public function addUser(Request $request)
+  {
         
         $request->validate([
             'firstname' => 'required|string|max:255',
@@ -51,7 +51,22 @@ class AdminController extends Controller
         // Dump and die to inspect the created user
         //dd('test');
 
-        return redirect()->back()->with('success', 'User added successfully.');
-    }
+        return redirect()->back()->with('message', 'User added successfully!');
+  }
+
+  public function deleteUser($id)
+  {
+    // Find the user by ID
+    $user = User::findOrFail($id);
+
+    // Delete the user
+    $user->delete();
+
+    // Optionally, you can add a success message to the session
+    session()->flash('message', 'User deleted successfully.');
+
+    // Redirect to the user list or any other desired page
+    return redirect()->route('user.list');
+  }
 
 }
