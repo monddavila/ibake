@@ -8,5 +8,5 @@
  */
 function currentNav($value)
 {
-  return $_SERVER['REQUEST_URI'] === $value ? 'current' : '';
+  return parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) === $value ? 'current' : '';
 }

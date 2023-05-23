@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Hash;
-
 use Illuminate\Validation\Rule;
-
 use Illuminate\Http\Request;
-
 use App\Models\User;
-
 use Illuminate\Support\Facades\Validator;
 
 
@@ -17,15 +13,15 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
-    public function viewUsers()
-    {
-        return view('admin.pages.users');
-    }
+  public function viewUsers()
+  {
+    return view('admin.pages.users');
+  }
 
-    public function showAddUsersForm()
-    {
-        return view('admin.pages.addusers');
-    }
+  public function showAddUsersForm()
+  {
+    return view('admin.pages.addusers');
+  }
 
     public function addUser(Request $request)
     {
@@ -39,6 +35,7 @@ class AdminController extends Controller
             'address' => 'required|string|max:255',
             'password' => 'required|string|confirmed',
         ]);
+
         
         
         $user = User::create([
