@@ -60,6 +60,7 @@ Route::group(['prefix' => 'user'], function () {
 Route::group(['prefix' => 'products'], function () {
   Route::get('/list', [AdminProductsController::class, 'viewProductsList'])->name('admin.viewProducts');
   Route::get('/add', [AdminProductsController::class, 'viewAddProducts'])->name('admin.viewAddProducts');
+  Route::get('/category', [AdminProductsController::class, 'viewAddCategory'])->name('admin.viewAddCategory');
   Route::post('/add', [AdminProductsController::class, 'addProducts'])->name('admin.addProducts');
 });
 

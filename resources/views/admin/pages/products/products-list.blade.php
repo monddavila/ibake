@@ -31,11 +31,11 @@
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Products List</h4>
-                <a href="#" class="btn btn-primary btn-fw">+ Add Product</a>
+                <a href="{{ route('admin.viewAddProducts') }}" class="btn btn-primary btn-fw">+ Add Product</a>
               </div>
               <div class="col-lg-2">
                 <form class="mt-2 mt-md-0 d-none d-lg-flex search">
-                  <input type="text" class="form-control" placeholder="Search products">
+                  <input type="text" class="form-control" placeholder="Search Products">
                 </form>
               </div>
               <div class="table-responsive">

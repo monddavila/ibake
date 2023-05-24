@@ -31,6 +31,11 @@
                 <p class="card-description"> All User List </p>
                 <a href="{{ route('user.form') }}" class="btn btn-primary me-2">+ Add User</a>
               </div>
+              <div class="col-lg-2">
+                <form class="mt-2 mt-md-0 d-none d-lg-flex search">
+                  <input type="text" class="form-control" placeholder="Search Users">
+                </form>
+              </div>
               <div class="table-responsive">
                 <table class="table">
                   <thead>
