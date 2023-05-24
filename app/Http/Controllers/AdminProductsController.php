@@ -24,6 +24,11 @@ class AdminProductsController extends Controller
     return view('admin.pages.products.products-add');
   }
 
+  function viewAddCategory()
+  {
+    return view('admin.pages.products.products-category');
+  }
+
   function addProducts(Request $request)
   {
     Products::create([
