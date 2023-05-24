@@ -103,6 +103,17 @@ $(document).ready(function () {
         $("#product-search-input").val("");
         location.reload();
     });
+
+    $(".product-name").on("click", function () {
+        let productName = $(this).html();
+        $(".modal-title").html(productName);
+        $("#myInput").trigger("focus");
+    });
+
+    /* $("#myModal").on("shown.bs.modal", function () {
+        console.log($(this));
+        $("#myInput").trigger("focus");
+    }); */
 });
 
 function loadData(sortBy = "updated_at", sortDirection = "asc") {

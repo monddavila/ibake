@@ -72,9 +72,33 @@
     <!-- page-body-wrapper ends -->
   </div>
 
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Open Modal
+  </button>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="img" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
   <!-- plugins:js -->
   @include('admin.partials.script')
   <script src="{{ asset('admin/assets/js/admin-products.js') }}"></script>
+  <!-- CSS -->
+
+  <!-- JavaScript -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
