@@ -32,7 +32,8 @@
               <h4 class="card-title">Add a new product to the menu</h4>
 
               <!-- Form  Start -->
-              <form class="admin-add-product" id="admin-add-product">
+              <form class="admin-add-product" method="POST" action="{{ route('admin.addProducts') }}"
+                id="admin-add-product" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                   <!-- Product Name -->
@@ -66,7 +67,7 @@
                     <!-- Product Image-->
                     <div class="form-group">
                       <label>File upload</label>
-                      <input type="file" name="img[]" class="file-upload-default">
+                      <input type="file" name="img" class="file-upload-default">
                       <div class="input-group col-xs-12">
                         <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                         <span class="input-group-append uploadprod-img-btn">
@@ -94,6 +95,12 @@
             </div>
           </div>
         </div>
+
+        @if (session('message'))
+        <div class="alert alert-success">
+          {{ session('message') }}
+        </div>
+        @endif
       </div>
       <!-- main-panel ends -->
     </div>
@@ -104,6 +111,7 @@
   <!-- plugins:js -->
   @include('admin.partials.script')
   <script src="{{ asset('admin/assets/js/admin-products.js') }}"></script>
+  <script src="{{ asset('admin/assets/js/file-upload.js') }}"></script>
 </body>
 
 </html>

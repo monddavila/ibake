@@ -2,37 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductsRequest;
 use App\Models\Products;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductsController extends Controller
 {
   /**
-   * Display a listing of the resource.
+   * Display a listing of the products.
    *
    * @return \Illuminate\Http\Response
    */
   public function index()
   {
     //
+    $products = DB::table('products')->get();
+
+    return view('admin.pages.products.products-list')->with(
+      ['products' => $products]
+    );
   }
 
   /**
-   * Show the form for creating a new resource.
+   * Show the form for adding/creating a new product.
    *
    * @return \Illuminate\Http\Response
    */
-  public function create(Request $request)
+  public function create()
   {
     //
-    Products::create([
-      'name' => $request->product_name,
-      'price' => $request->product_price,
-      'item_description' => $request->product_description,
-      'category' => $request->product_category,
-    ]);
-
-    return;
+    return view('admin.pages.products.products-add');
   }
 
   /**
@@ -44,6 +44,15 @@ class ProductsController extends Controller
   public function store(Request $request)
   {
     //
+    Products::create([
+      'name' => $request->product_name,
+      'price' => $request->product_price,
+      'item_description' => $request->product_description,
+      'category' => $request->product_category,
+      'image_path' => $this->storeImage($request),
+    ]);
+
+    return redirect(route('admin.viewAddProducts'));
   }
 
   /**
@@ -117,8 +126,12 @@ class ProductsController extends Controller
     )->render();
 
     return response()->json(['html' => $html]);
+  }
 
-    /* $searchInput = $request->input('searchInput');
-    $results = Products::where('name', 'LIKE', '%' . $searchInput . '%')->get(); */
+  private function storeImage($request)
+  {
+    $newImageName = uniqid() . '-' . $request->product_name . '.' . $request->img->getClientOriginalExtension();
+    return
+      $request->img->storeAs('images/products', $newImageName);
   }
 }

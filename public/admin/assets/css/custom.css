@@ -22,17 +22,16 @@
     margin-top: 20px;
 }
 
-.product-img {
-    padding: 0;
-    margin: 0;
-    font-size: 1.5rem;
-}
-
-.produnt-name,
+.product-name,
 th {
     cursor: pointer;
 }
 
 .current-sort {
     color: white;
+}
+
+#product-image {
+    height: 400px;
+    width: 400px;
 }

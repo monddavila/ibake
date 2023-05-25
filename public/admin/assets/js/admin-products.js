@@ -38,7 +38,7 @@ $(document).ready(function () {
         loadData($(this).data("sort"), sortDirection);
     });
 
-    $("#admin-add-product").on("submit", function (e) {
+    /* $("#admin-add-product").on("submit", function (e) {
         e.preventDefault();
         let formData = $(this).serialize();
         let successMsg =
@@ -62,7 +62,7 @@ $(document).ready(function () {
                 console.log("error: " + err);
             },
         });
-    });
+    }); */
 
     $(".edit-product-btn").on("click", function (e) {
         let productId = $(this).data("productid");
@@ -105,8 +105,17 @@ $(document).ready(function () {
     });
 
     $(".product-name").on("click", function () {
-        let productName = $(this).html();
-        $(".modal-title").html(productName);
+        /*         let productName = $(this).html();
+        var imgPath = $(this).data("imgpath");
+
+        var relativeImagePath = imgPath.replace(/^.*public[\/\\]/i, "");
+        var assetUrl = "{{ asset('" + relativeImagePath + "') }";
+        console.log("asset url: " + assetUrl);
+
+        $("#modal-title").html(productName);
+        $("#product-image").attr("src", assetUrl);
+
+        console.log(); */
         $("#myInput").trigger("focus");
     });
 

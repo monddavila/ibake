@@ -59,9 +59,9 @@ Route::group(['prefix' => 'user'], function () {
  * ProductsController is for backend
  */
 Route::group(['prefix' => 'products'], function () {
-  Route::get('/list', [AdminProductsController::class, 'viewProductsList'])->name('admin.viewProducts');
-  Route::get('/add', [AdminProductsController::class, 'viewAddProducts'])->name('admin.viewAddProducts');
-  Route::post('/add', [ProductsController::class, 'create'])->name('admin.addProducts');
+  Route::get('/list', [ProductsController::class, 'index'])->name('admin.viewProducts');
+  Route::get('/add', [ProductsController::class, 'create'])->name('admin.viewAddProducts');
+  Route::post('/add', [ProductsController::class, 'store'])->name('admin.addProducts');
   Route::delete('/remove/{id}', [ProductsController::class, 'destroy'])->name('admin.deleteProducts');
   Route::get('/search', [ProductsController::class, 'search'])->name('admin.searchProducts');
 });
