@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CartItemsController;
 use App\Http\Controllers\CartsController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ShopController;
 
 
@@ -56,12 +57,16 @@ Route::group(['prefix' => 'user'], function () {
 
 /**
  * Products Section in Admin Dashboard
+ * AdminProductsController is for frontend
+ * ProductsController is for backend
  */
 Route::group(['prefix' => 'products'], function () {
-  Route::get('/list', [AdminProductsController::class, 'viewProductsList'])->name('admin.viewProducts');
-  Route::get('/add', [AdminProductsController::class, 'viewAddProducts'])->name('admin.viewAddProducts');
-  Route::get('/category', [AdminProductsController::class, 'viewAddCategory'])->name('admin.viewAddCategory');
-  Route::post('/add', [AdminProductsController::class, 'addProducts'])->name('admin.addProducts');
+  Route::get('/list', [ProductsController::class, 'index'])->name('admin.viewProducts');
+  Route::get('/add', [ProductsController::class, 'create'])->name('admin.viewAddProducts');
+  Route::post('/add', [ProductsController::class, 'store'])->name('admin.addProducts');
+  Route::delete('/remove/{id}', [ProductsController::class, 'destroy'])->name('admin.deleteProducts');
+  Route::get('/search', [ProductsController::class, 'search'])->name('admin.searchProducts');
+  Route::get('/getImage', [ProductsController::class, 'getImage'])->name('admin.getImage');
 });
 
 

@@ -20,6 +20,7 @@ return new class extends Migration
       $table->text('item_description');
       $table->text('category');
       $table->float('rating')->default(0);
+      $table->string('image')->nullable();
       $table->timestamps(); // Adds created_at and updated_at columns
     });
   }

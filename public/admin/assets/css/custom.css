@@ -21,3 +21,17 @@
 .add-product-message {
     margin-top: 20px;
 }
+
+.product-name,
+th {
+    cursor: pointer;
+}
+
+.current-sort {
+    color: white;
+}
+
+#product-image {
+    height: 400px;
+    width: 400px;
+}
