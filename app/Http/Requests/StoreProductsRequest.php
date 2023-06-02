@@ -29,15 +29,15 @@ class StoreProductsRequest extends FormRequest
   public function rules()
   {
     $rules = [
-      'name' => 'required|unique:posts|max:255',
+      'name' => 'required|unique:products|max:255',
       'price' => 'required|min:0',
       'item_description' => 'required|max:255',
       'category' => 'required',
-      'img' => ['required', 'mimes:jpg,png,jpeg', 'max:5048']
+      'image' => ['mimes:jpg,png,jpeg', 'max:5048']
     ];
 
     if (in_array($this->method(), ['POST'])) {
-      $rules['img'] = ['required', 'mimes:jpg,png,jpeg', 'max:5048'];
+      $rules['image'] = ['required', 'mimes:jpg,png,jpeg', 'max:5048'];
     }
 
     return $rules;

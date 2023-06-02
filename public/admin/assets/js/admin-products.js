@@ -105,17 +105,26 @@ $(document).ready(function () {
     });
 
     $(".product-name").on("click", function () {
-        /*         let productName = $(this).html();
+        let productName = $(this).html();
         var imgPath = $(this).data("imgpath");
+        console.log(productName, imgPath);
+        $.ajax({
+            url: "/products/getImage",
+            method: "GET",
+            data: {
+                imgPath: imgPath,
+            },
+            success: function (res) {
+                console.log(res);
+                $("#modal-title").html(productName);
+                $("#product-image").attr("src", res.imgPath);
+                console.log(res.imgPath);
+            },
+            error: function (err) {
+                console.error(err);
+            },
+        });
 
-        var relativeImagePath = imgPath.replace(/^.*public[\/\\]/i, "");
-        var assetUrl = "{{ asset('" + relativeImagePath + "') }";
-        console.log("asset url: " + assetUrl);
-
-        $("#modal-title").html(productName);
-        $("#product-image").attr("src", assetUrl);
-
-        console.log(); */
         $("#myInput").trigger("focus");
     });
 

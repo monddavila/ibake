@@ -21,7 +21,6 @@ class ProductsSeeder extends Seeder
       'price' => 123,
       'item_description' => 'Item 1 Description',
       'category' => 'Item Category',
-      'image_path' => 'temp',
     ];
 
     foreach ($product as $key => $value) {

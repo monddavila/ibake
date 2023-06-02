@@ -77,11 +77,10 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modal-title">Modal title</h5>
+          <h5 class="modal-title" id="modal-title"></h5>
         </div>
-        <div class="modal-body">
-          <img class="rounded mx-auto d-block" id="product-image"
-            src="{{ asset('images/products/646f7b1541c8c-Test.jpg') }}" alt="">
+        <div class="modal-body" id="modal-body">
+          <img class="rounded mx-auto d-block" id="product-image" src="">
         </div>
       </div>
     </div>

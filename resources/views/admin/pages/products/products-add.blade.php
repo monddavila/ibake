@@ -39,16 +39,15 @@
                   <!-- Product Name -->
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="product_name">Product Name</label>
-                      <input type="text" class="form-control" id="product_name" name="product_name"
-                        placeholder="Product Name">
+                      <label for="name">Product Name</label>
+                      <input type="text" class="form-control" id="product_name" name="name" placeholder="Product Name">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <!-- Product Category -->
                     <div class="form-group">
-                      <label for="product_category">Category</label>
-                      <input type="text" class="form-control" id="product_category" name="product_category"
+                      <label for="category">Category</label>
+                      <input type="text" class="form-control" id="product_category" name="category"
                         placeholder="Category">
                     </div>
                   </div>
@@ -58,16 +57,15 @@
                   <div class="col-md-6">
                     <!-- Product Price -->
                     <div class="form-group">
-                      <label for="product_price">Price</label>
-                      <input type="text" class="form-control" id="product_price" name="product_price"
-                        placeholder="Price">
+                      <label for="price">Price</label>
+                      <input type="text" class="form-control" id="product_price" name="price" placeholder="Price">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <!-- Product Image-->
                     <div class="form-group">
                       <label>File upload</label>
-                      <input type="file" name="img" class="file-upload-default">
+                      <input type="file" name="image" class="file-upload-default">
                       <div class="input-group col-xs-12">
                         <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                         <span class="input-group-append uploadprod-img-btn">
@@ -81,9 +79,8 @@
 
                 <!-- Product Description -->
                 <div class="form-group">
-                  <label for="product_description">Textarea</label>
-                  <textarea class="form-control" id="product_description" name="product_description"
-                    rows="5"></textarea>
+                  <label for="item_description">Textarea</label>
+                  <textarea class="form-control" id="product_description" name="item_description" rows="5"></textarea>
                 </div>
                 <!-- Product Submit -->
                 <button type="submit" class="btn btn-primary mr-2">Submit</button>

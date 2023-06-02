@@ -1,6 +1,6 @@
 @foreach ($products as $product)
 <tr id="product-{{ $product->id }}">
-  <td class="product-name" data-toggle="modal" data-target="#myModal" data-imgPath="{{ $product->image_path }}">{{
+  <td class="product-name" data-toggle="modal" data-target="#myModal" data-imgPath="{{ $product->image }}">{{
     $product->name }}</td>
   <td>{{ $product->price }}</td>
   <td>{{ $product->category }}</td>

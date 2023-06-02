@@ -6,6 +6,7 @@ use App\Http\Requests\StoreProductsRequest;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
@@ -38,19 +39,18 @@ class ProductsController extends Controller
   /**
    * Store a newly created resource in storage.
    *
-   * @param  \Illuminate\Http\Request  $request
+   * @param  \App\Http\Requests\StoreProductsRequest  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(StoreProductsRequest $request)
   {
-    //
-    Products::create([
-      'name' => $request->product_name,
-      'price' => $request->product_price,
-      'item_description' => $request->product_description,
-      'category' => $request->product_category,
-      'image_path' => $this->storeImage($request),
-    ]);
+    $product = new Products();
+    $product->name = $request->name;
+    $product->price = $request->price;
+    $product->item_description = $request->item_description;
+    $product->category = $request->category;
+    $product->image = $this->storeImage($request); // Assign the image path to the 'image' column
+    $product->save();
 
     return redirect(route('admin.viewAddProducts'));
   }
@@ -128,10 +128,27 @@ class ProductsController extends Controller
     return response()->json(['html' => $html]);
   }
 
+  public function getImage(Request $request)
+  {
+    /* $modalView = view('admin.pages.products.product-modal')
+      ->with([
+        'productName' => $request->productName,
+        'imgPath' => $request->imgPath
+      ]); */
+    // $convertedPath = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $request->imgPath);
+    $imgPath = asset($request->imgPath);
+    return response()->json(['imgPath' => $imgPath]);
+  }
+
   private function storeImage($request)
   {
-    $newImageName = uniqid() . '-' . $request->product_name . '.' . $request->img->getClientOriginalExtension();
-    return
-      $request->img->storeAs('images/products', $newImageName);
+    $directory = "images\products";
+    /*     if (!Storage::exists($directory)) {
+      Storage::makeDirectory($directory);
+    } */
+    $newImgName = uniqid() . '-' . $request->name . '.' . $request->image->getClientOriginalExtension();
+    // $stored = $request->file('image')->storeAs($directory, $newImgName);
+    $stored = $request->file('image')->move($directory, $newImgName);
+    return $stored;
   }
 }
