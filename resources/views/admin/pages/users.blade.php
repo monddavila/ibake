@@ -17,13 +17,10 @@
 
         <!-- page breadcrumb-->
         <div class="page-header">
-          <h3 class="page-title"> Users </h3>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item">User Management</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Users</li>
-            </ol>
-          </nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item custom-breadcrumb">User Management</li>
+                    <li class="breadcrumb-item custom-breadcrumb" aria-current="page">User List</li>
+                </ol>
         </div>
 
         <div class="col-lg-12 grid-margin stretch-card">
@@ -32,7 +29,12 @@
               <h4 class="card-title">User List</h4>
               <div class="d-flex justify-content-between align-items-center">
                 <p class="card-description"> All User List </p>
-                <a href="{{ route('user.form') }}" class="btn btn-primary btn-fw">+ Add User</a>
+                <a href="{{ route('user.form') }}" class="btn btn-primary me-2">+ Add User</a>
+              </div>
+              <div class="col-lg-2">
+                <form class="mt-2 mt-md-0 d-none d-lg-flex search">
+                  <input type="text" class="form-control" placeholder="Search Users">
+                </form>
               </div>
               <div class="table-responsive">
                 <table class="table">
@@ -73,7 +75,7 @@
                             <div class="dropdown-menu">
                               <a class="dropdown-item" href="#">Profile</a>
                               <a class="dropdown-item" href="#">Edit</a>
-                              <a class="dropdown-item" href="#">Delete</a>
+                              <a class="dropdown-item" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')" href="{{ route('user.delete', ['id' => $user->id]) }}">Delete</a>
                             </div>
                           </div>
                         </td>

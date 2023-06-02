@@ -90,22 +90,6 @@
     </li>
 
     <li class="nav-item menu-items">
-      <a class="nav-link" data-bs-toggle="collapse" href="#users" aria-expanded="false" aria-controls="users">
-        <span class="menu-icon">
-          <i class="mdi mdi-account"></i>
-        </span>
-        <span class="menu-title">User Management</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="users">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="{{ route('user.list') }}">Users</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{ route('user.form') }}">Add User</a></li>
-        </ul>
-      </div>
-    </li>
-
-    <li class="nav-item menu-items">
       <a class="nav-link" data-bs-toggle="collapse" href="#orders" aria-expanded="false" aria-controls="orders">
         <span class="menu-icon">
           <i class="mdi mdi-basket"></i>
@@ -123,6 +107,22 @@
     </li>
 
     <li class="nav-item menu-items">
+      <a class="nav-link" data-bs-toggle="collapse" href="#users" aria-expanded="false" aria-controls="users">
+        <span class="menu-icon">
+          <i class="mdi mdi-account"></i>
+        </span>
+        <span class="menu-title">User Management</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="users">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="{{ route('user.list') }}">Users</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('user.form') }}">Add User</a></li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="nav-item menu-items">
       <a class="nav-link" data-bs-toggle="collapse" href="#products" aria-expanded="false" aria-controls="products">
         <span class="menu-icon">
           <i class="mdi mdi-view-list"></i>
@@ -132,8 +132,8 @@
       </a>
       <div class="collapse" id="products">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewProducts') }}">View
-              Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewAddCategory') }}">Category</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewProducts') }}">View Products</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewAddProducts') }}">Add a product</a></li>
         </ul>
       </div>
@@ -144,7 +144,7 @@
         <span class="menu-icon">
           <i class="mdi mdi-laptop"></i>
         </span>
-        <span class="menu-title">Basic UI Elements</span>
+        <span class="menu-title">Gallery</span>
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="ui-basic">
@@ -158,19 +158,11 @@
     </li>
 
     <li class="nav-item menu-items">
-      <a class="nav-link" href="admin/pages/forms/basic_elements.html">
-        <span class="menu-icon">
-          <i class="mdi mdi-playlist-play"></i>
-        </span>
-        <span class="menu-title">Form Elements</span>
-      </a>
-    </li>
-    <li class="nav-item menu-items">
       <a class="nav-link" href="admin/pages/tables/basic-table.html">
         <span class="menu-icon">
           <i class="mdi mdi-table-large"></i>
         </span>
-        <span class="menu-title">Tables</span>
+        <span class="menu-title">Reports</span>
       </a>
     </li>
     <li class="nav-item menu-items">
@@ -181,32 +173,22 @@
         <span class="menu-title">Charts</span>
       </a>
     </li>
-    <li class="nav-item menu-items">
-      <a class="nav-link" href="admin/pages/icons/mdi.html">
-        <span class="menu-icon">
-          <i class="mdi mdi-contacts"></i>
-        </span>
-        <span class="menu-title">Icons</span>
-      </a>
-    </li>
+   
     <li class="nav-item menu-items">
       <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
         <span class="menu-icon">
           <i class="mdi mdi-security"></i>
         </span>
-        <span class="menu-title">User admin/Pages</span>
+        <span class="menu-title">Settings</span>
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="auth">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="admin/pages/samples/blank-page.html"> Blank Page
+          <li class="nav-item"> <a class="nav-link" href="admin/pages/samples/blank-page.html"> System
             </a></li>
-          <li class="nav-item"> <a class="nav-link" href="admin/pages/samples/error-404.html"> 404 </a>
+          <li class="nav-item"> <a class="nav-link" href="admin/pages/samples/error-404.html"> API </a>
           </li>
-          <li class="nav-item"> <a class="nav-link" href="admin/pages/samples/error-500.html"> 500 </a>
-          </li>
-          <li class="nav-item"> <a class="nav-link" href="admin/pages/samples/login.html"> Login </a></li>
-          <li class="nav-item"> <a class="nav-link" href="admin/pages/samples/register.html"> Register </a>
+          <li class="nav-item"> <a class="nav-link" href="admin/pages/samples/error-500.html"> 3rd Party Tools </a>
           </li>
         </ul>
       </div>

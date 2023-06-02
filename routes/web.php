@@ -49,6 +49,8 @@ Route::group(['prefix' => 'user'], function () {
   Route::get('/list', [AdminController::class, 'viewUsers'])->name('user.list');
   /*Display create user form*/
   Route::get('/add', [AdminController::class, 'showAddUsersForm'])->name('user.form');
+  /*Delete User*/
+  Route::get('/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('user.delete');
   /*Post data from form to database- create new user*/
   Route::post('/add-user', [AdminController::class, 'addUser'])->name('user.add');
 });
