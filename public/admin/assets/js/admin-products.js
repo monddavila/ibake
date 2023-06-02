@@ -38,32 +38,6 @@ $(document).ready(function () {
         loadData($(this).data("sort"), sortDirection);
     });
 
-    /* $("#admin-add-product").on("submit", function (e) {
-        e.preventDefault();
-        let formData = $(this).serialize();
-        let successMsg =
-            '<div class="alert alert-success" role="alert">Product successfully added!</div>';
-        let failedMsg =
-            '<div class="alert alert-danger" role="alert">Failed to add Product!</div>';
-
-        $.ajax({
-            url: "/products/add",
-            type: "POST",
-            data: formData,
-            success: function (res) {
-                // Handle the response from the server
-                $("#form-submit-msg").html(successMsg);
-            },
-            error: function (xhr, status, err) {
-                $("#form-submit-msg").html(failedMsg);
-                // Handle error response
-                console.log(xhr.responseJSON);
-                console.log("status: " + status);
-                console.log("error: " + err);
-            },
-        });
-    }); */
-
     $(".edit-product-btn").on("click", function (e) {
         let productId = $(this).data("productid");
     });
@@ -127,11 +101,6 @@ $(document).ready(function () {
 
         $("#myInput").trigger("focus");
     });
-
-    /* $("#myModal").on("shown.bs.modal", function () {
-        console.log($(this));
-        $("#myInput").trigger("focus");
-    }); */
 });
 
 function loadData(sortBy = "updated_at", sortDirection = "asc") {

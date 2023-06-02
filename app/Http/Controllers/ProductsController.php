@@ -130,12 +130,6 @@ class ProductsController extends Controller
 
   public function getImage(Request $request)
   {
-    /* $modalView = view('admin.pages.products.product-modal')
-      ->with([
-        'productName' => $request->productName,
-        'imgPath' => $request->imgPath
-      ]); */
-    // $convertedPath = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $request->imgPath);
     $imgPath = asset($request->imgPath);
     return response()->json(['imgPath' => $imgPath]);
   }
@@ -143,11 +137,7 @@ class ProductsController extends Controller
   private function storeImage($request)
   {
     $directory = "images\products";
-    /*     if (!Storage::exists($directory)) {
-      Storage::makeDirectory($directory);
-    } */
     $newImgName = uniqid() . '-' . $request->name . '.' . $request->image->getClientOriginalExtension();
-    // $stored = $request->file('image')->storeAs($directory, $newImgName);
     $stored = $request->file('image')->move($directory, $newImgName);
     return $stored;
   }
