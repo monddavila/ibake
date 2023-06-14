@@ -132,7 +132,6 @@
       </a>
       <div class="collapse" id="products">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewAddCategory') }}">Category</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewProducts') }}">View Products</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewAddProducts') }}">Add a product</a></li>
         </ul>
@@ -173,7 +172,7 @@
         <span class="menu-title">Charts</span>
       </a>
     </li>
-   
+
     <li class="nav-item menu-items">
       <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
         <span class="menu-icon">

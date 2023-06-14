@@ -53,6 +53,7 @@ class CartsController extends Controller
       $cartItem->productId = $request->product_id;
       $cartItem->name = $request->product_name;
       $cartItem->price = $request->product_price;
+      $cartItem->image = $request->product_image;
 
       // retrieve current session data
       $sessionCart = session()->get('notAuthCart', []);
@@ -209,7 +210,8 @@ class CartsController extends Controller
         'cart_items.product_id',
         'cart_items.quantity',
         'products.name',
-        'products.price'
+        'products.price',
+        'products.image'
       )
       ->get();
 

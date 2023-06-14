@@ -778,6 +778,7 @@ $(document).ready(function () {
     $("#addToCartForm").on("submit", function (e) {
         e.preventDefault();
         let formData = $(this).serialize();
+        console.log(formData);
         let successMsg =
             '<div class="alert alert-success" role="alert">Item successfully added to cart!</div>';
         let failedMsg =
