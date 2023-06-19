@@ -64,6 +64,8 @@ Route::group(['prefix' => 'products'], function () {
   Route::get('/list', [ProductsController::class, 'index'])->name('admin.viewProducts');
   Route::get('/add', [ProductsController::class, 'create'])->name('admin.viewAddProducts');
   Route::post('/add', [ProductsController::class, 'store'])->name('admin.addProducts');
+  Route::get('/edit/{id}', [ProductsController::class, 'edit'])->name('admin.viewEditProducts');
+  Route::put('/edit/{id}', [ProductsController::class, 'update'])->name('admin.editProducts');
   Route::delete('/remove/{id}', [ProductsController::class, 'destroy'])->name('admin.deleteProducts');
   Route::get('/search', [ProductsController::class, 'search'])->name('admin.searchProducts');
   Route::get('/getImage', [ProductsController::class, 'getImage'])->name('admin.getImage');

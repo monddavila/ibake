@@ -47,8 +47,8 @@
                 <div class="basic-details">
                   <div class="row clearfix">
                     <div class="image-column col-md-6 col-sm-12">
-                      <figure class="image"><a href="https://via.placeholder.com/1000x1000" class="lightbox-image"
-                          title="Image Caption Here"><img src="https://via.placeholder.com/1000x1000" alt=""><span
+                      <figure class="image"><a href="{{ asset($product->image) }}" class="lightbox-image"
+                          title="Image Caption Here"><img src="{{ asset($product->image) }}" alt=""><span
                             class="icon fa fa-search"></span></a></figure>
                     </div>
                     <div class="info-column col-md-6 col-sm-12">
@@ -74,6 +74,7 @@
                           <input type="hidden" name="product_id" value="{{ $product->id }}">
                           <input type="hidden" name="product_name" value="{{ $product->name }}">
                           <input type="hidden" name="product_price" value="{{ $product->price }}">
+                          <input type="hidden" name="product_image" value="{{ $product->image }}">
                           <div class="item-quantity">Quantity <input class="quantity" type="number" value="1"
                               name="qty"></div>
                           <div class="cart-msg-container pt-5">
@@ -341,6 +342,7 @@
   <script src="{{ asset('js/select2.min.js') }}"></script>
   <script src="{{ asset('js/sticky_sidebar.min.js') }}"></script>
   <script src="{{ asset('js/script.js') }}"></script>
+  <script src="{{ asset('js/cart.js') }}"></script>
 </body>
 
 </html>
