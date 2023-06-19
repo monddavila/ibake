@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -15,7 +17,14 @@ class AdminController extends Controller
 {
   public function viewUsers()
   {
-    return view('admin.pages.users');
+    $users = DB::table('users')->get();
+
+    // Convert created_at column to Carbon instances
+    foreach ($users as $user) {
+      $user->created_at = Carbon::parse($user->created_at);
+    }
+
+    return view('admin.pages.users')->with(['users' => $users]);
   }
 
   public function showAddUsersForm()
@@ -25,33 +34,33 @@ class AdminController extends Controller
 
   public function addUser(Request $request)
   {
-        
-        $request->validate([
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'usertype' => 'required',
-            'phone' => 'required|string|unique:users',
-            'address' => 'required|string|max:255',
-            'password' => 'required|string|confirmed',
-        ]);
 
-        
-        
-        $user = User::create([
-            'firstname' => $request->input('firstname'),
-            'lastname' => $request->input('lastname'),
-            'email' => $request->input('email'),
-            'usertype' => $request->input('usertype'),
-            'password' => Hash::make($request->input('password')),
-            'phone' => $request->input('phone'),
-            'address' => $request->input('address'),
-        ]);
+    $request->validate([
+      'firstname' => 'required|string|max:255',
+      'lastname' => 'required|string|max:255',
+      'email' => 'required|string|email|max:255|unique:users',
+      'usertype' => 'required',
+      'phone' => 'required|string|unique:users',
+      'address' => 'required|string|max:255',
+      'password' => 'required|string|confirmed',
+    ]);
 
-        // Dump and die to inspect the created user
-        //dd('test');
 
-        return redirect()->back()->with('message', 'User added successfully!');
+
+    $user = User::create([
+      'firstname' => $request->input('firstname'),
+      'lastname' => $request->input('lastname'),
+      'email' => $request->input('email'),
+      'usertype' => $request->input('usertype'),
+      'password' => Hash::make($request->input('password')),
+      'phone' => $request->input('phone'),
+      'address' => $request->input('address'),
+    ]);
+
+    // Dump and die to inspect the created user
+    //dd('test');
+
+    return redirect()->back()->with('message', 'User added successfully!');
   }
 
   public function deleteUser($id)
@@ -78,15 +87,20 @@ class AdminController extends Controller
 
     // Perform the necessary database query based on the search query and sorting options
     // Example query for item search and sorting:
-    $results = User::where('name', 'like', '%' . $query . '%')
+    $results = User::where('firstname', 'like', '%' . $query . '%')
+      ->orWhere('lastname', 'like', '%' . $query . '%')
       ->orderBy($sortBy, $sortDirection)
       ->get();
 
+    // Convert created_at column to Carbon instances
+    foreach ($results as $result) {
+      $result->created_at = Carbon::parse($result->created_at);
+    }
+
     $html = view('admin.pages.users-table')->with(
-      ['user' => $results]
+      ['users' => $results]
     )->render();
 
     return response()->json(['html' => $html]);
   }
-
 }
