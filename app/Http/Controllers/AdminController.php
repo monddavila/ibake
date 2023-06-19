@@ -69,4 +69,24 @@ class AdminController extends Controller
     return redirect()->route('user.list');
   }
 
+  public function searchUser(Request $request)
+  {
+
+    $query = $request->input('query');
+    $sortBy = $request->input('sortBy');
+    $sortDirection = $request->input('sortDirection');
+
+    // Perform the necessary database query based on the search query and sorting options
+    // Example query for item search and sorting:
+    $results = User::where('name', 'like', '%' . $query . '%')
+      ->orderBy($sortBy, $sortDirection)
+      ->get();
+
+    $html = view('admin.pages.users-table')->with(
+      ['user' => $results]
+    )->render();
+
+    return response()->json(['html' => $html]);
+  }
+
 }

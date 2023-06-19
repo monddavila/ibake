@@ -53,6 +53,7 @@ Route::group(['prefix' => 'user'], function () {
   Route::get('/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('user.delete');
   /*Post data from form to database- create new user*/
   Route::post('/add-user', [AdminController::class, 'addUser'])->name('user.add');
+  Route::get('/search', [AdminController::class, 'searchUser'])->name('user.search');
 });
 
 /**

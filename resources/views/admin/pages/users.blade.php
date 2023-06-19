@@ -31,10 +31,13 @@
                 <p class="card-description"> All User List </p>
                 <a href="{{ route('user.form') }}" class="btn btn-primary me-2">+ Add User</a>
               </div>
-              <div class="col-lg-2">
-                <form class="mt-2 mt-md-0 d-none d-lg-flex search">
-                  <input type="text" class="form-control" placeholder="Search Users">
-                </form>
+              <div class="col-lg-3">
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" id="user-search-input" placeholder="Search User"
+                    aria-label="Search" aria-describedby="search-button">
+                  <button class="btn btn-outline-secondary" type="button" id="reset-search-btn">Reset</button>
+                </div>
+                <div class="mt-2id=" product-list-msg"></div>
               </div>
               <div class="table-responsive">
                 <table class="table">
@@ -42,45 +45,17 @@
                     <tr>
                       <th>No.</th>
                       <th>Profile</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Email</th>
-                      <th>Contact No.</th>
-                      <th>Created</th>
+                      <th class="sortable" id="sort-firstname" data-sort="firstname">First Name</th>
+                      <th class="sortable" id="sort-lastname" data-sort="lastname">Last Name</th>
+                      <th class="sortable" id="sort-email" data-sort="email">Email</th>
+                      <th class="sortable" id="sort-phone" data-sort="phone">Contact No.</th>
+                      <th class="sortable" id="sort-created" data-sort="created_at">Created</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    @php
-                      // Assuming you have a $users variable containing the user data retrieved from the database
-                      $users = \App\Models\User::all();
-                      $count = 1;
-                    @endphp
-                    @foreach ($users as $user)
-                      <tr>
-                        <td>{{ $count++ }}</td>
-                        <td class="py-1">
-                          <img src="{{ asset('admin/assets/images/faces-clipart/pic-1.png') }}"/>
-                        </td>
-                        <td>{{ $user->firstname }}</td>
-                        <td>{{ $user->lastname }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->phone }}</td>
-                        <td>{{ $user->created_at->format('d M Y') }}</td>
-                        <td><label class="badge badge-danger">Pending</label></td>
-                        <td>
-                          <div class="btn-group">
-                            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
-                            <div class="dropdown-menu">
-                              <a class="dropdown-item" href="#">Profile</a>
-                              <a class="dropdown-item" href="#">Edit</a>
-                              <a class="dropdown-item" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')" href="{{ route('user.delete', ['id' => $user->id]) }}">Delete</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    @endforeach
+                  <tbody id='users-table-body'>
+                    @include('admin.pages.users-table')
                   </tbody>
                 </table>
               </div>
@@ -96,5 +71,7 @@
 
   <!-- plugins:js -->
   @include('admin.partials.script')
+  <script src="{{ asset('admin/assets/js/admin-users.js') }}"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
