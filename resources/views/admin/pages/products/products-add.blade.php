@@ -3,6 +3,7 @@
 
 <head>
   @include('admin.partials.head')
+  <link rel="stylesheet" href="{{ asset('admin/assets/css/custom.css') }}">
 </head>
 
 <body>
@@ -32,7 +33,7 @@
               <h4 class="card-title">Add a new product to the menu</h4>
 
               <!-- Form  Start -->
-              <form class="admin-add-product" method="POST" action="{{ route('admin.addProducts') }}"
+              <form class="admin-edit-product" method="POST" action="{{ route('admin.addProducts') }}"
                 id="admin-add-product" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
