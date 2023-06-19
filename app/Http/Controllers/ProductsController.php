@@ -72,9 +72,11 @@ class ProductsController extends Controller
    * @param  \App\Models\Products  $products
    * @return \Illuminate\Http\Response
    */
-  public function edit(Products $products)
+  public function edit($id)
   {
     //
+    $product = Products::where('id', $id)->first();
+    return view('admin.pages.products.products-edit')->with(['product' => $product]);
   }
 
   /**
@@ -84,9 +86,28 @@ class ProductsController extends Controller
    * @param  \App\Models\Products  $products
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, Products $products)
+  public function update(Request $request, $id)
   {
     //
+    if (!$request->image) {
+      Products::where('id', $id)->limit(1)->update($request->except([
+        '_token',
+        '_method',
+        'image'
+      ]));
+    } else {
+      Products::where('id', $id)->limit(1)->update([
+        'name' => $request->name,
+        'price' => $request->price,
+        'item_description' => $request->item_description,
+        'category' => $request->category,
+        'image' => $this->storeImage($request) // Assign the image path to the 'image' colum
+      ]);
+    }
+
+    return redirect(route(
+      'admin.viewProducts'
+    ));
   }
 
   /**

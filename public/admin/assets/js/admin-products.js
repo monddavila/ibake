@@ -38,10 +38,6 @@ $(document).ready(function () {
         loadData($(this).data("sort"), sortDirection);
     });
 
-    $(".edit-product-btn").on("click", function (e) {
-        let productId = $(this).data("productid");
-    });
-
     $(".delete-product-btn").on("click", function () {
         var tableRow = $(this).closest("tr");
         let id = $(this).data("id");
@@ -98,8 +94,6 @@ $(document).ready(function () {
                 console.error(err);
             },
         });
-
-        $("#myInput").trigger("focus");
     });
 });
 
