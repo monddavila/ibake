@@ -38,8 +38,6 @@ $(document).ready(function () {
         loadData($(this).data("sort"), sortDirection);
     });
 
-
-
     $("#reset-search-btn").on("click", function () {
         // Remove sorting and indicator classes from all sortable columns
         $(".sortable")
@@ -50,12 +48,11 @@ $(document).ready(function () {
         $("#user-search-input").val("");
         location.reload();
     });
-
 });
 
 function loadData(sortBy = "updated_at", sortDirection = "asc") {
     const searchQuery = $("#user-search-input").val();
-
+    console.log(searchQuery);
     $.ajax({
         url: "/user/search",
         method: "GET",
@@ -65,7 +62,7 @@ function loadData(sortBy = "updated_at", sortDirection = "asc") {
             sortDirection: sortDirection,
         },
         success: function (res) {
-            $("#user-table").html(res.html);
+            $("#users-table-body").html(res.html);
         },
         error: function (err) {
             console.error(err);
