@@ -20,7 +20,7 @@ class AdminController extends Controller
 
   public function showAddUsersForm()
   {
-    return view('admin.pages.addusers');
+    return view('admin.pages.users-add');
   }
 
   public function addUser(Request $request)
