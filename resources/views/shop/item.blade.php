@@ -301,10 +301,14 @@
                 </div>
 
                 <!-- Cart Widget -->
-                <div id="cart-widget-container">
-                  @if ((Auth::check() && $hasCart) || session('notAuthCart') != [])
-                  @include('shop.cart-widget')
-                  @endif
+                <div class='sidebar-widget cart-widget' id="cart-widget-container">
+                  <div class="widget-content">
+                    <h3 class="widget-title">Cart</h3>
+                    <div class="shopping-cart">
+                      <h4>No Items in cart.</h4>
+                    </div>
+                    <!--end shopping-cart -->
+                  </div>
                 </div>
 
                 <!-- Tags Widget -->

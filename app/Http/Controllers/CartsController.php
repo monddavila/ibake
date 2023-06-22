@@ -63,24 +63,8 @@ class CartsController extends Controller
         foreach ($sessionCart as $item) {
           if ($item->productId == $cartItem->productId) {
             $item->quantity += $cartItem->quantity;
-
-            $userCart = count($sessionCart) > 2 ? array_slice(
-              $sessionCart,
-              0,
-              2
-            ) : $sessionCart;
-
-            $cartWidget = view('shop.cart-widget')
-              ->with([
-                'userCart' => $userCart,
-                'cartItemCount' => count($sessionCart)
-              ])
-              ->render();
-
             // Return cart widget partial with updated data
-            return response()->json([
-              'cartWidget' => $cartWidget
-            ]);
+            return $this->userCartWidget();
           }
         }
       }
@@ -89,22 +73,7 @@ class CartsController extends Controller
       $sessionCart[] = $cartItem;
       session(['notAuthCart' => $sessionCart]);
 
-      $userCart = count($sessionCart)  > 2 ? array_slice(
-        $sessionCart,
-        0,
-        2
-      ) : $sessionCart;
-
-      $cartWidget = view('shop.cart-widget')
-        ->with([
-          'userCart' => $userCart,
-          'cartItemCount' => count($sessionCart)
-        ])
-        ->render();
-
-      return response()->json([
-        'cartWidget' => $cartWidget,
-      ]);
+      return $this->userCartWidget();
     }
 
     // Get the user's cart, or create a new one if it doesn't exist
@@ -122,18 +91,7 @@ class CartsController extends Controller
     $cartItem = new CartItemsCtrl();
     $cartItem->index($cartId, $productId, $quantity);
 
-    $userCart = $this->userCart();
-
-    $cartWidget = view('shop.cart-widget')
-      ->with([
-        'userCart' => $userCart->take(2),
-        'cartItemCount' => count($userCart)
-      ])
-      ->render();
-
-    return response()->json([
-      'cartWidget' => $cartWidget
-    ]);
+    return $this->userCartWidget();
   }
 
 
@@ -217,6 +175,41 @@ class CartsController extends Controller
 
     return $userCart;
   }
+
+  public function userCartWidget()
+  {
+    if (Auth::check()) {
+      $cartItems = $this->userCart();
+      $cartWidget = view('shop.cart-widget')
+        ->with([
+          'userCart' => $cartItems->take(2),
+          'cartItemCount' => count($cartItems)
+        ])
+        ->render();
+      return response()->json(['cartWidget' => $cartWidget]);
+    } else {
+      // retrieve current session data
+      $sessionCart = session()->get('notAuthCart', []);
+
+      // Check if item is in cart
+      if (!empty($sessionCart)) {
+        // Get first two items
+        $userCart = count($sessionCart) > 2 ? array_slice($sessionCart, 0, 2) : $sessionCart;
+        $cartWidget = view('shop.cart-widget')
+          ->with([
+            'userCart' => $userCart,
+            'cartItemCount' => count($sessionCart)
+          ])
+          ->render();
+
+        // Return cart widget partial with updated data
+        return response()->json([
+          'cartWidget' => $cartWidget
+        ]);
+      }
+    }
+  }
+
 
 
 
