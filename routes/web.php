@@ -58,8 +58,6 @@ Route::group(['prefix' => 'user'], function () {
 
 /**
  * Products Section in Admin Dashboard
- * AdminProductsController is for frontend
- * ProductsController is for backend
  */
 Route::group(['prefix' => 'products'], function () {
   Route::get('/list', [ProductsController::class, 'index'])->name('admin.viewProducts');
@@ -88,7 +86,7 @@ Route::group(['prefix' => 'shop'], function () {
  */
 Route::group(['prefix' => 'cart'], function () {
   Route::middleware(['auth'])
-    ->get('/', [CartsController::class, 'show'])
+    ->get('/', [CartsController::class, 'index'])
     ->name('showCart');
   Route::get('/userCartWidget', [CartsController::class, 'userCartWidget'])
     ->name('userCartWidget');

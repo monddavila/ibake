@@ -29,6 +29,10 @@ $(document).ready(function () {
             },
         });
     });
+
+    $(".qty").on("input", function () {
+        updateQuantity($(this));
+    });
 });
 
 function loadCartWidget() {
@@ -51,14 +55,18 @@ function loadCartWidget() {
  * total item price
  *
  */
-function updateQuantity(e) {
-    e.preventDefault();
+function updateQuantity(item) {
     // Get cart item information
-    let quantity = $(e).val();
-    let productId = $(e).data("productid");
-    let cartId = $(e).data("cartid");
-    let productPrice = $(e).data("productprice");
-    let token = $(e).data("token");
+    let quantity = $(item).val();
+
+    if (quantity < 0) {
+        $(item).val(0);
+        return;
+    }
+    let productId = $(item).data("productid");
+    let cartId = $(item).data("cartid");
+    let productPrice = $(item).data("productprice");
+    let token = $(item).data("token");
     let total = quantity * productPrice;
 
     let totalPrice = 0;
@@ -73,7 +81,7 @@ function updateQuantity(e) {
             cartId: cartId,
             _token: token,
         },
-        success: function (response) {
+        success: function (res) {
             $(
                 'span.item-total-price[data-cartId="' +
                     cartId +
@@ -87,7 +95,6 @@ function updateQuantity(e) {
             });
             $("span.col.price").text("Php " + totalPrice);
             $("span.col.total-price").text("Php " + totalPrice);
-            console.log(totalPrice);
         },
         error: function (xhr) {
             // Handle error response
