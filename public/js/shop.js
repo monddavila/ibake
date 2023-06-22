@@ -2,16 +2,10 @@ $(document).ready(function () {
     loadCartWidget();
 
     $("#view-all-shop").on("click", function () {
-        $.ajax({
-            url: "/shop",
-            method: "GET",
-            success: function (res) {
-                console.log("reset");
-            },
-            error: function (err) {
-                console.error(err);
-            },
-        });
+        $("#min-price").val(0);
+        $("#max-price").val(1000);
+        $("select[name='sort-order']").val("");
+        location.reload();
     });
 
     $("#filter-shop").on("click", function () {
@@ -64,7 +58,6 @@ function loadShopItems(minPrice = 0, maxPrice = 1000, sortBy = "updated_at") {
 }
 
 function loadCartWidget() {
-    console.log("noice");
     $.ajax({
         url: "/cart/userCartWidget",
         method: "GET",

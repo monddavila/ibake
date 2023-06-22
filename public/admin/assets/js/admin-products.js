@@ -90,10 +90,8 @@ $(document).ready(function () {
                 imgPath: imgPath,
             },
             success: function (res) {
-                console.log(res);
                 $("#modal-title").html(productName);
                 $("#product-image").attr("src", res.imgPath);
-                console.log(res.imgPath);
             },
             error: function (err) {
                 console.error(err);
@@ -105,7 +103,6 @@ $(document).ready(function () {
 function loadData(sortBy = "updated_at", sortDirection = "asc") {
     const searchQuery = $("#product-search-input").val();
 
-    console.log(searchQuery, sortBy, sortDirection);
     $.ajax({
         url: "/products/search",
         method: "GET",
