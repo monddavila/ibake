@@ -54,19 +54,13 @@
                 <form method="post" action="{{ route('shop') }}">
                   @csrf
                   <div class="orderby">
-                    <select name="sort-order" class="sortby-select" onchange="this.form.submit()">
-                      {{-- <option value="" disabled {{ empty(session('sort-order')) ? 'selected' : '' }}>Sort by
-                      </option> --}}
-                      <option value="popularity" {{ session('sort-order')=='popularity' ? 'selected' : '' }}>Sort by
-                        popularity</option>
-                      <option value="rating" {{ session('sort-order')=='rating' ? 'selected' : '' }}>Sort by
-                        average rating</option>
-                      <option value="date" {{ session('sort-order')=='date' ? 'selected' : '' }}>Sort by newness
-                      </option>
-                      <option value="price-asc" {{ session('sort-order')=='price-asc' ? 'selected' : '' }}>Sort by
-                        price: low to high</option>
-                      <option value="price-desc" {{ session('sort-order')=='price-desc' ? 'selected' : '' }}>Sort by
-                        price: high to low</option>
+                    <select name="sort-order" class="sortby-select">
+                      <option value="" disabled>Sort by</option>
+                      <option value="popularity">Sort by popularity</option>
+                      <option value="rating">Sort by average rating</option>
+                      <option value="created_at">Sort by newness</option>
+                      <option value="price">Sort by price: low to high</option>
+                      <option value="price-desc">Sort by price: high to low</option>
                     </select>
 
                     <noscript>
@@ -74,36 +68,11 @@
                     </noscript>
                   </div>
                 </form>
-
-
               </div>
 
 
-              <div class="row clearfix">
-                @foreach ($products as $product)
-                <div class="shop-item col-lg-4 col-md-6 col-sm-12">
-                  <div class="inner-box">
-                    <div class="image-box">
-                      <figure class="image"><a href="{{ route('item', $product->id) }}"><img
-                            src="{{ asset($product->image) }}" alt=""></a>
-                      </figure>
-
-                      <div class="btn-box"><a href="{{ route('item', $product->id) }}">Add to
-                          cart</a>
-                      </div>
-                    </div>
-                    <div class="lower-content">
-                      <h4 class="name"><a href="shop-single.html">{{ $product->name }}</a>
-                      </h4>
-                      <div class="rating"><span class="fa fa-star"></span><span class="fa fa-star"></span><span
-                          class="fa fa-star"></span><span class="fa fa-star"></span><span
-                          class="fa fa-star light"></span>
-                      </div>
-                      <div class="price">Php {{ $product->price }}</div>
-                    </div>
-                  </div>
-                </div>
-                @endforeach
+              <div class="row clearfix product-cards-container">
+                @include('shop.shop-item-card')
               </div>
             </div>
           </div>
@@ -123,10 +92,14 @@
                 </div>
 
                 <!-- Cart Widget -->
-                <div id="cart-widget-container">
-                  @if ((Auth::check() && $hasCart) || session('notAuthCart') != [])
-                  @include('shop.cart-widget')
-                  @endif
+                <div class='sidebar-widget cart-widget' id="cart-widget-container">
+                  <div class="widget-content">
+                    <h3 class="widget-title">Cart</h3>
+                    <div class="shopping-cart">
+                      <h4>No Items in cart.</h4>
+                    </div>
+                    <!--end shopping-cart -->
+                  </div>
                 </div>
 
                 <!-- Range Slider Widget -->
@@ -136,42 +109,35 @@
 
                     <div class="range-slider-one clearfix">
                       <div class="clearfix">
-                        <form method="post" action="{{ route('shop') }}">
-                          @csrf
-                          <div class="pull-left input-box">
-                            <!-- Max Price Filter -->
-                            <div class="form-group">
-                              <x-label for="min-price" value="{{ __('Min. Price: ') }}" />
-                              <x-input id="min-price" class="block mt-1 w-full" type="text" name="min-price"
-                                value="{{ old('min-price', session('minPrice', 0)) }}" />
-                            </div>
-
-                            <!-- Max Price Filter -->
-                            <div class="form-group">
-                              <x-label for="max-price" value="{{ __('Max Price: ') }}" />
-                              <x-input id="max-price" class="block mt-1 w-full" type="text" name="max-price"
-                                value="{{ old('max-price', session('maxPrice', 1000)) }}" />
-                            </div>
+                        <div class="pull-left input-box">
+                          <!-- Max Price Filter -->
+                          <div class="form-group">
+                            <label for="min-price">Min. Price: </label>
+                            <input type="text" class="form-control" id="min-price" name="min-price"
+                              placeholder="Min. Price" value="0">
                           </div>
 
-                          {{-- Show an error if the min/max price entered is not numeric --}}
-                          @if ($errors->has('max-price') || $errors->has('min-price'))
-                          <span class="text-red-500">Please enter a numeric
-                            value</span>
-                          @endif
-
-
-                          <div class="pull-left
-                                                                btn-box">
-                            <button class="theme-btn" name="view-all" type="submit"><span class="btn-title">View
-                                All</span></button>
+                          <!-- Max Price Filter -->
+                          <div class="form-group">
+                            <label for="max-price">Min. Price: </label>
+                            <input type="text" class="form-control" id="max-price" name="max-price"
+                              placeholder="Max Price:" value="1000">
                           </div>
-                          <div class="pull-right
-                                                                btn-box">
-                            <button class="theme-btn" name="filter" type="submit"><span
-                                class="btn-title">Filtter</span></button>
-                          </div>
-                        </form>
+                        </div>
+
+                        {{-- Show an error if the min/max price entered is not numeric --}}
+                        @if ($errors->has('max-price') || $errors->has('min-price'))
+                        <span class="text-red-500">Please enter a numeric value</span>
+                        @endif
+
+                        <div class="pull-left btn-box">
+                          <button class="theme-btn" id="filter-shop" name="filter"><span
+                              class="btn-title">Filter</span></button>
+                        </div>
+                        <div class="pull-right btn-box">
+                          <button class="theme-btn" id="view-all-shop" name="view-all">
+                            <span class="btn-title">View All</span></button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -232,6 +198,7 @@
   <script src="js/select2.min.js"></script>
   <script src="js/sticky_sidebar.min.js"></script>
   <script src="js/script.js"></script>
+  <script src="{{ asset('js/shop.js') }}"></script>
 </body>
 
 </html>

@@ -78,6 +78,7 @@ Route::group(['prefix' => 'products'], function () {
  */
 Route::group(['prefix' => 'shop'], function () {
   Route::get('/', [ShopController::class, 'index'])->name('shop');
+  Route::get('/filterShop', [ShopController::class, 'filterShop'])->name('shop.filterShop');
   Route::post('/', [ShopController::class, 'index'])->name('shop');
   Route::get('/item/{id}', [ShopController::class, 'show'])->name('item');
 });
@@ -89,6 +90,8 @@ Route::group(['prefix' => 'cart'], function () {
   Route::middleware(['auth'])
     ->get('/', [CartsController::class, 'show'])
     ->name('showCart');
+  Route::get('/userCartWidget', [CartsController::class, 'userCartWidget'])
+    ->name('userCartWidget');
   Route::post('/add-to-cart', [CartsController::class, 'store'])
     ->name('addToCart');
   Route::middleware(['auth'])

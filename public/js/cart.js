@@ -1,3 +1,49 @@
+$(document).ready(function () {
+    loadCartWidget();
+
+    $("#addToCartForm").on("submit", function (e) {
+        e.preventDefault();
+        let formData = $(this).serialize();
+        console.log(formData);
+        let successMsg =
+            '<div class="alert alert-success" role="alert">Item successfully added to cart!</div>';
+        let failedMsg =
+            '<div class="alert alert-danger" role="alert">Failed to add item to cart!</div>';
+
+        $.ajax({
+            url: "/cart/add-to-cart",
+            type: "POST",
+            data: formData,
+            success: function (response) {
+                loadCartWidget();
+                $(".cart-msg-container").html(successMsg);
+
+                // Handle the response from the server
+            },
+            error: function (xhr, status, error) {
+                $(".cart-msg-container").html(failedMsg);
+                // Handle error response
+                console.log(xhr.responseJSON);
+                console.log("status: " + status);
+                console.log("error: " + error);
+            },
+        });
+    });
+});
+
+function loadCartWidget() {
+    $.ajax({
+        url: "/cart/userCartWidget",
+        method: "GET",
+        success: function (res) {
+            $(".shopping-cart").html(res.cartWidget);
+        },
+        error: function (err) {
+            console.error(err);
+        },
+    });
+}
+
 /**
  *  For updating the quantity of an itme
  * in the user cart page.
@@ -49,35 +95,3 @@ function updateQuantity(e) {
         },
     });
 }
-
-$(document).ready(function () {
-    $("#addToCartForm").on("submit", function (e) {
-        e.preventDefault();
-        let formData = $(this).serialize();
-        console.log(formData);
-        let successMsg =
-            '<div class="alert alert-success" role="alert">Item successfully added to cart!</div>';
-        let failedMsg =
-            '<div class="alert alert-danger" role="alert">Failed to add item to cart!</div>';
-
-        $.ajax({
-            url: "/cart/add-to-cart",
-            type: "POST",
-            data: formData,
-            success: function (response) {
-                console.log(`response\n` + JSON.stringify(response));
-                $("#cart-widget-container").html(response.cartWidget);
-                $(".cart-msg-container").html(successMsg);
-
-                // Handle the response from the server
-            },
-            error: function (xhr, status, error) {
-                $(".cart-msg-container").html(failedMsg);
-                // Handle error response
-                console.log(xhr.responseJSON);
-                console.log("status: " + status);
-                console.log("error: " + error);
-            },
-        });
-    });
-});
