@@ -1,7 +1,12 @@
 $(document).ready(function () {
     // Handle search input changes
     $("#product-search-input").on("input", function () {
-        // console.log($("#product-search-input").val());
+        // Remove sorting
+        $(".sortable")
+            .removeClass("ascending descending current-sort text-white")
+            .find(".sort-icon")
+            .remove();
+
         loadData();
     });
 
@@ -100,6 +105,7 @@ $(document).ready(function () {
 function loadData(sortBy = "updated_at", sortDirection = "asc") {
     const searchQuery = $("#product-search-input").val();
 
+    console.log(searchQuery, sortBy, sortDirection);
     $.ajax({
         url: "/products/search",
         method: "GET",

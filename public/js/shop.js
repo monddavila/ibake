@@ -45,7 +45,6 @@ function loadShopItems(minPrice = 0, maxPrice = 1000, sortBy = "updated_at") {
         sortOrder = "desc";
     }
 
-    console.log(minPrice, maxPrice, sortBy, sortOrder);
     $.ajax({
         url: "/shop/filterShop",
         method: "GET",
@@ -56,7 +55,6 @@ function loadShopItems(minPrice = 0, maxPrice = 1000, sortBy = "updated_at") {
             sortOrder: sortOrder,
         },
         success: function (res) {
-            console.log(res);
             $(".product-cards-container").html(res.shopItems);
         },
         error: function (err) {
