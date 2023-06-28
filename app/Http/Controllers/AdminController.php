@@ -7,6 +7,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\Role;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
@@ -39,7 +40,7 @@ class AdminController extends Controller
       'firstname' => 'required|string|max:255',
       'lastname' => 'required|string|max:255',
       'email' => 'required|string|email|max:255|unique:users',
-      'usertype' => 'required',
+      'role_id' => 'required',
       'phone' => 'required|string|unique:users',
       'address' => 'required|string|max:255',
       'password' => 'required|string|confirmed',
@@ -51,7 +52,7 @@ class AdminController extends Controller
       'firstname' => $request->input('firstname'),
       'lastname' => $request->input('lastname'),
       'email' => $request->input('email'),
-      'usertype' => $request->input('usertype'),
+      'usertype' => $request->input('role_id'),
       'password' => Hash::make($request->input('password')),
       'phone' => $request->input('phone'),
       'address' => $request->input('address'),
@@ -77,6 +78,41 @@ class AdminController extends Controller
     // Redirect to the user list or any other desired page
     return redirect()->route('user.list');
   }
+
+  public function editUser($id)
+  {
+    $user = User::findOrFail($id);
+    $role = $user->role;
+    $roles = role::all();
+
+
+    return view('admin.pages.users-edit', compact('user', 'role', 'roles'));
+  }
+
+  public function updateUser(Request $request, $id)
+  {
+    $user = User::find($id);
+
+    $user->firstname = $request->firstname;
+    $user->lastname = $request->lastname;
+    $user->email = $request->email;
+    $user->role_id = $request->role_id;
+    $user->phone = $request->phone;
+    $user->address = $request->address;
+
+    if (!empty($request->password)) {
+        $user->password = Hash::make($request->password);
+    }
+
+    $user->save();
+
+    // Optionally, you can add a success message to the session
+    session()->flash('message', 'User data updated successfully.');
+
+    return redirect()->back();
+  }
+
+
 
   public function searchUser(Request $request)
   {

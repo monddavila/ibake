@@ -21,12 +21,12 @@
 
             <span>
               @php
-              $userType = auth()->user()->usertype;
+              $userType = auth()->user()->role_id;
               @endphp
 
               @if ($userType == '1')
               <p>Adminstrator</p>
-              @elseif($userType == '2')
+              @elseif($userType == '3')
               <p>Manager</p>
               @else
               <p>Staff</p>

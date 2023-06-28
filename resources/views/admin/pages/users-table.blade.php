@@ -20,7 +20,7 @@ $count = 1;
         aria-expanded="false">Action</button>
       <div class="dropdown-menu">
         <a class="dropdown-item" href="#">Profile</a>
-        <a class="dropdown-item" href="#">Edit</a>
+        <a class="dropdown-item" href="{{ route('user.edit', ['id' => $user->id]) }}">Edit</a>
         <a class="dropdown-item" class="btn btn-danger"
           onclick="return confirm('Are you sure you want to delete this user?')"
           href="{{ route('user.delete', ['id' => $user->id]) }}">Delete</a>
