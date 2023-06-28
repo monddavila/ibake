@@ -84,11 +84,10 @@
                                     </div>
                                     <div class="form-group">
                                       <label for="account">Account Role</label>
-                                      <select class="form-control" id="account" name="usertype" style="width:30%">
-                                        <option value="0">Customer</option>
+                                      <select class="form-control" id="account" name="role_id" style="width:30%">
+                                        <option value="2">Customer</option>
                                         <option value="1">Admin</option>
-                                        <option value="2">Manager</option>
-                                        <option value="3">Staff</option>
+                                        <option value="3">Manager</option>
                                       </select>
                                     </div>
                                     <div class="form-group">
