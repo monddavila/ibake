@@ -37,7 +37,6 @@
                     aria-label="Search" aria-describedby="search-button">
                   <button class="btn btn-outline-secondary" type="button" id="reset-search-btn">Reset</button>
                 </div>
-                <div class="mt-2id=" product-list-msg"></div>
               </div>
               <div class="table-responsive">
                 <table class="table">

@@ -59,7 +59,7 @@ class HomeController extends Controller
 
   public function redirect()
   {
-    $usertype = Auth::user()->usertype;
+    $usertype = Auth::user()->role_id;
 
     /**Admin Account**/
     if ($usertype == '1') {

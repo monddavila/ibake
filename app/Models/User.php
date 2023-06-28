@@ -30,7 +30,7 @@ class User extends Authenticatable
     'phone',
     'address',
     'password',
-    'usertype',
+    'role_id',
   ];
 
   /**
@@ -67,4 +67,11 @@ class User extends Authenticatable
   {
     return $this->hasOne(Carts::class);
   }
+
+  public function role()
+  {
+    return $this->belongsTo(Role::class, 'role_id');
+  }
+
+
 }
