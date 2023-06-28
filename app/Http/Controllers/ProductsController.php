@@ -52,6 +52,9 @@ class ProductsController extends Controller
     $product->image = $this->storeImage($request); // Assign the image path to the 'image' column
     $product->save();
 
+     // Optionally, you can add a success message to the session
+     session()->flash('message', 'Product added successfully.');
+
     return redirect(route('admin.viewAddProducts'));
   }
 
