@@ -5,7 +5,7 @@
   <td>{{ $product->price }}</td>
   <td>{{ $product->category }}</td>
   <td>{{ $product->rating }}</td>
-  <td>TBD</td>
+  <td>{{ $product->availability ? 'Available' : 'Unavailable' }}</td>
   {{-- <td><a href="#"><i class="mdi mdi-image-area product-img"></i></a></td> --}}
   <td>
     <a href="{{ route('admin.viewEditProducts', $product->id) }}">
