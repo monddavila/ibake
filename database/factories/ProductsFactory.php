@@ -23,6 +23,7 @@ class ProductsFactory extends Factory
       'item_description' => $this->faker->sentence(50),
       'category' => $this->faker->randomElement($categories),
       'rating' => $this->faker->numberBetween(1, 5),
+      'rating' => $this->faker->boolean(),
       'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
       'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
     ];
