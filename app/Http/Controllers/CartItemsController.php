@@ -18,19 +18,7 @@ class CartItemsController extends Controller
   public function index($cartId, $productId, $quantity)
   {
     //
-    $itemExists = CartItems::where('cart_id', $cartId)
-      ->where('product_id', $productId)
-      ->exists();
 
-    $item = CartItems::where('cart_id', $cartId)
-      ->where('product_id', $productId)
-      ->first();
-
-    if ($itemExists) {
-      return $this->update($item, $quantity);
-    } else {
-      return $this->create($cartId, $productId, $quantity);
-    }
   }
 
   /**
@@ -59,11 +47,19 @@ class CartItemsController extends Controller
   public function store($cartId, $productId, $quantity)
   {
     //
-    return CartItems::create([
-      'cart_id' => $cartId,
-      'product_id' => $productId,
-      'quantity' => $quantity
-    ]);
+    $itemExists = CartItems::where('cart_id', $cartId)
+      ->where('product_id', $productId)
+      ->exists();
+
+    $item = CartItems::where('cart_id', $cartId)
+      ->where('product_id', $productId)
+      ->first();
+
+    if ($itemExists) {
+      $this->update($item, $quantity);
+    } else {
+      $this->create($cartId, $productId, $quantity);
+    }
   }
 
   /**

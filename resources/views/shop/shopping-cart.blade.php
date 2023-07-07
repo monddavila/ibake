@@ -54,34 +54,36 @@
                   <h1>No Items yet</h1>
                 </tr>
                 @else
-                @foreach ($cartItems as $cartItem)
-                <tr class="cart-item">
-                  <td class="product-thumbnail"><a href="shop-single.html"><img src="{{ asset($cartItem->image) }}"
-                        alt=""></a>
-                  </td>
-                  <td class="product-name"><a href="shop-single.html">{{ $cartItem->name }}</a>
-                  </td>
-                  <td class="product-price">Php {{ $cartItem->price }}</td>
-                  <td class="product-quantity">
-                    <div class="quantity"><label>Quantity</label>
-                      <input type="number" class="qty" name="quantity" value="{{ $cartItem->quantity }}"
-                        data-cartId="{{ $cartItem->cart_id }}" data-productId="{{ $cartItem->product_id }}"
-                        data-productPrice="{{ $cartItem->price }}" data-token="{{ csrf_token() }}"
-                        onchange="updateQuantity(this)">
-                    </div>
-                  </td>
-                  <td class="product-subtotal"><span class="amount item-total-price"
-                      data-cartId="{{ $cartItem->cart_id }}" data-productId="{{ $cartItem->product_id }}">Php
-                      {{ $cartItem->quantity * $cartItem->price }}</span></td>
-                  <td class="product-remove">
-                    <form action="{{ route('removeItem', [$cartItem->product_id, $cartItem->cart_id]) }}" method="post">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="remove"><span class="fa fa-times"></span></button>
-                    </form>
-                  </td>
-                </tr>
-                @endforeach
+                <div class="cart-items">
+                  @foreach ($cartItems as $cartItem)
+                  <tr class="cart-item">
+                    <td class="product-thumbnail"><a href="{{ route('item', $cartItem->product_id) }}"><img
+                          src="{{ asset($cartItem->image) }}" alt=""></a>
+                    </td>
+                    <td class="product-name"><a href="shop-single.html">{{ $cartItem->name }}</a>
+                    </td>
+                    <td class="product-price">Php {{ $cartItem->price }}</td>
+                    <td class="product-quantity">
+                      <div class="quantity"><label>Quantity</label>
+                        <input type="number" class="qty" name="quantity" value="{{ $cartItem->quantity }}"
+                          data-cartId="{{ $cartItem->cart_id }}" data-productId="{{ $cartItem->product_id }}"
+                          data-productPrice="{{ $cartItem->price }}" data-token="{{ csrf_token() }}">
+                      </div>
+                    </td>
+                    <td class="product-subtotal"><span class="amount item-total-price"
+                        data-cartId="{{ $cartItem->cart_id }}" data-productId="{{ $cartItem->product_id }}">Php
+                        {{ $cartItem->quantity * $cartItem->price }}</span></td>
+                    <td class="product-remove">
+                      <form action="{{ route('removeItem', [$cartItem->product_id, $cartItem->cart_id]) }}"
+                        method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="remove"><span class="fa fa-times"></span></button>
+                      </form>
+                    </td>
+                  </tr>
+                  @endforeach
+                </div>
                 @endif
               </tbody>
             </table>

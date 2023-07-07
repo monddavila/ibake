@@ -22,6 +22,22 @@ class CartsController extends Controller
 
   public function index(Request $request)
   {
+    if (!Carts::where('user_id', auth()->user()->id)->exists()) {
+      return view('shop.shopping-cart')->with([
+        'cartItems' => false
+      ]);
+    }
+
+    $cartItems = $this->userCart();
+    $totalPrice = 0;
+    foreach ($cartItems as $cartItem) {
+      # code...
+      $totalPrice += ($cartItem->price * $cartItem->quantity);
+    }
+    return view('shop.shopping-cart')->with([
+      'cartItems' => $cartItems,
+      'totalPrice' => $totalPrice
+    ]);
   }
 
   /**
@@ -32,9 +48,6 @@ class CartsController extends Controller
   public function create($userId)
   {
     //
-    return Carts::create([
-      'user_id' => $userId,
-    ]);
   }
 
   /**
@@ -80,7 +93,7 @@ class CartsController extends Controller
     $cart = Carts::where('user_id', auth()->user()->id)->first();
     if (!$cart) {
       $userId = auth()->user()->id;
-      $cart = $this->create($userId);
+      $cart = Carts::create(['user_id' => $userId]);
     }
 
     // Get the product and quantity from the request
@@ -89,7 +102,7 @@ class CartsController extends Controller
     $quantity = $request->qty;
 
     $cartItem = new CartItemsCtrl();
-    $cartItem->index($cartId, $productId, $quantity);
+    $cartItem->store($cartId, $productId, $quantity);
 
     return $this->userCartWidget();
   }
@@ -104,22 +117,7 @@ class CartsController extends Controller
   public function show()
   {
     //
-    if (!Carts::where('user_id', auth()->user()->id)->exists()) {
-      return view('shop.shopping-cart')->with([
-        'cartItems' => false
-      ]);
-    }
 
-    $cartItems = $this->userCart();
-    $totalPrice = 0;
-    foreach ($cartItems as $cartItem) {
-      # code...
-      $totalPrice += ($cartItem->price * $cartItem->quantity);
-    }
-    return view('shop.shopping-cart')->with([
-      'cartItems' => $cartItems,
-      'totalPrice' => $totalPrice
-    ]);
   }
 
   /**
