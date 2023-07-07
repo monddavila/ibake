@@ -24,20 +24,21 @@ class CartsController extends Controller
   {
     if (!Carts::where('user_id', auth()->user()->id)->exists()) {
       return view('shop.shopping-cart')->with([
-        'cartItems' => false
+        'cartItems' => false,
+        'totalPrice' => 0
+      ]);
+    } else {
+      $cartItems = $this->userCart();
+      $totalPrice = 0;
+      foreach ($cartItems as $cartItem) {
+        # code...
+        $totalPrice += ($cartItem->price * $cartItem->quantity);
+      }
+      return view('shop.shopping-cart')->with([
+        'cartItems' => $cartItems,
+        'totalPrice' => $totalPrice
       ]);
     }
-
-    $cartItems = $this->userCart();
-    $totalPrice = 0;
-    foreach ($cartItems as $cartItem) {
-      # code...
-      $totalPrice += ($cartItem->price * $cartItem->quantity);
-    }
-    return view('shop.shopping-cart')->with([
-      'cartItems' => $cartItems,
-      'totalPrice' => $totalPrice
-    ]);
   }
 
   /**

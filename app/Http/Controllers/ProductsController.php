@@ -106,9 +106,7 @@ class ProductsController extends Controller
       ]);
     }
 
-    return redirect(route(
-      'admin.viewProducts'
-    ));
+    return redirect(route('admin.viewProducts'));
   }
 
   /**

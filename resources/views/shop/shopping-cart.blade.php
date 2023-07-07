@@ -112,7 +112,7 @@
             <!--Totals Table-->
             <ul class="totals-table">
               <li>
-                <h3>Cart Totals</h3>
+                <h3>Cart Total</h3>
               </li>
               <li class="clearfix"><span class="col">Subtotal</span><span class="col price">Php
                   {{ $totalPrice }}</span>

@@ -32,7 +32,7 @@ class ShopController extends Controller
 
   public function index(Request $request)
   {
-    $products = Products::get();
+    $products = Products::where('availability', 1)->get();
     $productTags = Products::select('category')->distinct()->get();
     return view('shop.shop')->with([
       'products' => $products,
@@ -44,7 +44,7 @@ class ShopController extends Controller
   public function show($id)
   {
     // Product Tags
-    $productTags = Products::select('category')->distinct()->get();
+    $productTags = Products::where('availability', 1)->select('category')->distinct()->get();
 
     return view('shop.item')
       ->with([
@@ -56,7 +56,8 @@ class ShopController extends Controller
   function filterShop(Request $request)
   {
 
-    $products = Products::whereBetween('price', [$request->minPrice, $request->maxPrice])
+    $products = Products::where('availability', 1)
+      ->whereBetween('price', [$request->minPrice, $request->maxPrice])
       ->orderBy($request->sortBy, $request->sortOrder)
       ->get();
 

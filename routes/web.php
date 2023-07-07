@@ -10,9 +10,9 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CartItemsController;
 use App\Http\Controllers\CartsController;
+use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ShopController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -103,6 +103,12 @@ Route::group(['prefix' => 'cart'], function () {
     ->name('removeItem');
 });
 
+
+Route::group(['prefix' => 'checkout'], function () {
+  Route::middleware(['auth'])
+    ->get('/', [OrdersController::class, 'index'])
+    ->name('checkout');
+});
 
 /**
  * Login and Register Routes
