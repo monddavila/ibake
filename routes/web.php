@@ -106,8 +106,12 @@ Route::group(['prefix' => 'cart'], function () {
 
 Route::group(['prefix' => 'checkout'], function () {
   Route::middleware(['auth'])
-    ->get('/', [OrdersController::class, 'index'])
+    ->get('/', [OrdersController::class, 'create'])
     ->name('checkout');
+
+  Route::middleware(['auth'])
+    ->post('/createOrder', [OrdersController::class, 'store'])
+    ->name('createOrder');
 });
 
 /**

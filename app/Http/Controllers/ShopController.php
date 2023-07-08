@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class ShopController extends Controller
 {
   // Define the getSessionData function
-  private function getSessionData()
+  /* private function getSessionData()
   {
     $minPrice = session('minPrice', 0);
     $maxPrice = session('maxPrice', 1000);
@@ -20,7 +20,7 @@ class ShopController extends Controller
     $sortOrder = session('sortOrder', 'asc');
 
     return [$minPrice, $maxPrice, $orderBy, $sortOrder];
-  }
+  } */
 
   /**
    * Display the shop page with items filtered by price range and sorted by the selected order.

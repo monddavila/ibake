@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Bellaria - a Delicious Cakes and Bakery HTML Template | Checkout</title>
+  <title>iBake - Tiers of Joy | Checkout</title>
 
   <!-- Stylesheets -->
   @include('partials.head')
@@ -44,27 +44,21 @@
         </div> --}}
 
         <!--Checkout Details-->
-        <div class="checkout-form">
-          <form method="post" action="#">
+        <div class="checkout-form-container">
+          <div class="sec-title">
+            <h3>Checkout details</h3>
+          </div>
+          <form method="POST" action="{{ route('createOrder') }}" class="checkout-form">
+            @CSRF
             <div class="row clearfix">
               <!--Column-->
               <div class="column col-lg-6 col-md-12 col-sm-12">
                 <div class="inner-column">
-                  <div class="sec-title">
-                    <h3>Checkout details</h3>
-                  </div>
-
                   <!--Form Group-->
                   <div class="form-group">
                     <div class="field-label">Recipient's Name <sup>*</sup></div>
                     <input type="text" name="recipient_name" value="{{ $user->firstname . ' ' . $user->lastname }}"
                       placeholder="">
-                  </div>
-
-                  <!--Form Group-->
-                  <div class="form-group">
-                    <div class="field-label">Phone Number <sup>*</sup></div>
-                    <input type="text" name="recipient_phone" value="{{ $user->phone }}" placeholder="">
                   </div>
 
                   <!--Form Group-->
@@ -76,25 +70,19 @@
                   <!--Form Group-->
                   <div class="form-group">
                     <div class="field-label">Town / City <sup>*</sup></div>
-                    <input type="text" name="town" value="" placeholder="" required="">
+                    <input type="text" name="town" value="" placeholder="">
                   </div>
 
                   <!--Form Group-->
                   <div class="form-group">
                     <div class="field-label">Province <sup>*</sup></div>
-                    <input type="text" name="province" value="" placeholder="" required="">
+                    <input type="text" name="province" value="" placeholder="">
                   </div>
 
                   <!--Form Group-->
                   <div class="form-group">
                     <div class="field-label">Postcode/ ZIP <sup>*</sup></div>
-                    <input type="text" name="postcode" value="" placeholder="" required="">
-                  </div>
-
-                  <!--Form Group-->
-                  <div class="form-group">
-                    <div class="field-label">Email Address</div>
-                    <input type="text" name="email" value="" placeholder="">
+                    <input type="text" name="postcode" value="" placeholder="">
                   </div>
                 </div>
               </div>
@@ -102,19 +90,39 @@
               <!--Column-->
               <div class="column col-lg-6 col-md-12 col-sm-12">
                 <div class="inner-column">
-                  <div class="sec-title">
-                    <h3>Additional information</h3>
+                  <!--Form Group-->
+                  <div class="form-group">
+                    <div class="field-label">Email Address <sup>*</sup></div>
+                    <input type="text" name="recipient_email" value="{{ $user->email }}" placeholder="">
+                  </div>
+
+                  <!--Form Group-->
+                  <div class="form-group">
+                    <div class="field-label">Phone Number <sup>*</sup></div>
+                    <input type="text" name="recipient_phone" value="{{ $user->phone }}" placeholder="">
+                  </div>
+
+                  <!--Form Group-->
+                  <div class="form-group ">
+                    <div class="field-label">Delivery Date <sup>*</sup></div>
+                    <input type="date" id="delivery-date" name="delivery_date">
+                  </div>
+
+                  <!--Form Group-->
+                  <div class="form-group">
+                    <div class="field-label">Delivery Time <sup>*</sup></div>
+                    <input type="time" id="delivery-time" name="delivery_time" value="09:30">
                   </div>
 
                   <!--Form Group-->
                   <div class="form-group ">
                     <div class="field-label">Order notes (optional)</div>
-                    <textarea class="" placeholder="Notes about your order,e.g. special notes for delivery."></textarea>
+                    <textarea class="" name="order_notes"
+                      placeholder="Notes about your order,e.g. special notes for delivery."></textarea>
                   </div>
                 </div>
               </div>
             </div>
-          </form>
         </div>
         <!--End Checkout Details-->
 
@@ -160,7 +168,7 @@
               <ul>
                 <li>
                   <div class="radio-option">
-                    <input type="radio" name="payment-group" id="payment-2" checked>
+                    <input type="radio" name="payment_method" id="payment-2" value="Bank Transfer" checked>
                     <label for="payment-2"><strong>Direct Bank Transfer</strong><span class="small-text">Make your
                         payment directly into our bank account. Please use your Order ID as the payment reference. Your
                         order won’t be shipped until the funds have cleared in our account.</span></label>
@@ -168,7 +176,7 @@
                 </li>
                 <li>
                   <div class="radio-option">
-                    <input type="radio" name="payment-group" id="payment-1">
+                    <input type="radio" name="payment_method" id="payment-1" value="Check Payment">
                     <label for="payment-1"><strong>Check Payments</strong><span class="small-text">Make your payment
                         directly into our bank account. Please use your Order ID as the payment reference. Your order
                         won’t be shipped until the funds have cleared in our account.</span></label>
@@ -177,7 +185,7 @@
 
                 <li>
                   <div class="radio-option">
-                    <input type="radio" name="payment-group" id="payment-3">
+                    <input type="radio" name="payment_method" id="payment-3" value="Cash on Delivery">
                     <label for="payment-3"><strong>Cash on Delivery</strong><span class="small-text">Make your payment
                         directly into our bank account. Please use your Order ID as the payment reference. Your order
                         won’t be shipped until the funds have cleared in our account.</span></label>
@@ -189,9 +197,11 @@
             </div>
           </div>
           <div class="lower-box">
-            <a href="#" class="theme-btn"><span class="btn-title">Place Order</span></a>
+            <button type="submit" class="theme-btn" id="checkout-btn"><span class="btn-title">Place
+                Order</span></button>
           </div>
         </div>
+        </form>
         <!--End Payment Box-->
       </div>
     </section>
@@ -216,6 +226,7 @@
   <script src="js/select2.min.js"></script>
   <script src="js/sticky_sidebar.min.js"></script>
   <script src="js/script.js"></script>
+  <script src="{{ asset('js/checkout.js') }}"></script>
 </body>
 
 </html>

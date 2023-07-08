@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Orders;
 use App\Http\Requests\StoreOrdersRequest;
 use App\Http\Requests\UpdateOrdersRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrdersController extends Controller
@@ -17,8 +18,7 @@ class OrdersController extends Controller
   public function index()
   {
     //
-    $user = Auth::user();
-    return view('checkout.checkout')->with(['user' => $user]);
+
   }
 
   /**
@@ -29,6 +29,8 @@ class OrdersController extends Controller
   public function create()
   {
     //
+    $user = Auth::user();
+    return view('checkout.checkout')->with(['user' => $user]);
   }
 
   /**
@@ -40,6 +42,24 @@ class OrdersController extends Controller
   public function store(StoreOrdersRequest $request)
   {
     //
+    $validated = $request->validated();
+
+    $address = $request->street_address . ', ' . $request->town . ',' . $request->province . ',' . $request->postcode;
+    Orders::create([
+      'user_id' => Auth::id(),
+      'recipient_name' => $request->recipient_name,
+      'recipient_phone' => $request->recipient_phone,
+      'recipient_email' => $request->recipient_email,
+      'delivery_date' => $request->delivery_date,
+      'delivery_time' => $request->delivery_time,
+      'delivery_address' => $address,
+      'total_price' => 100,
+      'payment_method' => $request->payment_method,
+      'notes' => $request->order_notes,
+    ]);
+
+
+    return view('checkout.asd')->with(['request' => $request]);
   }
 
   /**
