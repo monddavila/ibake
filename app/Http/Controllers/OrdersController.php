@@ -151,4 +151,19 @@ class OrdersController extends Controller
   {
     //
   }
+
+  public function ordersDashboard()
+  {
+    $orders = Orders::get();
+    $orders = Orders::orderBy('delivery_date')
+      ->take(5)
+      ->get()
+      // copy 'created_at' column to 'order_date' with Y-m-d format 
+      ->map(function ($order) {
+        $order->order_date = $order->created_at->format('Y-m-d');
+        return $order;
+      });;
+
+    return response()->json(['orders' => $orders]);
+  }
 }
