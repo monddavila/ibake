@@ -59,16 +59,21 @@ class HomeController extends Controller
 
   public function redirect()
   {
-    $usertype = Auth::user()->role_id;
+    if (!Auth::check()) {
+      return view('home');
+    }
 
-    /**Admin Account**/
+    return Auth::user()->role_id == '1' ? view('admin.home') : view('home');
+
+    /* $usertype = Auth::user()->role_id;
+    // Admin Account
     if ($usertype == '1') {
       return view('admin.home');
     }
 
-    /**Other Accounts - will include guest, manager and bakers separately**/
+    // Other Accounts - will include guest, manager and bakers separately
     else {
       return view('home');
-    }
+    } */
   }
 }

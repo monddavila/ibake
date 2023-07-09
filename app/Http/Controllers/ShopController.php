@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class ShopController extends Controller
 {
   // Define the getSessionData function
-  private function getSessionData()
+  /* private function getSessionData()
   {
     $minPrice = session('minPrice', 0);
     $maxPrice = session('maxPrice', 1000);
@@ -20,7 +20,7 @@ class ShopController extends Controller
     $sortOrder = session('sortOrder', 'asc');
 
     return [$minPrice, $maxPrice, $orderBy, $sortOrder];
-  }
+  } */
 
   /**
    * Display the shop page with items filtered by price range and sorted by the selected order.
@@ -32,7 +32,7 @@ class ShopController extends Controller
 
   public function index(Request $request)
   {
-    $products = Products::get();
+    $products = Products::where('availability', 1)->get();
     $productTags = Products::select('category')->distinct()->get();
     return view('shop.shop')->with([
       'products' => $products,
@@ -44,7 +44,7 @@ class ShopController extends Controller
   public function show($id)
   {
     // Product Tags
-    $productTags = Products::select('category')->distinct()->get();
+    $productTags = Products::where('availability', 1)->select('category')->distinct()->get();
 
     return view('shop.item')
       ->with([
@@ -56,7 +56,8 @@ class ShopController extends Controller
   function filterShop(Request $request)
   {
 
-    $products = Products::whereBetween('price', [$request->minPrice, $request->maxPrice])
+    $products = Products::where('availability', 1)
+      ->whereBetween('price', [$request->minPrice, $request->maxPrice])
       ->orderBy($request->sortBy, $request->sortOrder)
       ->get();
 

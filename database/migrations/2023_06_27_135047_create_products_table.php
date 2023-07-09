@@ -16,11 +16,12 @@ return new class extends Migration
     Schema::create('products', function (Blueprint $table) {
       $table->id();
       $table->string('name')->unique();
-      $table->integer('price');
+      $table->unsignedBigInteger('price');
+      $table->string('image')->nullable();
       $table->text('item_description');
       $table->text('category');
       $table->float('rating')->default(0);
-      $table->string('image')->nullable();
+      $table->boolean('availability')->default(false);
       $table->timestamps(); // Adds created_at and updated_at columns
     });
   }

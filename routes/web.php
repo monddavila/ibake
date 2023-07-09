@@ -10,9 +10,9 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CartItemsController;
 use App\Http\Controllers\CartsController;
+use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ShopController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -84,6 +84,10 @@ Route::group(['prefix' => 'shop'], function () {
   Route::get('/item/{id}', [ShopController::class, 'show'])->name('item');
 });
 
+Route::group(['prefix' => 'orders'], function () {
+  Route::get('/dashboard', [OrdersController::class, 'ordersDashboard']);
+});
+
 /**
  * Cart Section in Customer side
  */
@@ -103,6 +107,15 @@ Route::group(['prefix' => 'cart'], function () {
     ->name('removeItem');
 });
 
+
+Route::group(['prefix' => 'checkout'], function () {
+  Route::middleware(['auth'])
+    ->get('/', [OrdersController::class, 'create'])
+    ->name('checkout');
+  Route::middleware(['auth'])
+    ->post('/createOrder', [OrdersController::class, 'store'])
+    ->name('createOrder');
+});
 
 /**
  * Login and Register Routes

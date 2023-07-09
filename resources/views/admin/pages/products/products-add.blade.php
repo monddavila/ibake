@@ -79,6 +79,14 @@
                                 rows="10"></textarea>
                             </td>
                           </tr>
+                          <tr>
+                            <td class="add-product-td">
+                              <input type="checkbox" name="is_available" value="1" checked
+                                style="vertical-align: middle; height: 20px; width: 20px">
+                              <label for="is_available"
+                                style="font-size: 1.2rem; vertical-align: middle;">Available</label>
+                            </td>
+                          </tr>
                         </tbody>
                       </table>
                     </div>
