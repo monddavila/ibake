@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Orders;
 use App\Http\Requests\StoreOrdersRequest;
 use App\Http\Requests\UpdateOrdersRequest;
+use App\Http\Controllers\CartsController;
+use App\Http\Controllers\OrderItemsController;
+use App\Models\OrderItems;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,7 +33,31 @@ class OrdersController extends Controller
   {
     //
     $user = Auth::user();
-    return view('checkout.checkout')->with(['user' => $user]);
+    $cartItems = (new CartsController())->userCart();
+    $totalPrice = 0;
+    foreach ($cartItems as $cartItem) {
+      # code...
+      $totalPrice += ($cartItem->price * $cartItem->quantity);
+    }
+    /*     $userCart = (new CartsController())->userCart();
+    order_id
+    product_id
+    price
+    quantity
+
+ 
+        'cart_items.cart_id',
+        'cart_items.product_id',
+        'cart_items.quantity',
+        'products.name',
+        'products.price',
+        'products.image' */
+
+    return view('checkout.checkout')->with([
+      'user' => $user,
+      'cartItems' => $cartItems,
+      'totalPrice' => $totalPrice
+    ]);
   }
 
   /**
@@ -45,7 +72,15 @@ class OrdersController extends Controller
     $validated = $request->validated();
 
     $address = $request->street_address . ', ' . $request->town . ',' . $request->province . ',' . $request->postcode;
-    Orders::create([
+    $cartItems = (new CartsController())->userCart();
+
+    $totalPrice = 0;
+    foreach ($cartItems as $cartItem) {
+      # code...
+      $totalPrice += ($cartItem->price * $cartItem->quantity);
+    }
+
+    $order = Orders::create([
       'user_id' => Auth::id(),
       'recipient_name' => $request->recipient_name,
       'recipient_phone' => $request->recipient_phone,
@@ -53,13 +88,23 @@ class OrdersController extends Controller
       'delivery_date' => $request->delivery_date,
       'delivery_time' => $request->delivery_time,
       'delivery_address' => $address,
-      'total_price' => 100,
+      'total_price' => $totalPrice,
       'payment_method' => $request->payment_method,
       'notes' => $request->order_notes,
     ]);
 
+    $orderItem = new OrderItemsController();
+    $orderId = $order->id;
+    foreach ($cartItems as $cartItem) {
+      $productId = $cartItem->product_id;
+      $price = $cartItem->price;
+      $quantity = $cartItem->quantity;
+      $orderItem->store($orderId, $productId, $price, $quantity);
+    }
 
-    return view('checkout.asd')->with(['request' => $request]);
+    return view('checkout.asd')->with([
+      'request' => $order,
+    ]);
   }
 
   /**

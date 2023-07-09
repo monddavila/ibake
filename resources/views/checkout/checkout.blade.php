@@ -136,24 +136,26 @@
               </tr>
             </thead>
             <tbody>
+              @foreach ($cartItems as $cartItem)
               <tr class="cart-item">
-                <td class="product-name">French Macaroon&nbsp;
-                  <strong class="product-quantity">× 1</strong>
+                <td class="product-name">{{ $cartItem->name }}&nbsp;
+                  <strong class="product-quantity">× {{ $cartItem->quantity }}</strong>
                 </td>
                 <td class="product-total">
-                  <span class="woocommerce-Price-amount amount"><span
-                      class="woocommerce-Price-currencySymbol">$</span>84.00</span>
+                  <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">Php
+                    </span>{{ $cartItem->price * $cartItem->quantity }}</span>
                 </td>
               </tr>
+              @endforeach
             </tbody>
             <tfoot>
-              <tr class="cart-subtotal">
+              {{-- <tr class="cart-subtotal">
                 <th>Subtotal</th>
-                <td><span class="amount">$186.00</span></td>
-              </tr>
+                <td><span class="amount">Php {{ $totalPrice }}</span></td>
+              </tr> --}}
               <tr class="order-total">
                 <th>Total</th>
-                <td><strong class="amount">$186.00</strong> </td>
+                <td><strong class="amount">Php {{ $totalPrice }}</strong> </td>
               </tr>
             </tfoot>
           </table>
