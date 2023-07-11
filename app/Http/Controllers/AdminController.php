@@ -91,27 +91,45 @@ class AdminController extends Controller
 
   public function updateUser(Request $request, $id)
   {
-    $user = User::find($id);
+          $user = User::find($id);
 
-    $user->firstname = $request->firstname;
-    $user->lastname = $request->lastname;
-    $user->email = $request->email;
-    $user->role_id = $request->role_id;
-    $user->phone = $request->phone;
-    $user->address = $request->address;
+          $request->validate([
+              'firstname' => 'required|string|max:255',
+              'lastname' => 'required|string|max:255',
+              'email' => [
+                  'required',
+                  'string',
+                  'email',
+                  'max:255',
+                  Rule::unique('users')->ignore($user->id),
+              ],
+              'role_id' => 'required',
+              'phone' => [
+                  'required',
+                  'string',
+                  Rule::unique('users')->ignore($user->id),
+              ],
+              'address' => 'required|string|max:255',
+              'password' => 'nullable|string|confirmed',
+          ]);
 
-    if (!empty($request->password)) {
-        $user->password = Hash::make($request->password);
-    }
+          $user->firstname = $request->firstname;
+          $user->lastname = $request->lastname;
+          $user->email = $request->email;
+          $user->role_id = $request->role_id;
+          $user->phone = $request->phone;
+          $user->address = $request->address;
 
-    $user->save();
+          if (!empty($request->password)) {
+              $user->password = Hash::make($request->password);
+          }
 
-    // Optionally, you can add a success message to the session
-    session()->flash('message', 'User data updated successfully.');
+          $user->save();
 
-    return redirect()->back();
-  }
+          session()->flash('message', 'User data updated successfully.');
 
+          return redirect()->back();
+  }      
 
 
   public function searchUser(Request $request)
@@ -140,3 +158,5 @@ class AdminController extends Controller
     return response()->json(['html' => $html]);
   }
 }
+
+?>

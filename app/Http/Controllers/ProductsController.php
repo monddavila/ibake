@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductsRequest;
 use App\Models\Products;
+use App\Models\Categories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -165,4 +166,15 @@ class ProductsController extends Controller
     $stored = $request->file('image')->move($directory, $newImgName);
     return $stored;
   }
+
+  public function viewCategories()
+  {
+    //
+    $categories = DB::table('categories')->get();
+
+    return view('admin.pages.products.products-category')->with(
+      ['products' => $categories]
+    );
+  }
+
 }
