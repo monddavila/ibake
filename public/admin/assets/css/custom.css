@@ -31,6 +31,18 @@ th {
     color: white;
 }
 
+.submit-btn {
+    margin-right: 10px;
+}
+
+.add-product-td {
+    border: none;
+}
+
+.product-input-label {
+    margin-bottom: 5px;
+}
+
 #product-image {
     height: auto;
     width: 100%;

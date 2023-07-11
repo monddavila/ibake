@@ -1,7 +1,12 @@
 $(document).ready(function () {
     // Handle search input changes
     $("#product-search-input").on("input", function () {
-        // console.log($("#product-search-input").val());
+        // Remove sorting
+        $(".sortable")
+            .removeClass("ascending descending current-sort text-white")
+            .find(".sort-icon")
+            .remove();
+
         loadData();
     });
 
@@ -85,10 +90,8 @@ $(document).ready(function () {
                 imgPath: imgPath,
             },
             success: function (res) {
-                console.log(res);
                 $("#modal-title").html(productName);
                 $("#product-image").attr("src", res.imgPath);
-                console.log(res.imgPath);
             },
             error: function (err) {
                 console.error(err);
@@ -116,3 +119,19 @@ function loadData(sortBy = "updated_at", sortDirection = "asc") {
         },
     });
 }
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $("#product-img-tag").attr("src", e.target.result);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$("#product-img-upload").change(function () {
+    readURL(this);
+});

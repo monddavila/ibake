@@ -48,9 +48,10 @@ class ProductsController extends Controller
     $product = new Products();
     $product->name = $request->name;
     $product->price = $request->price;
+    $product->image = $this->storeImage($request); // Assign the image path to the 'image' column
     $product->item_description = $request->item_description;
     $product->category = $request->category;
-    $product->image = $this->storeImage($request); // Assign the image path to the 'image' column
+    $product->availability = $request->has('is_available');
     $product->save();
 
      // Optionally, you can add a success message to the session
@@ -109,9 +110,7 @@ class ProductsController extends Controller
       ]);
     }
 
-    return redirect(route(
-      'admin.viewProducts'
-    ));
+    return redirect(route('admin.viewProducts'));
   }
 
   /**

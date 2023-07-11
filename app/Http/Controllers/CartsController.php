@@ -22,6 +22,23 @@ class CartsController extends Controller
 
   public function index(Request $request)
   {
+    if (!Carts::where('user_id', auth()->user()->id)->exists()) {
+      return view('shop.shopping-cart')->with([
+        'cartItems' => false,
+        'totalPrice' => 0
+      ]);
+    } else {
+      $cartItems = $this->userCart();
+      $totalPrice = 0;
+      foreach ($cartItems as $cartItem) {
+        # code...
+        $totalPrice += ($cartItem->price * $cartItem->quantity);
+      }
+      return view('shop.shopping-cart')->with([
+        'cartItems' => $cartItems,
+        'totalPrice' => $totalPrice
+      ]);
+    }
   }
 
   /**
@@ -32,9 +49,6 @@ class CartsController extends Controller
   public function create($userId)
   {
     //
-    return Carts::create([
-      'user_id' => $userId,
-    ]);
   }
 
   /**
@@ -63,24 +77,8 @@ class CartsController extends Controller
         foreach ($sessionCart as $item) {
           if ($item->productId == $cartItem->productId) {
             $item->quantity += $cartItem->quantity;
-
-            $userCart = count($sessionCart) > 2 ? array_slice(
-              $sessionCart,
-              0,
-              2
-            ) : $sessionCart;
-
-            $cartWidget = view('shop.cart-widget')
-              ->with([
-                'userCart' => $userCart,
-                'cartItemCount' => count($sessionCart)
-              ])
-              ->render();
-
             // Return cart widget partial with updated data
-            return response()->json([
-              'cartWidget' => $cartWidget
-            ]);
+            return $this->userCartWidget();
           }
         }
       }
@@ -89,29 +87,14 @@ class CartsController extends Controller
       $sessionCart[] = $cartItem;
       session(['notAuthCart' => $sessionCart]);
 
-      $userCart = count($sessionCart)  > 2 ? array_slice(
-        $sessionCart,
-        0,
-        2
-      ) : $sessionCart;
-
-      $cartWidget = view('shop.cart-widget')
-        ->with([
-          'userCart' => $userCart,
-          'cartItemCount' => count($sessionCart)
-        ])
-        ->render();
-
-      return response()->json([
-        'cartWidget' => $cartWidget,
-      ]);
+      return $this->userCartWidget();
     }
 
     // Get the user's cart, or create a new one if it doesn't exist
     $cart = Carts::where('user_id', auth()->user()->id)->first();
     if (!$cart) {
       $userId = auth()->user()->id;
-      $cart = $this->create($userId);
+      $cart = Carts::create(['user_id' => $userId]);
     }
 
     // Get the product and quantity from the request
@@ -120,20 +103,9 @@ class CartsController extends Controller
     $quantity = $request->qty;
 
     $cartItem = new CartItemsCtrl();
-    $cartItem->index($cartId, $productId, $quantity);
+    $cartItem->store($cartId, $productId, $quantity);
 
-    $userCart = $this->userCart();
-
-    $cartWidget = view('shop.cart-widget')
-      ->with([
-        'userCart' => $userCart->take(2),
-        'cartItemCount' => count($userCart)
-      ])
-      ->render();
-
-    return response()->json([
-      'cartWidget' => $cartWidget
-    ]);
+    return $this->userCartWidget();
   }
 
 
@@ -146,22 +118,7 @@ class CartsController extends Controller
   public function show()
   {
     //
-    if (!Carts::where('user_id', auth()->user()->id)->exists()) {
-      return view('shop.shopping-cart')->with([
-        'cartItems' => false
-      ]);
-    }
 
-    $cartItems = $this->userCart();
-    $totalPrice = 0;
-    foreach ($cartItems as $cartItem) {
-      # code...
-      $totalPrice += ($cartItem->price * $cartItem->quantity);
-    }
-    return view('shop.shopping-cart')->with([
-      'cartItems' => $cartItems,
-      'totalPrice' => $totalPrice
-    ]);
   }
 
   /**
@@ -217,6 +174,41 @@ class CartsController extends Controller
 
     return $userCart;
   }
+
+  public function userCartWidget()
+  {
+    if (Auth::check()) {
+      $cartItems = $this->userCart();
+      $cartWidget = view('shop.cart-widget')
+        ->with([
+          'userCart' => $cartItems->take(2),
+          'cartItemCount' => count($cartItems)
+        ])
+        ->render();
+      return response()->json(['cartWidget' => $cartWidget]);
+    } else {
+      // retrieve current session data
+      $sessionCart = session()->get('notAuthCart', []);
+
+      // Check if item is in cart
+      if (!empty($sessionCart)) {
+        // Get first two items
+        $userCart = count($sessionCart) > 2 ? array_slice($sessionCart, 0, 2) : $sessionCart;
+        $cartWidget = view('shop.cart-widget')
+          ->with([
+            'userCart' => $userCart,
+            'cartItemCount' => count($sessionCart)
+          ])
+          ->render();
+
+        // Return cart widget partial with updated data
+        return response()->json([
+          'cartWidget' => $cartWidget
+        ]);
+      }
+    }
+  }
+
 
 
 
