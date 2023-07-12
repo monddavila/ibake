@@ -21,6 +21,7 @@ class Orders extends Model
     'order_status',
     'total_price',
     'payment_method',
+    'payment_status',
     'notes',
   ];
 

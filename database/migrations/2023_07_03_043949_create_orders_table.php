@@ -25,6 +25,7 @@ return new class extends Migration
       $table->string('order_status')->default('Pending');
       $table->unsignedBigInteger('total_price');
       $table->string('payment_method');
+      $table->string('payment_status')->default('Not yet paid');
       $table->text('notes')->nullable();
       $table->timestamps();
 
