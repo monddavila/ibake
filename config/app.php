@@ -196,6 +196,7 @@ return [
     App\Providers\RouteServiceProvider::class,
     App\Providers\FortifyServiceProvider::class,
     App\Providers\JetstreamServiceProvider::class,
+    Ixudra\Curl\CurlServiceProvider::class,
 
   ],
 
@@ -212,6 +213,7 @@ return [
 
   'aliases' => Facade::defaultAliases()->merge([
     // 'ExampleClass' => App\Example\ExampleClass::class,
+    'Curl'          => Ixudra\Curl\Facades\Curl::class,
   ])->toArray(),
 
 ];
