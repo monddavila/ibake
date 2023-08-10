@@ -13,6 +13,7 @@ use App\Http\Controllers\CartsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -143,3 +144,17 @@ Route::middleware([
     return view('dashboard');
   })->name('dashboard');
 });
+
+
+/**
+ * Payment Gateway - Payment controller
+ */
+Route::get('pay',[PaymentController::class,'pay']);
+Route::get('success',[PaymentController::class,'success']);
+
+Route::get('link-pay',[PaymentController::class,'linkPay']);
+Route::get('link-status/{linkid}',[PaymentController::class,'linkStatus']);
+
+
+Route::get('refund',[PaymentController::class,'refund']);
+Route::get('refund-status/{id}',[PaymentController::class,'refundStatus']);
