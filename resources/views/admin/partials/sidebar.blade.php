@@ -99,9 +99,9 @@
       </a>
       <div class="collapse" id="orders">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="">Active Order</a></li>
-          <li class="nav-item"> <a class="nav-link" href="">Order History</a></li>
-          <li class="nav-item"> <a class="nav-link" href="">Add Order</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('activeOrders') }}">Active Orders</a></li>
+          <li class="nav-item"><a class="nav-link" href="">Order History</a></li>
+          <li class="nav-item"><a class="nav-link" href="">Add Order</a></li>
         </ul>
       </div>
     </li>

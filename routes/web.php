@@ -86,6 +86,7 @@ Route::group(['prefix' => 'shop'], function () {
 
 Route::group(['prefix' => 'orders'], function () {
   Route::get('/dashboard', [OrdersController::class, 'ordersDashboard']);
+  Route::get('/active', [OrdersController::class, 'activeOrders'])->name('activeOrders');
 });
 
 /**

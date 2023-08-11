@@ -23,7 +23,7 @@
       <div class="auto-container">
         <h1>Birthday Cake</h1>
         <ul class="page-breadcrumb">
-          <li><a href="{{ route('home') }}">home</a></li>
+          <li><a href="{{ route('home') }}">Home</a></li>
           <li><a href="{{ route('shop') }}">Products</a></li>
           <li>{{ $product->name }}</li>
         </ul>

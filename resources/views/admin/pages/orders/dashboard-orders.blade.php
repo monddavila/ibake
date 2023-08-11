@@ -7,10 +7,6 @@
           <table class="table" id="orders-table">
             <thead>
               <tr>
-                <th>
-                  <div class="form-check form-check-muted m-0">
-                  </div>
-                </th>
                 <th> Client Name </th>
                 <th> Order No. </th>
                 <th> Total Order Cost </th>
@@ -23,13 +19,6 @@
             </thead>
             <tbody>
               <tr>
-                <td>
-                  <div class="form-check form-check-muted m-0">
-                    <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input">
-                    </label>
-                  </div>
-                </td>
                 <td>
                   <span class="ps-2">Henry Klein</span>
                 </td>
@@ -45,13 +34,6 @@
               </tr>
               <tr>
                 <td>
-                  <div class="form-check form-check-muted m-0">
-                    <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input">
-                    </label>
-                  </div>
-                </td>
-                <td>
                   <span class="ps-2">Estella Bryan</span>
                 </td>
                 <td> 02312 </td>
@@ -65,13 +47,6 @@
                 </td>
               </tr>
               <tr>
-                <td>
-                  <div class="form-check form-check-muted m-0">
-                    <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input">
-                    </label>
-                  </div>
-                </td>
                 <td>
                   <span class="ps-2">Lucy Abbott</span>
                 </td>
