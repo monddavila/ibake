@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductsRequest;
 use App\Models\Products;
+use App\Models\Categories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -52,6 +53,9 @@ class ProductsController extends Controller
     $product->category = $request->category;
     $product->availability = $request->has('is_available');
     $product->save();
+
+     // Optionally, you can add a success message to the session
+     session()->flash('message', 'Product added successfully.');
 
     return redirect(route('admin.viewAddProducts'));
   }
@@ -161,4 +165,15 @@ class ProductsController extends Controller
     $stored = $request->file('image')->move($directory, $newImgName);
     return $stored;
   }
+
+  public function viewCategories()
+  {
+    //
+    $categories = DB::table('categories')->get();
+
+    return view('admin.pages.products.products-category')->with(
+      ['products' => $categories]
+    );
+  }
+
 }

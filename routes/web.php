@@ -13,6 +13,7 @@ use App\Http\Controllers\CartsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,19 +44,22 @@ Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
 Route::get('/track', [HomeController::class, 'track'])->name('track');
 Route::get('/redirect', [HomeController::class, 'redirect'])->name('redirect');
 
-/**Admin Panel Pages **/
-/*Display users page*/
+/**
+ * Admin Panel Pages
+ * Users Section
+ **/
 Route::group(['prefix' => 'user'], function () {
   Route::get('/list', [AdminController::class, 'viewUsers'])->name('user.list');
   /*Display create user form*/
   Route::get('/add', [AdminController::class, 'showAddUsersForm'])->name('user.form');
-  /*Display edit user form*/
+  /*Edit user data*/
   Route::get('/edit-user/{id}', [AdminController::class, 'editUser'])->name('user.edit');
   Route::post('/update/{id}', [AdminController::class, 'updateUser'])->name('user.update');
   /*Delete User*/
   Route::get('/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('user.delete');
   /*Post data from form to database- create new user*/
   Route::post('/add-user', [AdminController::class, 'addUser'])->name('user.add');
+  /*Search User Functiion*/
   Route::get('/search', [AdminController::class, 'searchUser'])->name('user.search');
 });
 
@@ -71,6 +75,11 @@ Route::group(['prefix' => 'products'], function () {
   Route::delete('/remove/{id}', [ProductsController::class, 'destroy'])->name('admin.deleteProducts');
   Route::get('/search', [ProductsController::class, 'search'])->name('admin.searchProducts');
   Route::get('/getImage', [ProductsController::class, 'getImage'])->name('admin.getImage');
+/*Categories Section*/
+  Route::get('/categories', [ProductsController::class, 'viewCategories'])->name('admin.viewCategories');
+
+
+
 });
 
 
@@ -136,3 +145,17 @@ Route::middleware([
     return view('dashboard');
   })->name('dashboard');
 });
+
+
+/**
+ * Payment Gateway - Payment controller
+ */
+Route::get('pay',[PaymentController::class,'pay']);
+Route::get('success',[PaymentController::class,'success']);
+
+Route::get('link-pay',[PaymentController::class,'linkPay']);
+Route::get('link-status/{linkid}',[PaymentController::class,'linkStatus']);
+
+
+Route::get('refund',[PaymentController::class,'refund']);
+Route::get('refund-status/{id}',[PaymentController::class,'refundStatus']);
