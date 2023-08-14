@@ -16,5 +16,5 @@
   </div>
   @endif
   <a href="{{ url('/cart') }}" class="theme-btn">View Cart</a>
-  <a href="checkout.html" class="theme-btn">Checkout</a>
+  <a href="{{ route('checkout') }}" class="theme-btn">Checkout</a>
 </div>

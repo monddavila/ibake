@@ -1,21 +1,8 @@
 $(document).ready(function () {
-    console.log("yabai");
     getOrders();
 });
 
 function getOrders() {
-    /* [
-        {
-            name: "Estella Bryan",
-            code: "02312",
-            amount: "$14,500",
-            source: "Website",
-            payment: "Cash on delivered",
-            date1: "04 Dec 2019",
-            date2: "04 Dec 2019",
-            status: "Pending",
-        },
-    ]; */
     $.ajax({
         url: "/orders/dashboard",
         method: "GET",
@@ -27,11 +14,6 @@ function getOrders() {
             console.log(res.orders);
             orders.forEach(function (orderData) {
                 var tableRow = $("<tr>").appendTo("#orders-table tbody");
-                $("<td>")
-                    .html(
-                        '<div class="form-check form-check-muted m-0"><label class="form-check-label"><input type="checkbox" class="form-check-input"></label></div>'
-                    )
-                    .appendTo(tableRow);
                 $("<td>")
                     .html(
                         '<span class="ps-2">' +

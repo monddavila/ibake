@@ -91,6 +91,10 @@
                                 style="vertical-align: middle; height: 20px; width: 20px">
                               <label for="is_available"
                                 style="font-size: 1.2rem; vertical-align: middle;">Available</label>
+                              <input type="checkbox" name="is_featured" value="1" checked
+                                style="vertical-align: middle; height: 20px; width: 20px; margin-left: 20px;">
+                              <label for="is_featured" style="font-size: 1.2rem; vertical-align: middle;">Featured
+                                Product</label>
                             </td>
                           </tr>
                         </tbody>

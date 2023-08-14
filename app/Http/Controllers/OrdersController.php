@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Orders;
 use App\Http\Requests\StoreOrdersRequest;
 use App\Http\Requests\UpdateOrdersRequest;
@@ -39,19 +40,6 @@ class OrdersController extends Controller
       # code...
       $totalPrice += ($cartItem->price * $cartItem->quantity);
     }
-    /*     $userCart = (new CartsController())->userCart();
-    order_id
-    product_id
-    price
-    quantity
-
- 
-        'cart_items.cart_id',
-        'cart_items.product_id',
-        'cart_items.quantity',
-        'products.name',
-        'products.price',
-        'products.image' */
 
     return view('checkout.checkout')->with([
       'user' => $user,
@@ -102,9 +90,7 @@ class OrdersController extends Controller
       $orderItem->store($orderId, $productId, $price, $quantity);
     }
 
-    return view('checkout.asd')->with([
-      'request' => $order,
-    ]);
+    return redirect(route('shop'));
   }
 
   /**
@@ -152,18 +138,41 @@ class OrdersController extends Controller
     //
   }
 
+  /**
+   * Show the orders on Dashboard homepage.
+   *
+   */
   public function ordersDashboard()
   {
-    $orders = Orders::get();
     $orders = Orders::orderBy('delivery_date')
       ->take(5)
       ->get()
-      // copy 'created_at' column to 'order_date' with Y-m-d format 
+      // copy 'created_at' column to 'order_date' with d M Y format (01 Jan 2023)
       ->map(function ($order) {
-        $order->order_date = $order->created_at->format('Y-m-d');
+        $order->order_date = Carbon::parse($order->created_at)->format('d M Y');
         return $order;
-      });;
+      });
+
 
     return response()->json(['orders' => $orders]);
+  }
+
+  /**
+   * Show the active orders on by accessing
+   * thorough the sidebar.
+   *
+   */
+  function activeOrders()
+  {
+    $activeOrders = Orders::where('order_status', '=', 'Pending')
+      ->orWhere('order_status', '=', 'Ongoing')->get()
+      ->map(function ($order) {
+        $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
+        return $order;
+      });
+
+    return view('admin.pages.orders.active-orders')->with([
+      'activeOrders' => $activeOrders,
+    ]);
   }
 }

@@ -12,9 +12,9 @@
       <button class="btn btn-md btn-inverse-success edit-product-btn">Edit</button>
     </a>
   </td>
-  <td><button class="btn btn-md btn-inverse-danger delete-product-btn" 
-  onclick="return confirm('Are you sure you want to delete this product?')"
-  data-id="{{ $product->id }}" data-token="{{ csrf_token() }}">Delete</button></td>
+  <td><button class="btn btn-md btn-inverse-danger delete-product-btn"
+      onclick="return confirm('Are you sure you want to delete this product?')" data-id="{{ $product->id }}"
+      data-token="{{ csrf_token() }}">Delete</button></td>
   </td>
 </tr>
 @endforeach

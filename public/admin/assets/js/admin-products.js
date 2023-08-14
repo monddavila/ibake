@@ -82,7 +82,6 @@ $(document).ready(function () {
     $(".product-name").on("click", function () {
         let productName = $(this).html();
         var imgPath = $(this).data("imgpath");
-        console.log(productName, imgPath);
         $.ajax({
             url: "/products/getImage",
             method: "GET",
