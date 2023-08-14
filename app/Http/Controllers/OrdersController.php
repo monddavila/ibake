@@ -90,7 +90,7 @@ class OrdersController extends Controller
       $orderItem->store($orderId, $productId, $price, $quantity);
     }
 
-    return;
+    return redirect(route('shop'));
   }
 
   /**

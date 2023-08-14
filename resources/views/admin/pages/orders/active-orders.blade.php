@@ -28,6 +28,7 @@
                     <table class="table" id="orders-table">
                       <thead>
                         <tr>
+                          <th></th>
                           <th> Client Name </th>
                           <th> Order No. </th>
                           <th> Total Order Cost </th>
@@ -41,6 +42,10 @@
                       <tbody>
                         @foreach ($activeOrders as $order)
                         <tr>
+                          <td data-toggle="modal" data-target="#activeOrderModal">
+                            <button class="btn btn-md btn-inverse-success order-details-btn">View
+                              Order</button>
+                          </td>
                           <td>
                             <span class="ps-2">{{ $order->recipient_name }}</span>
                           </td>
@@ -102,11 +107,55 @@
 
       <!-- main-panel ends -->
     </div>
+
     <!-- page-body-wrapper ends -->
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+      Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
+
+  <!-- Order Details Modal -->
+  {{-- <div class="modal fade" id="activeOrderModal" tabindex="-1" role="img" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-title"></h5>
+        </div>
+      </div>
+    </div>
+  </div> --}}
+  <!-- Order Details Modal End -->
 
   <!-- plugins:js -->
   @include('admin.partials.script')
+  <script src="{{ asset('admin/assets/js/admin-orders.js') }}"></script>
+  <!-- JavaScript -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

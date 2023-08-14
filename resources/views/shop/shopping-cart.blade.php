@@ -120,8 +120,8 @@
               <li class="clearfix"><span class="col">Total</span><span class="col total-price">Php
                   {{ $totalPrice }}</span>
               </li>
-              <li class="text-right"><button type="submit" class="theme-btn proceed-btn">Proceed to
-                  Checkout</button></li>
+              <li class="text-right"><a href="{{ route('checkout') }}"><button class="theme-btn proceed-btn">Proceed to
+                    Checkout</button></a></li>
             </ul>
           </div>
         </div>
