@@ -23,7 +23,14 @@ class PaymentController extends Controller
                             'description'   => 'text',
                             'name'          => 'Test Product',
                             'quantity'      => 1,
-                        ]
+                        ],
+                        [
+                            'currency'      => 'PHP',
+                            'amount'        => 100000,
+                            'description'   => 'text2',
+                            'name'          => 'Test Product 2',
+                            'quantity'      => 1,
+                        ],
                     ],
                     'payment_method_types' => [
                         'card','gcash','paymaya',
@@ -43,7 +50,7 @@ class PaymentController extends Controller
                     ->asJson()
                     ->post();
 
-        //dd($response);
+        dd($response);
         //\Session::put('session_id',$response->data->id);
         session(['session_id' => $response->data->id]);
 
@@ -81,7 +88,11 @@ class PaymentController extends Controller
                     ->asJson()
                     ->post();
 
-        dd($response);
+        session(['session_id' => $response->data->id]);
+
+        return redirect()->to($response->data->attributes->checkout_url);
+
+        //dd($response);
     }
 
     public function linkStatus($linkid)
@@ -92,7 +103,12 @@ class PaymentController extends Controller
                 ->asJson()
                 ->get();
 
-        dd($response);
+
+        session(['session_id' => $response->data->id]);
+
+        return redirect()->to($response->data->attributes->checkout_url);
+        
+        //dd($response);
     }
 
 

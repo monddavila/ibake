@@ -64,7 +64,7 @@
                   <!--Form Group-->
                   <div class="form-group">
                     <div class="field-label">Delivery address <sup>*</sup></div>
-                    <input type="text" name="street_address" value="" placeholder="Building Name/Street">
+                    <input type="text" name="street_address" value="" placeholder="Unit No./Building Name/Street/Barangay">
                   </div>
 
                   <!--Form Group-->
@@ -103,15 +103,34 @@
                   </div>
 
                   <!--Form Group-->
+                  <div class="form-group">
+                    <div class="field-label">Shipping Options <sup>*</sup></div>
+                    <div style="display: flex; justify-content: space-between;">
+                      <div style="width: 48%;">
+                        <div class="radio-option">
+                          <input type="radio" name="shipping_method" id="shipping-1" value="Delivery" checked>
+                          <label for="shipping-1">Delivery</label>
+                        </div>
+                      </div>
+                      <div style="width: 48%;">
+                        <div class="radio-option">
+                          <input type="radio" name="shipping_method" id="shipping-2" value="Pickup">
+                          <label for="shipping-2">Pick-Up</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--Form Group-->
                   <div class="form-group ">
-                    <div class="field-label">Delivery Date <sup>*</sup></div>
+                    <div class="field-label">Delivery/Pick-up Date <sup>*</sup></div>
                     <input type="date" id="delivery-date" name="delivery_date">
                   </div>
 
                   <!--Form Group-->
                   <div class="form-group">
-                    <div class="field-label">Delivery Time <sup>*</sup></div>
-                    <input type="time" id="delivery-time" name="delivery_time" value="09:30">
+                    <div class="field-label">Delivery/Pick-up Time <sup>*</sup></div>
+                    <input type="time" id="delivery-time" name="delivery_time" value="08:00">
                   </div>
 
                   <!--Form Group-->
@@ -170,17 +189,17 @@
               <ul>
                 <li>
                   <div class="radio-option">
-                    <input type="radio" name="payment_method" id="payment-2" value="Bank Transfer" checked>
-                    <label for="payment-2"><strong>Direct Bank Transfer</strong><span class="small-text">Make your
-                        payment directly into our bank account. Please use your Order ID as the payment reference. Your
+                    <input type="radio" name="payment_method" id="payment-2" value="Credit or Debit Card" checked>
+                    <label for="payment-2"><strong>Credit or Debit Card</strong><span class="small-text">Make your
+                        payment directly using your card details. Please use your Order ID as the payment reference. Your
                         order won’t be shipped until the funds have cleared in our account.</span></label>
                   </div>
                 </li>
                 <li>
                   <div class="radio-option">
-                    <input type="radio" name="payment_method" id="payment-1" value="Check Payment">
-                    <label for="payment-1"><strong>Check Payments</strong><span class="small-text">Make your payment
-                        directly into our bank account. Please use your Order ID as the payment reference. Your order
+                    <input type="radio" name="payment_method" id="payment-1" value="E-Wallets">
+                    <label for="payment-1"><strong>E-Wallets</strong><span class="small-text">Make your payment
+                        directly into your E-Wallets accounts such GCash and Maya. Please use your Order ID as the payment reference. Your order
                         won’t be shipped until the funds have cleared in our account.</span></label>
                   </div>
                 </li>
@@ -189,7 +208,7 @@
                   <div class="radio-option">
                     <input type="radio" name="payment_method" id="payment-3" value="Cash on Delivery">
                     <label for="payment-3"><strong>Cash on Delivery</strong><span class="small-text">Make your payment
-                        directly into our bank account. Please use your Order ID as the payment reference. Your order
+                        upon delivery of item/s. Please use your Order ID as the payment reference. Your order
                         won’t be shipped until the funds have cleared in our account.</span></label>
                   </div>
                 </li>
@@ -217,6 +236,62 @@
 
   <!-- Scroll To Top -->
   @include('partials.scroll-to-top')
+
+  <!-- Date of Delivery Validation (2 Days from today) -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const deliveryDateInput = document.getElementById("delivery-date");
+      
+      // Get today's date and add two days
+      const minDate = new Date();
+      minDate.setDate(minDate.getDate() + 2);
+      
+      // Format the minimum date as YYYY-MM-DD for input validation
+      const minDateString = minDate.toISOString().split("T")[0];
+      
+      // Set the minimum attribute of the input field
+      deliveryDateInput.min = minDateString;
+      
+      // Add an event listener to check the selected date on change
+      deliveryDateInput.addEventListener("change", function() {
+        const selectedDate = new Date(this.value);
+        
+        if (selectedDate < minDate) {
+          alert("Delivery date should be at least two days from today.");
+          this.value = ""; // Clear the input value
+        }
+      });
+    });
+  </script>
+
+   <!--Time of Delivery Validation (8 am to 6pm) -->
+   <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const deliveryTimeInput = document.getElementById("delivery-time");
+      
+      // Set the range for valid delivery times (8 AM to 6 PM)
+      const validStartTime = new Date();
+      validStartTime.setHours(8, 0, 0, 0); // 8:00 AM
+      
+      const validEndTime = new Date();
+      validEndTime.setHours(18, 0, 0, 0); // 6:00 PM
+      
+      // Add an event listener to check the selected time on change
+      deliveryTimeInput.addEventListener("change", function() {
+        const selectedTimeParts = this.value.split(":");
+        const selectedTime = new Date();
+        selectedTime.setHours(parseInt(selectedTimeParts[0]), parseInt(selectedTimeParts[1]), 0, 0);
+        
+        if (selectedTime < validStartTime || selectedTime > validEndTime) {
+          alert("Delivery time should be between 8 AM and 6 PM.");
+          this.value = "09:30"; // Reset the time to the default value
+        }
+      });
+    });
+  </script>
+
+
 
   <script src="js/jquery.js"></script>
   <script src="js/popper.min.js"></script>
