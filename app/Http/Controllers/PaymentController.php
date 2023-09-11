@@ -106,9 +106,9 @@ class PaymentController extends Controller
 
         session(['session_id' => $response->data->id]);
 
-        return redirect()->to($response->data->attributes->checkout_url);
+        //return redirect()->to($response->data->attributes->checkout_url);
         
-        //dd($response);
+        dd($response);
     }
 
 
