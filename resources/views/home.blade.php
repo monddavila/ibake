@@ -255,7 +255,7 @@
           <div class="portfolio-block col-lg-3 col-md-6 col-sm-12">
             <div class="inner-box">
               <div class="image-box">
-                <figure class="image"><img src="images/gallery/gallery_1-1.jpg" alt="">
+                <figure class="image"><img src="images/gallery/gallery_1-1.png" alt="">
                 </figure>
               </div>
               <div class="portfolio-hover">
@@ -266,8 +266,8 @@
                     </path>
                   </svg>
                 </div>
-                <a href="images/gallery/gallery_1-1.jpg" class="lightbox-image link" data-fancybox="portfolio"></a>
-                <h3><a href="portfolio-single.html">Nulla diam <br>tellus</a></h3>
+                <a href="images/gallery/gallery_1-1.png" class="lightbox-image link" data-fancybox="portfolio"></a>
+                <h3><a href="{{ route('portfolio') }}">Portfolio</a></h3>
               </div>
             </div>
           </div>
@@ -276,7 +276,7 @@
           <div class="portfolio-block col-lg-3 col-md-6 col-sm-12">
             <div class="inner-box">
               <div class="image-box">
-                <figure class="image"><img src="images/gallery/gallery_1-2.jpg" alt="">
+                <figure class="image"><img src="images/gallery/gallery_1-2.png" alt="">
                 </figure>
               </div>
               <div class="portfolio-hover">
@@ -287,8 +287,8 @@
                     </path>
                   </svg>
                 </div>
-                <a href="images/gallery/gallery_1-2.jpg" class="lightbox-image link" data-fancybox="portfolio"></a>
-                <h3><a href="portfolio-single.html">Varius vehicula turpis</a></h3>
+                <a href="images/gallery/gallery_1-2.png" class="lightbox-image link" data-fancybox="portfolio"></a>
+                <h3><a href="{{ route('portfolio') }}">Portfolio</a></h3>
               </div>
             </div>
           </div>
@@ -297,7 +297,7 @@
           <div class="portfolio-block col-lg-3 col-md-6 col-sm-12">
             <div class="inner-box">
               <div class="image-box">
-                <figure class="image"><img src="images/gallery/gallery_1-3.jpg" alt="">
+                <figure class="image"><img src="images/gallery/gallery_1-3.png" alt="">
                 </figure>
               </div>
               <div class="portfolio-hover">
@@ -308,8 +308,8 @@
                     </path>
                   </svg>
                 </div>
-                <a href="images/gallery/gallery_1-3.jpg" class="lightbox-image link" data-fancybox="portfolio"></a>
-                <h3><a href="portfolio-single.html">Luctus in ipsum</a></h3>
+                <a href="images/gallery/gallery_1-3.png" class="lightbox-image link" data-fancybox="portfolio"></a>
+                <h3><a href="{{ route('portfolio') }}">Portfolio</a></h3>
               </div>
             </div>
           </div>
@@ -318,7 +318,7 @@
           <div class="portfolio-block col-lg-3 col-md-6 col-sm-12">
             <div class="inner-box">
               <div class="image-box">
-                <figure class="image"><img src="images/gallery/gallery_1-4.jpg" alt="">
+                <figure class="image"><img src="images/gallery/gallery_1-4.png" alt="">
                 </figure>
               </div>
               <div class="portfolio-hover">
@@ -329,8 +329,8 @@
                     </path>
                   </svg>
                 </div>
-                <a href="images/gallery/gallery_1-4.jpg" class="lightbox-image link" data-fancybox="portfolio"></a>
-                <h3><a href="portfolio-single.html">Vitae sit laoreet</a></h3>
+                <a href="images/gallery/gallery_1-4.png" class="lightbox-image link" data-fancybox="portfolio"></a>
+                <h3><a href="{{ route('portfolio') }}">Portfolio</a></h3>
               </div>
             </div>
           </div>
@@ -339,7 +339,7 @@
           <div class="portfolio-block col-lg-3 col-md-6 col-sm-12">
             <div class="inner-box">
               <div class="image-box">
-                <figure class="image"><img src="images/gallery/gallery_1-5.jpg" alt="">
+                <figure class="image"><img src="images/gallery/gallery_1-5.png" alt="">
                 </figure>
               </div>
               <div class="portfolio-hover">
@@ -350,8 +350,8 @@
                     </path>
                   </svg>
                 </div>
-                <a href="images/gallery/gallery_1-5.jpg" class="lightbox-image link" data-fancybox="portfolio"></a>
-                <h3><a href="portfolio-single.html">Doloremque magna leo</a></h3>
+                <a href="images/gallery/gallery_1-5.png" class="lightbox-image link" data-fancybox="portfolio"></a>
+                <h3><a href="{{ route('portfolio') }}">Portfolio</a></h3>
               </div>
             </div>
           </div>
@@ -360,7 +360,7 @@
           <div class="portfolio-block col-lg-3 col-md-6 col-sm-12">
             <div class="inner-box">
               <div class="image-box">
-                <figure class="image"><img src="images/gallery/gallery_1-6.jpg" alt="">
+                <figure class="image"><img src="images/gallery/gallery_1-6.png" alt="">
                 </figure>
               </div>
               <div class="portfolio-hover">
@@ -371,8 +371,8 @@
                     </path>
                   </svg>
                 </div>
-                <a href="images/gallery/gallery_1-6.jpg" class="lightbox-image link" data-fancybox="portfolio"></a>
-                <h3><a href="portfolio-single.html">Aptent est mauris</a></h3>
+                <a href="images/gallery/gallery_1-6.png" class="lightbox-image link" data-fancybox="portfolio"></a>
+                <h3><a href="{{ route('portfolio') }}">Portfolio</a></h3>
               </div>
             </div>
           </div>
@@ -381,7 +381,7 @@
           <div class="portfolio-block col-lg-3 col-md-6 col-sm-12">
             <div class="inner-box">
               <div class="image-box">
-                <figure class="image"><img src="images/gallery/gallery_1-7.jpg" alt="">
+                <figure class="image"><img src="images/gallery/gallery_1-7.png" alt="">
                 </figure>
               </div>
               <div class="portfolio-hover">
@@ -392,8 +392,8 @@
                     </path>
                   </svg>
                 </div>
-                <a href="images/gallery/gallery_1-7.jpg" class="lightbox-image link" data-fancybox="portfolio"></a>
-                <h3><a href="portfolio-single.html">Velit semper quam</a></h3>
+                <a href="images/gallery/gallery_1-7.png" class="lightbox-image link" data-fancybox="portfolio"></a>
+                <h3><a href="{{ route('portfolio') }}">Portfolio</a></h3>
               </div>
             </div>
           </div>
@@ -402,7 +402,7 @@
           <div class="portfolio-block col-lg-3 col-md-6 col-sm-12">
             <div class="inner-box">
               <div class="image-box">
-                <figure class="image"><img src="images/gallery/gallery_1-8.jpg" alt="">
+                <figure class="image"><img src="images/gallery/gallery_1-8.png" alt="">
                 </figure>
               </div>
               <div class="portfolio-hover">
@@ -413,8 +413,8 @@
                     </path>
                   </svg>
                 </div>
-                <a href="images/gallery/gallery_1-8.jpg" class="lightbox-image link" data-fancybox="portfolio"></a>
-                <h3><a href="portfolio-single.html">Vel nec ligula</a></h3>
+                <a href="images/gallery/gallery_1-8.png" class="lightbox-image link" data-fancybox="portfolio"></a>
+                <h3><a href="{{ route('portfolio') }}">Portfolio</a></h3>
               </div>
             </div>
           </div>
@@ -676,7 +676,7 @@
                 </svg>
               </div>
               <div class="title-box">
-                <h3>Occasion Cakes</h3>
+                <h3>Wedding Cakes</h3>
               </div>
               <div class="price-box">
                 <div class="price"> 15<sup>$</sup></div>
@@ -684,9 +684,9 @@
               </div>
               <div class="table-content">
                 <ul>
-                  <li><span>1 x Sweet Aniseed</span></li>
-                  <li><span>1 x Soft Fruits </span></li>
-                  <li><span>1 x Assorted </span></li>
+                  <li><span>Three Layers</span></li>
+                  <li><span>Four Layers </span></li>
+                  <li><span>Five Layers </span></li>
                   <li><span>1 x Flavour Mix </span></li>
                 </ul>
               </div>
@@ -824,6 +824,19 @@
 
   </div><!-- End Page Wrapper -->
 
+  <!-- Messenger Chat Plugin Code -->
+  <div id="fb-root"></div>
+
+  <!-- Your Chat Plugin code -->
+  <div id="fb-customer-chat" class="fb-customerchat"></div>
+
+  <script>
+    var chatbox = document.getElementById('fb-customer-chat');
+    chatbox.setAttribute("page_id", "133337623189247");
+    chatbox.setAttribute("attribution", "biz_inbox");
+  </script>
+
+
   <!-- Scroll To Top -->
   @include('partials.scroll-to-top')
 
@@ -852,6 +865,27 @@
   <script src="js/script.js"></script>
 
   <script src="js/isotope.js"></script>
+
+
+  <!-- Messenger Chat Plugin Code -->
+  <!-- Your SDK code -->
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        xfbml: true,
+        version: 'v17.0'
+      });
+    };
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+
 
 </body>
 
