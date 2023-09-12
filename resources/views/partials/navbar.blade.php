@@ -55,7 +55,13 @@
               @auth
               <li class="{{ currentNav('/track') }}"><a href="{{ route('track') }}">Track Order</a></li>
               @endauth
-              <li class="{{ currentNav('/contact') }}"><a href="{{ route('contact') }}">Contacts</a>
+              <li class="{{ currentNav('/contact') || currentNav('/faqs') }}
+                                    dropdown">
+                <a href="{{ route('contact') }}">Contact</a>
+                <ul>
+                  <li><a href="{{ route('contact') }}">Message Us</a></li>
+                  <li><a href="{{ route('faqs') }}">FAQs</a></li>
+                </ul>
               </li>
 
             </ul>
