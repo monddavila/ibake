@@ -41,6 +41,7 @@ Route::get('/customize', [HomeController::class, 'customize'])->name('customize'
 Route::get('/gallery', [HomeController::class, 'gallery'])->name('gallery');
 Route::get('/portfolio', [HomeController::class, 'portfolio'])->name('portfolio');
 Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
+Route::get('/faqs', [HomeController::class, 'faqs'])->name('faqs');
 Route::get('/track', [HomeController::class, 'track'])->name('track');
 Route::get('/redirect', [HomeController::class, 'redirect'])->name('redirect');
 
