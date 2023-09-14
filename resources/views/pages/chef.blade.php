@@ -125,7 +125,7 @@
         <!-- End Chef Section -->
 
         <!-- Testimonial Section -->
-
+        <section class="testimonal-section-two">
         <!-- Sec title -->
         <div class="sec-title text-center margin-top-50">
             <div class="divider"><img src="images/icons/divider_1.png" alt=""></div>
@@ -133,7 +133,7 @@
         </div>
 
         <!-- Testimonial Carousel -->
-        <div class="testimonial-carousel-two owl-carousel owl-theme default-dots no-arrows text-center">
+        <div class="testimonial-carousel-two owl-carousel owl-theme default-dots no-arrows text-center" style="display: block;">
 
             <!-- Testimonial Block -->
             <div class="testimonial-block-two">
@@ -146,7 +146,7 @@
                         </svg>
 
                         <!-- Thumb Box -->
-                        <figure class="thumb-box"><img src="https://via.placeholder.com/76x76" alt=""></figure>
+                        <figure class="thumb-box"><img src="images/resource/client-01.png" alt=""></figure>
 
                         <svg class="div_right" fill="#ffffff" viewBox="0 0 25 8">
                             <path
@@ -154,8 +154,8 @@
                             </path>
                         </svg>
                     </div>
-                    <div class="text">Quisque eros ligula, tia odio. Morbi mattis.</div>
-                    <div class="name">Maria Doe</div>
+                    <div class="text">"Jan Kevin is the heart and soul of iBake. His creativity knows no bounds, and it's reflected in every sweet creation that leaves the shop. His commitment to delivering top-quality baked goods has earned them a well-deserved reputation for excellence."</div>
+                    <div class="name">Sarah K.</div>
                 </div>
             </div>
 
@@ -170,7 +170,7 @@
                         </svg>
 
                         <!-- Thumb Box -->
-                        <figure class="thumb-box"><img src="https://via.placeholder.com/76x76" alt=""></figure>
+                        <figure class="thumb-box"><img src="images/resource/client-02.png" alt=""></figure>
 
                         <svg class="div_right" fill="#ffffff" viewBox="0 0 25 8">
                             <path
@@ -178,8 +178,8 @@
                             </path>
                         </svg>
                     </div>
-                    <div class="text">Quisque eros ligula, tindio. Morbi mattis.</div>
-                    <div class="name">Anna Doe</div>
+                    <div class="text">"Not only is Jan Kevin a gifted baker, but he is also an incredibly warm and welcoming person. His passion for baking and dedication to customer satisfaction make iBake a must-visit shop for anyone with a sweet tooth."</div>
+                    <div class="name">David L.</div>
                 </div>
             </div>
 
@@ -194,7 +194,7 @@
                         </svg>
 
                         <!-- Thumb Box -->
-                        <figure class="thumb-box"><img src="https://via.placeholder.com/76x76" alt=""></figure>
+                        <figure class="thumb-box"><img src="images/resource/client-03.png" alt=""></figure>
 
                         <svg class="div_right" fill="#ffffff" viewBox="0 0 25 8">
                             <path
@@ -202,13 +202,13 @@
                             </path>
                         </svg>
                     </div>
-                    <div class="text">Quisque eros ligulcipit a odio. Morbi mattis.</div>
-                    <div class="name">Diana Doe</div>
+                    <div class="text">"What sets iBake apart is the combination of Jan kevin's culinary expertise and their unwavering commitment to using only the finest ingredients. Their creations are a testament to their love for baking and their desire to delight customers with every bite."</div>
+                    <div class="name">Robert P.</div>
                 </div>
             </div>
 
         </div>
-
+        </section>
 
 
         <!--End Testimonial Section -->

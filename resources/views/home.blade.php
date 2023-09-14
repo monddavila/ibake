@@ -578,7 +578,7 @@
                 </svg>
 
                 <!-- Thumb Box -->
-                <figure class="thumb-box"><img src="images/resource/client-01.jpg" alt="">
+                <figure class="thumb-box"><img src="images/resource/client-01.png" alt="">
                 </figure>
 
                 <svg class="div_right" fill="#ffffff" viewBox="0 0 25 8">
@@ -587,10 +587,8 @@
                   </path>
                 </svg>
               </div>
-              <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel
-                sem imperdiet, venenatis eros ac,mattis mauris. Nam ac purus justo. Vivamus non
-                hendrerit velit.</div>
-              <div class="name">Gordon Ramsey</div>
+              <div class="text">I ordered a custom cake for my daughter's birthday, and it was absolutely stunning! Not only did it look amazing, but it tasted even better. Thank you for making her day extra special!</div>
+              <div class="name">Sarah K.</div>
             </div>
           </div>
 
@@ -605,7 +603,7 @@
                 </svg>
 
                 <!-- Thumb Box -->
-                <figure class="thumb-box"><img src="images/resource/client-01.jpg" alt="">
+                <figure class="thumb-box"><img src="images/resource/client-02.png" alt="">
                 </figure>
 
                 <svg class="div_right" fill="#ffffff" viewBox="0 0 25 8">
@@ -614,10 +612,8 @@
                   </path>
                 </svg>
               </div>
-              <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel
-                sem imperdiet, venenatis eros ac,mattis mauris. Nam ac purus justo. Vivamus non
-                hendrerit velit.</div>
-              <div class="name">Gordon Ramsey</div>
+              <div class="text">I wanted a cake with a unique design for my wife's anniversary, and you guys nailed it! The cake not only looked incredible but also tasted divine. You made our celebration unforgettable.</div>
+              <div class="name">David L.</div>
             </div>
           </div>
 
@@ -632,7 +628,7 @@
                 </svg>
 
                 <!-- Thumb Box -->
-                <figure class="thumb-box"><img src="images/resource/client-01.jpg" alt="">
+                <figure class="thumb-box"><img src="images/resource/client-03.png" alt="">
                 </figure>
 
                 <svg class="div_right" fill="#ffffff" viewBox="0 0 25 8">
@@ -641,10 +637,8 @@
                   </path>
                 </svg>
               </div>
-              <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel
-                sem imperdiet, venenatis eros ac,mattis mauris. Nam ac purus justo. Vivamus non
-                hendrerit velit.</div>
-              <div class="name">Gordon Ramsey</div>
+              <div class="text">Your bake shop has become my go-to for all special occasions. The variety of options, from cakes to pastries, means there's something for everyone. Never disappointed!</div>
+              <div class="name">Robert P.</div>
             </div>
           </div>
         </div>
@@ -679,19 +673,20 @@
                 <h3>Wedding Cakes</h3>
               </div>
               <div class="price-box">
-                <div class="price"> 15<sup>$</sup></div>
-                <span class="title">FOR 1 CAKE</span>
+                <div class="price"><sup>₱</sup> 6,499</div>
+                <span class="title">AS LOW AS</span>
               </div>
               <div class="table-content">
                 <ul>
-                  <li><span>Three Layers</span></li>
-                  <li><span>Four Layers </span></li>
-                  <li><span>Five Layers </span></li>
-                  <li><span>1 x Flavour Mix </span></li>
+                  <li><span>Three Layer</span></li>
+                  <li><span>Four Layer</span></li>
+                  <li><span>Five Layer</span></li>
+                  <li><span>Inclusive of custom topper,</span></li>
+                  <li><span>flowers, and details</span></li>
                 </ul>
               </div>
               <div class="table-footer">
-                <a href="#" class="theme-btn btn-style-two regular"><span></span>Order
+                <a href="{{ route('shop') }}" class="theme-btn btn-style-two regular"><span></span>Order
                   Now<span></span></a>
               </div>
             </div>
@@ -712,22 +707,23 @@
                 </svg>
               </div>
               <div class="title-box">
-                <h3>Cupcakes</h3>
+                <h3>Standard Cakes</h3>
               </div>
               <div class="price-box">
-                <div class="price"> 35<sup>$</sup></div>
-                <span class="title">FOR 1 CAKE</span>
+              <div class="price"><sup>₱</sup> 699</div>
+                <span class="title">AS LOW AS</span>
               </div>
               <div class="table-content">
                 <ul>
-                  <li><span>2 x Sweet Aniseed</span></li>
-                  <li><span>2 x Soft Fruits </span></li>
-                  <li><span>2 x Assorted </span></li>
-                  <li><span>2 x Flavour Mix </span></li>
+                  <li><span>Moist Chocolate Cake</span></li>
+                  <li><span>Black Forest</span></li>
+                  <li><span>Carrot Walnut</span></li>
+                  <li><span>Red Velvet</span></li>
+                  <li><span>Ube & Yema Cake</span></li>
                 </ul>
               </div>
               <div class="table-footer">
-                <a href="#" class="theme-btn btn-style-two regular"><span></span>Order
+                <a href="{{ route('shop') }}" class="theme-btn btn-style-two regular"><span></span>Order
                   Now<span></span></a>
               </div>
             </div>
@@ -758,22 +754,23 @@
                 </svg>
               </div>
               <div class="title-box">
-                <h3>Macarons</h3>
+                <h3>Custom Cakes</h3>
               </div>
               <div class="price-box">
-                <div class="price"> 55<sup>$</sup></div>
-                <span class="title">FOR 1 CAKE</span>
+                <div class="price"><sup>₱</sup> 1,869</div>
+                <span class="title">AS LOW AS</span>
               </div>
               <div class="table-content">
                 <ul>
-                  <li><span>5 x Sweet Aniseed</span></li>
-                  <li><span>5 x Soft Fruits </span></li>
-                  <li><span>5 x Assorted </span></li>
-                  <li><span>5 x Flavour Mix </span></li>
+                  <li><span>One Layer</span></li>
+                  <li><span>Two Layer</span></li>
+                  <li><span>Three Layer</span></li>
+                  <li><span>FREE 2 dozen Cupcakes</span></li>
+                  <li><span>Money Cake +200 pesos</span></li>
                 </ul>
               </div>
               <div class="table-footer">
-                <a href="#" class="theme-btn btn-style-two regular"><span></span>Order
+                <a href="{{ route('shop') }}" class="theme-btn btn-style-two regular"><span></span>Order
                   Now<span></span></a>
               </div>
             </div>
@@ -794,22 +791,23 @@
                 </svg>
               </div>
               <div class="title-box">
-                <h3>Small Cakes</h3>
+                <h3>Cookies</h3>
               </div>
               <div class="price-box">
-                <div class="price"> 95<sup>$</sup></div>
-                <span class="title">FOR 1 CAKE</span>
+                <div class="price"><sup>₱</sup> 599</div>
+                <span class="title">AS LOW AS</span>
               </div>
               <div class="table-content">
                 <ul>
-                  <li><span>10 x Sweet Aniseed</span></li>
-                  <li><span>10 x Soft Fruits </span></li>
-                  <li><span>10 x Assorted </span></li>
-                  <li><span>10 x Flavour Mix </span></li>
+                  <li><span>Chocolate Chip</span></li>
+                  <li><span>Sugar Cookies</span></li>
+                  <li><span>Oatmeal Cookies</span></li>
+                  <li><span>Customized Cookies</span></li>
+                  <li><span>Available per dozen</span></li>
                 </ul>
               </div>
               <div class="table-footer">
-                <a href="#" class="theme-btn btn-style-two regular"><span></span>Order
+                <a href="{{ route('shop') }}" class="theme-btn btn-style-two regular"><span></span>Order
                   Now<span></span></a>
               </div>
             </div>
