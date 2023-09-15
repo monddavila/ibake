@@ -37,16 +37,13 @@
                 <div class="sec-title text-center">
                     <div class="divider"><img src="images/icons/divider_1.png" alt=""></div>
                     <h2>Our Contacts</h2>
-                    <div class="text">Got a question or need help placing an order? Our friendly customer service team
-                        is
-                        here to assist you! Get in touch with us through our convenient contact page, where you can
-                        easily
-                        send us a message, give us a call, or connect with us on social media.
-                        <br> We're dedicated to making your cake ordering experience as smooth and enjoyable as
-                        possible,
-                        and we're always happy to hear from our customers. So don't hesitate to reach out - we're here
-                        to
-                        help!
+                    <div class="text">
+                    Have questions or need assistance with your order? Our dedicated customer service team is just a click away with our chat messaging app, 
+                    conveniently located in the bottom left corner of our website. Alternatively, you may send a message through the form below.
+                    Whether you have inquiries about our delicious cakes, want to send a quick message, or need help with placing an order, 
+                    we're here to make your cake ordering experience smooth and enjoyable.
+                    <br>
+                    You might find quick answers to common questions on our <a href="{{ route('faqs') }}" style='color: blue;'>FAQ Page</a>. It's a valuable resource for resolving queries instantly.
                     </div>
                 </div>
 
@@ -90,32 +87,53 @@
                                 <div class="icon"><img src="images/icons/icon-devider-gray.png" alt=""></div>
                                 <h4>Send Message</h4>
                             </div>
-                            <div class="contact-form">
-                                <form action="#" method="post" id="email-form">
+                            <form class="contact-form" form action="{{ route('send.email') }}" method="POST">
+                                @csrf
 
                                     <div class="form-group">
-                                        <div class="response"></div>
+                                        <div class="response">
+                                            @if(session('success'))
+                                                <div class="alert alert-success">
+                                                    {{ session('success') }}
+                                                </div>
+                                            @elseif(session('error'))
+                                                <div class="alert alert-danger">
+                                                    {{ session('error') }}
+                                                </div>
+                                            @endif
+                                        </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="text" name="username" class="username"
+                                            @error('username')
+                                            <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        <input type="text" name="username" class="username" id="username"
                                             placeholder="Your Name *">
+                                            
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="email" name="email" class="email" placeholder="Your Email *">
+                                             @error('email')
+                                            <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        <input type="email" name="email" class="email" id="email" placeholder="Your Email *">
+                                    
                                     </div>
 
                                     <div class="form-group">
-                                        <textarea name="contact_message" placeholder="Text Message"></textarea>
+                                            @error('message')
+                                            <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        <textarea name="message" id="message" placeholder="Text Message"></textarea>
+                                            
                                     </div>
 
                                     <div class="form-group">
-                                        <button class="theme-btn" type="button" id="submit"
-                                            name="submit-form">Send</button>
+                                        <button class="theme-btn" type="submit" >Send</button>
                                     </div>
-                                </form>
-                            </div>
+                            </form>
+                            
                         </div>
                     </div>
                 </div>
