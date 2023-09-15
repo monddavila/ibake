@@ -43,7 +43,7 @@
                     Whether you have inquiries about our delicious cakes, want to send a quick message, or need help with placing an order, 
                     we're here to make your cake ordering experience smooth and enjoyable.
                     <br>
-                    You might find quick answers to common questions on our <a href="{{ route('faqs') }}" style='color: blue;'>FAQ Page</a>. It's a valuable resource for resolving queries instantly.
+                    You might find quick answers to common questions on our <a href="{{ route('faqs') }}" style='color: pink;'>FAQ Page</a>. It's a valuable resource for resolving queries instantly.
                     </div>
                 </div>
 
