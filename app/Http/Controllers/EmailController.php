@@ -21,10 +21,14 @@ class EmailController extends Controller
         'message' => 'required|string|max:500',
     ]);
 
+    // Generate the date and time
+    $dateTime = now()->format('Y-m-d H:i:s');
+
     $data = [
         'username' => $request->input('username'),
         'email' => $request->input('email'),
         'message' => $request->input('message'),
+        'dateTime' => $dateTime,
     ];
 
         //dd($data);

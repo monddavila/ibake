@@ -48,7 +48,7 @@ Route::get('/redirect', [HomeController::class, 'redirect'])->name('redirect');
 //Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
 Route::get('/contact', [EmailController::class, 'create'])->name('contact');
-Route::post('/message', [EmailController::class, 'sendEmail'])->name('send.email');
+Route::post('/contact', [EmailController::class, 'sendEmail'])->name('send.email');
 
 
 /**
