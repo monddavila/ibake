@@ -42,7 +42,7 @@
 <section class="portfolio-section alternate2 portfolio-square">
     <div class="container-fluid">
         <div class="row" id="cakes-container">
-            <!-- Images will be loaded here dynamically -->
+            <!-- Images will be loaded here dynamically thru portfolio.js -->
         </div>
 
         <div class="btn-box text-center">
