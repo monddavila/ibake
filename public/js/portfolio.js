@@ -49,5 +49,5 @@ $(document).ready(function () {
     });
 
     // Total number of cake images in the "cakes" folder
-    const totalCakeImages = 18; // Update this number to match the total number of cake images
+    const totalCakeImages = 42; // Update this number to match the total number of cake images
 });
