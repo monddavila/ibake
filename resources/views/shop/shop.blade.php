@@ -147,11 +147,12 @@
                 <div class="sidebar-widget tags-widget">
                   <h3 class="widget-title">Tags</h3>
                   <ul class="tag-list clearfix">
-                    @foreach ($productTags as $productTag)
-                    <li><a href="#">{{ $productTag->category }}</a></li>
-                    @endforeach
+                  @foreach ($categoryNames as $categoryName)
+                  <li><a href="#">{{ $categoryName }}</a></li>
+                  @endforeach
                   </ul>
                 </div>
+
               </div>
             </aside>
           </div>

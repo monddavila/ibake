@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Carts extends Model
+class Cart extends Model
 {
   use HasFactory;
 
@@ -18,8 +18,8 @@ class Carts extends Model
     return $this->belongsTo(User::class);
   }
 
-  public function cartItems()
+  public function cartItem()
   {
-    return $this->hasMany(CartItems::class);
+    return $this->hasMany(CartItem::class);
   }
 }

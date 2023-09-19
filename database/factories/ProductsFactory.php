@@ -16,7 +16,7 @@ class ProductsFactory extends Factory
    */
   public function definition()
   {
-    $categories = ['Cakes', 'Cupcakes', 'Tub Cakes', 'Cookies', 'Cake Pops'];
+    $categories = ['1', '2', '3', '4', '5', '6', '7','8'];
     return [
       'name' => $this->faker->unique()->sentence(2),
       'price' => $this->faker->numberBetween(100, 1000),

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OrderItems;
+use App\Models\OrderItem;
 use App\Http\Requests\StoreOrderItemsRequest;
 use App\Http\Requests\UpdateOrderItemsRequest;
 
@@ -37,7 +37,7 @@ class OrderItemsController extends Controller
   public function store($orderId, $productId, $price, $quantity)
   {
     //
-    OrderItems::create([
+    OrderItem::create([
       'order_id' => $orderId,
       'product_id' => $productId,
       'price' => $price,
@@ -51,7 +51,7 @@ class OrderItemsController extends Controller
    * @param  \App\Models\OrderItems  $orderItems
    * @return \Illuminate\Http\Response
    */
-  public function show(OrderItems $orderItems)
+  public function show(OrderItem $orderItems)
   {
     //
   }
@@ -62,7 +62,7 @@ class OrderItemsController extends Controller
    * @param  \App\Models\OrderItems  $orderItems
    * @return \Illuminate\Http\Response
    */
-  public function edit(OrderItems $orderItems)
+  public function edit(OrderItem $orderItems)
   {
     //
   }
@@ -74,7 +74,7 @@ class OrderItemsController extends Controller
    * @param  \App\Models\OrderItems  $orderItems
    * @return \Illuminate\Http\Response
    */
-  public function update(UpdateOrderItemsRequest $request, OrderItems $orderItems)
+  public function update(UpdateOrderItemsRequest $request, OrderItem $orderItems)
   {
     //
   }
@@ -85,7 +85,7 @@ class OrderItemsController extends Controller
    * @param  \App\Models\OrderItems  $orderItems
    * @return \Illuminate\Http\Response
    */
-  public function destroy(OrderItems $orderItems)
+  public function destroy(OrderItem $orderItems)
   {
     //
   }

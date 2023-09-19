@@ -1,8 +1,12 @@
 <?php
 
+use App\Models\Categories;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Seeder;
 
 return new class extends Migration
 {
@@ -19,7 +23,22 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->timestamps();
         });
+
+        // Seed the categories table
+        $this->seedCategories();
     }
+
+
+     /**
+     * Seed the categories table.
+     *
+     * @return void
+     */
+    protected function seedCategories()
+    {
+        Artisan::call('db:seed', ['--class' => CategoriesTableSeeder::class]);
+    }
+
 
     /**
      * Reverse the migrations.

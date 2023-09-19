@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductsRequest;
-use App\Models\Products;
-use App\Models\Categories;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -34,7 +34,9 @@ class ProductsController extends Controller
   public function create()
   {
     //
-    return view('admin.pages.products.products-add');
+      $categories = Category::all();
+      return view('admin.pages.products.products-add', compact('categories'));
+
   }
 
   /**
@@ -45,14 +47,19 @@ class ProductsController extends Controller
    */
   public function store(StoreProductsRequest $request)
   {
-    $product = new Products();
+    //dd($request->all());
+
+    $product = new Product();
     $product->name = $request->name;
     $product->price = $request->price;
     $product->image = $this->storeImage($request); // Assign the image path to the 'image' column
     $product->item_description = $request->item_description;
-    $product->category = $request->category;
+    $product->category_id = $request->category;
     $product->availability = $request->has('is_available');
+    $product->isfeatured = $request->has('is_featured');
     $product->save();
+
+    //dd($request->all());
 
      // Optionally, you can add a success message to the session
      session()->flash('message', 'Product added successfully.');
@@ -66,7 +73,7 @@ class ProductsController extends Controller
    * @param  \App\Models\Products  $products
    * @return \Illuminate\Http\Response
    */
-  public function show(Products $products)
+  public function show(Product $products)
   {
     //
   }
@@ -79,9 +86,13 @@ class ProductsController extends Controller
    */
   public function edit($id)
   {
-    //
-    $product = Products::where('id', $id)->first();
-    return view('admin.pages.products.products-edit')->with(['product' => $product]);
+    // Retrieve the product
+    $product = Product::where('id', $id)->first();
+
+    // Retrieve the categories
+    $categories = Category::all();
+
+    return view('admin.pages.products.products-edit', compact('product', 'categories'));
   }
 
   /**
@@ -95,13 +106,13 @@ class ProductsController extends Controller
   {
     //
     if (!$request->image) {
-      Products::where('id', $id)->limit(1)->update($request->except([
+      Product::where('id', $id)->limit(1)->update($request->except([
         '_token',
         '_method',
         'image'
       ]));
     } else {
-      Products::where('id', $id)->limit(1)->update([
+      Product::where('id', $id)->limit(1)->update([
         'name' => $request->name,
         'price' => $request->price,
         'item_description' => $request->item_description,
@@ -121,7 +132,7 @@ class ProductsController extends Controller
    */
   public function destroy(Request $request)
   {
-    Products::destroy($request->id);
+    Product::destroy($request->id);
     $successMsg =
       '<div class="alert alert-success" role="alert">Item successfully deleted!</div>';
     $failedMsg =
@@ -141,7 +152,7 @@ class ProductsController extends Controller
 
     // Perform the necessary database query based on the search query and sorting options
     // Example query for item search and sorting:
-    $results = Products::where('name', 'like', '%' . $query . '%')
+    $results = Product::where('name', 'like', '%' . $query . '%')
       ->orderBy($sortBy, $sortDirection)
       ->get();
 
@@ -176,4 +187,5 @@ class ProductsController extends Controller
     );
   }
 
+  
 }

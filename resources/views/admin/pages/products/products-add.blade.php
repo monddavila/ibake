@@ -58,29 +58,34 @@
                           </tr>
                           <tr>
                             <td class="add-product-td">
-                              <label for="category" class="product-input-label">Category</label>
-                              <select class="form-control" id="product_category" name="category">
-                                <option value="Occasion Cakes">Occasion Cakes</option>
-                                <option value="Wedding Cakes">Wedding Cakes</option>
-                                <option value="Customized Cakes">Customized Cakes</option>
-                                <option value="Small Cakes">Small Cakes</option>
-                                <option value="Tub Cakes">Tub Cakes</option>
-                                <option value="Cake Pops">Cake Pops</option>
-                                <option value="Cupcakes">Cupcakes</option>
-                                <option value="Cookies">Cookies</option>
-                              </select>
+                                <label for="category" class="product-input-label" style="width:100%" >Category</label><br><br>  
+                                <select class="js-example-basic-single" id="product_category" name="category">
+                                  @foreach($categories as $category)
+                                      <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                  @endforeach
+                                </select>
                             </td>
                           </tr>
+
                           <tr>
                             <td class="add-product-td">
-                              <label for="price" class="product-input-label">Price</label>
+                            <label for="price" class="product-input-label">Price</label>
+                              <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text bg-primary text-white">Php</span>
+                              </div>
                               <input type="text" class="form-control" id="product_price" name="price"
-                                placeholder="Price">
+                                placeholder="Product Price (No comma ' , ' separator needed)">
+                              <div class="input-group-append">
+                                <span class="input-group-text">.00</span>
+                              </div>
+                              </div>
                             </td>
                           </tr>
+                    
                           <tr>
                             <td class="add-product-td">
-                              <label for="item_description" class="product-input-label">Textarea</label>
+                              <label for="item_description" class="product-input-label">Product Description</label>
                               <textarea class="form-control" id="product_description" name="item_description"
                                 rows="10"></textarea>
                             </td>
@@ -91,7 +96,7 @@
                                 style="vertical-align: middle; height: 20px; width: 20px">
                               <label for="is_available"
                                 style="font-size: 1.2rem; vertical-align: middle;">Available</label>
-                              <input type="checkbox" name="is_featured" value="1" checked
+                              <input type="checkbox" name="is_featured" value="1" unchecked
                                 style="vertical-align: middle; height: 20px; width: 20px; margin-left: 20px;">
                               <label for="is_featured" style="font-size: 1.2rem; vertical-align: middle;">Featured
                                 Product</label>
@@ -106,7 +111,7 @@
                           <tr>
                             <td class="add-product-td">
                               <div class="form-group">
-                                <label for="image" class="product-input-label">Category Image</label>
+                              <label for="image" class="product-input-label">Product Image <span style="color: red;">(500x500px and PNG format required)</span></label>
                                 <input id="product-img-upload" type="file" class="form-control file-upload-info"
                                   name="image">
                                 <img src="#" id="product-img-tag" height="250px" width="auto" />
@@ -125,17 +130,13 @@
                 </div>
               </form>
               <!-- Form End -->
+
               <div class="add-product-message col-md-3" id="form-submit-msg">
               </div>
             </div>
           </div>
         </div>
 
-        @if (session('message'))
-        <div class="alert alert-success">
-          {{ session('message') }}
-        </div>
-        @endif
       </div>
       <!-- main-panel ends -->
     </div>
