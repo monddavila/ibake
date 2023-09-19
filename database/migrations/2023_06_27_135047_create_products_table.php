@@ -13,26 +13,25 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('products', function (Blueprint $table) {
-      $table->id();
-      $table->string('name')->unique();
-      $table->unsignedBigInteger('price');
-      $table->string('image')->nullable();
-      $table->text('item_description');
-      $table->text('category');
-      $table->float('rating')->default(0);
-      $table->boolean('availability')->default(false);
-      $table->timestamps(); // Adds created_at and updated_at columns
-    });
+      Schema::create('products', function (Blueprint $table) {
+          $table->id();
+          $table->string('name')->unique();
+          $table->unsignedBigInteger('price');
+          $table->string('image')->nullable();
+          $table->text('item_description');
+          $table->unsignedBigInteger('category_id'); // Foreign key column
+          $table->float('rating')->default(0);
+          $table->boolean('availability')->default(false);
+          $table->boolean('isfeatured')->default(false);
+          $table->timestamps();
+
+          // Define the foreign key constraint
+          $table->foreign('category_id')->references('id')->on('categories');
+      });
   }
 
-  /**
-   * Reverse the migrations.
-   *
-   * @return void
-   */
   public function down()
   {
-    Schema::dropIfExists('products');
+      Schema::dropIfExists('products');
   }
 };

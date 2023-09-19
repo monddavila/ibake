@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>iBake - Tiers of Joy | Shop Single</title>
+  <title>iBake - Tiers of Joy | Shop Item</title>
   @include('partials.head')
 </head>
 
@@ -19,9 +19,9 @@
     <!--End Main Header -->
 
     <!--Page Title-->
-    <section class="page-title" style="background-image:url(https://via.placeholder.com/1920x400)">
+    <section class="page-title" style="background-image:url(images/background/background-6.jpg)">
       <div class="auto-container">
-        <h1>Birthday Cake</h1>
+        <h1>{{ $product->name }}</h1>
         <ul class="page-breadcrumb">
           <li><a href="{{ route('home') }}">Home</a></li>
           <li><a href="{{ route('shop') }}">Products</a></li>
@@ -86,7 +86,7 @@
 
 
                         <ul class="product-meta">
-                          <li class="posted_in">Category: <a href="#">{{ $product->category }}</a></li>
+                          <li class="posted_in">Category: <a href="#">{{ $product->category_id }}</a></li>
                           <li class="tagged_as">Tag: <a href="#">Nuts</a></li>
                         </ul>
                       </div>
@@ -316,9 +316,10 @@
                   <h3 class="widget-title">Tags</h3>
                   <ul class="tag-list clearfix">
                     @foreach ($productTags as $productTag)
-                    <li><a href="#">{{ $productTag->category }}</a></li>
+                    <li><a href="#">{{ $productTag->category_id }}</a></li>
                     @endforeach
                 </div>
+                
               </div>
             </aside>
           </div>

@@ -35,7 +35,7 @@ class AdminController extends Controller
 
   public function addUser(Request $request)
   {
-
+    
     $request->validate([
       'firstname' => 'required|string|max:255',
       'lastname' => 'required|string|max:255',

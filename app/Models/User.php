@@ -65,7 +65,7 @@ class User extends Authenticatable
 
   public function cart()
   {
-    return $this->hasOne(Carts::class);
+    return $this->hasOne(Cart::class);
   }
 
   public function role()

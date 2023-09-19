@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CartItems;
-use App\Models\Carts;
-use App\Models\Products;
+use App\Models\CartItem;
+use App\Models\Cart;
+use App\Models\Product;
+use App\Models\Category;
 use App\Models\ShopItemTest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -32,31 +33,41 @@ class ShopController extends Controller
 
   public function index(Request $request)
   {
-    $products = Products::where('availability', 1)->get();
-    $productTags = Products::select('category')->distinct()->get();
-    return view('shop.shop')->with([
-      'products' => $products,
-      'productTags' => $productTags
-    ]);
+      $products = Product::where('availability', 1)->get();
+    
+      // Fetch unique category IDs
+      $productTags = Product::select('category_id')->distinct()->get();
+
+      // Fetch category names associated with those IDs
+      $categoryNames = Category::whereIn('id', $productTags->pluck('category_id'))->pluck('name');
+
+      return view('shop.shop')->with([
+          'products' => $products,
+          'productTags' => $productTags,
+          'categoryNames' => $categoryNames, // Pass category names to the view
+      ]);
   }
+
 
 
   public function show($id)
   {
     // Product Tags
-    $productTags = Products::where('availability', 1)->select('category')->distinct()->get();
+    $productTags = Product::where('availability', 1)->select('category_id')->distinct()->get();
+
+    
 
     return view('shop.item')
       ->with([
         'productTags' => $productTags,
-        'product' => Products::where('id', $id)->first(),
+        'product' => Product::where('id', $id)->first(),
       ]);
   }
 
   function filterShop(Request $request)
   {
 
-    $products = Products::where('availability', 1)
+    $products = Product::where('availability', 1)
       ->whereBetween('price', [$request->minPrice, $request->maxPrice])
       ->orderBy($request->sortBy, $request->sortOrder)
       ->get();

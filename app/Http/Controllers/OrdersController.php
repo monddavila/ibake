@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Models\Orders;
+use App\Models\Order;
 use App\Http\Requests\StoreOrdersRequest;
 use App\Http\Requests\UpdateOrdersRequest;
 use App\Http\Controllers\CartsController;
 use App\Http\Controllers\OrderItemsController;
-use App\Models\OrderItems;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -68,7 +68,7 @@ class OrdersController extends Controller
       $totalPrice += ($cartItem->price * $cartItem->quantity);
     }
 
-    $order = Orders::create([
+    $order = Order::create([
       'user_id' => Auth::id(),
       'recipient_name' => $request->recipient_name,
       'recipient_phone' => $request->recipient_phone,
@@ -99,7 +99,7 @@ class OrdersController extends Controller
    * @param  \App\Models\Orders  $orders
    * @return \Illuminate\Http\Response
    */
-  public function show(Orders $orders)
+  public function show(Order $orders)
   {
     //
   }
@@ -110,7 +110,7 @@ class OrdersController extends Controller
    * @param  \App\Models\Orders  $orders
    * @return \Illuminate\Http\Response
    */
-  public function edit(Orders $orders)
+  public function edit(Order $orders)
   {
     //
   }
@@ -122,7 +122,7 @@ class OrdersController extends Controller
    * @param  \App\Models\Orders  $orders
    * @return \Illuminate\Http\Response
    */
-  public function update(UpdateOrdersRequest $request, Orders $orders)
+  public function update(UpdateOrdersRequest $request, Order $orders)
   {
     //
   }
@@ -133,7 +133,7 @@ class OrdersController extends Controller
    * @param  \App\Models\Orders  $orders
    * @return \Illuminate\Http\Response
    */
-  public function destroy(Orders $orders)
+  public function destroy(Order $orders)
   {
     //
   }
@@ -144,7 +144,7 @@ class OrdersController extends Controller
    */
   public function ordersDashboard()
   {
-    $orders = Orders::orderBy('delivery_date')
+    $orders = Order::orderBy('delivery_date')
       ->take(5)
       ->get()
       // copy 'created_at' column to 'order_date' with d M Y format (01 Jan 2023)
@@ -164,7 +164,7 @@ class OrdersController extends Controller
    */
   function activeOrders()
   {
-    $activeOrders = Orders::where('order_status', '=', 'Pending')
+    $activeOrders = Order::where('order_status', '=', 'Pending')
       ->orWhere('order_status', '=', 'Ongoing')->get()
       ->map(function ($order) {
         $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');

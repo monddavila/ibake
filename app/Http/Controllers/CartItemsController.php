@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CartItems;
+use App\Models\CartItem;
 use App\Http\Requests\StoreCartItemsRequest;
 use App\Http\Requests\UpdateCartItemsRequest;
 use Illuminate\Http\Request;
@@ -29,7 +29,7 @@ class CartItemsController extends Controller
   public function create($cartId, $productId, $quantity)
   {
     //
-    return CartItems::create(
+    return CartItem::create(
       [
         'cart_id' => $cartId,
         'product_id' => $productId,
@@ -47,11 +47,11 @@ class CartItemsController extends Controller
   public function store($cartId, $productId, $quantity)
   {
     //
-    $itemExists = CartItems::where('cart_id', $cartId)
+    $itemExists = CartItem::where('cart_id', $cartId)
       ->where('product_id', $productId)
       ->exists();
 
-    $item = CartItems::where('cart_id', $cartId)
+    $item = CartItem::where('cart_id', $cartId)
       ->where('product_id', $productId)
       ->first();
 
@@ -65,10 +65,10 @@ class CartItemsController extends Controller
   /**
    * Display the specified resource.
    *
-   * @param  \App\Models\CartItems  $cartItems
+   * @param  \App\Models\CartItem  $cartItems
    * @return \Illuminate\Http\Response
    */
-  public function show(CartItems $cartItems)
+  public function show(CartItem $cartItems)
   {
     //
   }
@@ -76,8 +76,8 @@ class CartItemsController extends Controller
   public function showCartWidget($cartId)
   {
     //
-    $items = CartItems::where('cart_id', $cartId)->take(2)->get();
-    $remaining = CartItems::count() - 2;
+    $items = CartItem::where('cart_id', $cartId)->take(2)->get();
+    $remaining = CartItem::count() - 2;
 
     return [$items, $remaining];
   }
@@ -85,10 +85,10 @@ class CartItemsController extends Controller
   /**
    * Show the form for editing the specified resource.
    *
-   * @param  \App\Models\CartItems  $cartItems
+   * @param  \App\Models\CartItem  $cartItems
    * @return \Illuminate\Http\Response
    */
-  public function edit(CartItems $cartItems)
+  public function edit(CartItem $cartItems)
   {
     //
 
@@ -103,7 +103,7 @@ class CartItemsController extends Controller
     $quantity = $request->quantity;
 
     // Update cart item quantity
-    CartItems::where('cart_id', $cartId)
+    CartItem::where('cart_id', $cartId)
       ->where('product_id', $productId)
       ->update(['quantity' => $quantity]);
 
@@ -116,7 +116,7 @@ class CartItemsController extends Controller
    * Update the specified resource in storage.
    *
    * @param  \App\Http\Requests\UpdateCartItemsRequest  $request
-   * @param  \App\Models\CartItems  $cartItems
+   * @param  \App\Models\CartItem  $cartItems
    * @return \Illuminate\Http\Response
    */
   public function update($item, $quantity)
@@ -129,13 +129,13 @@ class CartItemsController extends Controller
   /**
    * Remove the specified resource from storage.
    *
-   * @param  \App\Models\CartItems  $cartItems
+   * @param  \App\Models\CartItem  $cartItems
    * @return \Illuminate\Http\Response
    */
   public function destroy($productId, $cartId)
   {
     //
-    CartItems::where('cart_id', $cartId)
+    CartItem::where('cart_id', $cartId)
       ->where('product_id', $productId)
       ->delete();
     return redirect()->back();

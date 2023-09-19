@@ -3,7 +3,7 @@
   <td class="product-name" data-toggle="modal" data-target="#productImageModal" data-imgPath="{{ $product->image }}">{{
     $product->name }}</td>
   <td>{{ $product->price }}</td>
-  <td>{{ $product->category }}</td>
+  <td>{{ $product->category_id }}</td>
   <td>{{ $product->rating }}</td>
   <td>{{ $product->availability ? 'Available' : 'Unavailable' }}</td>
   {{-- <td><a href="#"><i class="mdi mdi-image-area product-img"></i></a></td> --}}

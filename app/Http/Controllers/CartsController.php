@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCartsRequest;
 use App\Http\Requests\UpdateCartsRequest;
-use App\Models\Carts;
-use App\Models\Products;
+use App\Models\Cart;
+use App\Models\Product;
 use App\Http\Controllers\CartItemsController as CartItemsCtrl;
-use App\Models\CartItems;
+use App\Models\CartItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use stdClass;
@@ -22,7 +22,7 @@ class CartsController extends Controller
 
   public function index(Request $request)
   {
-    if (!Carts::where('user_id', auth()->user()->id)->exists()) {
+    if (!Cart::where('user_id', auth()->user()->id)->exists()) {
       return view('shop.shopping-cart')->with([
         'cartItems' => false,
         'totalPrice' => 0
@@ -91,15 +91,15 @@ class CartsController extends Controller
     }
 
     // Get the user's cart, or create a new one if it doesn't exist
-    $cart = Carts::where('user_id', auth()->user()->id)->first();
+    $cart = Cart::where('user_id', auth()->user()->id)->first();
     if (!$cart) {
       $userId = auth()->user()->id;
-      $cart = Carts::create(['user_id' => $userId]);
+      $cart = Cart::create(['user_id' => $userId]);
     }
 
     // Get the product and quantity from the request
     $cartId = $cart->id;
-    $productId = Products::findOrFail($request->product_id)->id;
+    $productId = Product::findOrFail($request->product_id)->id;
     $quantity = $request->qty;
 
     $cartItem = new CartItemsCtrl();
@@ -127,7 +127,7 @@ class CartsController extends Controller
    * @param  \App\Models\Carts  $carts
    * @return \Illuminate\Http\Response
    */
-  public function edit(Carts $carts)
+  public function edit(Cart $carts)
   {
     //
   }
@@ -139,7 +139,7 @@ class CartsController extends Controller
    * @param  \App\Models\Carts  $carts
    * @return \Illuminate\Http\Response
    */
-  public function update(UpdateCartsRequest $request, Carts $carts)
+  public function update(UpdateCartsRequest $request, Cart $carts)
   {
     //
   }
@@ -150,7 +150,7 @@ class CartsController extends Controller
    * @param  \App\Models\Carts  $carts
    * @return \Illuminate\Http\Response
    */
-  public function destroy(Carts $carts)
+  public function destroy(Cart $carts)
   {
     //
   }
@@ -158,9 +158,9 @@ class CartsController extends Controller
   public function userCart()
   {
     // Get the user's cart Id
-    $cartId = Carts::where('user_id', auth()->user()->id)->first()->id;
+    $cartId = Cart::where('user_id', auth()->user()->id)->first()->id;
     // Get product name, price, and quantity of the user's cart
-    $userCart = CartItems::where('cart_id', $cartId)
+    $userCart = CartItem::where('cart_id', $cartId)
       ->join('products', 'cart_items.product_id', '=', 'products.id')
       ->select(
         'cart_items.cart_id',
