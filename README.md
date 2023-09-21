@@ -6,6 +6,17 @@
 4. Push to github
 5. Create a pull request through github
 
+### iBake Laravel Setup
+
+1. Clone the repo
+2. Run `composer install` in cli
+3. Run `npm install` in cli
+4. Create .env file
+5. Post contents from .env.example to .env
+6. Run `php artisan key:generate` in cli
+7. Run `php artisan serve`
+8. Check on browser if running properly
+
 ### Updating local repository
 1. Change branch to master branch `git checkout master`
 2. Run `git remote add upstream https://github.com/teammed2022/iBake.git`
@@ -18,16 +29,7 @@ Commit message can be "Fetched updates". Example: `git commit -m "Fetched update
 6. Optional: Merge fetched files with your branch `git checkout (YOUR BRANCH)` then `git merge master`
 
 
-### iBake Laravel Setup
 
-1. Clone the repo
-2. Run `composer install` in cli
-3. Run `npm install` in cli
-4. Create .env file
-5. Post contents from .env.example to .env
-6. Run `php artisan key:generate` in cli
-7. Run `php artisan serve`
-8. Check on browser if running properly
 
 ### Setup Errors
 
