@@ -112,7 +112,7 @@ class CartsController extends Controller
   /**
    * Display the specified resource.
    *
-   * @param  \App\Models\Carts  $carts
+   * @param  \App\Models\Cart  $carts
    * @return \Illuminate\Http\Response
    */
   public function show()
@@ -124,7 +124,7 @@ class CartsController extends Controller
   /**
    * Show the form for editing the specified resource.
    *
-   * @param  \App\Models\Carts  $carts
+   * @param  \App\Models\Cart  $carts
    * @return \Illuminate\Http\Response
    */
   public function edit(Cart $carts)
@@ -136,7 +136,7 @@ class CartsController extends Controller
    * Update the specified resource in storage.
    *
    * @param  \App\Http\Requests\UpdateCartsRequest  $request
-   * @param  \App\Models\Carts  $carts
+   * @param  \App\Models\Cart  $carts
    * @return \Illuminate\Http\Response
    */
   public function update(UpdateCartsRequest $request, Cart $carts)
@@ -147,7 +147,7 @@ class CartsController extends Controller
   /**.
    * Remove the specified resource from storage.
    *
-   * @param  \App\Models\Carts  $carts
+   * @param  \App\Models\Cart  $carts
    * @return \Illuminate\Http\Response
    */
   public function destroy(Cart $carts)

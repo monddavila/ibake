@@ -62,7 +62,7 @@
                     </td>
                     <td class="product-name"><a href="shop-single.html">{{ $cartItem->name }}</a>
                     </td>
-                    <td class="product-price">Php {{ $cartItem->price }}</td>
+                    <td class="product-price">Php {{ number_format($cartItem->price, 2) }}</td>
                     <td class="product-quantity">
                       <div class="quantity"><label>Quantity</label>
                         <input type="number" class="qty" name="quantity" value="{{ $cartItem->quantity }}"
@@ -72,7 +72,7 @@
                     </td>
                     <td class="product-subtotal"><span class="amount item-total-price"
                         data-cartId="{{ $cartItem->cart_id }}" data-productId="{{ $cartItem->product_id }}">Php
-                        {{ $cartItem->quantity * $cartItem->price }}</span></td>
+                        {{ number_format($cartItem->quantity * $cartItem->price, 2) }}</span></td>
                     <td class="product-remove">
                       <form action="{{ route('removeItem', [$cartItem->product_id, $cartItem->cart_id]) }}"
                         method="post">
@@ -115,10 +115,10 @@
                 <h3>Cart Total</h3>
               </li>
               <li class="clearfix"><span class="col">Subtotal</span><span class="col price">Php
-                  {{ $totalPrice }}</span>
+                  {{ number_format($totalPrice, 2) }}</span>
               </li>
               <li class="clearfix"><span class="col">Total</span><span class="col total-price">Php
-                  {{ $totalPrice }}</span>
+                  {{ number_format($totalPrice, 2) }}</span>
               </li>
               <li class="text-right"><a href="{{ route('checkout') }}"><button class="theme-btn proceed-btn">Proceed to
                     Checkout</button></a></li>
