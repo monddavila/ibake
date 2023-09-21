@@ -162,7 +162,7 @@
                 </td>
                 <td class="product-total">
                   <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">Php
-                    </span>{{ $cartItem->price * $cartItem->quantity }}</span>
+                    </span>{{ number_format($cartItem->price * $cartItem->quantity, 2) }}</span>
                 </td>
               </tr>
               @endforeach
@@ -170,11 +170,11 @@
             <tfoot>
               {{-- <tr class="cart-subtotal">
                 <th>Subtotal</th>
-                <td><span class="amount">Php {{ $totalPrice }}</span></td>
+                <td><span class="amount">Php {{ number_format($totalPrice, 2) }}</span></td>
               </tr> --}}
               <tr class="order-total">
                 <th>Total</th>
-                <td><strong class="amount">Php {{ $totalPrice }}</strong> </td>
+                <td><strong class="amount">Php {{ number_format($totalPrice, 2) }}</strong> </td>
               </tr>
             </tfoot>
           </table>

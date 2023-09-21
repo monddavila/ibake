@@ -47,7 +47,7 @@
 
 
 
-      <div class="price">Php {{ $product->price }}</div>
+      <div class="price">Php {{ number_format($product->price, 2) }}</div>
     </div>
   </div>
 </div>

@@ -62,7 +62,7 @@
                           <span class="fa fa-star"></span>
                         </div>
                         <a class="reviews" href="#">(2 Customer Reviews)</a>
-                        <div class="item-price">Php {{ $product->price }}</div>
+                        <div class="item-price">Php {{ number_format($product->price, 2) }}</div>
                         {{-- Short item description beside item image --}}
                         <div class="text">{{ $product->item_description }}</div>
                       </div>
