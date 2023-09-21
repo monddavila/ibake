@@ -171,7 +171,8 @@ class ProductsController extends Controller
 
   private function storeImage($request)
   {
-    $directory = "images\products";
+    //$directory = "images\products";
+    $directory = "images/products";
     $newImgName = uniqid() . '-' . $request->name . '.' . $request->image->getClientOriginalExtension();
     $stored = $request->file('image')->move($directory, $newImgName);
     return $stored;
