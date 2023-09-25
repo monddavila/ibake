@@ -15,6 +15,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\GalleryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,12 +39,13 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/chef', [HomeController::class, 'chef'])->name('chef');
 Route::get('/customize', [HomeController::class, 'customize'])->name('customize');
-Route::get('/gallery', [HomeController::class, 'gallery'])->name('gallery');
-Route::get('/portfolio', [HomeController::class, 'portfolio'])->name('portfolio');
 Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
 Route::get('/faqs', [HomeController::class, 'faqs'])->name('faqs');
 Route::get('/track', [HomeController::class, 'track'])->name('track');
 Route::get('/redirect', [HomeController::class, 'redirect'])->name('redirect');
+
+Route::get('/gallery', [GalleryController::class, 'gallery'])->name('gallery');
+Route::get('/portfolio', [GalleryController::class, 'portfolio'])->name('portfolio');
 
 //Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
@@ -104,6 +106,7 @@ Route::group(['prefix' => 'orders'], function () {
   Route::get('/dashboard', [OrdersController::class, 'ordersDashboard']);
   Route::get('/active', [OrdersController::class, 'activeOrders'])->name('activeOrders');
 });
+
 
 /**
  * Cart Section in Customer side

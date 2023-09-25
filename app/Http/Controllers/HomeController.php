@@ -36,7 +36,7 @@ class HomeController extends Controller
     return view('pages.customize');
   }
 
-  function gallery()
+  /**function gallery()
   {
     return view('pages.gallery');
   }
@@ -45,7 +45,7 @@ class HomeController extends Controller
   {
     return view('pages.portfolio');
   }
-
+  */
   function blog()
   {
     return view('pages.blog');

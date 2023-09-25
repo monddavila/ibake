@@ -145,7 +145,7 @@
 
                 <!-- Tags Widget -->
                 <div class="sidebar-widget tags-widget">
-                  <h3 class="widget-title">Tags</h3>
+                  <h3 class="widget-title">Categories</h3>
                   <ul class="tag-list clearfix">
                   @foreach ($categoryNames as $categoryName)
                   <li><a href="#">{{ $categoryName }}</a></li>

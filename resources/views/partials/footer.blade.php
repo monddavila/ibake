@@ -1,6 +1,7 @@
 <footer class="main-footer">
     <div class="shape_wrapper shape_one">
-        <div class="shape_inner" style="background-image: url(images/background/background-5.jpg);">
+        <!--<div class="shape_inner" style="background-image: url(images/background/background-5.jpg);"> -->
+        <div class="shape_inner" style="background-image: url({{ asset('images/background/background-5.jpg') }});"> 
             <div class="overlay"></div>
         </div>
     </div>

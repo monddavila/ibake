@@ -99,7 +99,7 @@
     <div class="auto-container clearfix">
       <!--Logo-->
       <div class="logo">
-        <a href="{{ route('home') }}" title="Sticky Logo"><img src="images/logo-small.png" alt="Sticky Logo"></a>
+        <a href="{{ route('home') }}" title="Sticky Logo"><img src="{{ asset('images/logo-small.png') }}" alt="Sticky Logo"></a>
       </div>
 
       <!--Nav Outer-->
@@ -114,7 +114,7 @@
 
   <!-- Mobile Header -->
   <div class="mobile-header">
-    <div class="logo"><a href="{{ route('home') }}"><img src="images/logo-small.png" alt="" title=""></a></div>
+    <div class="logo"><a href="{{ route('home') }}"><img src="{{ asset('images/logo-small.png') }}" alt="" title=""></a></div>
 
     <!--Nav Box-->
     <div class="nav-outer clearfix">
@@ -125,7 +125,7 @@
   <!-- Mobile Menu  -->
   <div class="mobile-menu">
     <nav class="menu-box">
-      <div class="nav-logo"><a href="{{ route('home') }}"><img src="images/ibake-logo/logo-small.png" alt=""
+      <div class="nav-logo"><a href="{{ route('home') }}"><img src="{{ asset('images/ibake-logo/logo-small.png') }}" alt=""
             title=""></a></div>
       <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
     </nav>
