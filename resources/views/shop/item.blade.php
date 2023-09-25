@@ -19,7 +19,7 @@
     <!--End Main Header -->
 
     <!--Page Title-->
-    <section class="page-title" style="background-image:url(images/background/background-6.jpg)">
+    <section class="page-title" style="background-image: url({{ asset('images/background/background-6.jpg') }})">
       <div class="auto-container">
         <h1>{{ $product->name }}</h1>
         <ul class="page-breadcrumb">
@@ -61,7 +61,7 @@
                           <span class="fa fa-star"></span>
                           <span class="fa fa-star"></span>
                         </div>
-                        <a class="reviews" href="#">(2 Customer Reviews)</a>
+                        <a class="reviews" href="#">({{ $reviewCount }} Customer Reviews)</a>
                         <div class="item-price">Php {{ number_format($product->price, 2) }}</div>
                         {{-- Short item description beside item image --}}
                         <div class="text">{{ $product->item_description }}</div>
@@ -86,8 +86,9 @@
 
 
                         <ul class="product-meta">
-                          <li class="posted_in">Category: <a href="#">{{ $product->category_id }}</a></li>
-                          <li class="tagged_as">Tag: <a href="#">Nuts</a></li>
+                          <li class="posted_in">Category: <a href="#">{{ $product->category->name }}</a></li>
+                          <li class="posted_in">Tag: <a href="#">Custom</a></li>
+                          
                         </ul>
                       </div>
                     </div>
@@ -102,15 +103,15 @@
 
                     <!--Tab Btns-->
                     <ul class="tab-btns tab-buttons clearfix">
-                      <li data-tab="#prod-details" class="tab-btn">Descripton</li>
-                      <li data-tab="#prod-reviews" class="tab-btn active-btn">Review (2)</li>
+                      <li data-tab="#prod-details" class="tab-btn active-btn">Descripton</li>
+                      <li data-tab="#prod-reviews" class="tab-btn">Review({{ $reviewCount }})</li>
                     </ul>
 
                     <!--Tabs Container-->
                     <div class="tabs-content">
 
                       <!--Tab-->
-                      <div class="tab" id="prod-details">
+                      <div class="tab active-tab" id="prod-details">
                         <h2 class="title">Descripton</h2>
                         <div class="content">
                           {{-- Long item description ner review tab --}}
@@ -119,95 +120,43 @@
                       </div>
 
                       <!--Tab-->
-                      <div class="tab active-tab" id="prod-reviews">
-                        <h2 class="title">2 reviews for Birthday Cake</h2>
+                      <div class="tab" id="prod-reviews">
+                        <h2 class="title">Reviews for {{ $product->name }}</h2>
                         <!--Reviews Container-->
                         <div class="comments-area">
-                          <!--Comment Box-->
-                          <div class="comment-box">
-                            <div class="comment">
-                              <div class="author-thumb"><img src="https://via.placeholder.com/60x60" alt=""></div>
-                              <div class="comment-inner">
-                                <div class="comment-info clearfix">
-                                  <strong class="name">Stuart</strong>
-                                  <span class="date">– 07 Jun</span>
-                                </div>
-                                <div class="rating">
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star light"></span>
-                                </div>
-                                <div class="text">This will go great with my Hoodie
-                                  that I ordered a few weeks ago.</div>
-                              </div>
-                            </div>
-                          </div>
 
-                          <!--Comment Box-->
-                          <div class="comment-box">
-                            <div class="comment">
-                              <div class="author-thumb"><img src="https://via.placeholder.com/60x60" alt=""></div>
-                              <div class="comment-inner">
-                                <div class="comment-info clearfix">
-                                  <strong class="name">Maria</strong>
-                                  <span class="date">– 07 Jun</span>
+                        @if ($reviewCount > 0)
+                            <!--Comment Box-->
+                            @foreach ($reviews as $review)
+                            {{ $review->user->name }}
+                            <div class="comment-box">
+                              <div class="comment">
+                                <div class="author-thumb"><img src="/images/profile/profile-photo.png" alt=""></div>
+                                <div class="comment-inner">
+                                  <div class="comment-info clearfix">
+                                    <strong class="name">{{$review->user->firstname}} 
+                                      {{ strtoupper(substr($review->user->lastname, 0, 1)) . '.' }}</strong>
+                                      <span class="date">{{ $review->created_at->format('d-M-Y H:i') }}</span>
+                                  </div>
+                                  <div class="rating">
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star light"></span>
+                                  </div>
+                                  <div class="text">{{ $review->comment }}</div>
                                 </div>
-                                <div class="rating">
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star light"></span>
-                                </div>
-                                <div class="text">Love this shirt! The ninja near and
-                                  dear to my heart.</div>
                               </div>
                             </div>
-                          </div>
+                            @endforeach
+                        @else
+                        <p>No reviews available for this product.</p>
+                        @endif
+
                         </div>
 
-                        <!--Comment Form-->
-                        <div class="comment-form">
-                          <div class="sub-title">Add a review</div>
-                          <div class="form-outer">
-                            <p>Your email address will not be published. Required fields are
-                              marked *</p>
-                            <div class="rating-box">
-                              <div class="field-label">Your Rating</div>
-                              <div class="rating">
-                                <a href="#"><span class="fa fa-star"></span></a>
-                                <a href="#"><span class="fa fa-star"></span></a>
-                                <a href="#"><span class="fa fa-star"></span></a>
-                                <a href="#"><span class="fa fa-star"></span></a>
-                                <a href="#"><span class="fa fa-star"></span></a>
-                              </div>
-                            </div>
-                            <form method="post" action="blog-showcase.html">
-                              <div class="row clearfix">
-                                <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                  <div class="field-label">Your review *</div>
-                                  <textarea name="message" placeholder=""></textarea>
-                                </div>
-
-                                <div class="col-lg-6 col-md-12 col-sm-12 form-group">
-                                  <div class="field-label">Name *</div>
-                                  <input type="text" name="username" placeholder="" required="">
-                                </div>
-
-                                <div class="col-lg-6 col-md-12 col-sm-12 form-group">
-                                  <div class="field-label">Email *</div>
-                                  <input type="email" name="email" placeholder="" required="">
-                                </div>
-
-                                <div class="col-lg-12 col-md-12 col-sm-12 form-group text-right">
-                                  <input type="submit" name="submit" value="Submit">
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
+                        
                       </div>
                     </div>
                   </div>
@@ -219,67 +168,64 @@
                   <div class="sec-title">
                     <h2>Related products</h2>
                   </div>
-
+                  
                   <div class="row clearfix">
                     <!-- Shop Item -->
+                    @foreach ($relatedProducts as $product)
                     <div class="shop-item col-lg-4 col-md-6 col-sm-12">
                       <div class="inner-box">
                         <div class="image-box">
-                          <div class="sale-tag">sale!</div>
-                          <figure class="image"><a href="shop-single.html"><img
-                                src="https://via.placeholder.com/300x300" alt=""></a></figure>
-                          <div class="btn-box"><a href="shopping-cart.html">Add to cart</a>
-                          </div>
-                        </div>
-                        <div class="lower-content">
-                          <h4 class="name"><a href="shop-single.html">French Macaroon</a>
-                          </h4>
-                          <div class="rating"><span class="fa fa-star"></span><span class="fa fa-star"></span><span
-                              class="fa fa-star"></span><span class="fa fa-star"></span><span
-                              class="fa fa-star light"></span></div>
-                          <div class="price">$17.00</div>
-                        </div>
-                      </div>
-                    </div>
+                          <figure class="image"><a href="{{ route('item', $product->id) }}"><img src="{{ asset($product->image) }}"
+                                alt=""></a>
+                          </figure>
 
-                    <!-- Shop Item -->
-                    <div class="shop-item col-lg-4 col-md-6 col-sm-12">
-                      <div class="inner-box">
-                        <div class="image-box">
-                          <figure class="image"><a href="shop-single.html"><img
-                                src="https://via.placeholder.com/300x300" alt=""></a></figure>
-                          <div class="btn-box"><a href="shopping-cart.html">Add to cart</a>
+                          <div class="btn-box"><a href="{{ route('item', $product->id) }}">Add to
+                              cart</a>
                           </div>
                         </div>
                         <div class="lower-content">
-                          <h4 class="name"><a href="shop-single.html">Happy Ninja</a></h4>
-                          <div class="rating"><span class="fa fa-star"></span><span class="fa fa-star"></span><span
-                              class="fa fa-star"></span><span class="fa fa-star"></span><span
-                              class="fa fa-star light"></span></div>
-                          <div class="price">$35.00</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Shop Item -->
-                    <div class="shop-item col-lg-4 col-md-6 col-sm-12">
-                      <div class="inner-box">
-                        <div class="image-box">
-                          <figure class="image"><a href="shop-single.html"><img
-                                src="https://via.placeholder.com/300x300" alt=""></a></figure>
-                          <div class="btn-box"><a href="shopping-cart.html">Add to cart</a>
-                          </div>
-                        </div>
-                        <div class="lower-content">
-                          <h4 class="name"><a href="shop-single.html">Hearts Lollipop</a>
+                          <h4 class="name"><a href="{{ route('item', $product->id) }}">{{ $product->name }}</a>
                           </h4>
-                          <div class="rating"><span class="fa fa-star"></span><span class="fa fa-star"></span><span
-                              class="fa fa-star"></span><span class="fa fa-star"></span><span
-                              class="fa fa-star light"></span></div>
-                          <div class="price">$17.00</div>
+
+
+                            <?php
+                            // Stars depending on product rating from the database
+                            $productRating = $product->rating; // actual rating value
+
+                            // Calculate the number of filled and empty stars
+                            $filledStars = floor($productRating);
+                            $hasHalfStar = ($productRating - $filledStars) >= 0.5;
+                            ?>
+
+                            <!-- Star Rating HTML -->
+                            <div class="rating">
+                                <?php
+                                // Render filled stars
+                                for ($i = 1; $i <= $filledStars; $i++) {
+                                    echo '<span class="fa fa-star"></span>';
+                                }
+
+                                // Render a half star if needed
+                                if ($hasHalfStar) {
+                                    echo '<span class="fa fa-star-half"></span>';
+                                    $filledStars++; // Increment the count of filled stars
+                                }
+
+                                // Render empty stars
+                                for ($i = $filledStars + 1; $i <= 5; $i++) {
+                                    echo '<span class="fa fa-star-o"></span>';
+                                }
+                                ?>
+                            </div>
+
+
+
+                          <div class="price">Php {{ number_format($product->price, 2) }}</div>
                         </div>
                       </div>
                     </div>
+                    @endforeach
+                    
                   </div>
                 </div><!-- End Related Products -->
               </div><!-- Product Detail -->
