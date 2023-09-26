@@ -74,8 +74,14 @@
               <div class="row clearfix product-cards-container">
                 @include('shop.shop-item-card')
               </div>
+                  <!-- Pagination Links -->
+                  <div class="pagination-wrap">
+                  {{ $products->links() }}
+                  </div>
             </div>
           </div>
+
+              
 
           <!--Sidebar Side-->
           <div class="sidebar-side sticky-container col-lg-3 col-md-12 col-sm-12">

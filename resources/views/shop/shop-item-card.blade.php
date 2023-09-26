@@ -13,37 +13,39 @@
     <div class="lower-content">
       <h4 class="name"><a href="{{ route('item', $product->id) }}">{{ $product->name }}</a>
       </h4>
+      
+    @php
+    $productId = $product->id; // Retrieve the product ID
+    $averageRating = $averageRatings->where('product_id', $productId)->first();
+    @endphp
+    
+      <?php
+      // Stars depending on avearge product rating from the reviews
+      $productRating = $averageRating->average_rating; // actual rating value
+      
+      // Calculate the number of filled and empty stars
+      $filledStars = floor($productRating);
+      $hasHalfStar = ($productRating - $filledStars) >= 0.5;
+      $emptyStars = 5 - $filledStars - ($hasHalfStar ? 1 : 0);
+      ?>
+
+      <!-- Star Rating HTML -->
+      <div class="rating">
+          @for ($i = 1; $i <= $filledStars; $i++)
+              <span class="fa-solid fa-star"></span>
+          @endfor
+
+          @if ($hasHalfStar)
+              <span class="fa-solid fa-star-half-stroke"></span>
+          @endif
+
+          @for ($i = 1; $i <= $emptyStars; $i++)
+              <span class="fa-regular fa-star"></span>
+          @endfor
+      </div>
 
 
-        <?php
-        // Stars depending on product rating from the database
-        $productRating = $product->rating; // actual rating value
 
-        // Calculate the number of filled and empty stars
-        $filledStars = floor($productRating);
-        $hasHalfStar = ($productRating - $filledStars) >= 0.5;
-        ?>
-
-        <!-- Star Rating HTML -->
-        <div class="rating">
-            <?php
-            // Render filled stars
-            for ($i = 1; $i <= $filledStars; $i++) {
-                echo '<span class="fa fa-star"></span>';
-            }
-
-            // Render a half star if needed
-            if ($hasHalfStar) {
-                echo '<span class="fa fa-star-half"></span>';
-                $filledStars++; // Increment the count of filled stars
-            }
-
-            // Render empty stars
-            for ($i = $filledStars + 1; $i <= 5; $i++) {
-                echo '<span class="fa fa-star-o"></span>';
-            }
-            ?>
-        </div>
 
 
 

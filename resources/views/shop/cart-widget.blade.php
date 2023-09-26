@@ -21,13 +21,12 @@
     <button class="remove-item"><span class="fa fa-times"></span></button>
   </li>
 
-    @php
-    $itemTotal = $cartItem->quantity * $cartItem->price; // Calculate the total for this item
-    $subtotal += $itemTotal; // Add it to the subtotal
-    @endphp
+      @php
+      $itemTotal = $cartItem->quantity * $cartItem->price; // Calculate the total for this item
+      $subtotal += $itemTotal; // Add it to the subtotal
+      @endphp
 
-
-  @endforeach
+      @endforeach
   </ul>
 
 <!-- Cart Footer -->
