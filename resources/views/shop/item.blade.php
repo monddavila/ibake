@@ -54,11 +54,11 @@
                     <div class="info-column col-md-6 col-sm-12">
                       <div class="details-header">
                         <h4>{{ $product->name }}</h4>
-                        <strong>{{ number_format($averageRating, 2) }}/5</strong>
+                        <strong>{{ number_format($averageRating ?? 0, 2) }}/5</strong> <!-- Value default to zero if Null -->
                         
 
                         <?php
-                        // Stars depending on avearge product rating from the reviews table
+                        // Stars depending on average product rating from the reviews table
                         $productRating = $averageRating; // actual rating value
                         
                         // Calculate the number of filled and empty stars
@@ -240,14 +240,21 @@
                             $itemRating = $productRatings->where('product_id', $productId)->first();
                             @endphp
 
-                          <?php
-                            // Stars depending on avearge product rating from the reviews table
-                            $productRating = $itemRating->average_rating; // actual rating value
-                            
-                            // Calculate the number of filled and empty stars
-                            $filledStars = floor($productRating);
-                            $hasHalfStar = ($productRating - $filledStars) >= 0.5;
-                            $emptyStars = 5 - $filledStars - ($hasHalfStar ? 1 : 0);
+                            <?php
+                              // Stars depending on average product rating from the reviews table
+                              if ($itemRating !== null) {
+                                  $productRating = $itemRating->average_rating; // actual rating value
+
+                                  // Calculate the number of filled and empty stars
+                                  $filledStars = floor($productRating);
+                                  $hasHalfStar = ($productRating - $filledStars) >= 0.5;
+                                  $emptyStars = 5 - $filledStars - ($hasHalfStar ? 1 : 0);
+                              } else {
+                                  // Default to zero filled stars if averageRating is null
+                                  $filledStars = 0;
+                                  $hasHalfStar = false;
+                                  $emptyStars = 5;
+                              }
                             ?>
 
                             <!-- Star Rating HTML -->
@@ -264,8 +271,6 @@
                                     <span class="fa-regular fa-star"></span>
                                 @endfor
                             </div>
-
-
 
                           <div class="price">Php {{ number_format($product->price, 2) }}</div>
                         </div>
