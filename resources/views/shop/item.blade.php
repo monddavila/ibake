@@ -54,13 +54,35 @@
                     <div class="info-column col-md-6 col-sm-12">
                       <div class="details-header">
                         <h4>{{ $product->name }}</h4>
+                        <strong>{{ number_format($averageRating, 2) }}/5</strong>
+                        
+
+                        <?php
+                        // Stars depending on avearge product rating from the reviews table
+                        $productRating = $averageRating; // actual rating value
+                        
+                        // Calculate the number of filled and empty stars
+                        $filledStars = floor($productRating);
+                        $hasHalfStar = ($productRating - $filledStars) >= 0.5;
+                        $emptyStars = 5 - $filledStars - ($hasHalfStar ? 1 : 0);
+                        ?>
+
+                        <!-- Star Rating HTML -->
                         <div class="rating">
-                          <span class="fa fa-star"></span>
-                          <span class="fa fa-star"></span>
-                          <span class="fa fa-star"></span>
-                          <span class="fa fa-star"></span>
-                          <span class="fa fa-star"></span>
+                            @for ($i = 1; $i <= $filledStars; $i++)
+                                <span class="fa-solid fa-star"></span>
+                            @endfor
+
+                            @if ($hasHalfStar)
+                                <span class="fa-solid fa-star-half-stroke"></span>
+                            @endif
+
+                            @for ($i = 1; $i <= $emptyStars; $i++)
+                                <span class="fa-regular fa-star"></span>
+                            @endfor
                         </div>
+
+
                         <a class="reviews" href="#">({{ $reviewCount }} Customer Reviews)</a>
                         <div class="item-price">Php {{ number_format($product->price, 2) }}</div>
                         {{-- Short item description beside item image --}}
@@ -103,15 +125,15 @@
 
                     <!--Tab Btns-->
                     <ul class="tab-btns tab-buttons clearfix">
-                      <li data-tab="#prod-details" class="tab-btn active-btn">Descripton</li>
-                      <li data-tab="#prod-reviews" class="tab-btn">Review({{ $reviewCount }})</li>
+                      <li data-tab="#prod-details" class="tab-btn">Descripton</li>
+                      <li data-tab="#prod-reviews" class="tab-btn active-btn">Review({{ $reviewCount }})</li>
                     </ul>
 
                     <!--Tabs Container-->
                     <div class="tabs-content">
 
                       <!--Tab-->
-                      <div class="tab active-tab" id="prod-details">
+                      <div class="tab" id="prod-details">
                         <h2 class="title">Descripton</h2>
                         <div class="content">
                           {{-- Long item description ner review tab --}}
@@ -120,7 +142,7 @@
                       </div>
 
                       <!--Tab-->
-                      <div class="tab" id="prod-reviews">
+                      <div class="tab active-tab" id="prod-reviews">
                         <h2 class="title">Reviews for {{ $product->name }}</h2>
                         <!--Reviews Container-->
                         <div class="comments-area">
@@ -138,18 +160,44 @@
                                       {{ strtoupper(substr($review->user->lastname, 0, 1)) . '.' }}</strong>
                                       <span class="date">{{ $review->created_at->format('d-M-Y H:i') }}</span>
                                   </div>
-                                  <div class="rating">
-                                    <span class="fa fa-star"></span>
-                                    <span class="fa fa-star"></span>
-                                    <span class="fa fa-star"></span>
-                                    <span class="fa fa-star"></span>
-                                    <span class="fa fa-star light"></span>
-                                  </div>
+
+                                  <?php
+                                    // Stars depending on avearge product rating from the reviews table
+                                    $productRating = $review->rating; // actual rating value
+                                    
+                                    // Calculate the number of filled and empty stars
+                                    $filledStars = floor($productRating);
+                                    $hasHalfStar = ($productRating - $filledStars) >= 0.5;
+                                    $emptyStars = 5 - $filledStars - ($hasHalfStar ? 1 : 0);
+                                    ?>
+
+                                    <!-- Star Rating HTML -->
+                                    <div class="rating">
+                                        @for ($i = 1; $i <= $filledStars; $i++)
+                                            <span class="fa-solid fa-star"></span>
+                                        @endfor
+
+                                        @if ($hasHalfStar)
+                                            <span class="fa-solid fa-star-half-stroke"></span>
+                                        @endif
+
+                                        @for ($i = 1; $i <= $emptyStars; $i++)
+                                            <span class="fa-regular fa-star"></span>
+                                        @endfor
+                                    </div>
+
+
                                   <div class="text">{{ $review->comment }}</div>
                                 </div>
                               </div>
                             </div>
                             @endforeach
+
+                              <!-- Pagination Links -->
+                              <div class="pagination-wrap">
+                                  {{ $reviews->links() }}
+                              </div>
+
                         @else
                         <p>No reviews available for this product.</p>
                         @endif
@@ -187,35 +235,34 @@
                           <h4 class="name"><a href="{{ route('item', $product->id) }}">{{ $product->name }}</a>
                           </h4>
 
+                            @php
+                            $productId = $product->id; // Retrieve the product ID
+                            $itemRating = $productRatings->where('product_id', $productId)->first();
+                            @endphp
 
-                            <?php
-                            // Stars depending on product rating from the database
-                            $productRating = $product->rating; // actual rating value
-
+                          <?php
+                            // Stars depending on avearge product rating from the reviews table
+                            $productRating = $itemRating->average_rating; // actual rating value
+                            
                             // Calculate the number of filled and empty stars
                             $filledStars = floor($productRating);
                             $hasHalfStar = ($productRating - $filledStars) >= 0.5;
+                            $emptyStars = 5 - $filledStars - ($hasHalfStar ? 1 : 0);
                             ?>
 
                             <!-- Star Rating HTML -->
                             <div class="rating">
-                                <?php
-                                // Render filled stars
-                                for ($i = 1; $i <= $filledStars; $i++) {
-                                    echo '<span class="fa fa-star"></span>';
-                                }
+                                @for ($i = 1; $i <= $filledStars; $i++)
+                                    <span class="fa-solid fa-star"></span>
+                                @endfor
 
-                                // Render a half star if needed
-                                if ($hasHalfStar) {
-                                    echo '<span class="fa fa-star-half"></span>';
-                                    $filledStars++; // Increment the count of filled stars
-                                }
+                                @if ($hasHalfStar)
+                                    <span class="fa-solid fa-star-half-stroke"></span>
+                                @endif
 
-                                // Render empty stars
-                                for ($i = $filledStars + 1; $i <= 5; $i++) {
-                                    echo '<span class="fa fa-star-o"></span>';
-                                }
-                                ?>
+                                @for ($i = 1; $i <= $emptyStars; $i++)
+                                    <span class="fa-regular fa-star"></span>
+                                @endfor
                             </div>
 
 

@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Review;
 use App\Models\ShopItemTest;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 
 class ShopController extends Controller
@@ -32,22 +33,30 @@ class ShopController extends Controller
    */
 
 
-  public function index(Request $request)
-  {
-      $products = Product::where('availability', 1)->get();
-    
-      // Fetch unique category IDs
-      $productTags = Product::select('category_id')->distinct()->get();
-
-      // Fetch category names associated with those IDs
-      $categoryNames = Category::whereIn('id', $productTags->pluck('category_id'))->pluck('name');
-
-      return view('shop.shop')->with([
-          'products' => $products,
-          'productTags' => $productTags,
-          'categoryNames' => $categoryNames, // Pass category names to the view
-      ]);
-  }
+   public function index(Request $request)
+   {
+       $products = Product::where('availability', 1)
+       //->get();
+       ->paginate(9);
+       // Fetch unique category IDs
+       $productTags = Product::select('category_id')->distinct()->get();
+   
+       // Fetch category names associated with those IDs
+       $categoryNames = Category::whereIn('id', $productTags->pluck('category_id'))->pluck('name');
+   
+       // Calculate average product ratings
+       $averageRatings = DB::table('reviews')
+           ->select('product_id', DB::raw('AVG(rating) as average_rating'))
+           ->groupBy('product_id')
+           ->get();
+   
+       return view('shop.shop')->with([
+           'products' => $products,
+           'productTags' => $productTags,
+           'categoryNames' => $categoryNames, // Pass category names to the view
+           'averageRatings' => $averageRatings, // Pass average ratings to the view
+       ]);
+   }
 
 
 
@@ -69,9 +78,19 @@ class ShopController extends Controller
     // Query to retrieve reviews for the current product
     $reviews = Review::with('user')
         ->where('product_id', $id)
-        ->get();
+        //->get();
+        ->paginate(3); // Paginate with 3 reviews per page
 
     $reviewCount = Review::where('product_id', $id)->count();
+
+    // Query for average rating of the selected product
+    $averageRating = Review::where('product_id', $id)->avg('rating');
+
+    // Query and all product ratings and average it
+    $productRatings = DB::table('reviews')
+    ->select('product_id', DB::raw('AVG(rating) as average_rating'))
+    ->groupBy('product_id')
+    ->get();
 
 
     return view('shop.item')
@@ -81,19 +100,24 @@ class ShopController extends Controller
         'relatedProducts' => $relatedProducts,
         'reviews' => $reviews,
         'reviewCount' => $reviewCount,
+        'averageRating' => $averageRating,
+        'productRatings' => $productRatings,
       ]);
   }
+  
+  
+      public function filterShop(Request $request)
+      {
+          $products = Product::where('availability', 1)
+              ->whereBetween('price', [$request->minPrice, $request->maxPrice])
+              ->orderBy($request->sortBy, $request->sortOrder)
+              ->get();
+  
+          $shopItems = view('shop.shop-item-card')->with(['products' => $products])->render();
+  
+          return response()->json(['shopItems' => $shopItems]);
+      }
+  
+  
 
-  function filterShop(Request $request)
-  {
-
-    $products = Product::where('availability', 1)
-      ->whereBetween('price', [$request->minPrice, $request->maxPrice])
-      ->orderBy($request->sortBy, $request->sortOrder)
-      ->get();
-
-    $shopItems = view('shop.shop-item-card')->with(['products' => $products])->render();
-
-    return response()->json(['shopItems' => $shopItems]);
-  }
 }
