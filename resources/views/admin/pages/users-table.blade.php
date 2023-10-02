@@ -10,6 +10,7 @@ $count = 1;
   </td>
   <td>{{ $user->firstname }}</td>
   <td>{{ $user->lastname }}</td>
+  <td>{{ $user->role->name }}</td>
   <td>{{ $user->email }}</td>
   <td>{{ $user->phone }}</td>
   <td>{{ $user->created_at->format('d M Y') }}</td>

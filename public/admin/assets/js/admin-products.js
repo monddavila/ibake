@@ -128,6 +128,9 @@ function readURL(input) {
         };
 
         reader.readAsDataURL(input.files[0]);
+    } else {
+        // If no file is selected, set the image source to a blank image
+        $("#product-img-tag").attr("src", "");
     }
 }
 

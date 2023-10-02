@@ -46,6 +46,7 @@
                       <th>Profile</th>
                       <th class="sortable" id="sort-firstname" data-sort="firstname">First Name</th>
                       <th class="sortable" id="sort-lastname" data-sort="lastname">Last Name</th>
+                      <th class="sortable" id="sort-role_id" data-sort="role_id">Role</th>
                       <th class="sortable" id="sort-email" data-sort="email">Email</th>
                       <th class="sortable" id="sort-phone" data-sort="phone">Contact No.</th>
                       <th class="sortable" id="sort-created" data-sort="created_at">Created</th>
@@ -57,6 +58,8 @@
                     @include('admin.pages.users-table')
                   </tbody>
                 </table>
+                  <!-- Pagination Links -->
+                  {{ $users->links() }}
               </div>
             </div>
           </div>

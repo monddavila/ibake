@@ -100,6 +100,7 @@ Route::group(['prefix' => 'shop'], function () {
   Route::get('/filterShop', [ShopController::class, 'filterShop'])->name('shop.filterShop');
   Route::post('/', [ShopController::class, 'index'])->name('shop');
   Route::get('/item/{id}', [ShopController::class, 'show'])->name('item');
+  
 });
 
 Route::group(['prefix' => 'orders'], function () {

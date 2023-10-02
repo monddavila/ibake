@@ -18,12 +18,8 @@ class AdminController extends Controller
 {
   public function viewUsers()
   {
-    $users = DB::table('users')->get();
-
-    // Convert created_at column to Carbon instances
-    foreach ($users as $user) {
-      $user->created_at = Carbon::parse($user->created_at);
-    }
+    $users = User::with('role') // having a 'role' relationship in your User model
+        ->paginate(10);
 
     return view('admin.pages.users')->with(['users' => $users]);
   }
