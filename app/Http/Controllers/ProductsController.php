@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductsRequest;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -18,13 +19,14 @@ class ProductsController extends Controller
    */
   public function index()
   {
-    //
-    $products = DB::table('products')->get();
+    $products = DB::table('products')
+        ->join('categories', 'products.category_id', '=', 'categories.id')
+        ->select('products.*', 'categories.name as category_name')
+        ->paginate(10);
 
-    return view('admin.pages.products.products-list')->with(
-      ['products' => $products]
-    );
+    return view('admin.pages.products.products-list', ['products' => $products]);
   }
+
 
   /**
    * Show the form for adding/creating a new product.
@@ -35,7 +37,9 @@ class ProductsController extends Controller
   {
     //
       $categories = Category::all();
-      return view('admin.pages.products.products-add', compact('categories'));
+      $tags = Tag::all(); // Retrieve all tags from the database
+
+      return view('admin.pages.products.products-add', compact('categories', 'tags'));
 
   }
 
@@ -47,8 +51,6 @@ class ProductsController extends Controller
    */
   public function store(StoreProductsRequest $request)
   {
-    //dd($request->all());
-
     $product = new Product();
     $product->name = $request->name;
     $product->price = $request->price;
@@ -59,13 +61,21 @@ class ProductsController extends Controller
     $product->isfeatured = $request->has('is_featured');
     $product->save();
 
-    //dd($request->all());
+    $selectedTagIds = $request->input('tags');
+    // Get the current timestamp
+    $currentTimestamp = now();
+    // Use sync to attach tags with additional data
+    $product->tags()->sync($selectedTagIds, [
+        'created_at' => $currentTimestamp,
+        'updated_at' => $currentTimestamp,
+    ]);
 
-     // Optionally, you can add a success message to the session
-     session()->flash('message', 'Product added successfully.');
+    // Optionally, you can add a success message to the session
+    session()->flash('message', 'Product added successfully.');
 
     return redirect(route('admin.viewAddProducts'));
   }
+
 
   /**
    * Display the specified resource.
@@ -86,13 +96,16 @@ class ProductsController extends Controller
    */
   public function edit($id)
   {
-    // Retrieve the product
-    $product = Product::where('id', $id)->first();
+    // Retrieve the product with its category information
+    $product = Product::with('category', 'tags')->where('id', $id)->first();
 
     // Retrieve the categories
     $categories = Category::all();
 
-    return view('admin.pages.products.products-edit', compact('product', 'categories'));
+    // Retrieve all available tags
+    $tags = Tag::all();
+
+    return view('admin.pages.products.products-edit', compact('product', 'categories', 'tags'));
   }
 
   /**
@@ -104,24 +117,36 @@ class ProductsController extends Controller
    */
   public function update(Request $request, $id)
   {
-    //
-    if (!$request->image) {
-      Product::where('id', $id)->limit(1)->update($request->except([
-        '_token',
-        '_method',
-        'image'
-      ]));
-    } else {
-      Product::where('id', $id)->limit(1)->update([
-        'name' => $request->name,
-        'price' => $request->price,
-        'item_description' => $request->item_description,
-        'category' => $request->category,
-        'image' => $this->storeImage($request) // Assign the image path to the 'image' colum
-      ]);
+    $product = Product::find($id);
+
+    if (!$product) {
+        return redirect()->route('admin.viewProducts')->with('error', 'Product not found.');
     }
 
-    return redirect(route('admin.viewProducts'));
+    // Update product details
+    $product->name = $request->name;
+    // Check if the 'price' field is provided in the request
+    if ($request->has('price')) {
+      $product->price = $request->price;
+    }
+    $product->item_description = $request->item_description;
+    $product->category_id = $request->category_id;
+    
+    if ($request->has('image')) {
+        $product->image = $this->storeImage($request);
+    }
+
+    // Update is_available and is_featured based on checkbox values
+    $product->availability = $request->has('is_available') ? 1 : 0;
+    $product->isfeatured = $request->has('is_featured') ? 1 : 0;
+
+    $product->save();
+
+    // Update product tags
+    $selectedTagIds = $request->input('tags', []); // Get selected tag IDs or an empty array if none selected
+    $product->tags()->sync($selectedTagIds);
+
+    return redirect()->route('admin.viewProducts')->with('success', 'Product updated successfully.');
   }
 
   /**

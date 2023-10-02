@@ -4,6 +4,7 @@
 <head>
   @include('admin.partials.head')
   <link rel="stylesheet" href="{{ asset('admin/assets/css/custom.css') }}">
+
 </head>
 
 <body>
@@ -54,16 +55,22 @@
                               <label for="name" class="product-input-label">Product Name</label>
                               <input type="text" class="form-control" id="product_name" name="name"
                                 placeholder="Product Name">
+                                        @error('name')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                             </td>
                           </tr>
                           <tr>
                             <td class="add-product-td">
-                                <label for="category" class="product-input-label" style="width:100%" >Category</label><br><br>  
-                                <select class="js-example-basic-single" id="product_category" name="category">
+                                <label for="category" class="product-input-label" >Category</label><br><br>  
+                                <select class="js-example-basic-single" style="width:100%" id="product_category" name="category">
                                   @foreach($categories as $category)
                                       <option value="{{ $category->id }}">{{ $category->name }}</option>
                                   @endforeach
                                 </select>
+                                        @error('category')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                             </td>
                           </tr>
 
@@ -80,6 +87,9 @@
                                 <span class="input-group-text">.00</span>
                               </div>
                               </div>
+                                        @error('price')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                             </td>
                           </tr>
                     
@@ -88,6 +98,9 @@
                               <label for="item_description" class="product-input-label">Product Description</label>
                               <textarea class="form-control" id="product_description" name="item_description"
                                 rows="10"></textarea>
+                                        @error('item_description')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                             </td>
                           </tr>
                           <tr>
@@ -114,11 +127,33 @@
                               <label for="image" class="product-input-label">Product Image <span style="color: red;">(500x500px and PNG format required)</span></label>
                                 <input id="product-img-upload" type="file" class="form-control file-upload-info"
                                   name="image">
-                                <img src="#" id="product-img-tag" height="250px" width="auto" />
+                                        @error('image')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                  <div style="width: 200px; height: 200px; overflow: hidden; border: 1px solid #ccc;">
+                                      <img id="product-img-tag" src="" alt="Upload Image" style="width: 100%; height: 100%; object-fit: cover;">
+                                  </div>
                                 <!--for preview purpose -->
                               </div>
                             </td>
                           </tr>
+
+                          <tr>
+                            <td class="add-product-td">
+                              <div class="form-group">
+                                <label for="tags" class="product-input-label">Tags/Labels</label><br><br>
+                                <select class="js-example-basic-multiple" multiple="multiple" style="width:100%" id="product_tags" name="tags[]">
+                                  @foreach ($tags as $tag)
+                                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                  @endforeach
+                                </select>
+                              </div>
+                                        @error('tags')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                            </td>
+                          </tr>
+
                         </tbody>
                       </table>
                     </div>

@@ -156,8 +156,11 @@
             </thead>
             <tbody>
               @foreach ($cartItems as $cartItem)
+              
               <tr class="cart-item">
-                <td class="product-name">{{ $cartItem->name }}&nbsp;
+              
+                
+                <td class="product-name"><img src="{{ asset($cartItem->image) }}" alt="" style="width: 80px; height: 80px;">&nbsp;&nbsp;{{ $cartItem->name }}&nbsp;
                   <strong class="product-quantity">× {{ $cartItem->quantity }}</strong>
                 </td>
                 <td class="product-total">

@@ -109,7 +109,14 @@
 
                         <ul class="product-meta">
                           <li class="posted_in">Category: <a href="#">{{ $product->category->name }}</a></li>
-                          <li class="posted_in">Tag: <a href="#">Custom</a></li>
+                          <li class="posted_in">Tag: <a href="#">
+                            @foreach ($tags as $tag)
+                              {{ $tag->name }}
+                              @unless ($loop->last)
+                              ,
+                              @endunless
+                            @endforeach
+                          </a></li>
                           
                         </ul>
                       </div>
@@ -313,8 +320,8 @@
                 <div class="sidebar-widget tags-widget">
                   <h3 class="widget-title">Tags</h3>
                   <ul class="tag-list clearfix">
-                    @foreach ($productTags as $productTag)
-                    <li><a href="#">{{ $productTag->category_id }}</a></li>
+                    @foreach ($tags as $tag)
+                    <li><a href="#">{{ $tag->name }}</a></li>
                     @endforeach
                 </div>
                 

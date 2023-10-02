@@ -67,6 +67,7 @@ class ShopController extends Controller
 
     $product = Product::find($id);
     $categoryId = $product->category_id;
+    $tags = $product->tags;
 
     // Query for related products (random 3) excluding the current product
     $relatedProducts = Product::where('category_id', $categoryId)
@@ -102,6 +103,7 @@ class ShopController extends Controller
         'reviewCount' => $reviewCount,
         'averageRating' => $averageRating,
         'productRatings' => $productRatings,
+        'tags' => $tags,
       ]);
   }
   
@@ -116,6 +118,20 @@ class ShopController extends Controller
           $shopItems = view('shop.shop-item-card')->with(['products' => $products])->render();
   
           return response()->json(['shopItems' => $shopItems]);
+      }
+
+      public function tags()
+      {
+          // Replace '1' with the ID of the product you want to find
+          $productId = 1;
+          $product = Product::find($productId);
+          
+          $tags = $product->tags;
+
+          dd($tags);
+          
+  
+          return view('shop.tags', compact('tags'));
       }
   
   
