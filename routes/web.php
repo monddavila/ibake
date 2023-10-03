@@ -86,6 +86,10 @@ Route::group(['prefix' => 'products'], function () {
   Route::get('/getImage', [ProductsController::class, 'getImage'])->name('admin.getImage');
 /*Categories Section*/
   Route::get('/categories', [ProductsController::class, 'viewCategories'])->name('admin.viewCategories');
+  Route::post('/add-category', [ProductsController::class, 'addCategories'])->name('addCategory');
+  Route::get('/delete-category/{id}', [ProductsController::class, 'deleteCategories'])->name('deleteCategory');
+  Route::patch('/update-category', [ProductsController::class, 'updateCategories'])->name('updateCategory');
+
 
 
 
