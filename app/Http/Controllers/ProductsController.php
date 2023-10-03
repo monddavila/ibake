@@ -206,12 +206,71 @@ class ProductsController extends Controller
   public function viewCategories()
   {
     //
-    $categories = DB::table('categories')->get();
+    $categories = DB::table('categories')->paginate(8);
 
     return view('admin.pages.products.products-category')->with(
-      ['products' => $categories]
+      ['categories' => $categories]
     );
   }
+
+  public function addCategories(Request $request)
+  {
+
+    $request->validate([
+      'name' => 'required|string|max:50|unique:categories',
+      'description' => 'required|string|max:100',
+    ]);
+
+    $currentTimestamp = now();
+
+    $category = new Category();
+    $category->name = $request->name;
+    $category->description = $request->description;
+    $category->created_at = $currentTimestamp;
+    $category->updated_at = $currentTimestamp;
+
+    $category->save();
+  
+
+    // Optionally, you can add a success message to the session
+    session()->flash('message-1', 'Category added successfully.');
+
+    return redirect(route('admin.viewCategories'));
+  }
+
+  public function deleteCategories($id)
+  {
+    // Find the user by ID
+    $category = Category::findOrFail($id);
+
+    // Delete the user
+    $category->delete();
+
+    // Optionally, you can add a success message to the session
+    session()->flash('message-2', 'Category deleted successfully.');
+
+    // Redirect to the user list or any other desired page
+    return redirect()->route('admin.viewCategories');
+  }
+
+  public function updateCategories(Request $request)
+  {
+    $request->validate([
+        'name' => 'required|string|max:50',
+        'description' => 'required|string|max:100',
+    ]);
+
+    $category = Category::findOrFail($request->id);
+    $category->name = $request->name;
+    $category->description = $request->description;
+    $category->save();
+
+    // Optionally, you can add a success message to the session
+    session()->flash('message-3', 'Category updated successfully.');
+
+    return redirect()->route('admin.viewCategories');
+  }
+
 
   
 }
