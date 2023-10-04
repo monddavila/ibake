@@ -167,7 +167,7 @@ Route::middleware([
 /**
  * Payment Gateway - Payment controller
  */
-Route::get('pay',[PaymentController::class,'pay']);
+Route::get('pay',[PaymentController::class,'pay'])->name('pay');
 Route::get('success',[PaymentController::class,'success']);
 
 Route::get('link-pay',[PaymentController::class,'linkPay']);

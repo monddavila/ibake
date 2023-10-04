@@ -24,7 +24,7 @@ $count = 1;
         <a class="dropdown-item" href="{{ route('user.edit', ['id' => $user->id]) }}">Edit</a>
         <a class="dropdown-item" class="btn btn-danger"
           onclick="return confirm('Are you sure you want to delete this user?')"
-          href="{{ route('user.delete', ['id' => $user->id]) }}">Delete</a>
+          href="{{ route('user.delete', ['id' => $user->id]) }}"style="color: red;">Delete</a>
       </div>
     </div>
   </td>

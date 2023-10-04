@@ -56,7 +56,8 @@ class OrdersController extends Controller
    */
   public function store(StoreOrdersRequest $request)
   {
-    //
+    dd($request);
+
     $validated = $request->validated();
 
     $address = $request->street_address . ', ' . $request->town . ',' . $request->province . ',' . $request->postcode;
