@@ -89,7 +89,9 @@ Route::group(['prefix' => 'products'], function () {
   Route::post('/add-category', [ProductsController::class, 'addCategories'])->name('addCategory');
   Route::get('/delete-category/{id}', [ProductsController::class, 'deleteCategories'])->name('deleteCategory');
   Route::patch('/update-category', [ProductsController::class, 'updateCategories'])->name('updateCategory');
-
+/*Reviews Section*/
+  Route::get('/reviews', [ProductsController::class, 'viewReviews'])->name('viewReview');
+  Route::get('/get-reviews', [ProductsController::class, 'getReviews'])->name('getReviews');
 
 
 
