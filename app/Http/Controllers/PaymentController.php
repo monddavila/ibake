@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Ixudra\Curl\Facades\Curl;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -12,35 +13,40 @@ use Illuminate\Support\Facades\Session;
 class PaymentController extends Controller
 {
     public function pay()
-    {
-       $data = [
-            'data' => [
-                'attributes' => [
-                    'line_items' => [
-                        [
-                            'currency'      => 'PHP',
-                            'amount'        => 10000,
-                            'description'   => 'text',
-                            'name'          => 'Test Product',
-                            'quantity'      => 1,
-                        ],
-                        [
-                            'currency'      => 'PHP',
-                            'amount'        => 100000,
-                            'description'   => 'text2',
-                            'name'          => 'Test Product 2',
-                            'quantity'      => 1,
-                        ],
-                    ],
-                    'payment_method_types' => [
-                        'card','gcash','paymaya',
-                    ],
-                    'success_url' => 'http://localhost:8000/success',
-                    'cancel_url' => 'http://localhost:8000/success',
-                    'description' => 'text'
+{
+    $user = Auth::user();
+    $cartItems = (new CartsController())->userCart();
+    $totalPrice = 0;
+
+    // Initialize an array to store line items
+    $lineItems = [];
+
+    foreach ($cartItems as $cartItem) {
+        $totalPrice += ($cartItem->price * $cartItem->quantity);
+
+        // Add each cart item as a line item
+        $lineItems[] = [
+            'currency' => 'PHP',
+            'amount' => $cartItem->price * 100,
+            'description' => 'Cake Item Order',
+            'name' => $cartItem->name,
+            'quantity' => $cartItem->quantity,
+        ];
+    }
+
+    $data = [
+        'data' => [
+            'attributes' => [
+                'line_items' => $lineItems, // Add the array of line items here
+                'payment_method_types' => [
+                    'card', 'gcash', 'paymaya',
                 ],
-            ]
-       ];
+                'success_url' => route('home'),
+                'cancel_url' => route('checkout'),
+                'description' => 'iBake Tiers of Joy',
+            ],
+        ],
+    ];
 
        $response = Curl::to('https://api.paymongo.com/v1/checkout_sessions')
                     ->withHeader('Content-Type: application/json')
@@ -50,7 +56,7 @@ class PaymentController extends Controller
                     ->asJson()
                     ->post();
 
-        dd($response);
+        //dd($response);
         //\Session::put('session_id',$response->data->id);
         session(['session_id' => $response->data->id]);
 
