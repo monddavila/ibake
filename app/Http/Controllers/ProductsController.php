@@ -6,6 +6,7 @@ use App\Http\Requests\StoreProductsRequest;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -270,6 +271,39 @@ class ProductsController extends Controller
 
     return redirect()->route('admin.viewCategories');
   }
+
+  public function viewReviews()
+{
+  
+    // Fetch all products for the dropdown
+    $products = Product::all();
+    $reviews = Review::all();
+   
+
+    return view('admin.pages.products.reviews', ['products' => $products, 'reviews' => $reviews]);
+}
+
+public function getReviews(Request $request)
+{
+
+    $productId = $request->input('productId');
+
+    // Check if productId is empty or zero
+    if (empty($productId) || $productId == 0) {
+        // Handle the case where productId is zero or blank, e.g., display an error message.
+        return redirect()->route('viewReview')->with('error', 'Please select a valid product.');
+    }
+
+    $products = Product::all();
+    // Fetch reviews for the selected product
+    $product = Product::findOrFail($productId);
+    $reviews = $product->reviews;
+
+
+    // Return the reviews in a blade view
+    return view('admin.pages.products.reviews', ['reviews' => $reviews, 'products' => $products]);
+}
+
 
 
   
