@@ -47,12 +47,14 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th class="sortable col-lg-3" id="sort-name" data-sort="name">Product Name</th>
+                      <th class="sortable" id="id" data-sort="id">ID</th>
+                      <th class="sortable" id="image" data-sort="image">Image</th>
+                      <th class="sortable" id="sort-name" data-sort="name">Product Name</th>
                       <th class="sortable" id="sort-price" data-sort="price">Price</th>
-                      <th class="sortable" id="sort-category" data-sort="category">Category</th>
+                      <th class="sortable" id="sort-category" data-sort="category_name">Category</th>
                       <th class="sortable" id="sort-rate" data-sort="rating">Rating</th>
+                      <th class="sortable" id="sort-isfeatured" data-sort="isfeatured">is Featured</th>
                       <th class="sortable" id="sort-available" data-sort="availability">Availability</th>
-                      <th></th>
                       <th></th>
                       <th></th>
                     </tr>
@@ -61,6 +63,8 @@
                     @include('admin.pages.products.products-list-table')
                   </tbody>
                 </table>
+                <!-- Pagination Links -->
+                {{ $products->links() }}
               </div>
             </div>
           </div>

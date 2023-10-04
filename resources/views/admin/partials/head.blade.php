@@ -11,6 +11,8 @@
 <link rel="stylesheet" href="{{ asset('admin/assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
 <link rel="stylesheet" href="{{ asset('admin/assets/vendors/owl-carousel-2/owl.carousel.min.css') }}">
 <link rel="stylesheet" href="{{ asset('admin/assets/vendors/owl-carousel-2/owl.theme.default.min.css') }}">
+<link rel="stylesheet" href="{{ asset('admin/assets/vendors/select2/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('admin/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css') }}">
 <!-- End plugin css for this page -->
 <!-- inject:css -->
 <!-- endinject -->
@@ -18,3 +20,4 @@
 <link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}">
 <!-- End layout styles -->
 <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.png') }}" />
+
