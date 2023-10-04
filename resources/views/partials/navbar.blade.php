@@ -18,7 +18,7 @@
                 <li class="{{ currentNav('/') }}"><a href="{{ route('home') }}">Home</a>
                 </li>
 
-                <li class="{{ currentNav('/customize') }}"><a href="#">Customize</a>
+                <li class="{{ currentNav('/customize') }}"><a href="{{ route('customize') }}">Customize</a>
                 </li>
 
                 <li class="{{ currentNav('/about') || currentNav('/chef') }}

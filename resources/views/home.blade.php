@@ -234,7 +234,7 @@
             dream cake with ease and let us bring it to life with our high-quality ingredients and expert
             craftsmanship. Order now and experience the ultimate level of customization with our bakery.</p>
           <div class="btn-box">
-            <a href="#" class="theme-btn btn-style-one large"><span></span>Create Your
+            <a href="{{ route('customize') }}" class="theme-btn btn-style-one large"><span></span>Create Your
               Own<span></span></a>
           </div>
         </div>
