@@ -24,7 +24,7 @@ class StoreOrdersRequest extends FormRequest
   public function rules()
   {
     $rules = [
-      'recipient_name' => 'required|max:255',
+      /** 'recipient_name' => 'required|max:255',
       'street_address' => 'required|max:255',
       'town' => 'required|max:255',
       'province' => 'required|max:255',
@@ -34,6 +34,7 @@ class StoreOrdersRequest extends FormRequest
       'delivery_date' => 'required',
       'delivery_time' => 'required',
       'payment_method' => 'required|max:255'
+      **/
     ];
 
     return $rules;

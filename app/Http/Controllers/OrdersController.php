@@ -56,7 +56,7 @@ class OrdersController extends Controller
    */
   public function store(StoreOrdersRequest $request)
   {
-    dd($request);
+    dd('Store function called');
 
     $validated = $request->validated();
 
@@ -176,4 +176,21 @@ class OrdersController extends Controller
       'activeOrders' => $activeOrders,
     ]);
   }
+
+  function test1()
+  {
+    dd('test 1');
+  }
+
+  function test2()
+  {
+    dd('test 2');
+  }
+
+  function test3()
+  {
+    dd('test 3');
+  }
+
+
 }

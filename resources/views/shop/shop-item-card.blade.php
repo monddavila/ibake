@@ -3,7 +3,7 @@
   <div class="inner-box">
     <div class="image-box">
       <figure class="image"><a href="{{ route('item', $product->id) }}"><img src="{{ asset($product->image) }}" alt=""></a></figure>
-      <div class="btn-box"><a href="{{ route('item', $product->id) }}">Add to cart</a></div>
+      <div class="btn-box"><a href="{{ route('item', $product->id) }}">View Product</a></div>
     </div>
     <div class="lower-content">
       <h4 class="name"><a href="{{ route('item', $product->id) }}">{{ $product->name }}</a></h4>

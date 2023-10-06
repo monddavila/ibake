@@ -140,8 +140,18 @@ Route::group(['prefix' => 'checkout'], function () {
     ->get('/', [OrdersController::class, 'create'])
     ->name('checkout');
   Route::middleware(['auth'])
-    ->post('/createOrder', [OrdersController::class, 'store'])
-    ->name('createOrder');
+    ->post('/create-order', [OrdersController::class, 'store'])
+    ->name('create-order');
+
+    Route::middleware(['auth'])
+    ->get('/test1', [OrdersController::class, 'test1'])
+    ->name('test1');
+    Route::middleware(['auth'])
+    ->get('/test2', [OrdersController::class, 'test2'])
+    ->name('test2');
+    Route::middleware(['auth'])
+    ->get('/test3', [OrdersController::class, 'test3'])
+    ->name('test3');
 });
 
 /**
@@ -176,3 +186,6 @@ Route::get('link-status/{linkid}',[PaymentController::class,'linkStatus']);
 
 Route::get('refund',[PaymentController::class,'refund']);
 Route::get('refund-status/{id}',[PaymentController::class,'refundStatus']);
+
+
+Route::post('place-order',[PaymentController::class,'placeOrder'])->name('placeOrder');
