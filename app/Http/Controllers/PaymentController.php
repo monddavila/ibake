@@ -12,6 +12,30 @@ use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
+
+
+    public function placeOrder(Request $request)
+{
+    $paymentMethod = $request->input('payment_method');
+
+    //dd($paymentMethod);
+
+    if ($paymentMethod === 'full') {
+        // Call the fullPayment function
+        //dd('pay function called');
+        return redirect()->route('pay');
+    } elseif ($paymentMethod === 'half-online') {
+        // Call the halfOnline function
+        $result = $this->halfOnline($request);
+    } elseif ($paymentMethod === 'half-cod') {
+        // Call the halfCod function
+        $result = $this->halfCod($request);
+    } else {
+        // Handle unsupported or unknown payment methods
+        $result = ['success' => false, 'message' => 'Invalid payment method'];
+    }
+}
+
     public function pay()
 {
     $user = Auth::user();
@@ -22,7 +46,7 @@ class PaymentController extends Controller
     $lineItems = [];
 
     foreach ($cartItems as $cartItem) {
-        $totalPrice += ($cartItem->price * $cartItem->quantity);
+       // $totalPrice += ($cartItem->price * $cartItem->quantity);
 
         // Add each cart item as a line item
         $lineItems[] = [
@@ -41,7 +65,7 @@ class PaymentController extends Controller
                 'payment_method_types' => [
                     'card', 'gcash', 'paymaya',
                 ],
-                'success_url' => route('home'),
+                'success_url' => route('create-order'),
                 'cancel_url' => route('checkout'),
                 'description' => 'iBake Tiers of Joy',
             ],
