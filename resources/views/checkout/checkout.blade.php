@@ -48,7 +48,7 @@
           <div class="sec-title">
             <h3>Checkout details</h3>
           </div>
-          <form method="POST" action="{{ route('placeOrder') }}" class="checkout-form">
+          <form method="POST" action="{{ route('create-order') }}" class="checkout-form">
             @CSRF
             <div class="row clearfix">
               <!--Column-->
@@ -222,29 +222,31 @@
                   <ul>
                     <li>
                       <div class="radio-option">
-                        <input type="radio" name="payment_method" id="payment-1" value="full"
+                        <input type="radio" name="payment_method" id="payment-1" value="card"
                           checked>
-                        <label for="payment-1"><strong>Full Payment</strong><span class="small-text">
-                          You will pay (Full) 100% of the total amount of the purchase upfront. Please use your Order ID as the payment reference.</span></label>
+                        <label for="payment-1"><strong>Credit Or Debit Card</strong><span class="small-text">
+                        We accept Visa and Mastercard debit and credit cards, make your payment directly using your card details. 
+                        Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</span></label>
                       </div>
                     </li>
                     <li>
                       <div class="radio-option">
-                        <input type="radio" name="payment_method" id="payment-2" value="half-online">
-                        <label for="payment-2"><strong>50% Downpayment (Online)</strong><span class="small-text">
-                          You will pay 50% of the total amount of the purchase upfront, and the remaining 50% will be paid online before delivery. 
-                          Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</span></label>
+                        <input type="radio" name="payment_method" id="payment-2" value="wallet">
+                        <label for="payment-2"><strong>Digital Wallets</strong><span class="small-text">
+                        Pay with your favorite digital wallet, such as GCash and Maya. Please use your Order ID as the payment reference. 
+                        Your order won’t be shipped until the funds have cleared in our account.</span></label>
                       </div>
                     </li>
 
                     <li>
                       <div class="radio-option">
-                        <input type="radio" name="payment_method" id="payment-3" value="half-cod">
-                        <label for="payment-3"><strong>50% Downpayment (Online/Cash on Delivery)</strong><span class="small-text">
-                          You will pay 50% of the total amount of the purchase upfront, and the remaining 50% will be paid in cash upon delivery.
-                          Please use your Order ID as the payment reference.</span></label>
+                        <input type="radio" name="payment_method" id="payment-3" value="bank">
+                        <label for="payment-3"><strong>Online Banking</strong><span class="small-text">
+                        Make your payment directly using your online banking account. Please use your Order ID as the payment reference. 
+                        Your order won’t be shipped until the funds have cleared in our account.</span></label>
                       </div>
                     </li>
+
                   </ul>
                   <div class="text">Your personal data will be used to process your order, support your experience
                     throughout this website, and for other purposes described in our <a href="#">privacy policy.</a></div>
@@ -333,32 +335,6 @@
           // Display the prompt message
           alert("Please note that the shipping fee is not yet included in the total price. It will be added to your total due when you receive your order.");
         }
-      });
-    });
-  </script>
-
-    <!-- JavaScript to update form action based on payment method -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const form = document.querySelector(".checkout-form");
-      const paymentMethodRadios = document.querySelectorAll("[name='payment_method']");
-
-      // Add change event listeners to all payment method radios
-      paymentMethodRadios.forEach(function(radio) {
-        radio.addEventListener("change", function() {
-          if (this.checked) {
-            if (this.value === "full") {
-              // Update form action for full payment
-              form.action = "{{ route('placeOrder') }}";
-            } else if (this.value === "half-online") {
-              // Update form action for half-online payment
-              form.action = "{{ route('test2') }}";
-            } else if (this.value === "half-cod") {
-              // Update form action for half-cod payment
-              form.action = "{{ route('test3') }}";
-            }
-          }
-        });
       });
     });
   </script>

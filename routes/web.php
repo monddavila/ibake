@@ -16,6 +16,9 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\SMSController;
+use App\Http\Controllers\CustomizeController;
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,8 +96,13 @@ Route::group(['prefix' => 'products'], function () {
   Route::get('/reviews', [ProductsController::class, 'viewReviews'])->name('viewReview');
   Route::get('/get-reviews', [ProductsController::class, 'getReviews'])->name('getReviews');
 
+});
 
-
+/**
+ * Customer side
+ */
+Route::group(['prefix' => 'customer'], function () {
+  Route::get('/', [CustomerController::class, 'index'])->name('customer');
 });
 
 
@@ -112,6 +120,19 @@ Route::group(['prefix' => 'shop'], function () {
 Route::group(['prefix' => 'orders'], function () {
   Route::get('/dashboard', [OrdersController::class, 'ordersDashboard']);
   Route::get('/active', [OrdersController::class, 'activeOrders'])->name('activeOrders');
+  /*Customize Approving Section*/
+  Route::get('/customize-order-section', [AdminController::class, '__viewCustomOrders'])->name('customOrders');
+  Route::post('/approval-order/{id}', [AdminController::class, '__updateCustomerOrders'])->name('approvalOrder');
+  Route::post('/reject-order/{id}', [AdminController::class, '__updateCustomerRejectOrders'])->name('rejectOrder');
+  Route::post('/custom-pay/{id}', [PaymentController::class, 'custom_pay'])->name('custompay');
+});
+
+/**
+ * Customize/Products Section in Customer side
+ */
+Route::group(['prefix' => 'custom-orders'], function () {
+  Route::post('/', [CustomizeController::class, 'store'])->name('custom-orders');
+  Route::post('/upload-order-photo', [CustomizeController::class, '___insertCustomOrderImage'])->name('customer.upload-order-photo');
 });
 
 
@@ -142,16 +163,6 @@ Route::group(['prefix' => 'checkout'], function () {
   Route::middleware(['auth'])
     ->post('/create-order', [OrdersController::class, 'store'])
     ->name('create-order');
-
-    Route::middleware(['auth'])
-    ->get('/test1', [OrdersController::class, 'test1'])
-    ->name('test1');
-    Route::middleware(['auth'])
-    ->get('/test2', [OrdersController::class, 'test2'])
-    ->name('test2');
-    Route::middleware(['auth'])
-    ->get('/test3', [OrdersController::class, 'test3'])
-    ->name('test3');
 });
 
 /**
@@ -189,3 +200,8 @@ Route::get('refund-status/{id}',[PaymentController::class,'refundStatus']);
 
 
 Route::post('place-order',[PaymentController::class,'placeOrder'])->name('placeOrder');
+
+/**
+ * SMS Gateway - SMS controller
+ */
+Route::get('sendSMS',[SMSController::class,'sendSMS'])->name('sendSMS');

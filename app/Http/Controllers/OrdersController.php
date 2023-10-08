@@ -56,24 +56,24 @@ class OrdersController extends Controller
    */
   public function store(StoreOrdersRequest $request)
   {
-    dd('Store function called');
-
-    $validated = $request->validated();
+    
+    $paymentMethod = $request->input('payment_method');
+    $validated = $request->validated();  
 
     $address = $request->street_address . ', ' . $request->town . ',' . $request->province . ',' . $request->postcode;
     $cartItems = (new CartsController())->userCart();
-
+    dd($address);
     $totalPrice = 0;
     foreach ($cartItems as $cartItem) {
-      # code...
       $totalPrice += ($cartItem->price * $cartItem->quantity);
     }
 
     $order = Order::create([
       'user_id' => Auth::id(),
       'recipient_name' => $request->recipient_name,
-      'recipient_phone' => $request->recipient_phone,
       'recipient_email' => $request->recipient_email,
+      'recipient_phone' => $request->recipient_phone,
+      'shipping_method' => $request->shipping_method,
       'delivery_date' => $request->delivery_date,
       'delivery_time' => $request->delivery_time,
       'delivery_address' => $address,
@@ -81,6 +81,7 @@ class OrdersController extends Controller
       'payment_method' => $request->payment_method,
       'notes' => $request->order_notes,
     ]);
+
 
     $orderItem = new OrderItemsController();
     $orderId = $order->id;
