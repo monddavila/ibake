@@ -153,6 +153,42 @@ class AdminController extends Controller
 
     return response()->json(['html' => $html]);
   }
-}
 
+  public function __viewCustomOrders(){
+    $orders = DB::table('customize_orders')
+                    ->select('*')
+                    ->get();
+
+    return view('admin.pages.orders.customize-orders', compact('orders'));
+  }
+  public function __updateCustomerOrders(Request $request, $id)
+  {
+    if ($request->input('isSelectionOrder') == 1) { 
+      $update = DB::table('customize_orders')
+                    ->where('customize_orders.orderID', $id)
+                    ->update([
+                              'orderStatus' => 2,
+                    ]);
+    }elseif ($request->input('isSelectionOrder') == 2) {
+      $update = DB::table('customize_orders')
+                    ->where('customize_orders.orderID', $id)
+                    ->update([
+                              'invoice_details' => $request->input('invoice_details'),
+                              'cakePrice' => $request->input('cakePrice'),
+                              'orderStatus' => 2,
+                    ]);
+    }
+
+    return redirect(route('customOrders'));
+  }
+  public function __updateCustomerRejectOrders($id)
+  {
+      $update = DB::table('customize_orders')
+                    ->where('customize_orders.orderID', $id)
+                    ->update([
+                              'orderStatus' => 3,
+                    ]);
+      return redirect(route('customOrders'));
+  }
+}
 ?>

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>iBake - Tier's of Joy | Customize Cake</title>
 
     <!-- Header Section -->
@@ -48,19 +48,15 @@
                     Build your cake of choice with our intuitive cake builder!!
                     </div>
                 </div>
-
-                
-                
                 <div class="row clearfix" >
                     <div class="column col-xl-6 col-lg-6 col-md-6 col-sm-12">
                         <div class="inner-column">
                             <div class="title">
                                 <div class="icon"><img src="images/icons/icon-devider-gray.png" alt=""></div>
-                                <h4>Build Your Cake</h4>
+                                <h4>Build Your Cake or <a href="#uploadrefcake">Upload Photo</a></h4>
                             </div>
 
                             <div class="customize-info">
-
                                 <div class="cakeSummary d-none mt-2">
                                     <h5 class="mb-2">Your custom cake:</h5>
                                     <ul>
@@ -90,7 +86,9 @@
                                             <p class="size-label font-weight-bold text-left">Small</p>
                                             <span class="align-left font-italic font-light-weight">12 Servings</span>
                                             </div>
-                                            <p class="cake-price font-weight-bold">120PHP</p>
+                                            <p class="font-weight-bold">
+                                                <span class="cake-price">120</span>PHP
+                                            </p>
                                         </div>
                                     </button>
                                     <hr>
@@ -100,7 +98,9 @@
                                             <p class="size-label font-weight-bold text-left">Medium</p>
                                             <span class="align-left font-italic font-light-weight">24 Servings</span>
                                             </div>
-                                            <p class="cake-price font-weight-bold">180PHP</p>
+                                            <p class="font-weight-bold">
+                                                <span class="cake-price">180</span>PHP
+                                            </p>
                                         </div>
                                     </button>
                                     <hr>
@@ -110,7 +110,9 @@
                                             <p class="size-label font-weight-bold text-left">Large</p>
                                             <span class="align-left font-italic font-light-weight">32 Servings</span>
                                             </div>
-                                            <p class="cake-price font-weight-bold">220PHP</p>
+                                            <p class="font-weight-bold">
+                                                <span class="cake-price">220</span>PHP
+                                            </p>
                                         </div>
                                     </button>
                                 </div>
@@ -309,7 +311,7 @@
                                     <button type="button" class="btn sizes container-fluid  py-1 ">
                                         <div class="d-flex justify-content-between">
                                             <div>
-                                            <p class="cake-message font-weight-bold text-left">None</p>
+                                                <p class="cake-message font-weight-bold text-left">None</p>
                                             </div>
                                         </div>
                                     </button>
@@ -325,11 +327,30 @@
                                     </div>
                                     <button class="btn" id="nextStep">Next</button>
                                 </div>
-
-                                <div class="go-back mt-5 text-center container-fluid d-none justify-content-end justify-items-center">
-                                    <button class="btn" id="editChoices">Edit choices</button>
-                                </div>
-
+                                    <?php if (Auth::check()) { ?>
+                                        <form method="POST" action="{{ route('custom-orders') }}">
+                                            @csrf
+                                            <div style="display:none;">
+                                                <input type="" value="" id="cakeSizeval" name="cakeSize">
+                                                <input type="" value="" id="cakeFlavorval" name="cakeFlavor">
+                                                <input type="" value="" id="cakeFillingval" name="cakeFilling">
+                                                <input type="" value="" id="cakeIcingval" name="cakeIcing">
+                                                <input type="" value="" id="cakeTopBorderval" name="cakeTopBorder">
+                                                <input type="" value="" id="cakeBottomBorderval" name="cakeBottomBorder">
+                                                <input type="" value="" id="cakeDecorationval" name="cakeDecoration">
+                                                <input type="" value="" id="cakeMessageval" name="cakeMessage">
+                                                <input type="" value="" id="cakePriceval" name="cakePrice">
+                                            </div>
+                                            <div class="go-back mt-5 text-center container-fluid d-none justify-content-end justify-items-center">
+                                                <button type="submit" class="btn btn-primary btn-sm form-control" id="cOrderbtn">Order</button>
+                                                <button class="btn btn-default form-control" id="editChoices">Edit choices</button>
+                                            </div>
+                                        </form>
+                                    <?php }else{?>
+                                        <div class="alert alert-warning" role="alert">
+                                          Please <a href="{{ route('login') }}">login</a> to proceed your Order...
+                                        </div>
+                                    <?php } ?>
 
                             </div>
                         </div>
@@ -407,9 +428,38 @@
                             </div>
                         </div>
                     </div>
-
-                   
                 </div>
+                <hr>
+                <div id="uploadrefcake">
+                    <div class="row clearfix">
+                        <div class="column col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                            <div class="title">
+                                <div class="icon"><img src="images/icons/icon-devider-gray.png" alt=""></div>
+                                <h4>Upload Photo of your prefer Cake..</h4>
+                            </div>
+                            <br>
+                            <div class="inner-column">
+                                <form action="{{ route('customer.upload-order-photo') }}" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="file" name="cakeOrderImage" accept="image/gif, image/jpg, image/png, image/jpeg" onchange="loadFile(event)" required="" rows="4" colspan="100" style="width:100%; border:2px solid black; border-radius:12px;padding:10px;"><br><br>
+                                    <textarea class="cake-message" name="cakeMessage" rows="4" colspan="100" style="width:100%; border:2px solid black; border-radius:12px;padding:10px;" placeholder="Additional Info..." name="cakeImageDetails"></textarea>
+                                    <?php if (Auth::check()) { ?>
+                                        <button type="submit" class="btn btn-primary form-control">Send Order</button>
+                                    <?php }else{?>
+                                        <div class="alert alert-warning" role="alert">
+                                          Please <a href="{{ route('login') }}">login</a> to proceed your Order...
+                                        </div>
+                                    <?php } ?>    
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="column col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                <img id="output" style="width: 100%;height: auto;margin-top: 70px;border-radius:5% ;" src=""/>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
             </div>
         </section>
         <!--End Contact Section -->
@@ -705,22 +755,39 @@
                     $('.steps').each(function(i,el){
                         $(this).addClass('d-none')
                     })
-                    
-                    console.log(yourCakeBuild)
+                    // Cake Customized order summary data
                     $('#cakeSize').html('Size: ' +yourCakeBuild.size)
+                    $('#cakeSizeval').val(yourCakeBuild.size)
+
                     $('#cakeFlavor').html('Flavor: ' +yourCakeBuild.flavor)
+                    $('#cakeFlavorval').val(yourCakeBuild.flavor)
+
                     $('#cakeFilling').html('Filling: ' +yourCakeBuild.filling)
+                    $('#cakeFillingval').val(yourCakeBuild.filling)
+
                     $('#cakeIcing').html('Icing: ' +yourCakeBuild.icing)
+                    $('#cakeIcingval').val(yourCakeBuild.icing)
+
                     $('#cakeTopBorder').html('Top Border: ' +yourCakeBuild.topBorder)
+                    $('#cakeTopBorderval').val(yourCakeBuild.topBorder)
+
                     $('#cakeBottomBorder').html('Bottom Border: ' +yourCakeBuild.bottomBorder)
+                    $('#cakeBottomBorderval').val(yourCakeBuild.bottomBorder)
+
                     if(yourCakeBuild.decorColor == 'None') {
                         $('#cakeDecoration').html('Decoration: ' +yourCakeBuild.decorColor)
+                        $('#cakeDecorationval').val(yourCakeBuild.decorColor)
                     } else {
                         $('#cakeDecoration').html('Decoration: ' +yourCakeBuild.decorColor+ ' Flower')
+                        $('#cakeDecorationval').val(yourCakeBuild.decorColor+ ' Flower')
                     }
+
                     $('#cakeMessage').html('Message: ' +yourCakeBuild.message)
+                    $('#cakeMessageval').val(yourCakeBuild.message)
+
                     $('#cakePrice').html(yourCakeBuild.price)
-                    return
+                    $('#cakePriceval').val(yourCakeBuild.price)
+
                 }
                 index++
                 $('.steps').each(function(i,el){
@@ -764,7 +831,18 @@
             })
         })
     </script>
+    <script>
+      var loadFile = function(event) {
+      var reader = new FileReader();
+          reader.onload = function(){
+              var output = document.getElementById('output');
+                              
+              output.src = reader.result;
 
+          };
+          reader.readAsDataURL(event.target.files[0]);
+      };
+    </script>
 
 
 
