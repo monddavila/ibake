@@ -1,21 +1,39 @@
 ### Git flow
 
-1. Fork repository thorugh github
-2. `git clone` to create local files
-3. Edit code
-4. Push to github
-5. Create a pull request through github
+1. `git clone` to create local files
+2. Edit/Update code
+3. Git Add ( `git add .`)
+4. `git commit -m "commit message here"`
+5. Push to github `git push`
+6. Create a pull request through github and merge
 
-### iBake Laravel Setup
+### iBake Laravel Project Setup
 
 1. Clone the repo
 2. Run `composer install` in cli
 3. Run `npm install` in cli
 4. Create .env file
-5. Post contents from .env.example to .env
+5. Post contents from project .env
 6. Run `php artisan key:generate` in cli
 7. Run `php artisan serve`
 8. Check on browser if running properly
+9. Run `php artisan migrate` to load database
+    **Additional packages**
+11. Run composer require ixudra/curl
+ Once the package is installed, you need to register the service provider in your project's config/app.php file. Add the following line to the providers  and aliases array:
+'providers' => [
+    ...
+    Ixudra\Curl\CurlServiceProvider::class,
+    ...
+]
+'aliases' => [
+    ...
+    'Curl' => Ixudra\Curl\Facades\Curl::class,
+    ...
+]
+12. For SMS API engageSPARK run `composer require guzzlehttp/guzzle`
+
+
 
 ### Updating local repository
 1. Change branch to master branch `git checkout master`
