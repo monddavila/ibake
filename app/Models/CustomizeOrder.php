@@ -24,4 +24,6 @@ class CustomizeOrder extends Model
                                 'cakePrice',
                                 'orderStatus'
                         ];
+
+ 
 }

@@ -94,6 +94,8 @@ class CustomizeController extends Controller
     
     // Retrieve Custom Order ID
     $customOrder_id = session('customOrder_id');
+    // Retrieve Item's Order ID
+    $customize_order_id = session('customize_order_id');
 
     // Retrieve Orders form data from the session
     $customOrderData = $request->session()->get('customOrder_data');
@@ -134,6 +136,13 @@ class CustomizeController extends Controller
       'notes' => $orderNotes,
       'created_at' => now(),
     ]);
+
+    //update order status to "Processing" of customize_orders table
+    $update = DB::table('customize_orders')
+                    ->where('customize_orders.orderID', $customize_order_id)
+                    ->update([
+                              'orderStatus' => 4,
+                    ]);
 
     // Clear the session variable if needed
     $request->session()->forget('customOrder_data');

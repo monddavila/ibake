@@ -28,6 +28,8 @@
                             </form>
                           <?php elseif($value->orderStatus == 3): ?>
                             <div class="badge badge-outline-danger">Rejected</div>
+                          <?php elseif($value->orderStatus == 4): ?>
+                            <div class="badge badge-outline-info">Paid</div>
                           <?php endif ?>
                       </td>
                       <td><a href="" type="button" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID  }}">{{ $value->orderID  }}</a></td>

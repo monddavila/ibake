@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
-use App\CustomizeOrder;
+use App\Models\CustomizeOrder;
+
 
 class CustomizeOrderDetail extends Model
 {
@@ -38,9 +39,9 @@ class CustomizeOrderDetail extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function customOrder()
+    public function customizeOrder()
     {
-        return $this->belongsTo(CustomizeOrder::class, 'customOrder_id');
+    return $this->belongsTo(CustomizeOrder::class, 'customOrder_id');
     }
 
 }
