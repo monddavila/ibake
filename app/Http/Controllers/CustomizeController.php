@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\CustomizeOrder;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ProductsController;
+use App\Models\CustomizeOrderDetail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CustomizeController extends Controller
 {
@@ -83,6 +86,64 @@ class CustomizeController extends Controller
         return redirect('/customer');
     }
 
+    public function storeCustomOrder(Request $request)
+  {
+    // Retrieve PayMongo Payment IDs
+    $paymentSessionId = Session::get('paymentSession_id');
+    $paymentIntentId = Session::get('paymentIntent_id');
+    
+    // Retrieve Custom Order ID
+    $customOrder_id = session('customOrder_id');
+
+    // Retrieve Orders form data from the session
+    $customOrderData = $request->session()->get('customOrder_data');
+
+    $recipientName = $customOrderData['recipient_name'];
+    $streetAddress = $customOrderData['street_address'];
+    $town = $customOrderData['town'];
+    $province = $customOrderData['province'];
+    $postcode = $customOrderData['postcode'];
+    $recipientEmail = $customOrderData['recipient_email'];
+    $recipientPhone = $customOrderData['recipient_phone'];
+    $shippingMethod = $customOrderData['shipping_method'];
+    $deliveryDate = $customOrderData['delivery_date'];
+    $deliveryTime = $customOrderData['delivery_time'];
+    $paymentMethod = $customOrderData['payment_method'];
+    $orderNotes = $customOrderData['order_notes'];
+
+    $address = $streetAddress . ', ' . $town . ',' . $province . ',' . $postcode;
+    //retrieve cake price
+    $cakePrice = session('cakePrice');
+
+    //store data to orders table
+    $order = CustomizeOrderDetail::create([
+      'user_id' => Auth::id(),
+      'customOrder_id' => $customOrder_id,
+      'recipient_name' => $recipientName,
+      'recipient_email' => $recipientEmail,
+      'recipient_phone' => $recipientPhone,
+      'shipping_method' => $shippingMethod,
+      'delivery_date' => $deliveryDate,
+      'delivery_time' => $deliveryTime,
+      'delivery_address' => $address,
+      'total_price' => $cakePrice,
+      'payment_method' => $paymentMethod,
+      'payment_status' => 'Paid',
+      'payment_session_id' => $paymentSessionId,
+      'payment_intent_id' => $paymentIntentId,
+      'notes' => $orderNotes,
+      'created_at' => now(),
+    ]);
+
+    // Clear the session variable if needed
+    $request->session()->forget('customOrder_data');
+    $request->session()->forget('customOrder_id');
+    $request->session()->forget('cakePrice');
+    session()->forget(['paymentSession_id', 'paymentIntent_id']);
+
+    return redirect()->route('customer');
+  }
+
     /**
      * Display the specified resource.
      *
@@ -127,4 +188,27 @@ class CustomizeController extends Controller
     {
         //
     }
+
+    public function showCheckoutForm($id)
+    {
+        $user = Auth::user();
+        $customOrderId = $id;
+
+        $orders = DB::table('customize_orders')
+                    ->select('*')
+                    ->where('customize_orders.orderID', $id)
+                    ->get();
+
+        return view('checkout.custom-checkout')->with([
+            'user' => $user,
+            'orders' => $orders,
+            'customOrderId' => $customOrderId,
+        ]);
+    }
+    public function customCheckout(Request $request, $id)
+    {
+       // dd('I was called');
+        return redirect()->route('cake-request.checkout', ['id' => $id]);
+    }
+
 }

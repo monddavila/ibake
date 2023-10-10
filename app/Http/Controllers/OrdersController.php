@@ -11,6 +11,10 @@ use App\Http\Controllers\OrderItemsController;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use App\Models\Cart;
+use App\Models\CartItem;
+
 
 class OrdersController extends Controller
 {
@@ -54,35 +58,57 @@ class OrdersController extends Controller
    * @param  \App\Http\Requests\StoreOrdersRequest  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(StoreOrdersRequest $request)
+  public function store(Request $request)
   {
-    
-    $paymentMethod = $request->input('payment_method');
-    $validated = $request->validated();  
+    // Retrieve PayMongo Payment IDs
+    $paymentSessionId = Session::get('paymentSession_id');
+    $paymentIntentId = Session::get('paymentIntent_id');
 
-    $address = $request->street_address . ', ' . $request->town . ',' . $request->province . ',' . $request->postcode;
+    // Retrieve Orders form data from the session
+    $orderData = $request->session()->get('order_data');
+
+    $recipientName = $orderData['recipient_name'];
+    $streetAddress = $orderData['street_address'];
+    $town = $orderData['town'];
+    $province = $orderData['province'];
+    $postcode = $orderData['postcode'];
+    $recipientEmail = $orderData['recipient_email'];
+    $recipientPhone = $orderData['recipient_phone'];
+    $shippingMethod = $orderData['shipping_method'];
+    $deliveryDate = $orderData['delivery_date'];
+    $deliveryTime = $orderData['delivery_time'];
+    $paymentMethod = $orderData['payment_method'];
+    $orderNotes = $orderData['order_notes'];
+
+    $address = $streetAddress . ', ' . $town . ',' . $province . ',' . $postcode;
+    //check order total price
     $cartItems = (new CartsController())->userCart();
-    dd($address);
     $totalPrice = 0;
     foreach ($cartItems as $cartItem) {
       $totalPrice += ($cartItem->price * $cartItem->quantity);
     }
 
+    //store data to orders table
     $order = Order::create([
       'user_id' => Auth::id(),
-      'recipient_name' => $request->recipient_name,
-      'recipient_email' => $request->recipient_email,
-      'recipient_phone' => $request->recipient_phone,
-      'shipping_method' => $request->shipping_method,
-      'delivery_date' => $request->delivery_date,
-      'delivery_time' => $request->delivery_time,
+      'order_id' => date("sdmY"),
+      'recipient_name' => $recipientName,
+      'recipient_email' => $recipientEmail,
+      'recipient_phone' => $recipientPhone,
+      'shipping_method' => $shippingMethod,
+      'delivery_date' => $deliveryDate,
+      'delivery_time' => $deliveryTime,
       'delivery_address' => $address,
       'total_price' => $totalPrice,
-      'payment_method' => $request->payment_method,
-      'notes' => $request->order_notes,
+      'payment_method' => $paymentMethod,
+      'payment_status' => 'Paid',
+      'payment_session_id' => $paymentSessionId,
+      'payment_intent_id' => $paymentIntentId,
+      'notes' => $orderNotes,
+      'created_at' => now(),
     ]);
 
-
+    //store data to order_items table
     $orderItem = new OrderItemsController();
     $orderId = $order->id;
     foreach ($cartItems as $cartItem) {
@@ -92,7 +118,19 @@ class OrdersController extends Controller
       $orderItem->store($orderId, $productId, $price, $quantity);
     }
 
-    return redirect(route('shop'));
+    //Delete items in the Cart
+    // Get the user's cart ID
+    $userId = Auth::id();
+    $cart = Cart::where('user_id', $userId)->first();
+
+    // Delete all cart items associated with the user's cart
+    CartItem::where('cart_id', $cart->id)->delete();
+
+    // Clear the session variable if needed
+    $request->session()->forget('order_data');
+    session()->forget(['paymentSession_id', 'paymentIntent_id']);
+
+    return redirect()->route('customer');
   }
 
   /**
@@ -166,32 +204,39 @@ class OrdersController extends Controller
    */
   function activeOrders()
   {
-    $activeOrders = Order::where('order_status', '=', 'Pending')
-      ->orWhere('order_status', '=', 'Ongoing')->get()
+    $activeOrders = Order::where('order_status', '=', 'Pending')->get()
       ->map(function ($order) {
         $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
         return $order;
       });
 
-    return view('admin.pages.orders.active-orders')->with([
-      'activeOrders' => $activeOrders,
-    ]);
+    return view('admin.pages.orders.active-orders')->with(['activeOrders' => $activeOrders,]);
   }
 
-  function test1()
+  function ongoingOrders()
   {
-    dd('test 1');
+    $ongoingOrders = Order::where('order_status', '=', 'Processing')->get()
+      //->orWhere('order_status', '=', 'Processing')->get()
+      ->map(function ($order) {
+        $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
+        return $order;
+      });
+
+    return view('admin.pages.orders.ongoing-orders')->with(['ongoingOrders' => $ongoingOrders,]);
   }
 
-  function test2()
+  function completedOrders()
   {
-    dd('test 2');
+    $completedOrders = Order::where('order_status', '=', 'Completed')->get()
+      ->map(function ($order) {
+        $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
+        return $order;
+      });
+
+    return view('admin.pages.orders.completed-orders')->with(['completedOrders' => $completedOrders,]);
   }
 
-  function test3()
-  {
-    dd('test 3');
-  }
+ 
 
 
 }

@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Validation\Rule;
 
 class LoginController extends Controller
 {
@@ -93,13 +93,15 @@ class LoginController extends Controller
    */
   public function store(Request $request)
   {
+    $phoneValidationPattern = '/^(?:\+63|0)[1-9]\d{9}$/';
+
     $request->validate([
-        'firstname' => 'required|string|max:255',
-        'lastname' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users',
-        'phone' => 'required|string|max:11|unique:users',
-        'address' => 'required|string|max:255',
-        'password' => 'required|string|confirmed',
+    'firstname' => 'required|string|max:50',
+    'lastname' => 'required|string|max:50',
+    'email' => 'required|string|email|max:50|unique:users',
+    'phone' => ['required', 'string', 'max:11', 'unique:users', 'regex:' . $phoneValidationPattern],
+    'address' => 'required|string|max:100',
+    'password' => 'required|string|confirmed',
     ]);
 
     $user = User::create([

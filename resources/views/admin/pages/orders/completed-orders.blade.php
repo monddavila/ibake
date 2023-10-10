@@ -14,8 +14,6 @@
     <div class="container-fluid page-body-wrapper">
       <!-- partial:navbar -->
       @include('admin.partials.navbar')
-
-      {{-- {{ dd($activeOrders) }} --}}
       <div class="main-panel">
         <div class="content-wrapper">
 
@@ -37,13 +35,12 @@
                           <th> Recepient Phone </th>
                           <th> Delivery Address </th>
                           <th> Shipping Method </th>
-                          <th> Payment Status </th>
                           <th> Delivery Notes </th>
                           <th> Order Status </th>
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach ($activeOrders as $order)
+                        @foreach ($completedOrders as $order)
                         <tr>
                           <td data-toggle="modal" data-target="#activeOrderModal">
                             <button class="btn btn-md btn-inverse-success order-details-btn">View
@@ -61,7 +58,6 @@
                               <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->delivery_address }}</textarea>
                           </td>
                           <td>{{ $order->shipping_method }}</td>
-                          <td>{{ $order->payment_status }}</td>
                           <td>
                               <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->notes }}</textarea>
                           </td>

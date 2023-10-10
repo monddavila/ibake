@@ -120,11 +120,14 @@ Route::group(['prefix' => 'shop'], function () {
 Route::group(['prefix' => 'orders'], function () {
   Route::get('/dashboard', [OrdersController::class, 'ordersDashboard']);
   Route::get('/active', [OrdersController::class, 'activeOrders'])->name('activeOrders');
+  Route::get('/ongoing', [OrdersController::class, 'ongoingOrders'])->name('ongoingOrders');
+  Route::get('/completed', [OrdersController::class, 'completedOrders'])->name('completedOrders');
   /*Customize Approving Section*/
   Route::get('/customize-order-section', [AdminController::class, '__viewCustomOrders'])->name('customOrders');
+  Route::post('/process-order/{id}', [AdminController::class, 'processOrder'])->name('processOrder');
   Route::post('/approval-order/{id}', [AdminController::class, '__updateCustomerOrders'])->name('approvalOrder');
   Route::post('/reject-order/{id}', [AdminController::class, '__updateCustomerRejectOrders'])->name('rejectOrder');
-  Route::post('/custom-pay/{id}', [PaymentController::class, 'custom_pay'])->name('custompay');
+  
 });
 
 /**
@@ -155,15 +158,33 @@ Route::group(['prefix' => 'cart'], function () {
     ->name('removeItem');
 });
 
-
+/**
+ * Regular Shop Checkout
+ */
 Route::group(['prefix' => 'checkout'], function () {
   Route::middleware(['auth'])
     ->get('/', [OrdersController::class, 'create'])
     ->name('checkout');
   Route::middleware(['auth'])
-    ->post('/create-order', [OrdersController::class, 'store'])
+    ->get('/create-order', [OrdersController::class, 'store'])
     ->name('create-order');
 });
+/**
+ * Customize Cake Request Checkout
+ */
+// GET route for displaying the checkout form
+Route::middleware(['auth'])
+    ->get('/cake-request/checkout/{id}', [CustomizeController::class, 'showCheckoutForm'])
+    ->name('cake-request.checkout');
+
+// POST route for processing the form submission
+Route::middleware(['auth'])
+    ->post('/cake-request/checkout/{id}', [CustomizeController::class, 'customCheckout'])
+    ->name('cake-request.process');
+
+Route::middleware(['auth'])
+    ->get('/store-custom-order', [CustomizeController::class, 'storeCustomOrder'])
+    ->name('storeCustomOrder');
 
 /**
  * Login and Register Routes
@@ -200,7 +221,8 @@ Route::get('refund-status/{id}',[PaymentController::class,'refundStatus']);
 
 
 Route::post('place-order',[PaymentController::class,'placeOrder'])->name('placeOrder');
-
+Route::post('place-custom-order/{id}',[PaymentController::class,'placeCustomOrder'])->name('placeCustomOrder');
+Route::get('pay-custom-order/{id}', [PaymentController::class, 'custom_pay'])->name('custompay');
 /**
  * SMS Gateway - SMS controller
  */
