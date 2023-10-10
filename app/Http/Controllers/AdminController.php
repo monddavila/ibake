@@ -181,14 +181,30 @@ class AdminController extends Controller
 
     return redirect(route('customOrders'));
   }
-  public function __updateCustomerRejectOrders($id)
+  public function __updateCustomerRejectOrders(Request $request, $id)
   {
       $update = DB::table('customize_orders')
                     ->where('customize_orders.orderID', $id)
                     ->update([
+                              'invoice_details' => $request->input('invoice_details'),
                               'orderStatus' => 3,
                     ]);
       return redirect(route('customOrders'));
   }
+
+  public function processOrder(Request $request, $id)
+  {
+    // Retrieve the action (approve or reject)
+    $action = $request->input('action');
+
+    // Rest of your logic...
+
+    if ($action == 'approve') {
+        return $this->__updateCustomerOrders($request, $id);
+    } elseif ($action == 'reject') {
+        return $this->__updateCustomerRejectOrders($request, $id);
+    }
+  }
+
 }
 ?>

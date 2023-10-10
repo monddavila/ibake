@@ -29,7 +29,7 @@
               @elseif($userType == '3')
               <p>Manager</p>
               @else
-              <p>Staff</p>
+              <p>Customer</p>
               @endif
             </span>
 
@@ -88,5 +88,23 @@
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
+    <li class="nav-item menu-items">
+  <a class="nav-link" href="#orders" aria-expanded="true" aria-controls="orders">
+    <span class="menu-icon">
+      <i class="mdi mdi-basket"></i>
+    </span>
+    <span class="menu-title">Orders</span>
+    <i class="menu-arrow"></i>
+  </a>
+  <div id="orders">
+    <ul class="nav flex-column sub-menu">
+      <li class="nav-item"><a class="nav-link" href="{{ route('activeOrders') }}">Active Orders</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('customOrders') }}">Customize Cake Requests</a></li>
+      <li class="nav-item"><a class="nav-link" href="">Order History</a></li>
+      <li class="nav-item"><a class="nav-link" href="">Add Order</a></li>
+    </ul>
+  </div>
+</li>
+
   </ul>
 </nav>

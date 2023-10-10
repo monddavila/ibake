@@ -23,7 +23,7 @@
 
   <!-- plugins:js -->
   @include('customer.partials.script')
-  <script src="{{ asset('admin/assets/js/dashboard-orders.js') }}"></script>
+ <!-- <script src="{{ asset('admin/assets/js/dashboard-orders.js') }}"></script> -->
 </body>
 
 </html>

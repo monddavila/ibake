@@ -21,7 +21,7 @@
     <!--End Main Header -->
 
     <!--Page Title-->
-    <section class="page-title" style="background-image:url(images/background/background-6.jpg)">
+    <section class="page-title" style="background-image:url('{{ asset('images/background/background-6.jpg') }}')">
       <div class="auto-container">
         <h1>Checkout</h1>
         <ul class="page-breadcrumb">
@@ -48,7 +48,8 @@
           <div class="sec-title">
             <h3>Checkout details</h3>
           </div>
-          <form method="POST" action="{{ route('placeOrder') }}" class="checkout-form">
+       
+          <form method="POST" action="{{ route('placeCustomOrder', ['id' => $customOrderId]) }}" class="checkout-form">
             @CSRF
             <div class="row clearfix">
               <!--Column-->
@@ -188,15 +189,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($cartItems as $cartItem)
+                  @foreach ($orders as $order)
                   <tr class="cart-item">
-                    <td class="product-name"><img src="{{ asset($cartItem->image) }}" alt=""
-                        style="width: 80px; height: 80px;">&nbsp;&nbsp;{{ $cartItem->name }}&nbsp;
-                      <strong class="product-quantity">× {{ $cartItem->quantity }}</strong>
+                    <td class="product-name"><img src="{{ asset($order->cakeOrderImage) }}" alt=""
+                        style="width: 80px; height: 80px;">&nbsp;&nbsp;Customize Cake Request&nbsp;
+                      <strong class="product-quantity">× 1</strong>
                     </td>
                     <td class="product-total">
                       <span class="woocommerce-Price-amount amount"><span
-                          class="woocommerce-Price-currencySymbol">Php</span>{{ number_format($cartItem->price * $cartItem->quantity, 2) }}</span>
+                          class="woocommerce-Price-currencySymbol">Php</span>{{ number_format($order->cakePrice * 1, 2) }}</span>
                     </td>
                   </tr>
                   @endforeach
@@ -204,11 +205,11 @@
                 <tfoot>
                   {{-- <tr class="cart-subtotal">
                     <th>Subtotal</th>
-                    <td><span class="amount">Php {{ number_format($totalPrice, 2) }}</span></td>
+                    <td><span class="amount">Php {{ number_format($order->cakePrice, 2) }}</span></td>
                   </tr> --}}
                   <tr class="order-total">
                     <th><strong>Total</strong></th>
-                    <td><strong class="amount">Php {{ number_format($totalPrice, 2) }}</strong> </td>
+                    <td><strong class="amount">Php {{ number_format($order->cakePrice, 2) }}</strong> </td>
                   </tr>
                 </tfoot>
               </table>
@@ -342,17 +343,19 @@
     });
   </script>
 
-  <script src="js/jquery.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.fancybox.js"></script>
-  <script src="js/owl.js"></script>
-  <script src="js/wow.js"></script>
-  <script src="js/appear.js"></script>
-  <script src="js/select2.min.js"></script>
-  <script src="js/sticky_sidebar.min.js"></script>
-  <script src="js/script.js"></script>
+<script src="{{ asset('js/jquery.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/jquery.fancybox.js') }}"></script>
+<script src="{{ asset('js/owl.js') }}"></script>
+<script src="{{ asset('js/wow.js') }}"></script>
+<script src="{{ asset('js/appear.js') }}"></script>
+<script src="{{ asset('js/select2.min.js') }}"></script>
+<script src="{{ asset('js/sticky_sidebar.min.js') }}"></script>
+<script src="{{ asset('js/script.js') }}"></script>
   <script src="{{ asset('js/checkout.js') }}"></script>
+
+  
 </body>
 
 </html>

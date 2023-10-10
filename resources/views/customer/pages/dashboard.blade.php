@@ -22,7 +22,7 @@
                           <?php if ($value->orderStatus == 1): ?>
                             <div class="badge badge-outline-warning">Pending</div>
                           <?php elseif($value->orderStatus == 2): ?>
-                            <form action="{{ route('custompay', ['id' => $value->orderID]) }}" method="post"> 
+                            <form action="{{ route('cake-request.process', ['id' => $value->orderID]) }}" method="post"> 
                               @csrf
                               <button type="submit" class="badge badge-outline-success btn-success" style="text-decoration: none;">Pay Now</button>
                             </form>
@@ -86,11 +86,18 @@
                                     <textarea class="form-control" rows="10" spellcheck="false" style="color:black;" readonly>{{ $value->cakeMessage  }}</textarea>
                                     @if($value->orderStatus == 2)
                                     <hr> 
-                                      <label>Reason:</label>
+                                      <label>Details:</label>
                                         <textarea class="form-control" name="invoice_details" rows="10" spellcheck="false" style="color:black;" readonly>{{ $value->invoice_details }}</textarea><br>
-                                      <label>Enter Price</label>
-                                        <input type="number" class="form-control" value="{{ $value->cakePrice }}" name="cakePrice" style="color:black;" readonly>
+                                      <label>Product Price</label>
+                                      <input type="text" class="form-control" value="&#8369; {{$value->cakePrice}}" name="cakePrice" style="color: black;" readonly>
                                     @endif  
+
+                                    @if($value->orderStatus == 3)
+                                    <hr> 
+                                      <label>Rejection Details:</label>
+                                        <textarea class="form-control" name="rejection_details" rows="10" spellcheck="false" style="color:black;" readonly>{{ $value->invoice_details }}</textarea><br>
+                                    @endif  
+
                                   @endif  
                                 </div>
                                 <div class="modal-footer">

@@ -45,7 +45,12 @@
                                   <button type="button" class="btn badge-outline-danger">Rejected</button>
                               @endif
                             </td>
-                            <td>{{ $value->orderID  }}</td>
+                            <td>
+                                <a href="#" style="text-decoration: none; color: yellow;" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID }}">
+                                    {{ $value->orderID }}
+                                </a>
+                            </td>
+                            </td>
                             <td>
                               @if(!empty($value->cakeOrderImage))
                                 <a href="{{ asset($value->cakeOrderImage)  }}">{{ $value->cakeOrderImage  }}</a>
@@ -88,7 +93,7 @@
                                           <span><i>{{ $value->cakeBottomBorder }}</i></span><br>
                                         <label>Decoration:</label>
                                           <span><i>{{ $value->cakeDecoration }}</i></span><br>
-                                        <label>Message:</label>
+                                        <label>Cake Message:</label>
                                           <span><i>{{ $value->cakeMessage }}</i></span><br>
                                         <hr>
                                         <div align="right">
@@ -103,24 +108,23 @@
                                     <textarea class="form-control" rows="10" spellcheck="false" style="color:black;" readonly>{{ $value->cakeMessage  }}</textarea>
                                   <hr>
                                   @endif
-                              <form action="{{ route('approvalOrder', ['id' => $value->orderID]) }}" method="post"> 
-                                @csrf
-                                  <input type="hidden" value="{{ $value->isSelectionOrder  }}" name="isSelectionOrder">    
-                                    @if($value->isSelectionOrder == 2)
-                                      <label>Enter Invoice Details</label>
+                                  <form action="{{ route('processOrder', ['id' => $value->orderID]) }}" method="post"> 
+                                      @csrf
+                                      <input type="hidden" value="{{ $value->isSelectionOrder }}" name="isSelectionOrder">
+                                      
+                                      @if($value->isSelectionOrder == 2)
+                                      <label>Enter Details/Remarks</label>
                                       <textarea class="form-control" name="invoice_details" rows="10" spellcheck="false" style="color:white;" required></textarea><br>
-                                      <label>Enter Price</label>
+                                      <label>Enter Price (Enter 0 for rejected order)</label>
                                       <input type="number" class="form-control" name="cakePrice" style="color:white;" required>
-                                     @endif
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                  <button type="submit" class="btn badge-outline-success">Approved</button>
-                              </form>   
-                              <form action="{{ route('rejectOrder', ['id' => $value->orderID]) }}" method="post">
-                                @csrf
-                                  <button type="submit" class="btn badge-outline-danger">Reject</button>
-                              </form>
+                                      @endif
+                                      
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                          <button type="submit" class="btn badge-outline-success" name="action" value="approve">Approved</button>
+                                          <button type="submit" class="btn badge-outline-danger" name="action" value="reject">Reject</button>
+                                      </div>
+                                  </form>
                                 </div>
                               </div>
                             </div>
@@ -142,7 +146,7 @@
 
   <!-- plugins:js -->
   @include('admin.partials.script')
-  <script src="{{ asset('admin/assets/js/dashboard-orders.js') }}"></script>
+
 </body>
 
 </html>

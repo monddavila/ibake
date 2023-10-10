@@ -7,6 +7,7 @@ use Ixudra\Curl\Facades\Curl;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 
 
@@ -18,16 +19,80 @@ class PaymentController extends Controller
 
     public function placeOrder(Request $request)
     {
-    $paymentMethod = $request->input('payment_method');
+        $phoneValidationPattern = '/^(?:\+63|0)[1-9]\d{9}$/';
+        // Validate the form data
+        $validator = Validator::make($request->all(), [
+            'recipient_name' => 'required|string|max:100',
+            'street_address' => 'required|string|max:50',
+            'town' => 'required|string|max:50',
+            'province' => 'required|string|max:50',
+            'postcode' => 'required|string|max:10',
+            'recipient_email' => 'required|email|max:50',
+            'recipient_phone' => ['required', 'string', 'max:11', 'regex:' . $phoneValidationPattern],
+            'shipping_method' => 'required|string|max:255',
+            'delivery_date' => 'required|date',
+            'delivery_time' => 'required|date_format:H:i',
+            'payment_method' => 'required|string|in:card,wallet,bank', // Valid payment methods
+            'order_notes' => 'nullable|string|max:1500',
+        ]);
 
-    if (in_array($paymentMethod, ['card', 'wallet', 'bank'])) {
-        // Valid payment method, set it in the session and redirect to 'pay'
-        session(['payment_method' => $paymentMethod]);
-        return redirect()->route('pay');
-    } else {
-        // Handle unsupported or unknown payment methods
-        $result = ['success' => false, 'message' => 'Invalid payment method'];
+        // Check if validation fails
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Save the form data to a session variable
+        $request->session()->put('order_data', $request->all());
+
+        $paymentMethod = $request->input('payment_method');
+
+        if (in_array($paymentMethod, ['card', 'wallet', 'bank'])) {
+            // Valid payment method, set it in the session and redirect to 'pay'
+            session(['payment_method' => $paymentMethod]);
+            return redirect()->route('pay');
+        } else {
+            // Handle unsupported or unknown payment methods
+            $result = ['success' => false, 'message' => 'Invalid payment method'];
+        }
     }
+
+    public function placeCustomOrder(Request $request, $id)
+    {
+        $phoneValidationPattern = '/^(?:\+63|0)[1-9]\d{9}$/';
+        // Validate the form data
+        $validator = Validator::make($request->all(), [
+            'recipient_name' => 'required|string|max:100',
+            'street_address' => 'required|string|max:50',
+            'town' => 'required|string|max:50',
+            'province' => 'required|string|max:50',
+            'postcode' => 'required|string|max:10',
+            'recipient_email' => 'required|email|max:50',
+            'recipient_phone' => ['required', 'string', 'max:11', 'regex:' . $phoneValidationPattern],
+            'shipping_method' => 'required|string|max:255',
+            'delivery_date' => 'required|date',
+            'delivery_time' => 'required|date_format:H:i',
+            'payment_method' => 'required|string|in:card,wallet,bank', // Valid payment methods
+            'order_notes' => 'nullable|string|max:1500',
+        ]);
+
+        // Check if validation fails
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Save the form data to a session variable
+        $request->session()->put('customOrder_data', $request->all());
+
+        $paymentMethod = $request->input('payment_method');
+
+        if (in_array($paymentMethod, ['card', 'wallet', 'bank'])) {
+            // Valid payment method, set it in the session and redirect to 'pay'
+            session(['custom_payment_method' => $paymentMethod]);
+            return redirect()->route('custompay', ['id' => $id]);
+        } else {
+            // Handle unsupported or unknown payment methods
+            $result = ['success' => false, 'message' => 'Invalid payment method'];
+        }
     }
 
 
@@ -76,7 +141,7 @@ class PaymentController extends Controller
             'attributes' => [
                 'line_items' => $lineItems, // Add the array of line items here
                 'payment_method_types' => $paymentMethodTypes,
-                'success_url' => route('store'),
+                'success_url' => route('create-order'),
                 'cancel_url' => route('checkout'),
                 'description' => 'iBake Tiers of Joy',
                 'send_email_receipt' => true,
@@ -92,10 +157,11 @@ class PaymentController extends Controller
                     ->asJson()
                     ->post();
 
-   
+
         // Store the session ID in the session
-        //\Session::put('session_id',$response->data->id);
         session(['paymentSession_id' => $response->data->id]);
+        // Store the payment intent ID in the session
+        session(['paymentIntent_id' =>$response->data->attributes->payment_intent->id]);
 
         
 
@@ -106,11 +172,16 @@ class PaymentController extends Controller
     public function custom_pay($id)
     {
         $items = DB::table('customize_orders')
-                    ->select('customize_orders.orderID', 'customize_orders.cakePrice')
+                    ->select('customize_orders.id','customize_orders.orderID', 'customize_orders.cakePrice')
                     ->where('customize_orders.orderID', $id)
-                    ->get();;
+                    ->get();
+
+        $customOrder_id = $items[0]->id;
+                    session(['customOrder_id' => $customOrder_id]);
+        $cakePrice = $items[0]->cakePrice;
+                    session(['cakePrice' => $cakePrice]);
         
-        $totalPrice = 0;
+        $name = 'Customize Cake Order ID - ' . $id;
 
         // Initialize an array to store line items
         $lineItems = [];
@@ -120,22 +191,38 @@ class PaymentController extends Controller
             $lineItems[] = [
                 'currency' => 'PHP',
                 'amount' => $item->cakePrice * 100,
-                'description' => 'Cake Item Order',
-                'name' => $id,
+                'description' => 'Custom Cake Order',
+                'name' => $name,
                 'quantity' => 1,
             ];
         }
+
+         // Determine the payment method types based on the selected payment method
+            $paymentType = session('custom_payment_method');
+
+
+            $paymentMethodTypes = [];
+
+            if ($paymentType === 'card') {
+                $paymentMethodTypes[] = 'card';
+            } elseif ($paymentType === 'wallet') {
+                $paymentMethodTypes = ['gcash', 'paymaya'];
+            } elseif ($paymentType === 'bank') {
+                $paymentMethodTypes[] = 'dob';
+            } else {
+                // Handle other cases or invalid selections here
+                return redirect()->route('checkout')->with('error', 'Invalid payment method selected.');
+            }
 
         $data = [
             'data' => [
                 'attributes' => [
                     'line_items' => $lineItems, // Add the array of line items here
-                    'payment_method_types' => [
-                        'card', 'gcash', 'paymaya',
-                    ],
-                    'success_url' => route('home'),
-                    'cancel_url' => route('checkout'),
+                    'payment_method_types' => $paymentMethodTypes,
+                    'success_url' => route('storeCustomOrder'),
+                    'cancel_url' => route('cake-request.process', ['id' => $id]),
                     'description' => 'iBake Tiers of Joy',
+                    'send_email_receipt' => true,
                 ],
             ],
         ];
@@ -148,9 +235,10 @@ class PaymentController extends Controller
                     ->asJson()
                     ->post();
 
-        // dd($response);
-        //\Session::put('session_id',$response->data->id);
-        session(['session_id' => $response->data->id]);
+        // Store the session ID in the session
+        session(['paymentSession_id' => $response->data->id]);
+        // Store the payment intent ID in the session
+        session(['paymentIntent_id' =>$response->data->attributes->payment_intent->id]);
 
         return redirect()->to($response->data->attributes->checkout_url);
     }
@@ -159,15 +247,34 @@ class PaymentController extends Controller
     {
        //$sessionId = \Session::get('session_id');
        $sessionId = session('paymentSession_id');
+       $sessionPaymentIntentId = session('paymentIntent_id');
+       $sessionPaymentId = session('payment_id');
 
-
-      $response = Curl::to('https://api.paymongo.com/v1/checkout_sessions/'.$sessionId)
+       $response = Curl::to('https://api.paymongo.com/v1/checkout_sessions/'.$sessionId)
                 ->withHeader('accept: application/json')
                 ->withHeader('Authorization: Basic '.env('AUTH_PAY'))
                 ->asJson()
-                ->get();
+                ->get(); 
 
-        dd($response);
+
+       $paymentIntent = Curl::to('https://api.paymongo.com/v1/payment_intents/'.$sessionPaymentIntentId)
+       ->withHeader('accept: application/json')
+       ->withHeader('Authorization: Basic '.env('AUTH_PAY'))
+       ->asJson()
+       ->get();
+
+       $payment = Curl::to('https://api.paymongo.com/v1/payments/'.$sessionPaymentId)
+        ->withHeader('accept: application/json')
+        ->withHeader('Authorization: Basic '.env('AUTH_PAY'))
+        ->asJson()
+        ->get();
+
+        dd($paymentIntent);
+        //dd($response->data->attributes->payment_intent->id); 
+        //dd($response->data->attributes->payments[0]->id);
+        //dd($response->data->attributes->payments[0]->id); //payment id
+        //session(['paymentIntent_status' =>$response->data->attributes->payment_intent->attributes->status]);
+
 
     }
 
