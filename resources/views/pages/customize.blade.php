@@ -87,7 +87,7 @@
                                             <span class="align-left font-italic font-light-weight">12 Servings</span>
                                             </div>
                                             <p class="font-weight-bold">
-                                                <span class="cake-price">120</span>PHP
+                                                <span class="cake-price">999</span>PHP
                                             </p>
                                         </div>
                                     </button>
@@ -99,7 +99,7 @@
                                             <span class="align-left font-italic font-light-weight">24 Servings</span>
                                             </div>
                                             <p class="font-weight-bold">
-                                                <span class="cake-price">180</span>PHP
+                                                <span class="cake-price">1499</span>PHP
                                             </p>
                                         </div>
                                     </button>
@@ -111,7 +111,7 @@
                                             <span class="align-left font-italic font-light-weight">32 Servings</span>
                                             </div>
                                             <p class="font-weight-bold">
-                                                <span class="cake-price">220</span>PHP
+                                                <span class="cake-price">1899</span>PHP
                                             </p>
                                         </div>
                                     </button>

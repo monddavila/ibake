@@ -178,6 +178,8 @@ class PaymentController extends Controller
 
         $customOrder_id = $items[0]->id;
                     session(['customOrder_id' => $customOrder_id]);
+        $customize_order_id = $id;
+                    session(['customize_order_id' => $customize_order_id]);
         $cakePrice = $items[0]->cakePrice;
                     session(['cakePrice' => $cakePrice]);
         

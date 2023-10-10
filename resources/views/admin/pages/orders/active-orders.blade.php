@@ -23,7 +23,7 @@
             <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Order Status</h4>
+                  <h4 class="card-title">Shop Orders</h4>
                   <div class="table-responsive">
                     <table class="table" id="orders-table">
                       <thead>
@@ -43,8 +43,17 @@
                         </tr>
                       </thead>
                       <tbody>
+                      @if ($activeOrders->isEmpty())
+                          <tr>
+                              <td colspan="11" class="text-center">
+                                  <div class="order-info">No Orders Available</div>
+                              </td>
+                          </tr>
+                      @else
+                        
                         @foreach ($activeOrders as $order)
                         <tr>
+                        
                           <td data-toggle="modal" data-target="#activeOrderModal">
                             <button class="btn btn-md btn-inverse-success order-details-btn">View
                               Order</button>
@@ -75,7 +84,81 @@
                         </tr>
                         @endforeach
 
+                      @endif 
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row ">
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Custom Cake Orders</h4>
+                  <div class="table-responsive">
+                    <table class="table" id="orders-table">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th> Client Name </th>
+                          <th> Order ID </th>
+                          <th> Order Date</th>
+                          <th> Delivery Date </th>
+                          <th> Delivery Time </th>
+                          <th> Recepient Phone </th>
+                          <th> Delivery Address </th>
+                          <th> Shipping Method </th>
+                          <th> Payment Status </th>
+                          <th> Delivery Notes </th>
+                          <th> Order Status </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      @if ($activeCustomOrders->isEmpty())
+                          <tr>
+                              <td colspan="11" class="text-center">
+                                  <div class="order-info">No Orders Available</div>
+                              </td>
+                          </tr>
+                      @else
                         
+                        @foreach ($activeCustomOrders as $order)
+                        <tr>
+                        
+                          <td data-toggle="modal" data-target="#activeOrderModal">
+                            <button class="btn btn-md btn-inverse-success order-details-btn">View
+                              Order</button>
+                          </td>
+                          <td>
+                            <span class="ps-2">{{ $order->recipient_name }}</span>
+                          </td>
+                          <td>{{ $order->customizeOrder->orderID }}</td>
+                          <td>{{ $order->created_at->format('d M Y') }}</td>
+                          <td>{{ $order->delivery_date }}</td>
+                          <td>{{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</td>
+                          <td>+63{{ $order->recipient_phone }}</td>
+                          <td>
+                              <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->delivery_address }}</textarea>
+                          </td>
+                          <td>{{ $order->shipping_method }}</td>
+                          <td>{{ $order->payment_status }}</td>
+                          <td>
+                              <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->notes }}</textarea>
+                          </td>
+                          <td>
+                            @if ($order->order_status == 'Pending')
+                            <div class="badge badge-outline-warning">{{ $order->order_status }}</div>
+                            @else
+                            <div class="badge badge-outline-primary">{{ $order->order_status }}</div>
+                            @endif
+                          </td>
+                        </tr>
+                        @endforeach
+
+                      @endif 
                       </tbody>
                     </table>
                   </div>

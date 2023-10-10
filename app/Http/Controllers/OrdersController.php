@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\Cart;
 use App\Models\CartItem;
-
+use App\Models\CustomizeOrderDetail;
 
 class OrdersController extends Controller
 {
@@ -210,7 +210,22 @@ class OrdersController extends Controller
         return $order;
       });
 
-    return view('admin.pages.orders.active-orders')->with(['activeOrders' => $activeOrders,]);
+    $activeCustomOrders = CustomizeOrderDetail::where('order_status', '=', 'Pending')->get()
+      ->map(function ($order) {
+        $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
+        return $order;
+      });
+
+      $orderDetails = CustomizeOrderDetail::where('order_status', 'Pending')
+      ->with('CustomizeOrder') // Eager load the related CustomizeOrder
+      ->get();
+
+
+    return view('admin.pages.orders.active-orders')->with([
+      'activeOrders' => $activeOrders, 
+      'activeCustomOrders' => $activeCustomOrders,
+      '$orderDetails' => $orderDetails,
+    ]);
   }
 
   function ongoingOrders()
@@ -222,7 +237,21 @@ class OrdersController extends Controller
         return $order;
       });
 
-    return view('admin.pages.orders.ongoing-orders')->with(['ongoingOrders' => $ongoingOrders,]);
+    $ongoingCustomOrders = CustomizeOrderDetail::where('order_status', '=', 'Processing')->get()
+      ->map(function ($order) {
+        $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
+        return $order;
+      });
+
+    $orderDetails = CustomizeOrderDetail::where('order_status', 'Processing')
+      ->with('CustomizeOrder') // Eager load the related CustomizeOrder
+      ->get();
+
+    return view('admin.pages.orders.ongoing-orders')->with([
+      'ongoingOrders' => $ongoingOrders,
+      'ongoingCustomOrders' => $ongoingCustomOrders,
+      'orderDetails' => $orderDetails,
+    ]);
   }
 
   function completedOrders()
@@ -233,7 +262,21 @@ class OrdersController extends Controller
         return $order;
       });
 
-    return view('admin.pages.orders.completed-orders')->with(['completedOrders' => $completedOrders,]);
+    $completedCustomOrders = CustomizeOrderDetail::where('order_status', '=', 'Completed')->get()
+      ->map(function ($order) {
+        $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
+        return $order;
+      });
+
+    $orderDetails = CustomizeOrderDetail::where('order_status', 'Completed')
+      ->with('CustomizeOrder') // Eager load the related CustomizeOrder
+      ->get();
+
+    return view('admin.pages.orders.completed-orders')->with([
+      'completedOrders' => $completedOrders,
+      'completedCustomOrders' => $completedCustomOrders,
+      'orderDetails' => $orderDetails,
+    ]);
   }
 
  

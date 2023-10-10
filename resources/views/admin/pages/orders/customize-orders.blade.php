@@ -21,7 +21,7 @@
             <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">List of Customized Cake Orders</h4>
+                  <h4 class="card-title">Customized Cake Order Requests</h4>
                   <div class="table-responsive">
                     <table class="table" id="orders-table">
                       <thead>
@@ -38,17 +38,25 @@
                           <tr>
                             <td>
                               @if($value->orderStatus == 1)
-                                  <a href="" type="button" style="text-decoration: none;" class="badge badge-outline-info" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID  }}">View</a>
+                                  <a href="" type="button" style="text-decoration: none;" class="badge badge-outline-success btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID  }}">View</a>
                               @elseif($value->orderStatus == 2)
                                   <button type="button" class="btn badge-outline-success">Approved</button>
                               @elseif($value->orderStatus == 3)
                                   <button type="button" class="btn badge-outline-danger">Rejected</button>
+                                  @elseif($value->orderStatus == 4)
+                                  <div class="badge badge-outline-warning">Pocessed</div>
                               @endif
                             </td>
                             <td>
-                                <a href="#" style="text-decoration: none; color: yellow;" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID }}">
-                                    {{ $value->orderID }}
-                                </a>
+                                @if ($value->orderStatus == 4)
+                                    <!-- Common content when the condition is met -->
+                                    <span>{{ $value->orderID }}</span>
+                                @else
+                                    <!-- Content for the modal when the condition is not met -->
+                                    <a href="#" style="text-decoration: none; color: yellow;" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID }}">
+                                        {{ $value->orderID }}
+                                    </a>
+                                @endif
                             </td>
                             </td>
                             <td>
