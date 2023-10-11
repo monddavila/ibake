@@ -32,7 +32,7 @@
                           <th> Recepient Name </th>
                           <th> Order ID </th>
                           <th> Order Date</th>
-                          <th> <a href="{{ route('cancelledOrders') }}?sort_by=delivery_date">Delivery Date</a></th>
+                          <th> <a href="{{ route('readyOrders') }}?sort_by=delivery_date">Delivery Date</a></th>
                           <th> Delivery Time </th>
                           <th> Recepient Phone </th>
                           <th> Delivery Address </th>
@@ -42,19 +42,19 @@
                         </tr>
                       </thead>
                       <tbody>
-                      @if ($cancelledOrders->isEmpty())
+                      @if ($readyOrders->isEmpty())
                           <tr>
                               <td colspan="11" class="text-center">
-                                  <div class="order-info">No Cancelled Orders Available</div>
+                                  <div class="order-info">No Ready Orders Available</div>
                               </td>
                           </tr>
                       @else
                         
-                        @foreach ($cancelledOrders as $order)
+                        @foreach ($readyOrders as $order)
                           <tr>
                           
                             <td data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $order->order_id }}">
-                              <button class="btn btn-md btn-inverse-success order-details-btn">View
+                              <button class="btn btn-md btn-inverse-success order-details-btn">Manage
                                 Order</button>
                             </td>
                             <td>
@@ -73,7 +73,7 @@
                                 <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->notes }}</textarea>
                             </td>
                             <td>
-                              <div class="badge badge-outline-danger">{{ $order->order_status }}</div>
+                              <div class="badge badge-outline-primary">{{ $order->order_status }}</div>
                             </td>
                           </tr>
 
@@ -127,7 +127,7 @@
                                           
                                           <div class="modal-footer">
                                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                              <button type="submit" class="btn badge-outline-warning reconsider-button" name="action" value="reconsider">Reconsider Order</button>
+                                              <button type="submit" class="btn badge-outline-success ready-button" name="action" value="ready">Complete Order</button>
 
                                           </div>
                                       </form>
@@ -159,7 +159,7 @@
                           <th> Recepient Name </th>
                           <th> Order ID </th>
                           <th> Order Date</th>
-                          <th> <a href="{{ route('cancelledOrders') }}?sort_by=delivery_date">Delivery Date</a></th>
+                          <th> <a href="{{ route('readyOrders') }}?sort_by=delivery_date">Delivery Date</a></th>
                           <th> Delivery Time </th>
                           <th> Recepient Phone </th>
                           <th> Delivery Address </th>
@@ -169,19 +169,19 @@
                         </tr>
                       </thead>
                       <tbody>
-                      @if ($cancelledCustomOrders->isEmpty())
+                      @if ($readyCustomOrders->isEmpty())
                           <tr>
                               <td colspan="11" class="text-center">
-                                  <div class="order-info">No Cancelled Orders Available</div>
+                                  <div class="order-info">No Ready Orders Available</div>
                               </td>
                           </tr>
                       @else
                         
-                        @foreach ($cancelledCustomOrders as $order)
+                        @foreach ($readyCustomOrders as $order)
                           <tr>
                           
                             <td data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $order->customizeOrder->orderID  }}">
-                              <button class="btn btn-md btn-inverse-success order-details-btn">View
+                              <button class="btn btn-md btn-inverse-success order-details-btn">Manage
                                 Order</button>
                             </td>
                             <td>
@@ -200,7 +200,8 @@
                                 <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->notes }}</textarea>
                             </td>
                             <td>
-                              <div class="badge badge-outline-danger">{{ $order->order_status }}</div>
+                              <div class="badge badge-outline-primary">{{ $order->order_status }}</div>
+
                             </td>
                           </tr>
 
@@ -263,7 +264,7 @@
                                         
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn badge-outline-warning reconsider-button" name="action" value="reconsider">Reconsider Order</button>
+                                            <button type="submit" class="btn badge-outline-success ready-button" name="action" value="ready">Complete Order</button>
 
                                         </div>
                                     </form>
@@ -295,9 +296,9 @@
 
   <!-- plugins:js -->
   <script>
-    document.querySelectorAll(".reconsider-button").forEach(function(button) {
+    document.querySelectorAll(".ready-button").forEach(function(button) {
     button.addEventListener("click", function (event) {
-        if (!confirm("Are you sure you want to reconsider and process the order again?")) {
+        if (!confirm("Are you sure you want to update the order status to ready for pick-up or delivery?")) {
             event.preventDefault(); // Prevent the form submission if the user cancels
         }
     });
