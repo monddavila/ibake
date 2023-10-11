@@ -1,6 +1,6 @@
 <nav class="navbar p-0 fixed-top d-flex flex-row">
     <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo-mini" href="/"><img src="{{ asset('assets/images/logo-mini.svg') }}"
+        <a class="navbar-brand brand-logo-mini" href="/"><img src="{{ asset('admin/assets/images/logo-mini.png') }}"
                 alt="logo" /></a>
     </div>
 
@@ -10,6 +10,10 @@
         </button>
 
         <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item dropdown d-none d-lg-block">
+        
+                <a href="{{ route('customOrders') }}" class="nav-link btn btn-primary create-new-button"><i class="fas fa-eye"></i>View Order Requests</a>
+            </li>
             <li class="nav-item dropdown d-none d-lg-block">
                 
                 <a href="{{ route('admin.viewAddProducts') }}" class="nav-link btn btn-success create-new-button">+ Add New Product</a>

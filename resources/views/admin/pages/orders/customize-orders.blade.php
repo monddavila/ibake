@@ -28,6 +28,7 @@
                         <tr>
                           <th> Action </th>
                           <th> Order No. </th>
+                          <th> Request Date </th>
                           <th> Image </th>
                           <th> Message </th>
                           <th> Price </th>
@@ -38,7 +39,7 @@
                           <tr>
                             <td>
                               @if($value->orderStatus == 1)
-                                  <a href="" type="button" style="text-decoration: none;" class="badge badge-outline-success btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID  }}">View</a>
+                                  <a href="" type="button" style="text-decoration: none;" class="badge badge-outline-success btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID  }}">View Request</a>
                               @elseif($value->orderStatus == 2)
                                   <button type="button" class="btn badge-outline-success">Approved</button>
                               @elseif($value->orderStatus == 3)
@@ -58,6 +59,8 @@
                                     </a>
                                 @endif
                             </td>
+                            <td>
+                                {{ $value->created_at ? \Carbon\Carbon::parse($value->created_at)->format('d M Y') : 'N/A' }}
                             </td>
                             <td>
                               @if(!empty($value->cakeOrderImage))
@@ -67,7 +70,7 @@
                               @endif
                             </td>
                             <td>{{ $value->cakeMessage  }}</td>
-                            <td> &#8369; {{ $value->cakePrice }}</td>
+                            <td> &#8369; {{ number_format($value->cakePrice, 2) }}</td>
                           </tr>
                           <!-- Modal -->
                           <div class="modal fade" id="staticBackdrop{{ $value->orderID  }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -105,7 +108,7 @@
                                           <span><i>{{ $value->cakeMessage }}</i></span><br>
                                         <hr>
                                         <div align="right">
-                                          <span>&#8369; {{ $value->cakePrice }}</span>
+                                          <span>&#8369; {{ number_format($value->cakePrice, 2) }}</span>
                                         </div>
                                       </div>
                                     </div>

@@ -4,18 +4,26 @@
       <div class="col-12 grid-margin">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Order Status</h4>
+            <h4 class="card-title">Order Requests</h4>
             <div class="table-responsive">
               <table class="table" id="orders-table">
                 <thead>
                   <tr>
                     <th> Status </th>
                     <th> Order No. </th>
+                    <th> Request Date </th>
                     <th> Image </th>
                     <th> Price </th>
                   </tr>
                 </thead>
                 <tbody>
+                @if ($orders->isEmpty())
+                          <tr>
+                              <td colspan="11" class="text-center">
+                                  <div class="order-info">No Pending Orders Available</div>
+                              </td>
+                          </tr>
+                      @else
                   @foreach($orders as $key => $value)
                     <tr>
                       <td>
@@ -34,13 +42,16 @@
                       </td>
                       <td><a href="" type="button" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID  }}">{{ $value->orderID  }}</a></td>
                       <td>
+                          {{ $value->created_at ? \Carbon\Carbon::parse($value->created_at)->format('d M Y') : 'N/A' }}
+                      </td>
+                      <td>
                         @if($value->isSelectionOrder == 2)
                           <a href="{{ asset($value->cakeOrderImage)  }}">{{ $value->cakeOrderImage  }}</a>
                         @elseif($value->isSelectionOrder == 1)
                           -
                         @endif
                       </td>
-                      <td>&#8369; {{ $value->cakePrice }}</td>
+                      <td>&#8369; {{ number_format($value->cakePrice, 2) }}</td>
                     </tr>
                     <div class="modal fade" id="staticBackdrop{{ $value->orderID  }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -77,7 +88,7 @@
                                           <span><i>{{ $value->cakeMessage }}</i></span><br>
                                         <hr>
                                         <div align="right">
-                                          <span>&#8369; {{ $value->cakePrice }}</span>
+                                          <span>&#8369; {{ number_format($value->cakePrice, 2) }}</span>
                                         </div>
                                       </div>
                                     </div>
@@ -91,7 +102,7 @@
                                       <label>Details:</label>
                                         <textarea class="form-control" name="invoice_details" rows="10" spellcheck="false" style="color:black;" readonly>{{ $value->invoice_details }}</textarea><br>
                                       <label>Product Price</label>
-                                      <input type="text" class="form-control" value="&#8369; {{$value->cakePrice}}" name="cakePrice" style="color: black;" readonly>
+                                      <input type="text" class="form-control" value="&#8369; {{number_format($value->cakePrice, 2)}}" name="cakePrice" style="color: black;" readonly>
                                     @endif  
 
                                     @if($value->orderStatus == 3)
@@ -109,6 +120,7 @@
                             </div>
                           </div>
                   @endforeach
+                @endif 
                 </tbody>
               </table>
             </div>

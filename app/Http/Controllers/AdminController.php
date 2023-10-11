@@ -154,10 +154,13 @@ class AdminController extends Controller
     return response()->json(['html' => $html]);
   }
 
-  public function __viewCustomOrders(){
+  public function __viewCustomOrders()
+  {
     $orders = DB::table('customize_orders')
-                    ->select('*')
-                    ->get();
+    ->select('*')
+    ->orderBy('orderStatus', 'asc')
+    ->orderBy('created_at', 'desc')
+    ->get();
 
     return view('admin.pages.orders.customize-orders', compact('orders'));
   }
@@ -167,7 +170,9 @@ class AdminController extends Controller
       $update = DB::table('customize_orders')
                     ->where('customize_orders.orderID', $id)
                     ->update([
+                              'updated_at' => now(),
                               'orderStatus' => 2,
+                              
                     ]);
     }elseif ($request->input('isSelectionOrder') == 2) {
       $update = DB::table('customize_orders')
@@ -175,6 +180,7 @@ class AdminController extends Controller
                     ->update([
                               'invoice_details' => $request->input('invoice_details'),
                               'cakePrice' => $request->input('cakePrice'),
+                              'updated_at' => now(),
                               'orderStatus' => 2,
                     ]);
     }
@@ -187,6 +193,7 @@ class AdminController extends Controller
                     ->where('customize_orders.orderID', $id)
                     ->update([
                               'invoice_details' => $request->input('invoice_details'),
+                              'updated_at' => now(),
                               'orderStatus' => 3,
                     ]);
       return redirect(route('customOrders'));
@@ -203,6 +210,22 @@ class AdminController extends Controller
         return $this->__updateCustomerOrders($request, $id);
     } elseif ($action == 'reject') {
         return $this->__updateCustomerRejectOrders($request, $id);
+    }
+  }
+
+  public function processOrderStatus(Request $request, $id)
+  {
+    // Retrieve the action (approve or reject)
+    $action = $request->input('action');
+
+    // Rest of your logic...
+
+    if ($action == 'process') {
+        //return $this->__updateCustomerOrders($request, $id);
+        return 'Process';
+    } elseif ($action == 'cancel') {
+        //return $this->__updateCustomerRejectOrders($request, $id);
+        return 'cancel';
     }
   }
 

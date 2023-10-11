@@ -16,7 +16,6 @@
       <!-- partial:navbar -->
       @include('admin.partials.navbar')
 
-      {{-- {{ dd($activeOrders) }} --}}
       <div class="main-panel">
         <div class="content-wrapper">
 
@@ -33,26 +32,25 @@
                           <th> Recepient Name </th>
                           <th> Order ID </th>
                           <th> Order Date</th>
-                          <th> <a href="{{ route('activeOrders') }}?sort_by=delivery_date">Delivery Date</a></th>
+                          <th> <a href="{{ route('cancelledOrders') }}?sort_by=delivery_date">Delivery Date</a></th>
                           <th> Delivery Time </th>
                           <th> Recepient Phone </th>
                           <th> Delivery Address </th>
                           <th> Shipping Method </th>
-                          <th> Payment Status </th>
                           <th> Delivery Notes </th>
                           <th> Order Status </th>
                         </tr>
                       </thead>
                       <tbody>
-                      @if ($activeOrders->isEmpty())
+                      @if ($cancelledOrders->isEmpty())
                           <tr>
                               <td colspan="11" class="text-center">
-                                  <div class="order-info">No Orders Available</div>
+                                  <div class="order-info">No Cancelled Orders Available</div>
                               </td>
                           </tr>
                       @else
                         
-                        @foreach ($activeOrders as $order)
+                        @foreach ($cancelledOrders as $order)
                           <tr>
                           
                             <td data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $order->order_id }}">
@@ -71,12 +69,15 @@
                                 <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->delivery_address }}</textarea>
                             </td>
                             <td>{{ $order->shipping_method }}</td>
-                            <td>{{ $order->payment_status }}</td>
                             <td>
                                 <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->notes }}</textarea>
                             </td>
                             <td>
+                              @if ($order->order_status == 'Pending')
                               <div class="badge badge-outline-warning">{{ $order->order_status }}</div>
+                              @else
+                              <div class="badge badge-outline-primary">{{ $order->order_status }}</div>
+                              @endif
                             </td>
                           </tr>
 
@@ -130,8 +131,7 @@
                                           
                                           <div class="modal-footer">
                                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                              <button type="submit" class="btn badge-outline-success" name="action" value="process">Process</button>
-                                              <button type="submit" class="btn badge-outline-danger cancel-button" name="action" value="cancel">Cancel Order</button>
+                                              <button type="submit" class="btn badge-outline-warning reconsider-button" name="action" value="reconsider">Reconsider Order</button>
 
                                           </div>
                                       </form>
@@ -163,26 +163,25 @@
                           <th> Recepient Name </th>
                           <th> Order ID </th>
                           <th> Order Date</th>
-                          <th> <a href="{{ route('activeOrders') }}?sort_by=delivery_date">Delivery Date</a></th>
+                          <th> <a href="{{ route('cancelledOrders') }}?sort_by=delivery_date">Delivery Date</a></th>
                           <th> Delivery Time </th>
                           <th> Recepient Phone </th>
                           <th> Delivery Address </th>
                           <th> Shipping Method </th>
-                          <th> Payment Status </th>
                           <th> Delivery Notes </th>
                           <th> Order Status </th>
                         </tr>
                       </thead>
                       <tbody>
-                      @if ($activeCustomOrders->isEmpty())
+                      @if ($cancelledCustomOrders->isEmpty())
                           <tr>
                               <td colspan="11" class="text-center">
-                                  <div class="order-info">No Orders Available</div>
+                                  <div class="order-info">No Cancelled Orders Available</div>
                               </td>
                           </tr>
                       @else
                         
-                        @foreach ($activeCustomOrders as $order)
+                        @foreach ($cancelledCustomOrders as $order)
                           <tr>
                           
                             <td data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $order->customizeOrder->orderID  }}">
@@ -201,12 +200,15 @@
                                 <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->delivery_address }}</textarea>
                             </td>
                             <td>{{ $order->shipping_method }}</td>
-                            <td>{{ $order->payment_status }}</td>
                             <td>
                                 <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->notes }}</textarea>
                             </td>
                             <td>
+                              @if ($order->order_status == 'Pending')
                               <div class="badge badge-outline-warning">{{ $order->order_status }}</div>
+                              @else
+                              <div class="badge badge-outline-primary">{{ $order->order_status }}</div>
+                              @endif
                             </td>
                           </tr>
 
@@ -269,8 +271,7 @@
                                         
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn badge-outline-success" name="action" value="process">Process</button>
-                                            <button type="submit" class="btn badge-outline-danger cancel-button" name="action" value="cancel">Cancel Order</button>
+                                            <button type="submit" class="btn badge-outline-warning reconsider-button" name="action" value="reconsider">Reconsider Order</button>
 
                                         </div>
                                     </form>
@@ -302,9 +303,9 @@
 
   <!-- plugins:js -->
   <script>
-    document.querySelectorAll(".cancel-button").forEach(function(button) {
+    document.querySelectorAll(".reconsider-button").forEach(function(button) {
     button.addEventListener("click", function (event) {
-        if (!confirm("Are you sure you want to cancel this order? The item is already paid, please notify the customer for a possible refund.")) {
+        if (!confirm("Are you sure you want to reconsider and process the order again?")) {
             event.preventDefault(); // Prevent the form submission if the user cancels
         }
     });
