@@ -54,7 +54,7 @@
                           <tr>
                           
                             <td data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $order->order_id }}">
-                              <button class="btn btn-md btn-inverse-success order-details-btn">View
+                              <button class="btn btn-md btn-inverse-success order-details-btn">Manage
                                 Order</button>
                             </td>
                             <td>
@@ -181,7 +181,7 @@
                           <tr>
                           
                             <td data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $order->customizeOrder->orderID  }}">
-                              <button class="btn btn-md btn-inverse-success order-details-btn">View
+                              <button class="btn btn-md btn-inverse-success order-details-btn">Manage
                                 Order</button>
                             </td>
                             <td>

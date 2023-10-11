@@ -123,6 +123,7 @@ Route::group(['prefix' => 'orders'], function () {
   Route::get('/dashboard', [OrdersController::class, 'ordersDashboard']);
   Route::get('/active', [OrdersController::class, 'activeOrders'])->name('activeOrders');
   Route::get('/ongoing', [OrdersController::class, 'ongoingOrders'])->name('ongoingOrders');
+  Route::get('/ready', [OrdersController::class, 'readyOrders'])->name('readyOrders');
   Route::get('/completed', [OrdersController::class, 'completedOrders'])->name('completedOrders');
   Route::get('/cancelled', [OrdersController::class, 'cancelledOrders'])->name('cancelledOrders');
 

@@ -106,6 +106,7 @@
               <a class="nav-link" href="{{ route('activeOrders') }}" style="color: orange;">Active Orders</a>
           </li>
           <li class="nav-item"><a class="nav-link" href="{{ route('ongoingOrders') }}">Ongoing Orders</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('readyOrders') }}">Delivery/Pickup Orders</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('completedOrders') }}">Completed Orders</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('cancelledOrders') }}">Cancelled Orders</a></li>
         </ul>

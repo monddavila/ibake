@@ -323,6 +323,46 @@ class OrdersController extends Controller
     ]);
   }
 
+
+  function readyOrders(Request $request)
+  {
+    $readyOrders = Order::where('order_status', '=', 'On Delivery')
+        ->with('orderItems.product'); // Eager load the related OrderItem;
+
+      if(isset($request->sort_by)){
+        $completedOrders = $readyOrders->orderBy($request->sort_by,'ASC');
+      }
+
+      $readyOrders = $readyOrders->get()
+        ->map(function ($order) {
+        $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
+        return $order;
+      });
+
+
+      $readyCustomOrders = CustomizeOrderDetail::where('order_status', '=', 'On Delivery');
+      
+      if(isset($request->sort_by)){
+        $readyCustomOrders = $readyCustomOrders->orderBy($request->sort_by,'ASC');
+      }
+      
+      $readyCustomOrders = $readyCustomOrders->get()
+        ->map(function ($order) {
+          $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
+          return $order;
+        });
+
+    $orderDetails = CustomizeOrderDetail::where('order_status', 'Completed')
+      ->with('CustomizeOrder') // Eager load the related CustomizeOrder
+      ->get();
+
+    return view('admin.pages.orders.ready-orders')->with([
+      'readyOrders' => $readyOrders,
+      'readyCustomOrders' => $readyCustomOrders,
+      'orderDetails' => $orderDetails,
+    ]);
+  }
+
   function cancelledOrders(Request $request)
   {
 

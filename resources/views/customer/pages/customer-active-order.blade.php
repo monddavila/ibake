@@ -3,6 +3,7 @@
 
 <head>
   @include('customer.partials.head')
+
 </head>
 
 <body>
@@ -15,7 +16,6 @@
       <!-- partial:navbar -->
       @include('customer.partials.navbar')
 
-      {{-- {{ dd($activeOrders) }} --}}
       <div class="main-panel">
         <div class="content-wrapper">
 
@@ -29,9 +29,10 @@
                       <thead>
                         <tr>
                           <th></th>
+                          <th> Recepient Name </th>
                           <th> Order ID </th>
                           <th> Order Date</th>
-                          <th> Delivery Date </th>
+                          <th> <a href="{{ route('customerActiveOrder') }}?sort_by=delivery_date">Delivery Date</a></th>
                           <th> Delivery Time </th>
                           <th> Recepient Phone </th>
                           <th> Delivery Address </th>
@@ -45,39 +46,105 @@
                       @if ($activeOrders->isEmpty())
                           <tr>
                               <td colspan="11" class="text-center">
-                                  <div class="order-info">No Active Shop Orders Available</div>
+                                  <div class="order-info">No Orders Available</div>
                               </td>
                           </tr>
                       @else
                         
                         @foreach ($activeOrders as $order)
-                        <tr>
-                        
-                          <td data-toggle="modal" data-target="#activeOrderModal">
-                            <button class="btn btn-md btn-inverse-success order-details-btn">View
-                              Order</button>
-                          </td>
-                          <td>{{ $order->order_id }}</td>
-                          <td>{{ $order->created_at->format('d M Y') }}</td>
-                          <td>{{ $order->delivery_date }}</td>
-                          <td>{{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</td>
-                          <td>+63{{ $order->recipient_phone }}</td>
-                          <td>
-                              <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->delivery_address }}</textarea>
-                          </td>
-                          <td>{{ $order->shipping_method }}</td>
-                          <td>{{ $order->payment_status }}</td>
-                          <td>
-                              <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->notes }}</textarea>
-                          </td>
-                          <td>
-                            @if ($order->order_status == 'Pending')
-                            <div class="badge badge-outline-warning">{{ $order->order_status }}</div>
-                            @else
-                            <div class="badge badge-outline-primary">{{ $order->order_status }}</div>
-                            @endif
-                          </td>
-                        </tr>
+                          <tr>
+                          
+                            <td data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $order->order_id }}">
+                              <button class="btn btn-md btn-inverse-success order-details-btn">View
+                                Order</button>
+                            </td>
+                            <td>
+                              <span class="ps-2">{{ $order->recipient_name }}</span>
+                            </td>
+                            <td>{{ $order->order_id }}</td>
+                            <td>{{ $order->created_at->format('d M Y') }}</td>
+                            <td>{{ $order->delivery_date }}</td>
+                            <td>{{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</td>
+                            <td>+63{{ $order->recipient_phone }}</td>
+                            <td>
+                                <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->delivery_address }}</textarea>
+                            </td>
+                            <td>{{ $order->shipping_method }}</td>
+                            <td>{{ $order->payment_status }}</td>
+                            <td>
+                                <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->notes }}</textarea>
+                            </td>
+                            <td>
+                                <?php if ($order->order_status == 'Pending'): ?>
+                                    <div class="badge badge-outline-warning">Pending</div>
+                                  <?php elseif($order->order_status == 'Processing'): ?>
+                                    <div class="badge badge-outline-primary">Processing</div>
+                                  <?php elseif($order->order_status == 'Ready'): ?>
+                                    <div class="badge badge-outline-success">Ready</div>
+                                  <?php elseif($order->order_status == 'On Delivery'): ?>
+                                    <div class="badge badge-outline-info">On Delivery</div>
+                                <?php endif ?>
+                            </td>
+                          </tr>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop{{ $order->order_id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Order No. {{ $order->order_id }}</h1>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                        <div class="modal-body">
+                                                    @php
+                                                    $totalPrice = 0; // Initialize the total price variable
+                                                    @endphp
+                                                @foreach ($order->orderItems as $orderItem)
+                                                  <!-- details -->
+                                                  <div class="card">
+                                                    <div class="card-body">
+                                                      <div class="row">
+                                                        <div class="col">
+                                                        <label>Product Name:</label>
+                                                            <span><i>{{ $orderItem->product->name }}</i></span><br>
+                                                            <label>Quantity:</label>
+                                                            <span><i>{{ $orderItem->quantity }}</i></span><br>
+                                                            <label>Price:</label>
+                                                            <span><i>{{ $orderItem->product->price }}</i></span><br>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a href="{{ asset($orderItem->product->image) }}" data-lightbox="image">
+                                                                <img src="{{ asset($orderItem->product->image) }}" style="float: right; max-width: auto; max-height: 80px;">
+                                                            </a>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                      <hr>
+                                                      @php
+                                                      $totalPrice += $orderItem->quantity * $orderItem->product->price;
+                                                      @endphp
+                                                @endforeach
+                                                    <div align="right">
+                                                      <span>Price: &#8369; {{ number_format($totalPrice, 2) }}</span>
+                                                    </div>
+                                                  </div>
+                                        </div>
+                                              
+                                      <form action="{{ route('processOrderStatus', ['id' => $order->order_id]) }}" method="post"> 
+                                          @csrf
+                                          <input type="hidden" value="{{ $order->order_id }}" name="isSelectionOrder">
+                                          
+                                          <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+
+                                          </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                            </div>
+                            
                         @endforeach
 
                       @endif 
@@ -99,9 +166,10 @@
                       <thead>
                         <tr>
                           <th></th>
+                          <th> Recepient Name </th>
                           <th> Order ID </th>
                           <th> Order Date</th>
-                          <th> Delivery Date </th>
+                          <th> <a href="{{ route('customerActiveOrder') }}?sort_by=delivery_date">Delivery Date</a></th>
                           <th> Delivery Time </th>
                           <th> Recepient Phone </th>
                           <th> Delivery Address </th>
@@ -115,39 +183,119 @@
                       @if ($activeCustomOrders->isEmpty())
                           <tr>
                               <td colspan="11" class="text-center">
-                                  <div class="order-info">No Active Custom Cake Orders Available</div>
+                                  <div class="order-info">No Orders Available</div>
                               </td>
                           </tr>
                       @else
                         
                         @foreach ($activeCustomOrders as $order)
-                        <tr>
-                        
-                          <td data-toggle="modal" data-target="#activeOrderModal">
-                            <button class="btn btn-md btn-inverse-success order-details-btn">View
-                              Order</button>
-                          </td>
-                          <td>{{ $order->customizeOrder->orderID }}</td>
-                          <td>{{ $order->created_at->format('d M Y') }}</td>
-                          <td>{{ $order->delivery_date }}</td>
-                          <td>{{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</td>
-                          <td>+63{{ $order->recipient_phone }}</td>
-                          <td>
-                              <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->delivery_address }}</textarea>
-                          </td>
-                          <td>{{ $order->shipping_method }}</td>
-                          <td>{{ $order->payment_status }}</td>
-                          <td>
-                              <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->notes }}</textarea>
-                          </td>
-                          <td>
-                            @if ($order->order_status == 'Pending')
-                            <div class="badge badge-outline-warning">{{ $order->order_status }}</div>
-                            @else
-                            <div class="badge badge-outline-primary">{{ $order->order_status }}</div>
-                            @endif
-                          </td>
-                        </tr>
+                          <tr>
+                          
+                            <td data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $order->customizeOrder->orderID  }}">
+                              <button class="btn btn-md btn-inverse-success order-details-btn">View
+                                Order</button>
+                            </td>
+                            <td>
+                              <span class="ps-2">{{ $order->recipient_name }}</span>
+                            </td>
+                            <td>{{ $order->customizeOrder->orderID }}</td>
+                            <td>{{ $order->created_at->format('d M Y') }}</td>
+                            <td>{{ $order->delivery_date }}</td>
+                            <td>{{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</td>
+                            <td>+63{{ $order->recipient_phone }}</td>
+                            <td>
+                                <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->delivery_address }}</textarea>
+                            </td>
+                            <td>{{ $order->shipping_method }}</td>
+                            <td>{{ $order->payment_status }}</td>
+                            <td>
+                                <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->notes }}</textarea>
+                            </td>
+                            <td>
+                                <?php if ($order->order_status == 'Pending'): ?>
+                                    <div class="badge badge-outline-warning">Pending</div>
+                                  <?php elseif($order->order_status == 'Processing'): ?>
+                                    <div class="badge badge-outline-primary">Processing</div>
+                                  <?php elseif($order->order_status == 'Ready'): ?>
+                                    <div class="badge badge-outline-success">Ready</div>
+                                  <?php elseif($order->order_status == 'On Delivery'): ?>
+                                    @if ($order->shipping_method === 'Pickup')
+                                    <div class="badge badge-outline-info">For Pickup</div>
+                                    @else
+                                    <div class="badge badge-outline-info">On Delivery</div>
+                                    @endif
+                                <?php endif ?>
+                            </td>
+                          </tr>
+
+                          <!-- Modal -->
+                          <div class="modal fade" id="staticBackdrop{{ $order->customizeOrder->orderID }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Order No. {{ $order->customizeOrder->orderID }}</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    @if($order->customizeOrder->isSelectionOrder == 2)
+                                      <div align="center">
+                                        <a href="{{ asset($order->customizeOrder->cakeOrderImage) }}">
+                                        <img src="{{ asset($order->customizeOrder->cakeOrderImage) }}" style="max-width: auto;max-height: 250px;">
+                                        </a>
+                                      </div>
+                                      
+                                    @endif
+                                    <!-- details -->
+                                    @if($order->customizeOrder->isSelectionOrder == 1)
+                                      <div class="card">
+                                        <div class="card-body">
+                                          <label>Size:</label>
+                                            <span><i>{{ $order->customizeOrder->cakeSize }}</i></span><br>
+                                          <label>Flavor:</label>
+                                            <span><i>{{ $order->customizeOrder->cakeFlavor }}</i></span><br>
+                                          <label>Filling:</label>
+                                            <span><i>{{ $order->customizeOrder->cakeFilling }}</i></span><br>
+                                          <label>Icing:</label>
+                                            <span><i>{{ $order->customizeOrder->cakeIcing }}</i></span><br>
+                                          <label>Top Border:</label>
+                                            <span><i>{{ $order->customizeOrder->cakeTopBorder }}</i></span><br>
+                                          <label>Bottom Border:</label>
+                                            <span><i>{{ $order->customizeOrder->cakeBottomBorder }}</i></span><br>
+                                          <label>Decoration:</label>
+                                            <span><i>{{ $order->customizeOrder->cakeDecoration }}</i></span><br>
+                                          <label>Cake Message:</label>
+                                            <span><i>{{ $order->customizeOrder->cakeMessage }}</i></span><br>
+                                          <hr>
+                                          <div align="right">
+                                            <span>&#8369; {{ number_format($order->customizeOrder->cakePrice, 2) }}</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    @endif
+                                    @if($order->customizeOrder->isSelectionOrder == 2)
+                                    <hr>
+                                      <label>Additional Info.</label>
+                                      <textarea class="form-control" rows="10" spellcheck="false" style="color:black;" readonly>{{ $order->customizeOrder->cakeMessage  }}</textarea>
+                                    <hr>
+                                    <div align="right">
+                                                      <span>Price: &#8369; {{ number_format($order->customizeOrder->cakePrice, 2) }}</span>
+                                                    </div>
+                                    @endif
+                                    <form action="{{ route('processOrderStatus', ['id' => $order->customizeOrder->orderID]) }}" method="post"> 
+                                        @csrf
+                                        <input type="hidden" value="{{ $order->customizeOrder->isSelectionOrder }}" name="isSelectionOrder">
+                                        
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+
+                                        </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
                         @endforeach
 
                       @endif 
@@ -168,53 +316,17 @@
     <!-- page-body-wrapper ends -->
 
 
-    <!-- Button trigger modal
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-      Launch demo modal
-    </button> -->
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Order Details Modal -->
-  {{-- <div class="modal fade" id="activeOrderModal" tabindex="-1" role="img" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modal-title"></h5>
-        </div>
-      </div>
-    </div>
-  </div> --}}
-  <!-- Order Details Modal End -->
 
   <!-- plugins:js -->
+
   @include('customer.partials.script')
   <script src="{{ asset('customer/assets/js/customer-orders.js') }}"></script>
   <!-- JavaScript -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  
+
+
 </body>
 
 </html>

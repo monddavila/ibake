@@ -21,29 +21,41 @@ class CustomerController extends Controller
                     ->orderBy('orderStatus', 'asc')
                     ->orderBy('created_at', 'desc')
                     ->get();
-        // dd($orders);
+
         return view('customer.chome', compact('orders'));
     }
 
-    function customerActiveOrders()
+    function customerActiveOrders(Request $request)
   {
     $userId = Auth::user()->id; // Get the ID of the currently logged-in user.
 
-    $activeOrders = Order::where('user_id', $userId) // Filter by user ID.
-        ->where('order_status', 'Pending')
-        ->get()
-        ->map(function ($order) {
-            $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
-            return $order;
-        });
+      $activeOrders = Order::where('user_id', $userId)
+        ->with('orderItems.product') // Eager load the related OrderItem;
+        ->whereIn('order_status', ['Pending', 'Processing', 'Ready', 'On Delivery']);
 
-    $activeCustomOrders = CustomizeOrderDetail::where('user_id', $userId) // Filter by user ID.
-        ->where('order_status', 'Pending')
-        ->get()
+      if(isset($request->sort_by)){
+        $activeOrders = $activeOrders->orderBy($request->sort_by,'ASC');
+      }
+
+      $activeOrders = $activeOrders->get()
         ->map(function ($order) {
-            $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
-            return $order;
+        $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
+        return $order;
       });
+
+
+      $activeCustomOrders = CustomizeOrderDetail::where('user_id', $userId)
+      ->whereIn('order_status', ['Pending', 'Processing', 'Ready', 'On Delivery']);
+      
+      if(isset($request->sort_by)){
+        $activeCustomOrders = $activeCustomOrders->orderBy($request->sort_by,'ASC');
+      }
+      
+      $activeCustomOrders = $activeCustomOrders->get()
+        ->map(function ($order) {
+          $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
+          return $order;
+        });
 
       $orderDetails = CustomizeOrderDetail::where('order_status', 'Pending')
         ->where('user_id', $userId) // Filter by the user's ID
@@ -57,33 +69,37 @@ class CustomerController extends Controller
     ]);
   }
 
-  function customerCompletedOrders()
+  function customerCompletedOrders(Request $request)
   {
     $userId = Auth::user()->id; // Get the ID of the currently logged-in user.
 
     $completedOrders = Order::where('user_id', $userId)
-        ->where(function ($query) {
-            $query->where('order_status', 'Completed')
-                ->orWhere('order_status', 'Refunded')
-                ->orWhere('order_status', 'Cancelled');
-        })
-        ->get()
-        ->map(function ($order) {
-            $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
-            return $order;
-        });
+        ->with('orderItems.product') // Eager load the related OrderItem;
+        ->whereIn('order_status', ['Completed', 'Cancelled', 'Refunded']);
 
-    $completedCustomOrders = CustomizeOrderDetail::where('user_id', $userId)
-        ->where(function ($query) {
-            $query->where('order_status', 'Completed')
-                ->orWhere('order_status', 'Refunded')
-                ->orWhere('order_status', 'Cancelled');
-        })
-        ->get()
+      if(isset($request->sort_by)){
+        $completedOrders = $completedOrders->orderBy($request->sort_by,'ASC');
+      }
+
+      $completedOrders = $completedOrders->get()
         ->map(function ($order) {
-            $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
-            return $order;
+        $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
+        return $order;
       });
+
+
+      $completedCustomOrders = CustomizeOrderDetail::where('user_id', $userId)
+      ->whereIn('order_status', ['Completed', 'Cancelled', 'Refunded']);
+      
+      if(isset($request->sort_by)){
+        $completedCustomOrders = $completedCustomOrders->orderBy($request->sort_by,'ASC');
+      }
+      
+      $completedCustomOrders = $completedCustomOrders->get()
+        ->map(function ($order) {
+          $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
+          return $order;
+        });
 
       $orderDetails = CustomizeOrderDetail::where('user_id', $userId)
         ->where(function ($query) {

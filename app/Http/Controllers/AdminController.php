@@ -223,9 +223,24 @@ class AdminController extends Controller
     if ($action == 'process') {
         //return $this->__updateCustomerOrders($request, $id);
         return 'Process';
-    } elseif ($action == 'cancel') {
+      } elseif ($action == 'cancel') {
         //return $this->__updateCustomerRejectOrders($request, $id);
         return 'cancel';
+      } elseif ($action == 'another_action') {
+          // Handle another action here
+          return 'Another Action';
+      } elseif ($action == 'yet_another_action') {
+          // Handle yet another action here
+          return 'Yet Another Action';
+      } elseif ($action == 'yet_another_action') {
+          // Handle yet another action here
+          return 'Yet Another Action';
+      } elseif ($action == 'yet_another_action') {
+          // Handle yet another action here
+          return 'Yet Another Action';
+      } elseif ($action == 'yet_another_action') {
+          // Handle yet another action here
+          return 'Yet Another Action';
     }
   }
 
