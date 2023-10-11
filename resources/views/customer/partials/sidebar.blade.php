@@ -1,8 +1,8 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-    <a class="sidebar-brand brand-logo" href="/"><img src="{{ asset('admin/assets/images/logo.png') }}"
+    <a class="sidebar-brand brand-logo" href="/redirect"><img src="{{ asset('admin/assets/images/logo.png') }}"
         alt="logo" /></a>
-    <a class="sidebar-brand brand-logo-mini" href="/redirect"><img src="{{ asset('admin/assets/images/logo.png') }}"
+    <a class="sidebar-brand brand-logo-mini" href="/redirect"><img src="{{ asset('admin/assets/images/logo-mini.png') }}"
         alt="logo" /></a>
   </div>
   <ul class="nav">
@@ -28,8 +28,10 @@
               <p>Adminstrator</p>
               @elseif($userType == '3')
               <p>Manager</p>
-              @else
+              @elseif($userType == '2')
               <p>Customer</p>
+              @else
+              <p>Staff</p>
               @endif
             </span>
 
@@ -81,7 +83,7 @@
       <span class="nav-link">Navigation</span>
     </li>
     <li class="nav-item menu-items">
-      <a class="nav-link" href="/redirect">
+      <a class="nav-link" href="#">
         <span class="menu-icon">
           <i class="mdi mdi-speedometer"></i>
         </span>
@@ -98,10 +100,10 @@
   </a>
   <div id="orders">
     <ul class="nav flex-column sub-menu">
-      <li class="nav-item"><a class="nav-link" href="{{ route('activeOrders') }}">Active Orders</a></li>
-      <li class="nav-item"><a class="nav-link" href="{{ route('customOrders') }}">Customize Cake Requests</a></li>
-      <li class="nav-item"><a class="nav-link" href="">Order History</a></li>
-      <li class="nav-item"><a class="nav-link" href="">Add Order</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('customer') }}">Customize Cake Requests</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('customerActiveOrder') }}">Active Orders</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('customerCompletedOrder') }}">Order History</a></li>
+
     </ul>
   </div>
 </li>

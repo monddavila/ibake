@@ -103,6 +103,8 @@ Route::group(['prefix' => 'products'], function () {
  */
 Route::group(['prefix' => 'customer'], function () {
   Route::get('/', [CustomerController::class, 'index'])->name('customer');
+  Route::get('active-orders', [CustomerController::class, 'customerActiveOrders'])->name('customerActiveOrder');
+  Route::get('order-history', [CustomerController::class, 'customerCompletedOrders'])->name('customerCompletedOrder');
 });
 
 
@@ -122,11 +124,16 @@ Route::group(['prefix' => 'orders'], function () {
   Route::get('/active', [OrdersController::class, 'activeOrders'])->name('activeOrders');
   Route::get('/ongoing', [OrdersController::class, 'ongoingOrders'])->name('ongoingOrders');
   Route::get('/completed', [OrdersController::class, 'completedOrders'])->name('completedOrders');
+  Route::get('/cancelled', [OrdersController::class, 'cancelledOrders'])->name('cancelledOrders');
+
+
   /*Customize Approving Section*/
   Route::get('/customize-order-section', [AdminController::class, '__viewCustomOrders'])->name('customOrders');
   Route::post('/process-order/{id}', [AdminController::class, 'processOrder'])->name('processOrder');
   Route::post('/approval-order/{id}', [AdminController::class, '__updateCustomerOrders'])->name('approvalOrder');
   Route::post('/reject-order/{id}', [AdminController::class, '__updateCustomerRejectOrders'])->name('rejectOrder');
+
+  Route::post('/update-status/{id}', [AdminController::class, 'processOrderStatus'])->name('processOrderStatus');
   
 });
 

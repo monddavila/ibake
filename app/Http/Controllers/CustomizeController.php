@@ -55,6 +55,7 @@ class CustomizeController extends Controller
             'cakeDecoration' => $request->input('cakeDecoration'),
             'cakeMessage' => $request->input('cakeMessage'),
             'cakePrice' => $request->input('cakePrice'),
+            'created_at' => now(),
             'orderStatus' => 1
         ]);
         return redirect('/customer');
@@ -80,6 +81,7 @@ class CustomizeController extends Controller
             'cakeDecoration' => null,
             'cakeMessage' => $request->input('cakeMessage'),
             'cakePrice' => null,
+            'created_at' => now(),
             'orderStatus' => 1
         ]);
 
