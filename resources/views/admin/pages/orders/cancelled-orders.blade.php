@@ -123,11 +123,11 @@
                                               
                                       <form action="{{ route('processOrderStatus', ['id' => $order->order_id]) }}" method="post"> 
                                           @csrf
-                                          <input type="hidden" value="{{ $order->order_id }}" name="isSelectionOrder">
+                                          <input type="hidden" value="1" name="isSelectionOrder">
                                           
                                           <div class="modal-footer">
                                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                              <button type="submit" class="btn badge-outline-warning reconsider-button" name="action" value="reconsider">Reconsider Order</button>
+                                              <button type="submit" class="btn badge-outline-warning reconsider-button" name="action" value="Reconsider">Reconsider Order</button>
 
                                           </div>
                                       </form>
@@ -259,11 +259,11 @@
                                     @endif
                                     <form action="{{ route('processOrderStatus', ['id' => $order->customizeOrder->orderID]) }}" method="post"> 
                                         @csrf
-                                        <input type="hidden" value="{{ $order->customizeOrder->isSelectionOrder }}" name="isSelectionOrder">
+                                        <input type="hidden" value="2" name="isSelectionOrder">
                                         
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn badge-outline-warning reconsider-button" name="action" value="reconsider">Reconsider Order</button>
+                                            <button type="submit" class="btn badge-outline-warning reconsider-button" name="action" value="Reconsider">Reconsider Order</button>
 
                                         </div>
                                     </form>
@@ -297,7 +297,7 @@
   <script>
     document.querySelectorAll(".reconsider-button").forEach(function(button) {
     button.addEventListener("click", function (event) {
-        if (!confirm("Are you sure you want to reconsider and process the order again?")) {
+        if (!confirm("Warning: Reprocessing the order will revoke the cancellation and start the order process over. Are you sure you want to do this?")) {
             event.preventDefault(); // Prevent the form submission if the user cancels
         }
     });

@@ -47,7 +47,7 @@
                       @if ($activeOrders->isEmpty())
                           <tr>
                               <td colspan="11" class="text-center">
-                                  <div class="order-info">No Orders Available</div>
+                                  <div class="order-info">No Active Orders Available</div>
                               </td>
                           </tr>
                       @else
@@ -126,12 +126,12 @@
                                               
                                       <form action="{{ route('processOrderStatus', ['id' => $order->order_id]) }}" method="post"> 
                                           @csrf
-                                          <input type="hidden" value="{{ $order->order_id }}" name="isSelectionOrder">
+                                          <input type="hidden" value="1" name="isSelectionOrder">
                                           
                                           <div class="modal-footer">
                                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                              <button type="submit" class="btn badge-outline-success" name="action" value="process">Process</button>
-                                              <button type="submit" class="btn badge-outline-danger cancel-button" name="action" value="cancel">Cancel Order</button>
+                                              <button type="submit" class="btn badge-outline-success process-button " name="action" value="Process">Process</button>
+                                              <button type="submit" class="btn badge-outline-danger cancel-button" name="action" value="Cancel">Cancel Order</button>
 
                                           </div>
                                       </form>
@@ -177,7 +177,7 @@
                       @if ($activeCustomOrders->isEmpty())
                           <tr>
                               <td colspan="11" class="text-center">
-                                  <div class="order-info">No Orders Available</div>
+                                  <div class="order-info">No Active Orders Available</div>
                               </td>
                           </tr>
                       @else
@@ -265,12 +265,12 @@
                                     @endif
                                     <form action="{{ route('processOrderStatus', ['id' => $order->customizeOrder->orderID]) }}" method="post"> 
                                         @csrf
-                                        <input type="hidden" value="{{ $order->customizeOrder->isSelectionOrder }}" name="isSelectionOrder">
+                                        <input type="hidden" value="2" name="isSelectionOrder">
                                         
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn badge-outline-success" name="action" value="process">Process</button>
-                                            <button type="submit" class="btn badge-outline-danger cancel-button" name="action" value="cancel">Cancel Order</button>
+                                            <button type="submit" class="btn badge-outline-success process-button" name="action" value="Process">Process</button>
+                                            <button type="submit" class="btn badge-outline-danger cancel-button" name="action" value="Cancel">Cancel Order</button>
 
                                         </div>
                                     </form>
@@ -304,11 +304,22 @@
   <script>
     document.querySelectorAll(".cancel-button").forEach(function(button) {
     button.addEventListener("click", function (event) {
-        if (!confirm("Are you sure you want to cancel this order? The item is already paid, please notify the customer for a possible refund.")) {
+        if (!confirm("Are you sure you want to cancel this order? The item is already paid, and the customer may be eligible for a refund. Please notify the customer of this possibility.")) {
             event.preventDefault(); // Prevent the form submission if the user cancels
         }
     });
-});
+    });
+
+  </script>
+
+  <script>
+    document.querySelectorAll(".process-button").forEach(function(button) {
+    button.addEventListener("click", function (event) {
+        if (!confirm("Are you sure you want to mark the order as processing? The order must be in the process of being processed before you can mark it as such.")) {
+            event.preventDefault(); // Prevent the form submission if the user cancels
+        }
+    });
+    });
 
   </script>
 

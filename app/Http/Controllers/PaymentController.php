@@ -185,6 +185,8 @@ class PaymentController extends Controller
         
         $name = 'Customize Cake Order ID - ' . $id;
 
+        $description = 'iBake Tiers of Joy - Order ID: ' . $id;
+
         // Initialize an array to store line items
         $lineItems = [];
 
@@ -223,7 +225,7 @@ class PaymentController extends Controller
                     'payment_method_types' => $paymentMethodTypes,
                     'success_url' => route('storeCustomOrder'),
                     'cancel_url' => route('cake-request.process', ['id' => $id]),
-                    'description' => 'iBake Tiers of Joy',
+                    'description' => $description,
                     'send_email_receipt' => true,
                 ],
             ],
@@ -249,6 +251,9 @@ class PaymentController extends Controller
     {
        //$sessionId = \Session::get('session_id');
        $sessionId = session('paymentSession_id');
+
+       //$sessionPaymentIntentId = 'pi_VAHEjoNVGkduhcNAYYKgCiBG';
+
        $sessionPaymentIntentId = session('paymentIntent_id');
        $sessionPaymentId = session('payment_id');
 

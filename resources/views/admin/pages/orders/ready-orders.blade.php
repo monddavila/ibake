@@ -123,11 +123,11 @@
                                               
                                       <form action="{{ route('processOrderStatus', ['id' => $order->order_id]) }}" method="post"> 
                                           @csrf
-                                          <input type="hidden" value="{{ $order->order_id }}" name="isSelectionOrder">
+                                          <input type="hidden" value="1" name="isSelectionOrder">
                                           
                                           <div class="modal-footer">
                                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                              <button type="submit" class="btn badge-outline-success ready-button" name="action" value="ready">Complete Order</button>
+                                              <button type="submit" class="btn badge-outline-success ready-button" name="action" value="Complete">Complete Order</button>
 
                                           </div>
                                       </form>
@@ -260,11 +260,11 @@
                                     @endif
                                     <form action="{{ route('processOrderStatus', ['id' => $order->customizeOrder->orderID]) }}" method="post"> 
                                         @csrf
-                                        <input type="hidden" value="{{ $order->customizeOrder->isSelectionOrder }}" name="isSelectionOrder">
+                                        <input type="hidden" value="2" name="isSelectionOrder">
                                         
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn badge-outline-success ready-button" name="action" value="ready">Complete Order</button>
+                                            <button type="submit" class="btn badge-outline-success ready-button" name="action" value="Complete">Complete Order</button>
 
                                         </div>
                                     </form>
@@ -298,7 +298,7 @@
   <script>
     document.querySelectorAll(".ready-button").forEach(function(button) {
     button.addEventListener("click", function (event) {
-        if (!confirm("Are you sure you want to update the order status to ready for pick-up or delivery?")) {
+        if (!confirm("Mark order as completed? Order must be delivered or picked up.")) {
             event.preventDefault(); // Prevent the form submission if the user cancels
         }
     });

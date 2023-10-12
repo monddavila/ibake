@@ -213,35 +213,97 @@ class AdminController extends Controller
     }
   }
 
+  public function updateOrderStatus(Request $request, $id)
+  {
+    //Retrieve order status
+    $orderStatusSession = session('action_order_status');
+    $orderStatus=null;
+
+    if ($orderStatusSession == 'Process') {
+          $orderStatus='Processing';
+    }elseif ($orderStatusSession == 'Cancel') {
+          $orderStatus='Cancelled';
+    }elseif ($orderStatusSession == 'Ready') {
+          $orderStatus='On Delivery';
+    }elseif ($orderStatusSession == 'Complete') {
+      $orderStatus='Completed';
+    }elseif ($orderStatusSession == 'Reconsider') {
+      $orderStatus='Pending'; 
+    }
+
+
+    //isSelectionOrder => 1 = Shop Order 2 = Custom Cake Order
+    
+    if ($request->input('isSelectionOrder') == 1) { 
+      $update = DB::table('orders')
+                    ->where('orders.order_id', $id)
+                    ->update([
+                              'updated_at' => now(),
+                              'order_status' => $orderStatus,
+                              
+                    ]);
+    }elseif ($request->input('isSelectionOrder') == 2) {
+      $update = DB::table('customize_order_details')
+                    ->join('customize_orders', 'customize_order_details.customOrder_id', '=', 'customize_orders.id')
+                    ->where('customize_orders.orderID', $id)
+                    ->update([
+                        'customize_order_details.updated_at' => now(),
+                        'customize_order_details.order_status' => $orderStatus,
+                    ]);
+    }
+      if($orderStatus == 'Processing'){
+        return redirect(route('activeOrders'));
+      }elseif ($orderStatus == 'Cancelled'){
+        return redirect(route('cancelledOrders'));
+      }elseif ($orderStatus == 'On Delivery'){
+
+        //ADD CODE FOR EMAIL SENDING TO CUSTOMER "Order Status"
+
+        return redirect(route('readyOrders'));
+      }elseif ($orderStatus == 'Completed'){
+        return redirect(route('completedOrders'));
+      }elseif ($orderStatus == 'Pending'){
+        return redirect(route('activeOrders'));
+      }
+    
+  }
+
   public function processOrderStatus(Request $request, $id)
   {
-    // Retrieve the action (approve or reject)
+    // Retrieve the actions
     $action = $request->input('action');
 
-    // Rest of your logic...
+    
+         //Active Orders Section
+    if ($action == 'Process') {
+        $action_order_status = $action;
+        session(['action_order_status' => $action_order_status]);
+        return $this->updateOrderStatus($request, $id);
 
-    if ($action == 'process') {
-        //return $this->__updateCustomerOrders($request, $id);
-        return 'Process';
-      } elseif ($action == 'cancel') {
-        //return $this->__updateCustomerRejectOrders($request, $id);
-        return 'cancel';
-      } elseif ($action == 'another_action') {
-          // Handle another action here
-          return 'Another Action';
-      } elseif ($action == 'yet_another_action') {
-          // Handle yet another action here
-          return 'Yet Another Action';
-      } elseif ($action == 'yet_another_action') {
-          // Handle yet another action here
-          return 'Yet Another Action';
-      } elseif ($action == 'yet_another_action') {
-          // Handle yet another action here
-          return 'Yet Another Action';
-      } elseif ($action == 'yet_another_action') {
-          // Handle yet another action here
-          return 'Yet Another Action';
-    }
+      } elseif ($action == 'Cancel') {
+        $action_order_status = $action;
+        session(['action_order_status' => $action_order_status]);
+        return $this->updateOrderStatus($request, $id);
+
+         //Ongoing Orders Section
+      } elseif ($action == 'Ready') {
+        $action_order_status = $action;
+        session(['action_order_status' => $action_order_status]);
+        return $this->updateOrderStatus($request, $id);
+
+          //Delivery Orders Section
+      } elseif ($action == 'Complete') {
+        $action_order_status = $action;
+        session(['action_order_status' => $action_order_status]);
+        return $this->updateOrderStatus($request, $id);
+
+          //Cancelled Orders Section
+      } elseif ($action == 'Reconsider') {
+        $action_order_status = $action;
+        session(['action_order_status' => $action_order_status]);
+        return $this->updateOrderStatus($request, $id);
+      }
+    
   }
 
 }

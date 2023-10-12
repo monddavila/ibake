@@ -132,8 +132,8 @@
                                       
                                       <div class="modal-footer">
                                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                          <button type="submit" class="btn badge-outline-success" name="action" value="approve">Approved</button>
-                                          <button type="submit" class="btn badge-outline-danger" name="action" value="reject">Reject</button>
+                                          <button type="submit" class="btn badge-outline-success approve-button" name="action" value="approve">Approved</button>
+                                          <button type="submit" class="btn badge-outline-danger cancel-button" name="action" value="reject">Reject</button>
                                       </div>
                                   </form>
                                 </div>
@@ -156,6 +156,26 @@
   </div>
 
   <!-- plugins:js -->
+  <script>
+    document.querySelectorAll(".cancel-button").forEach(function(button) {
+    button.addEventListener("click", function (event) {
+        if (!confirm("Are you sure you want to reject this order? The order will be declined.")) {
+            event.preventDefault(); 
+        }
+    });
+    });
+  </script>
+
+<script>
+    document.querySelectorAll(".approve-button").forEach(function(button) {
+    button.addEventListener("click", function (event) {
+        if (!confirm("Are you sure you want to approve this order? Order will be transferred to active order queue list.")) {
+            event.preventDefault(); 
+        }
+    });
+    });
+  </script>
+
   @include('admin.partials.script')
 
 </body>

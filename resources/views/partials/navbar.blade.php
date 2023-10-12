@@ -48,13 +48,13 @@
                     <li><a href="{{ route('shop') }}">Shop</a></li>
                     <li><a href="{{ route('showCart') }}">Cart</a></li>
                     <li><a href="{{ route('checkout') }}">Checkout</a></li>
-                    <li><a href="login.html">My account</a></li>
+                    <?php if (Auth::user()->role_id == 2): ?>
+                    <li><a href="{{ route('customer') }}">My account</a></li>
+                    <?php endif ?>
                   </ul>
                   @endauth
                 </li>
-                @auth
-                <li class="{{ currentNav('/track') }}"><a href="{{ route('track') }}">Track Order</a></li>
-                @endauth
+                <li class="{{ route('track') }}"><a href="{{ route('track') }}">Track Order</a></li>
                 <li class="{{ currentNav('/contact') || currentNav('/faqs') }}
                                       dropdown">
                   <a href="{{ route('contact') }}">Contact</a>
