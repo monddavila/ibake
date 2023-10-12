@@ -41,7 +41,8 @@ class CustomizeOrderDetail extends Model
 
     public function customizeOrder()
     {
-    return $this->belongsTo(CustomizeOrder::class, 'customOrder_id');
+    return $this->belongsTo(CustomizeOrder::class, 'customOrder_id', 'id');
     }
+
 
 }

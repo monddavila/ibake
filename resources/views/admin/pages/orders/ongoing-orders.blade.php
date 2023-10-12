@@ -123,11 +123,11 @@
                                               
                                       <form action="{{ route('processOrderStatus', ['id' => $order->order_id]) }}" method="post"> 
                                           @csrf
-                                          <input type="hidden" value="{{ $order->order_id }}" name="isSelectionOrder">
+                                          <input type="hidden" value="1" name="isSelectionOrder">
                                           
                                           <div class="modal-footer">
                                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                              <button type="submit" class="btn badge-outline-success ready-button" name="action" value="ready">Order Ready</button>
+                                              <button type="submit" class="btn badge-outline-success ready-button" name="action" value="Ready">Order Ready</button>
 
                                           </div>
                                       </form>
@@ -260,11 +260,11 @@
                                     @endif
                                     <form action="{{ route('processOrderStatus', ['id' => $order->customizeOrder->orderID]) }}" method="post"> 
                                         @csrf
-                                        <input type="hidden" value="{{ $order->customizeOrder->isSelectionOrder }}" name="isSelectionOrder">
+                                        <input type="hidden" value="2" name="isSelectionOrder">
                                         
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn badge-outline-success ready-button" name="action" value="ready">Order Ready</button>
+                                            <button type="submit" class="btn badge-outline-success ready-button" name="action" value="Ready">Order Ready</button>
 
                                         </div>
                                     </form>
@@ -298,7 +298,7 @@
   <script>
     document.querySelectorAll(".ready-button").forEach(function(button) {
     button.addEventListener("click", function (event) {
-        if (!confirm("Are you sure you want to update the order status to ready for pick-up or delivery?")) {
+        if (!confirm("Warning: Marking the order as ready for pick-up or delivery will notify the customer that their order is ready. Make sure the order is ready before proceeding. Proceed?")) {
             event.preventDefault(); // Prevent the form submission if the user cancels
         }
     });

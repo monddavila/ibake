@@ -45,7 +45,7 @@
                       @if ($completedOrders->isEmpty())
                           <tr>
                               <td colspan="11" class="text-center">
-                                  <div class="order-info">No Completed Orders Available</div>
+                                  <div class="order-info">No Shop Order History Available</div>
                               </td>
                           </tr>
                       @else
@@ -178,7 +178,7 @@
                       @if ($completedCustomOrders->isEmpty())
                           <tr>
                               <td colspan="11" class="text-center">
-                                  <div class="order-info">No Completed Orders Available</div>
+                                  <div class="order-info">No Custom Cake Order History Available</div>
                               </td>
                           </tr>
                       @else

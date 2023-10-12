@@ -46,7 +46,7 @@
                       @if ($activeOrders->isEmpty())
                           <tr>
                               <td colspan="11" class="text-center">
-                                  <div class="order-info">No Orders Available</div>
+                                  <div class="order-info">No Active Shop Orders Available</div>
                               </td>
                           </tr>
                       @else
@@ -183,7 +183,7 @@
                       @if ($activeCustomOrders->isEmpty())
                           <tr>
                               <td colspan="11" class="text-center">
-                                  <div class="order-info">No Orders Available</div>
+                                  <div class="order-info">No Active Custom Cake Orders Available</div>
                               </td>
                           </tr>
                       @else

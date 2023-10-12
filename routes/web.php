@@ -44,7 +44,11 @@ Route::get('/chef', [HomeController::class, 'chef'])->name('chef');
 Route::get('/customize', [HomeController::class, 'customize'])->name('customize');
 Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
 Route::get('/faqs', [HomeController::class, 'faqs'])->name('faqs');
-Route::get('/track', [HomeController::class, 'track'])->name('track');
+
+Route::get('/track-order', [HomeController::class, 'track'])->name('track');
+Route::post('/track-order', [HomeController::class, 'trackOrderId'])->name('trackOrderId');
+
+
 Route::get('/redirect', [HomeController::class, 'redirect'])->name('redirect');
 
 Route::get('/gallery', [GalleryController::class, 'gallery'])->name('gallery');
@@ -60,7 +64,7 @@ Route::post('/contact', [EmailController::class, 'sendEmail'])->name('send.email
  * Admin Panel Pages
  * Users Section
  **/
-Route::group(['prefix' => 'user'], function () {
+Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
   Route::get('/list', [AdminController::class, 'viewUsers'])->name('user.list');
   /*Display create user form*/
   Route::get('/add', [AdminController::class, 'showAddUsersForm'])->name('user.form');
@@ -78,7 +82,7 @@ Route::group(['prefix' => 'user'], function () {
 /**
  * Products Section in Admin Dashboard
  */
-Route::group(['prefix' => 'products'], function () {
+Route::group(['prefix' => 'products', 'middleware' => ['auth']], function () {
   Route::get('/list', [ProductsController::class, 'index'])->name('admin.viewProducts');
   Route::get('/add', [ProductsController::class, 'create'])->name('admin.viewAddProducts');
   Route::post('/add', [ProductsController::class, 'store'])->name('admin.addProducts');
@@ -102,9 +106,9 @@ Route::group(['prefix' => 'products'], function () {
  * Customer side
  */
 Route::group(['prefix' => 'customer'], function () {
-  Route::get('/', [CustomerController::class, 'index'])->name('customer');
-  Route::get('active-orders', [CustomerController::class, 'customerActiveOrders'])->name('customerActiveOrder');
-  Route::get('order-history', [CustomerController::class, 'customerCompletedOrders'])->name('customerCompletedOrder');
+  Route::middleware(['auth']) ->get('/', [CustomerController::class, 'index'])->name('customer');
+  Route::middleware(['auth']) ->get('active-orders', [CustomerController::class, 'customerActiveOrders'])->name('customerActiveOrder');
+  Route::middleware(['auth']) ->get('order-history', [CustomerController::class, 'customerCompletedOrders'])->name('customerCompletedOrder');
 });
 
 
@@ -120,21 +124,21 @@ Route::group(['prefix' => 'shop'], function () {
 });
 
 Route::group(['prefix' => 'orders'], function () {
-  Route::get('/dashboard', [OrdersController::class, 'ordersDashboard']);
-  Route::get('/active', [OrdersController::class, 'activeOrders'])->name('activeOrders');
-  Route::get('/ongoing', [OrdersController::class, 'ongoingOrders'])->name('ongoingOrders');
-  Route::get('/ready', [OrdersController::class, 'readyOrders'])->name('readyOrders');
-  Route::get('/completed', [OrdersController::class, 'completedOrders'])->name('completedOrders');
-  Route::get('/cancelled', [OrdersController::class, 'cancelledOrders'])->name('cancelledOrders');
+  Route::middleware(['auth']) ->get('/dashboard', [OrdersController::class, 'ordersDashboard']);
+  Route::middleware(['auth']) ->get('/active', [OrdersController::class, 'activeOrders'])->name('activeOrders');
+  Route::middleware(['auth']) ->get('/ongoing', [OrdersController::class, 'ongoingOrders'])->name('ongoingOrders');
+  Route::middleware(['auth']) ->get('/ready', [OrdersController::class, 'readyOrders'])->name('readyOrders');
+  Route::middleware(['auth']) ->get('/completed', [OrdersController::class, 'completedOrders'])->name('completedOrders');
+  Route::middleware(['auth']) ->get('/cancelled', [OrdersController::class, 'cancelledOrders'])->name('cancelledOrders');
 
 
   /*Customize Approving Section*/
-  Route::get('/customize-order-section', [AdminController::class, '__viewCustomOrders'])->name('customOrders');
-  Route::post('/process-order/{id}', [AdminController::class, 'processOrder'])->name('processOrder');
-  Route::post('/approval-order/{id}', [AdminController::class, '__updateCustomerOrders'])->name('approvalOrder');
-  Route::post('/reject-order/{id}', [AdminController::class, '__updateCustomerRejectOrders'])->name('rejectOrder');
+  Route::middleware(['auth']) ->get('/customize-order-section', [AdminController::class, '__viewCustomOrders'])->name('customOrders');
+  Route::middleware(['auth']) ->post('/process-order/{id}', [AdminController::class, 'processOrder'])->name('processOrder');
+  Route::middleware(['auth']) ->post('/approval-order/{id}', [AdminController::class, '__updateCustomerOrders'])->name('approvalOrder');
+  Route::middleware(['auth']) ->post('/reject-order/{id}', [AdminController::class, '__updateCustomerRejectOrders'])->name('rejectOrder');
 
-  Route::post('/update-status/{id}', [AdminController::class, 'processOrderStatus'])->name('processOrderStatus');
+  Route::middleware(['auth']) ->post('/update-status/{id}', [AdminController::class, 'processOrderStatus'])->name('processOrderStatus');
   
 });
 
@@ -217,8 +221,8 @@ Route::middleware([
 /**
  * Payment Gateway - Payment controller
  */
-Route::get('pay',[PaymentController::class,'pay'])->name('pay');
-Route::get('success',[PaymentController::class,'success']);
+Route::middleware(['auth']) ->get('pay',[PaymentController::class,'pay'])->name('pay');
+Route::middleware(['auth']) ->get('success',[PaymentController::class,'success']);
 
 Route::get('link-pay',[PaymentController::class,'linkPay']);
 Route::get('link-status/{linkid}',[PaymentController::class,'linkStatus']);
@@ -228,9 +232,9 @@ Route::get('refund',[PaymentController::class,'refund']);
 Route::get('refund-status/{id}',[PaymentController::class,'refundStatus']);
 
 
-Route::post('place-order',[PaymentController::class,'placeOrder'])->name('placeOrder');
-Route::post('place-custom-order/{id}',[PaymentController::class,'placeCustomOrder'])->name('placeCustomOrder');
-Route::get('pay-custom-order/{id}', [PaymentController::class, 'custom_pay'])->name('custompay');
+Route::middleware(['auth']) ->post('place-order',[PaymentController::class,'placeOrder'])->name('placeOrder');
+Route::middleware(['auth']) ->post('place-custom-order/{id}',[PaymentController::class,'placeCustomOrder'])->name('placeCustomOrder');
+Route::middleware(['auth']) ->get('pay-custom-order/{id}', [PaymentController::class, 'custom_pay'])->name('custompay');
 /**
  * SMS Gateway - SMS controller
  */

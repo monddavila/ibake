@@ -28,7 +28,7 @@
                     <tr>
                       <td>
                           <?php if ($value->orderStatus == 1): ?>
-                            <div class="badge badge-outline-warning">Pending</div>
+                            <div class="badge badge-outline-warning">Awaiting Approval</div>
                           <?php elseif($value->orderStatus == 2): ?>
                             <form action="{{ route('cake-request.process', ['id' => $value->orderID]) }}" method="post"> 
                               @csrf
