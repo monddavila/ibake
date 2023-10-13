@@ -93,6 +93,7 @@ class HomeController extends Controller
       ->select('customize_order_details.*')
       ->get();
   
+      request()->session()->forget('track_orderId');
 
 
       if ($orderDetails->isEmpty() && $customizeOrderDetails->isEmpty()) {
@@ -100,7 +101,6 @@ class HomeController extends Controller
       }
 
         return view('pages.track')->with([
-          'orderId' => $orderId,
           'error' => $error, 
           'orderDetails' => $orderDetails, 
           'customizeOrderDetails' => $customizeOrderDetails,
@@ -114,20 +114,21 @@ class HomeController extends Controller
   public function redirect()
   {
     if (!Auth::check()) {
-      return view('home');
+        return view('home');
     }
 
-    return Auth::user()->role_id == '1' ? view('admin.home') : view('home');
+    $userRole = Auth::user()->role_id;
 
-    /* $usertype = Auth::user()->role_id;
-    // Admin Account
-    if ($usertype == '1') {
-      return view('admin.home');
+    switch ($userRole) {
+        case 1:
+            return view('admin.home');
+        case 2:
+            return view('home');
+        case 3:
+            return view('home');//to be updated
+        default:
+            return view('home');
     }
-
-    // Other Accounts - will include guest, manager and bakers separately
-    else {
-      return view('home');
-    } */
   }
+
 }

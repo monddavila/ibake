@@ -77,6 +77,8 @@
                 <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn">Dashboard</a>
               <?php elseif(Auth::user()->role_id == 2): ?>
                 <a href="{{ route('customer') }}" style="margin-right:10px;" class="theme-btn auth-btn">Dashboard</a>
+              <?php elseif(Auth::user()->role_id == 3): ?>
+                <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn">Dashboard</a>
               <?php endif ?>
               {{-- Logout only works in a form --}}
               <form method="POST" action="{{ route('logout') }}">

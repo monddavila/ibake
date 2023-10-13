@@ -205,204 +205,161 @@ class OrdersController extends Controller
    */
   function activeOrders(Request $request)
   {
+    // Active Shop Orders
+    $activeOrders = Order::where('order_status', 'Pending')
+        ->with('orderItems.product');
 
-  
-      $activeOrders = Order::where('order_status', '=', 'Pending')
-        ->with('orderItems.product'); // Eager load the related OrderItem;
+    if (isset($request->sort_by)) {
+        $activeOrders = $activeOrders->orderBy($request->sort_by, 'ASC');
+    }
 
-      if(isset($request->sort_by)){
-        $activeOrders = $activeOrders->orderBy($request->sort_by,'ASC');
-      }
+    $activeOrders = $activeOrders->paginate(10); // Adjust the number of items per page
 
-      $activeOrders = $activeOrders->get()
-        ->map(function ($order) {
-        $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
-        return $order;
-      });
+    // Active Custom Cake Orders
+    $activeCustomOrders = CustomizeOrderDetail::where('order_status', 'Pending');
 
+    if (isset($request->sort_by)) {
+        $activeCustomOrders = $activeCustomOrders->orderBy($request->sort_by, 'ASC');
+    }
 
-      $activeCustomOrders = CustomizeOrderDetail::where('order_status', '=', 'Pending');
-      
-      if(isset($request->sort_by)){
-        $activeCustomOrders = $activeCustomOrders->orderBy($request->sort_by,'ASC');
-      }
-      
-      $activeCustomOrders = $activeCustomOrders->get()
-        ->map(function ($order) {
-          $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
-          return $order;
-        });
-
-      $orderDetails = CustomizeOrderDetail::where('order_status', 'Pending')
-      ->with('CustomizeOrder') // Eager load the related CustomizeOrder
-      ->get();
-
+    $activeCustomOrders = $activeCustomOrders->paginate(10); // Adjust the number of items per page
 
     return view('admin.pages.orders.active-orders')->with([
-      'activeOrders' => $activeOrders, 
-      'activeCustomOrders' => $activeCustomOrders,
-      'orderDetails' => $orderDetails,
+        'activeOrders' => $activeOrders,
+        'activeCustomOrders' => $activeCustomOrders,
     ]);
   }
 
   function ongoingOrders(Request $request)
-  {
-    $ongoingOrders = Order::where('order_status', '=', 'Processing')
-        ->with('orderItems.product'); // Eager load the related OrderItem;
+{
+    // Ongoing Shop Orders
+    $ongoingOrders = Order::where('order_status', 'Processing')
+        ->with('orderItems.product');
 
-      if(isset($request->sort_by)){
-        $ongoingOrders = $ongoingOrders->orderBy($request->sort_by,'ASC');
-      }
+    if (isset($request->sort_by)) {
+        $ongoingOrders = $ongoingOrders->orderBy($request->sort_by, 'ASC');
+    }
 
-      $ongoingOrders = $ongoingOrders->get()
-        ->map(function ($order) {
-        $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
-        return $order;
-      });
+    $ongoingOrders = $ongoingOrders->paginate(10); // Adjust the number of items per page
 
+    // Ongoing Custom Cake Orders
+    $ongoingCustomOrders = CustomizeOrderDetail::where('order_status', 'Processing');
 
-      $ongoingCustomOrders = CustomizeOrderDetail::where('order_status', '=', 'Processing');
-      
-      if(isset($request->sort_by)){
-        $ongoingCustomOrders = $ongoingCustomOrders->orderBy($request->sort_by,'ASC');
-      }
-      
-      $ongoingCustomOrders = $ongoingCustomOrders->get()
-        ->map(function ($order) {
-          $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
-          return $order;
-        });
+    if (isset($request->sort_by)) {
+        $ongoingCustomOrders = $ongoingCustomOrders->orderBy($request->sort_by, 'ASC');
+    }
+
+    $ongoingCustomOrders = $ongoingCustomOrders->paginate(0); // Adjust the number of items per page
 
     $orderDetails = CustomizeOrderDetail::where('order_status', 'Processing')
-      ->with('CustomizeOrder') // Eager load the related CustomizeOrder
-      ->get();
+        ->with('CustomizeOrder')
+        ->get();
 
     return view('admin.pages.orders.ongoing-orders')->with([
-      'ongoingOrders' => $ongoingOrders,
-      'ongoingCustomOrders' => $ongoingCustomOrders,
-      'orderDetails' => $orderDetails,
+        'ongoingOrders' => $ongoingOrders,
+        'ongoingCustomOrders' => $ongoingCustomOrders,
+        'orderDetails' => $orderDetails,
     ]);
-  }
+}
 
-  function completedOrders(Request $request)
+
+function completedOrders(Request $request)
   {
-    $completedOrders = Order::where('order_status', '=', 'Completed')
-        ->with('orderItems.product'); // Eager load the related OrderItem;
+    // Completed Shop Orders
+    $completedOrders = Order::where('order_status', 'Completed')
+        ->with('orderItems.product');
 
-      if(isset($request->sort_by)){
-        $completedOrders = $completedOrders->orderBy($request->sort_by,'ASC');
-      }
+    if (isset($request->sort_by)) {
+        $completedOrders = $completedOrders->orderBy($request->sort_by, 'ASC');
+    }
 
-      $completedOrders = $completedOrders->get()
-        ->map(function ($order) {
-        $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
-        return $order;
-      });
+    $completedOrders = $completedOrders->paginate(1); // Adjust the number of items per page
 
+    // Completed Custom Cake Orders
+    $completedCustomOrders = CustomizeOrderDetail::where('order_status', 'Completed');
 
-      $completedCustomOrders = CustomizeOrderDetail::where('order_status', '=', 'Completed');
-      
-      if(isset($request->sort_by)){
-        $completedCustomOrders = $completedCustomOrders->orderBy($request->sort_by,'ASC');
-      }
-      
-      $completedCustomOrders = $completedCustomOrders->get()
-        ->map(function ($order) {
-          $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
-          return $order;
-        });
+    if (isset($request->sort_by)) {
+        $completedCustomOrders = $completedCustomOrders->orderBy($request->sort_by, 'ASC');
+    }
+
+    $completedCustomOrders = $completedCustomOrders->paginate(1); // Adjust the number of items per page
 
     $orderDetails = CustomizeOrderDetail::where('order_status', 'Completed')
-      ->with('CustomizeOrder') // Eager load the related CustomizeOrder
-      ->get();
+        ->with('CustomizeOrder')
+        ->get();
 
     return view('admin.pages.orders.completed-orders')->with([
-      'completedOrders' => $completedOrders,
-      'completedCustomOrders' => $completedCustomOrders,
-      'orderDetails' => $orderDetails,
+        'completedOrders' => $completedOrders,
+        'completedCustomOrders' => $completedCustomOrders,
+        'orderDetails' => $orderDetails,
     ]);
   }
+
 
 
   function readyOrders(Request $request)
   {
-    $readyOrders = Order::where('order_status', '=', 'On Delivery')
-        ->with('orderItems.product'); // Eager load the related OrderItem;
+    // Ready Shop Orders
+    $readyOrders = Order::where('order_status', 'On Delivery')
+        ->with('orderItems.product');
 
-      if(isset($request->sort_by)){
-        $completedOrders = $readyOrders->orderBy($request->sort_by,'ASC');
-      }
+    if (isset($request->sort_by)) {
+        $readyOrders = $readyOrders->orderBy($request->sort_by, 'ASC');
+    }
 
-      $readyOrders = $readyOrders->get()
-        ->map(function ($order) {
-        $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
-        return $order;
-      });
+    $readyOrders = $readyOrders->paginate(10); // Adjust the number of items per page
 
+    // Ready Custom Cake Orders
+    $readyCustomOrders = CustomizeOrderDetail::where('order_status', 'On Delivery');
 
-      $readyCustomOrders = CustomizeOrderDetail::where('order_status', '=', 'On Delivery');
-      
-      if(isset($request->sort_by)){
-        $readyCustomOrders = $readyCustomOrders->orderBy($request->sort_by,'ASC');
-      }
-      
-      $readyCustomOrders = $readyCustomOrders->get()
-        ->map(function ($order) {
-          $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
-          return $order;
-        });
+    if (isset($request->sort_by)) {
+        $readyCustomOrders = $readyCustomOrders->orderBy($request->sort_by, 'ASC');
+    }
+
+    $readyCustomOrders = $readyCustomOrders->paginate(10); // Adjust the number of items per page
 
     $orderDetails = CustomizeOrderDetail::where('order_status', 'Completed')
-      ->with('CustomizeOrder') // Eager load the related CustomizeOrder
-      ->get();
+        ->with('CustomizeOrder')
+        ->get();
 
     return view('admin.pages.orders.ready-orders')->with([
-      'readyOrders' => $readyOrders,
-      'readyCustomOrders' => $readyCustomOrders,
-      'orderDetails' => $orderDetails,
+        'readyOrders' => $readyOrders,
+        'readyCustomOrders' => $readyCustomOrders,
+        'orderDetails' => $orderDetails,
     ]);
   }
 
   function cancelledOrders(Request $request)
   {
+    // Cancelled Shop Orders
+    $cancelledOrders = Order::where('order_status', 'Cancelled')
+        ->with('orderItems.product');
 
-    $cancelledOrders = Order::where('order_status', '=', 'Cancelled')
-        ->with('orderItems.product'); // Eager load the related OrderItem;
+    if (isset($request->sort_by)) {
+        $cancelledOrders = $cancelledOrders->orderBy($request->sort_by, 'DESC');
+    }
 
-      if(isset($request->sort_by)){
-        $cancelledOrders = $cancelledOrders->orderBy($request->sort_by,'DESC');
-      }
+    $cancelledOrders = $cancelledOrders->paginate(10); // Adjust the number of items per page
 
-      $cancelledOrders = $cancelledOrders->get()
-        ->map(function ($order) {
-        $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
-        return $order;
-      });
+    // Cancelled Custom Cake Orders
+    $cancelledCustomOrders = CustomizeOrderDetail::where('order_status', 'Cancelled');
 
+    if (isset($request->sort_by)) {
+        $cancelledCustomOrders = $cancelledCustomOrders->orderBy($request->sort_by, 'DESC');
+    }
 
-      $cancelledCustomOrders = CustomizeOrderDetail::where('order_status', '=', 'Cancelled');
-      
-      if(isset($request->sort_by)){
-        $cancelledCustomOrders = $cancelledCustomOrders->orderBy($request->sort_by,'DESC');
-      }
-      
-      $cancelledCustomOrders = $cancelledCustomOrders->get()
-        ->map(function ($order) {
-          $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
-          return $order;
-        });
+    $cancelledCustomOrders = $cancelledCustomOrders->paginate(10); // Adjust the number of items per page
 
     $orderDetails = CustomizeOrderDetail::where('order_status', 'Completed')
-      ->with('CustomizeOrder') // Eager load the related CustomizeOrder
-      ->get();
+        ->with('CustomizeOrder')
+        ->get();
 
     return view('admin.pages.orders.cancelled-orders')->with([
-      'cancelledOrders' => $cancelledOrders,
-      'cancelledCustomOrders' => $cancelledCustomOrders,
-      'orderDetails' => $orderDetails,
+        'cancelledOrders' => $cancelledOrders,
+        'cancelledCustomOrders' => $cancelledCustomOrders,
+        'orderDetails' => $orderDetails,
     ]);
   }
-
  
 
 

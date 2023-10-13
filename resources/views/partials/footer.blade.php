@@ -90,7 +90,7 @@
                             </svg>
                         </div>
 
-                        <!--Newslatter Form-->
+                        <!--Newsletter Form-->
                         <div class="newslatter-form">
                             <form method="post" action="#" id="subscribe-form">
                                 <div class="form-group">
@@ -138,7 +138,7 @@
         window.fbAsyncInit = function() {
             FB.init({
             xfbml            : true,
-            version          : 'v17.0'
+            version          : 'v18.0'
             });
         };
 

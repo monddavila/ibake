@@ -160,7 +160,7 @@ class AdminController extends Controller
     ->select('*')
     ->orderBy('orderStatus', 'asc')
     ->orderBy('created_at', 'desc')
-    ->get();
+    ->paginate(10);
 
     return view('admin.pages.orders.customize-orders', compact('orders'));
   }

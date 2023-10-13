@@ -64,7 +64,7 @@
                             </td>
                             <td>{{ $order->order_id }}</td>
                             <td>{{ $order->created_at->format('d M Y') }}</td>
-                            <td>{{ $order->delivery_date }}</td>
+                            <td>{{ \Carbon\Carbon::parse($order->delivery_date)->format('d M Y') }}</td>
                             <td>{{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</td>
                             <td>+63{{ $order->recipient_phone }}</td>
                             <td>
@@ -144,7 +144,8 @@
                       @endif 
                       </tbody>
                     </table>
-                  </div>
+                  </div> 
+                  {{ $activeOrders->links() }} <!-- Custom Cake Orders Pagination Links -->
                 </div>
               </div>
             </div>
@@ -194,7 +195,7 @@
                             </td>
                             <td>{{ $order->customizeOrder->orderID }}</td>
                             <td>{{ $order->created_at->format('d M Y') }}</td>
-                            <td>{{ $order->delivery_date }}</td>
+                            <td>{{ \Carbon\Carbon::parse($order->delivery_date)->format('d M Y') }}</td>
                             <td>{{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</td>
                             <td>+63{{ $order->recipient_phone }}</td>
                             <td>
@@ -285,6 +286,7 @@
                       </tbody>
                     </table>
                   </div>
+                  {{ $activeCustomOrders->links() }} <!-- Custom Cake Orders Pagination Links -->
                 </div>
               </div>
             </div>

@@ -24,7 +24,7 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Shop Orders</h4>
-                  <div class="table-responsive">
+                  <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
                     <table class="table" id="orders-table">
                       <thead>
                         <tr>
@@ -157,7 +157,7 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Custom Cake Orders</h4>
-                  <div class="table-responsive">
+                  <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
                     <table class="table" id="orders-table">
                       <thead>
                         <tr>
