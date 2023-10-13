@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomizeOrderDetail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Order;
+use App\Models\CustomizeOrder;
 use Carbon\Carbon;
+use App\Notifications\OrderStatusUpdated;
+use App\Notifications\OrderApproved;
+use App\Notifications\OrderRejected;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -166,6 +172,7 @@ class AdminController extends Controller
   }
   public function __updateCustomerOrders(Request $request, $id)
   {
+
     if ($request->input('isSelectionOrder') == 1) { 
       $update = DB::table('customize_orders')
                     ->where('customize_orders.orderID', $id)
@@ -184,9 +191,20 @@ class AdminController extends Controller
                               'orderStatus' => 2,
                     ]);
     }
+    //Sending Email if customize order request is apporved and ready for payment"
+  
+    $cusOrder = CustomizeOrder::where('orderID', $id)->first();
+    $orderId = $id;
+    $userId = $cusOrder->userID;
+    $user = User::find($userId); // Fetch the user by their ID
+    $cusname = ($user->firstname . " ". $user->lastname);
+
+    $user->notify(new OrderRejected($cusname, $cusOrder, $orderId));
 
     return redirect(route('customOrders'));
   }
+
+
   public function __updateCustomerRejectOrders(Request $request, $id)
   {
       $update = DB::table('customize_orders')
@@ -196,7 +214,20 @@ class AdminController extends Controller
                               'updated_at' => now(),
                               'orderStatus' => 3,
                     ]);
-      return redirect(route('customOrders'));
+
+    //Sending Email if customize order request is declined"
+  
+    $cusOrder = CustomizeOrder::where('orderID', $id)->first();
+    $orderId = $id;
+    $userId = $cusOrder->userID;
+    $user = User::find($userId); // Fetch the user by their ID
+    $cusname = ($user->firstname . " ". $user->lastname);
+
+    $user->notify(new OrderRejected($cusname, $cusOrder, $orderId));
+
+
+
+    return redirect(route('customOrders'));
   }
 
   public function processOrder(Request $request, $id)
@@ -215,6 +246,7 @@ class AdminController extends Controller
 
   public function updateOrderStatus(Request $request, $id)
   {
+
     //Retrieve order status
     $orderStatusSession = session('action_order_status');
     $orderStatus=null;
@@ -232,7 +264,7 @@ class AdminController extends Controller
     }
 
 
-    //isSelectionOrder => 1 = Shop Order 2 = Custom Cake Order
+    //isSelectionOrder => 1 = Shop Order 2 = Custom Cake Order//
     
     if ($request->input('isSelectionOrder') == 1) { 
       $update = DB::table('orders')
@@ -257,7 +289,24 @@ class AdminController extends Controller
         return redirect(route('cancelledOrders'));
       }elseif ($orderStatus == 'On Delivery'){
 
-        //ADD CODE FOR EMAIL SENDING TO CUSTOMER "Order Status"
+        //CODE BLOCK FOR EMAIL SENDING TO CUSTOMER if order is ready for pickup or on delivery"
+        $customOrder = DB::table('customize_order_details')
+        ->join('customize_orders', 'customize_order_details.customOrder_id', '=', 'customize_orders.id')
+        ->where('customize_orders.orderID', $id)
+        ->select('customize_order_details.*', 'customize_orders.*')
+        ->first();
+    
+        $order = Order::where('order_id', $id)->first();
+        $orderId = $id;
+    
+        if ($customOrder) {
+            $userId = $customOrder->user_id;
+        } else {
+            $userId = $order->user_id;
+        }
+    
+        $user = User::find($userId); // Fetch the user by their ID
+        $user->notify(new OrderStatusUpdated($order, $customOrder, $orderId));
 
         return redirect(route('readyOrders'));
       }elseif ($orderStatus == 'Completed'){
