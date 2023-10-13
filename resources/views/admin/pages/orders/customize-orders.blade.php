@@ -141,8 +141,12 @@
                             </div>
                           </div>
                         @endforeach
+                        
                       </tbody>
                     </table>
+                      <div class="pagination">
+                          {{ $orders->links() }}
+                      </div>
                   </div>
                 </div>
               </div>

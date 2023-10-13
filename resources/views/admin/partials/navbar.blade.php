@@ -11,13 +11,24 @@
 
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item dropdown d-none d-lg-block">
-        
-                <a href="{{ route('customOrders') }}" class="nav-link btn btn-primary create-new-button"><i class="fas fa-eye"></i>View Order Requests</a>
+                <a href="{{ route('customOrders') }}" class="nav-link btn btn-primary create-new-button">
+                    <i class="fas fa-eye"></i> View Order Requests
+                </a>
             </li>
+
             <li class="nav-item dropdown d-none d-lg-block">
-                
-                <a href="{{ route('admin.viewAddProducts') }}" class="nav-link btn btn-success create-new-button">+ Add New Product</a>
+                <a href="{{ route('admin.viewProducts') }}" class="nav-link btn btn-success create-new-button">
+                    <i class="fas fa-cogs"></i> Manage Products
+                </a>
             </li>
+
+            <li class="nav-item dropdown d-none d-lg-block">
+                <a href="{{ route('admin.viewAddProducts') }}" class="nav-link btn btn-warning create-new-button">
+                    <i class="fas fa-plus-circle"></i> Add New Product
+                </a>
+            </li>
+
+        
 
             <li class="nav-item nav-settings d-none d-lg-block">
                 <a class="nav-link" href="#">

@@ -55,7 +55,7 @@
 
                                 </div>
                             </div>
-                            <div class="table-responsive">
+                            <div class="table-responsive"  style="max-height: 600px; overflow-y: auto;">
                                 <table class="table">
                                     <thead>
                                         <tr>

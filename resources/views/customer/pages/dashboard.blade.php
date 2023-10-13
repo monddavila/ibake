@@ -5,7 +5,7 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Order Requests</h4>
-            <div class="table-responsive">
+            <div class="table-responsive" style="max-height: 700px; overflow-y: auto;">
               <table class="table" id="orders-table">
                 <thead>
                   <tr>
