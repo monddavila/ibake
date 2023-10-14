@@ -47,9 +47,8 @@
                   <ul>
                     <li><a href="{{ route('shop') }}">Shop</a></li>
                     <li><a href="{{ route('showCart') }}">Cart</a></li>
-                    <li><a href="{{ route('checkout') }}">Checkout</a></li>
                     <?php if (Auth::user()->role_id == 2): ?>
-                    <li><a href="{{ route('customer') }}">My account</a></li>
+                    <li><a href="{{ route('customer') }}">My Orders</a></li>
                     <?php endif ?>
                   </ul>
                   @endauth
@@ -74,11 +73,11 @@
               @auth
               <!-- Logged in -->
               <?php if (Auth::user()->role_id == 1): ?>
-                <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-dashboard" style="visibility: visible;"></i> Admin Panel</a>
+                <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-dashboard"></i> Admin Panel</a>
               <?php elseif(Auth::user()->role_id == 2): ?>
-                <a href="{{ route('customer') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-user" style="visibility: visible;"></i> My Account</a>
+                <a href="{{ route('customer') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-user"></i> My Account</a>
               <?php elseif(Auth::user()->role_id == 3): ?>
-                <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-dashboard" style="visibility: visible;"></i> Admin Panel</a>
+                <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-dashboard"></i> Admin Panel</a>
               <?php endif ?>
               {{-- Logout only works in a form --}}
               <form method="POST" action="{{ route('logout') }}">
