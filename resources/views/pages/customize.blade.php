@@ -443,7 +443,7 @@
                         <div class="column col-xl-6 col-lg-6 col-md-6 col-sm-12">
                             <div class="title">
                                 <div class="icon"><img src="images/icons/icon-devider-gray.png" alt=""></div>
-                                <h4>Upload Photo of your prefer Cake..</h4>
+                                <h4>Upload a photo of your desired cake!</h4>
                             </div>
                             <br>
                             <div class="inner-column">

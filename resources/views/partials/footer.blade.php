@@ -115,7 +115,7 @@
         <div class="auto-container">
             <div class="copyright-text">
                 <p> &copy; <?php echo date('Y'); ?> iBake "Tiers of Joy" - Captivating Cakes & other Sweet
-                    Necessities</p>
+                    Necessities <span><a href="{{route('terms')}}">Terms</a></span><span> | </span><span><a href="{{route('privacy')}}">Privacy</a></span></p>
             </div>
         </div>
     </div>

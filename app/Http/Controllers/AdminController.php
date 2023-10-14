@@ -95,6 +95,9 @@ class AdminController extends Controller
   {
           $user = User::find($id);
 
+          // Get the current timestamp
+           $currentTimestamp = now();
+
           $request->validate([
               'firstname' => 'required|string|max:255',
               'lastname' => 'required|string|max:255',
@@ -121,6 +124,7 @@ class AdminController extends Controller
           $user->role_id = $request->role_id;
           $user->phone = $request->phone;
           $user->address = $request->address;
+          $user->updated_at = $currentTimestamp;
 
           if (!empty($request->password)) {
               $user->password = Hash::make($request->password);

@@ -120,6 +120,9 @@ class ProductsController extends Controller
   {
     $product = Product::find($id);
 
+    // Get the current timestamp
+    $currentTimestamp = now();
+
     if (!$product) {
         return redirect()->route('admin.viewProducts')->with('error', 'Product not found.');
     }
@@ -140,6 +143,8 @@ class ProductsController extends Controller
     // Update is_available and is_featured based on checkbox values
     $product->availability = $request->has('is_available') ? 1 : 0;
     $product->isfeatured = $request->has('is_featured') ? 1 : 0;
+
+    $product->updated_at = $currentTimestamp;
 
     $product->save();
 
@@ -256,6 +261,10 @@ class ProductsController extends Controller
 
   public function updateCategories(Request $request)
   {
+
+    // Get the current timestamp
+    $currentTimestamp = now();
+
     $request->validate([
         'name' => 'required|string|max:50',
         'description' => 'required|string|max:100',
@@ -264,6 +273,7 @@ class ProductsController extends Controller
     $category = Category::findOrFail($request->id);
     $category->name = $request->name;
     $category->description = $request->description;
+    $category->updated_at = $currentTimestamp;
     $category->save();
 
     // Optionally, you can add a success message to the session

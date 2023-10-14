@@ -39,7 +39,7 @@
         <div class="default-links">
           <div class="message-box with-icon info">
             <div class="icon-box"><span class="icon fa fa-info"></span></div> Thank you for choosing iBake! We deliver to all areas within Nueva Vizcaya.
-            You can also pick up your order at our <a href="{{ route('faqs') }}">shop</a>. 
+            You can also pick up your order at our <a href="{{ route('faqs') }}" target="_blank">shop</a>. 
              <button class="close-btn"><span class="fa fa-times"></span></button>
           </div>
         </div>
@@ -247,7 +247,7 @@
                 <!--Payment Options-->
                 <div class="payment-options">
                     <div class="text">The shipping fee is not included in the total price. 
-                      You will pay the shipping fee when you receive your order. For more information, please see our <a href="#">Terms & Conditions.</a></div><br>
+                      You will pay the shipping fee when you receive your order. For more information, please see our <a href="{{route('terms')}}" target="_blank">Terms & Services.</a></div><br>
                   <ul>
                     <li>
                       <div class="radio-option">
@@ -278,7 +278,7 @@
 
                   </ul>
                   <div class="text">Your personal data will be used to process your order, support your experience
-                    throughout this website, and for other purposes described in our <a href="#">privacy policy.</a></div>
+                    throughout this website, and for other purposes described in our <a href="{{ route('privacy') }}" target="_blank">Privacy policy.</a></div>
                 </div>
               </div>
               <div class="lower-box">

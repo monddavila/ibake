@@ -74,21 +74,21 @@
               @auth
               <!-- Logged in -->
               <?php if (Auth::user()->role_id == 1): ?>
-                <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn">Dashboard</a>
+                <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-dashboard" style="visibility: visible;"></i> Admin Panel</a>
               <?php elseif(Auth::user()->role_id == 2): ?>
-                <a href="{{ route('customer') }}" style="margin-right:10px;" class="theme-btn auth-btn">Dashboard</a>
+                <a href="{{ route('customer') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-user" style="visibility: visible;"></i> My Account</a>
               <?php elseif(Auth::user()->role_id == 3): ?>
-                <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn">Dashboard</a>
+                <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-dashboard" style="visibility: visible;"></i> Admin Panel</a>
               <?php endif ?>
               {{-- Logout only works in a form --}}
               <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button class="theme-btn auth-btn" type="submit">Logout</button>
+                <button class="theme-btn auth-btn" type="submit"><i class="fa fa-sign-out"></i> Logout</button>
               </form>
               @else
               <!-- Not Logged in -->
-              <a href="{{ route('login') }}" style="margin-right:10px;" class="theme-btn auth-btn">Log in</a>
-              <a href="{{ route('register') }}" class="theme-btn auth-btn">Register</a>
+              <a href="{{ route('login') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-sign-in"></i> Log in</a>
+              <a href="{{ route('register') }}" class="theme-btn auth-btn"><i class="fa fa-user-plus"></i> Register</a>
               @endauth
               
           <!-- Login/Register End-->
