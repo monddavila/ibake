@@ -37,9 +37,9 @@
       <div class="auto-container">
         <!--Default Links-->
         <div class="default-links">
-          <div class="message-box with-icon info">
-            <div class="icon-box"><span class="icon fa fa-info"></span></div> Thank you for choosing iBake! We deliver to all areas within Nueva Vizcaya.
-             You can also pick up your order at our <a href="{{ route('faqs') }}" target="_blank">shop</a>. 
+          <div class="message-box with-icon warning">
+            <div class="icon-box"><span class="icon fa fa-warning"></span></div> Thank you for choosing iBake! Please note that we only deliver to all areas within Nueva Vizcaya.
+             <br>You can also pick up your order at our <a href="{{ route('faqs') }}" target="_blank">shop</a>. 
              <button class="close-btn"><span class="fa fa-times"></span></button>
           </div>
         </div>
