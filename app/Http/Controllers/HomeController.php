@@ -59,6 +59,16 @@ class HomeController extends Controller
     return view('pages.faqs');
   }
 
+  function privacy()
+  {
+    return view('pages.privacy');
+  }
+
+  function terms()
+  {
+    return view('pages.terms');
+  }
+
   function track()
   {
 

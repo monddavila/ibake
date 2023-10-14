@@ -44,6 +44,8 @@ Route::get('/chef', [HomeController::class, 'chef'])->name('chef');
 Route::get('/customize', [HomeController::class, 'customize'])->name('customize');
 Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
 Route::get('/faqs', [HomeController::class, 'faqs'])->name('faqs');
+Route::get('/privacy-policy', [HomeController::class, 'privacy'])->name('privacy');
+Route::get('/terms-of-service', [HomeController::class, 'terms'])->name('terms');
 
 Route::get('/track-order', [HomeController::class, 'track'])->name('track');
 Route::post('/track-order', [HomeController::class, 'trackOrderId'])->name('trackOrderId');
@@ -56,7 +58,7 @@ Route::get('/portfolio', [GalleryController::class, 'portfolio'])->name('portfol
 
 //Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
-Route::get('/contact', [EmailController::class, 'create'])->name('contact');
+Route::get('/contact-us', [EmailController::class, 'create'])->name('contact');
 Route::post('/contact', [EmailController::class, 'sendEmail'])->name('send.email');
 
 

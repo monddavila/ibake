@@ -54,6 +54,7 @@
           <option value="date" {{ session('sort-order')=='date' ? 'selected' : '' }}>
             Sort by newness
           </option> --}}
+          
           <!--Content Side-->
           <div class="content-side col-lg-9 col-md-12 col-sm-12">
             <div class="our-shop">

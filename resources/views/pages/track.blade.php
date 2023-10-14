@@ -38,7 +38,8 @@
                     <div class="divider"><img src="images/icons/divider_1.png" alt=""></div>
                     <h2>Track your order and stay informed</h2>
                     <div class="text">
-                        Enter your Order ID in the search bar below to track the status of your order. Once you click the "Track" button, you will be able to see the scheduled delivery date and time of your order. Tracking your order helps you stay up-to-date on its status and receive notifications if there are any delays or changes. If you have any questions, please feel free to contact us.
+                        Enter your Order ID in the search bar below to track the status of your order. Once you click the "Track" button, you will be able to see the scheduled delivery date and time of your order. Tracking your order helps you stay up-to-date on its status. <br>If you have any questions, please feel free to contact us
+                        or visit your account <a href="{{ route('customer') }}">profile</a> to see more details.
                     </div>
                 </div>
 
