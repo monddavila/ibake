@@ -95,9 +95,9 @@
                 <div class="form-group clearfix">
                   <input type="text" name="coupon-code" value="" placeholder="Coupon Code">
                 </div>
-                <div class="form-group clearfix">
+                  {{--<div class="form-group clearfix">
                   <button type="button" class="theme-btn coupon-btn">Apply Coupon</button>
-                </div>
+                </div>--}}
               </div>
             </div>
 

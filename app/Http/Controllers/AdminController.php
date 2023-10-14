@@ -199,7 +199,7 @@ class AdminController extends Controller
     $user = User::find($userId); // Fetch the user by their ID
     $cusname = ($user->firstname . " ". $user->lastname);
 
-    $user->notify(new OrderRejected($cusname, $cusOrder, $orderId));
+    $user->notify(new OrderApproved($cusname, $cusOrder, $orderId));
 
     return redirect(route('customOrders'));
   }

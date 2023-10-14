@@ -41,7 +41,15 @@
         
 
             <div class="auto-container">
-                <div class="sec-title text-center">
+                <div class="sec-title text-center" style="margin-top: 20px;">
+                    <!--Default Links-->
+                    <div class="default-links">
+                    <div class="message-box with-icon info">
+                        <div class="icon-box"><span class="icon fa fa-info"></span></div> Thank you for choosing iBake! We deliver to all areas within Nueva Vizcaya.
+                        You can also pick up your order at our <a href="{{ route('faqs') }}">shop</a>. 
+                        <button class="close-btn"><span class="fa fa-times"></span></button>
+                    </div>
+                    </div>
                     <div class="divider"><img src="images/icons/divider_1.png" alt=""></div>
                     <h2>Make your own Cake with Us</h2>
                     <div class="text">
