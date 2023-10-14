@@ -36,12 +36,13 @@
     <section class="checkout-page">
       <div class="auto-container">
         <!--Default Links-->
-        {{-- <div class="default-links">
+        <div class="default-links">
           <div class="message-box with-icon info">
-            <div class="icon-box"><span class="icon fa fa-info"></span></div> Have a coupon? <a href="#">Click here to
-              enter your code</a>
+            <div class="icon-box"><span class="icon fa fa-info"></span></div> Thank you for choosing iBake! We deliver to all areas within Nueva Vizcaya.
+             You can also pick up your order at our <a href="{{ route('faqs') }}">shop</a>. 
+             <button class="close-btn"><span class="fa fa-times"></span></button>
           </div>
-        </div> --}}
+        </div>
 
         <!--Checkout Details-->
         <div class="checkout-form-container">
@@ -73,19 +74,38 @@
                                         @enderror
                   </div>
 
-                  <!--Form Group-->
+                  <!-- Form Group -->
                   <div class="form-group">
-                    <div class="field-label">Town / City <sup>*</sup></div>
-                    <input type="text" name="town" value="" placeholder="">
-                                        @error('town')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                      <div class="field-label">Town / City <sup>*</sup></div>
+                      <select name="town">
+                          <option value="" disabled selected>Select</option>
+                          <option value="Alfonso Castañeda">Alfonso Castañeda</option>
+                          <option value="Ambaguio">Ambaguio</option>
+                          <option value="Aritao">Aritao</option>
+                          <option value="Bambang">Bambang</option>
+                          <option value="Bayombong">Bayombong</option>
+                          <option value="Diadi">Diadi</option>
+                          <option value="	Dupax del Norte">	Dupax del Norte</option>
+                          <option value="	Dupax del Sur">	Dupax del Sur</option>
+                          <option value="Kasibu">Kasibu</option>
+                          <option value="Kayapa">Kayapa</option>
+                          <option value="Quezon">Quezon</option>
+                          <option value="Santa Fe">Santa Fe</option>
+                          <option value="Solano">Solano</option>
+                          <option value="Villaverde">Villaverde</option>
+
+                          <!-- Add more options as needed -->
+                      </select>
+                                      @error('town')
+                                      <div class="text-danger">{{ $message }}</div>
+                                      @enderror
                   </div>
+
 
                   <!--Form Group-->
                   <div class="form-group">
-                    <div class="field-label">Province <sup>*</sup></div>
-                    <input type="text" name="province" value="" placeholder="">
+                    <div class="field-label">Province </div>
+                    <input type="text" name="province" value="Nueva Vizcaya" placeholder="" readonly>
                                         @error('province')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -93,7 +113,7 @@
 
                   <!--Form Group-->
                   <div class="form-group">
-                    <div class="field-label">Postcode/ ZIP <sup>*</sup></div>
+                    <div class="field-label">Postcode/ ZIP </div>
                     <input type="text" name="postcode" value="" placeholder="">
                                         @error('postcode')
                                         <div class="text-danger">{{ $message }}</div>

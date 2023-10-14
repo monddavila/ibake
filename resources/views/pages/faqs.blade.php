@@ -46,9 +46,9 @@
                     <ul class="accordion-box">
 
                         <!--Block-->
-                        <li class="accordion block">
-                            <div class="acc-btn"><div class="icon-outer"><span class="icon fa fa-plus"></span> </div>Where is your shop located?</div>
-                            <div class="acc-content">
+                        <li class="accordion block active-block">
+                            <div class="acc-btn active"><div class="icon-outer"><span class="icon fa fa-plus"></span> </div>Where is your shop located?</div>
+                            <div class="acc-content current">
                                 <div class="content">
                                     <div class="text">You can place orders online, but you can still visit our physical store at 35 National Road, Brgy. Sta. Rosa, Bayombong, Nueva Vizcaya, 3700. For your convenience, here's a link to our location on Google Maps: <a href='https://goo.gl/maps/XtUzXry1pdDA2wmc6' target='_blank' style='color: black;'>Click here for directions</a>
 .</div>
@@ -57,9 +57,9 @@
                         </li>
 
                         <!--Block-->
-                        <li class="accordion block active-block">
-                            <div class="acc-btn active"><div class="icon-outer"><span class="icon fa fa-plus"></span> </div>What services does iBake offer?</div>
-                            <div class="acc-content current">
+                        <li class="accordion block">
+                            <div class="acc-btn"><div class="icon-outer"><span class="icon fa fa-plus"></span> </div>What services does iBake offer?</div>
+                            <div class="acc-content">
                                 <div class="content">
                                     <div class="text">iBake offers a variety of products including pastries, tub cakes, cake pops, cupcakes, cookies, desserts, custom cakes, occasion cakes, wedding cakes, small cakes, and customize cake.</div>
                                 </div>

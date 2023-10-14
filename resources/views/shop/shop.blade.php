@@ -36,6 +36,14 @@
     <div class="sidebar-page-container">
       <div class="auto-container">
         <div class="row clearfix">
+                    <!--Default Links-->
+                    <div class="default-links">
+                    <div class="message-box with-icon info">
+                        <div class="icon-box"><span class="icon fa fa-info"></span></div> Thank you for choosing iBake! We deliver to all areas within Nueva Vizcaya.
+                        You can also pick up your order at our <a href="{{ route('faqs') }}">shop</a>. 
+                        <button class="close-btn"><span class="fa fa-times"></span></button>
+                    </div>
+                    </div>
 
           {{-- <option value="popularity" {{ session('sort-order')=='popularity' ? 'selected' : '' }}>
             Sort by popularity

@@ -163,7 +163,7 @@
   <script>
     document.querySelectorAll(".cancel-button").forEach(function(button) {
     button.addEventListener("click", function (event) {
-        if (!confirm("Are you sure you want to reject this order? The order will be declined.")) {
+        if (!confirm("Are you sure you want to reject this order? The order will be declined and the customer will be notified.")) {
             event.preventDefault(); 
         }
     });
@@ -173,7 +173,7 @@
 <script>
     document.querySelectorAll(".approve-button").forEach(function(button) {
     button.addEventListener("click", function (event) {
-        if (!confirm("Are you sure you want to approve this order? Order will be transferred to active order queue list.")) {
+        if (!confirm("Are you sure you want to approve this order? Order will be transferred to active order queue list and the customer will be notified.")) {
             event.preventDefault(); 
         }
     });
