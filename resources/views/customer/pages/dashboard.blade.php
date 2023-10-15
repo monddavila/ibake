@@ -43,14 +43,14 @@
                       </td>
                       <td><a href="" type="button" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID  }}">{{ $value->orderID  }}</a></td>
                       <td>
-                          {{ $value->created_at ? \Carbon\Carbon::parse($value->created_at)->format('d M Y') : 'N/A' }}
+                          {{ $value->created_at ? \Carbon\Carbon::parse($value->created_at)->format('d M Y') : '-' }}
                       </td>
                       <td>
-                          {{ $value->created_at ? \Carbon\Carbon::parse($value->updated_at)->format('d M Y') : 'N/A' }}
+                          {{ $value->created_at ? \Carbon\Carbon::parse($value->updated_at)->format('d M Y') : '-' }}
                       </td>
                       <td>
                                 @if (!empty($value->cakeOrderImage))
-                                    <a href="{{ asset($value->cakeOrderImage) }}" target="_blank" class="btn btn-light"><i class="fas fa-eye"></i>View Image</a>
+                                    <a href="{{ asset($value->cakeOrderImage) }}" target="_blank" class="btn btn-secondary"><i class="fas fa-eye"></i>View Image</a>
                                 @else
                                     -
                                 @endif
@@ -140,11 +140,10 @@
     </div>
   </div>
   <!-- content-wrapper ends -->
-  <!-- partial:partials/_footer.html -->
   <footer class="footer">
     <div class="d-sm-flex justify-content-center justify-content-sm-between">
       <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © iBake Tiers of Joy
-        2023</span>
+      <?php echo date('Y');  ?><a href="{{route('terms')}}"> Terms</a> | <a href="{{route('privacy')}}">Privacy</a></span>
     </div>
   </footer>
   <!-- partial -->
