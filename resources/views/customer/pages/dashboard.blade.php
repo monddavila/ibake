@@ -11,8 +11,9 @@
                   <tr>
                     <th> Status </th>
                     <th> Order No. </th>
-                    <th> Request Date </th>
-                    <th> Image </th>
+                    <th> Date Requested</th>
+                    <th> Request Reviewed </th>
+                    <th> Uploaded Image </th>
                     <th> Price </th>
                   </tr>
                 </thead>
@@ -45,13 +46,22 @@
                           {{ $value->created_at ? \Carbon\Carbon::parse($value->created_at)->format('d M Y') : 'N/A' }}
                       </td>
                       <td>
-                        @if($value->isSelectionOrder == 2)
-                          <a href="{{ asset($value->cakeOrderImage)  }}">{{ $value->cakeOrderImage  }}</a>
-                        @elseif($value->isSelectionOrder == 1)
-                          -
-                        @endif
+                          {{ $value->created_at ? \Carbon\Carbon::parse($value->updated_at)->format('d M Y') : 'N/A' }}
                       </td>
-                      <td>&#8369; {{ number_format($value->cakePrice, 2) }}</td>
+                      <td>
+                                @if (!empty($value->cakeOrderImage))
+                                    <a href="{{ asset($value->cakeOrderImage) }}" target="_blank" class="btn btn-light">View Image</a>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td>
+                                @if (!empty($value->cakePrice) && !is_null($value->cakePrice))
+                                    &#8369; {{ number_format($value->cakePrice, 2) }}
+                                @else
+                                    -
+                                @endif
+                            </td>
                     </tr>
                     <div class="modal fade" id="staticBackdrop{{ $value->orderID  }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog">

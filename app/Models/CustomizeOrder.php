@@ -25,5 +25,10 @@ class CustomizeOrder extends Model
                                 'orderStatus'
                         ];
 
+    public function user()
+    {
+    return $this->belongsTo(User::class, 'userID');
+    }
+
  
 }

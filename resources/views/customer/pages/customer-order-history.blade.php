@@ -29,12 +29,12 @@
                       <thead>
                         <tr>
                           <th></th>
-                          <th> Recepient Name </th>
                           <th> Order ID </th>
                           <th> Order Date</th>
                           <th> <a href="{{ route('customerCompletedOrder') }}?sort_by=delivery_date">Delivery Date</a></th>
                           <th> Delivery Time </th>
-                          <th> Recepient Phone </th>
+                          <th> Recipient Name </th>
+                          <th> Recipient Phone </th>
                           <th> Delivery Address </th>
                           <th> Shipping Method </th>
                           <th> Delivery Notes </th>
@@ -57,13 +57,13 @@
                               <button class="btn btn-md btn-inverse-success order-details-btn">View
                                 Order</button>
                             </td>
-                            <td>
-                              <span class="ps-2">{{ $order->recipient_name }}</span>
-                            </td>
                             <td>{{ $order->order_id }}</td>
                             <td>{{ $order->created_at->format('d M Y') }}</td>
                             <td>{{ $order->delivery_date }}</td>
                             <td>{{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</td>
+                            <td>
+                              <span class="ps-2">{{ $order->recipient_name }}</span>
+                            </td>
                             <td>+63{{ $order->recipient_phone }}</td>
                             <td>
                                 <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->delivery_address }}</textarea>
@@ -162,12 +162,12 @@
                       <thead>
                         <tr>
                           <th></th>
-                          <th> Recepient Name </th>
                           <th> Order ID </th>
                           <th> Order Date</th>
                           <th> <a href="{{ route('customerCompletedOrder') }}?sort_by=delivery_date">Delivery Date</a></th>
                           <th> Delivery Time </th>
-                          <th> Recepient Phone </th>
+                          <th> Recipient Name </th>
+                          <th> Recipient Phone </th>
                           <th> Delivery Address </th>
                           <th> Shipping Method </th>
                           <th> Delivery Notes </th>
@@ -190,13 +190,13 @@
                               <button class="btn btn-md btn-inverse-success order-details-btn">View
                                 Order</button>
                             </td>
-                            <td>
-                              <span class="ps-2">{{ $order->recipient_name }}</span>
-                            </td>
                             <td>{{ $order->customizeOrder->orderID }}</td>
                             <td>{{ $order->created_at->format('d M Y') }}</td>
                             <td>{{ $order->delivery_date }}</td>
                             <td>{{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</td>
+                            <td>
+                              <span class="ps-2">{{ $order->recipient_name }}</span>
+                            </td>
                             <td>+63{{ $order->recipient_phone }}</td>
                             <td>
                                 <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->delivery_address }}</textarea>
