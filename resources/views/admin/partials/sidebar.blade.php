@@ -103,10 +103,10 @@
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"><a class="nav-link" href="{{ route('customOrders') }}">Customize Cake Requests</a></li>
           <li class="nav-item">
-              <a class="nav-link" href="{{ route('activeOrders') }}" style="color: orange;">Active Orders</a>
+              <a class="nav-link" href="{{ route('activeOrders') }}" style="color: orange;">Pending Orders</a>
           </li>
           <li class="nav-item"><a class="nav-link" href="{{ route('ongoingOrders') }}">In Progress Orders</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ route('readyOrders') }}">For Dispatch Orders</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('readyOrders') }}">Dispatched Orders</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('completedOrders') }}">Completed Orders</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('cancelledOrders') }}">Cancelled Orders</a></li>
         </ul>

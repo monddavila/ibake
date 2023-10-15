@@ -35,9 +35,9 @@ class ShopController extends Controller
 
    public function index(Request $request)
    {
-       $products = Product::where('availability', 1)
-       //->get();
-       ->paginate(9);
+
+       $products = Product::paginate(9);
+
        // Fetch unique category IDs
        $productTags = Product::select('category_id')->distinct()->get();
    

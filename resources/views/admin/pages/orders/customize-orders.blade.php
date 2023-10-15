@@ -70,7 +70,9 @@
                             <td>{{ $value->user->phone }}</td>
                             <td>
                                 @if (!empty($value->cakeOrderImage))
-                                    <a href="{{ asset($value->cakeOrderImage) }}" target="_blank" class="btn btn-light">View Image</a>
+                                    <a href="{{ asset($value->cakeOrderImage) }}" target="_blank" class="btn btn-light">
+                                        <i class="fas fa-eye"></i> View Image
+                                    </a>
                                 @else
                                     -
                                 @endif

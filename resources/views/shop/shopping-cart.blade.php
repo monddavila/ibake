@@ -34,6 +34,14 @@
     <!--Cart Section-->
     <section class="cart-section">
       <div class="auto-container">
+      @if($errors->has('cart'))
+          <div class="alert alert-danger alert-dismissible fade show">
+              {{ $errors->first('cart') }}
+              <button type="button" class="close" data-dismiss="alert">
+                  <span>&times;</span>
+              </button>
+          </div>
+      @endif
         <!--Cart Outer-->
         <div class="cart-outer">
           <div class="table-outer">

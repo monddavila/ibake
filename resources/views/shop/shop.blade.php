@@ -35,6 +35,14 @@
     <!--Sidebar Page Container-->
     <div class="sidebar-page-container">
       <div class="auto-container">
+      @if($errors->has('cart'))
+          <div class="alert alert-danger alert-dismissible fade show">
+              {{ $errors->first('cart') }}
+              <button type="button" class="close" data-dismiss="alert">
+                  <span>&times;</span>
+              </button>
+          </div>
+      @endif
         <div class="row clearfix">
                     <!--Default Links-->
                     <div class="default-links">

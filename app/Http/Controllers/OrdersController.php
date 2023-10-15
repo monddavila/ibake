@@ -36,22 +36,28 @@ class OrdersController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function create()
-  {
-    //
+{
     $user = Auth::user();
     $cartItems = (new CartsController())->userCart();
+
+    if ($cartItems->isEmpty()) {
+        return redirect()->back()->withErrors(['cart' => 'Cannot proceed to checkout. There are no items in the cart.']);
+    }
+
     $totalPrice = 0;
     foreach ($cartItems as $cartItem) {
-      # code...
-      $totalPrice += ($cartItem->price * $cartItem->quantity);
+        $totalPrice += ($cartItem->price * $cartItem->quantity);
     }
 
     return view('checkout.checkout')->with([
-      'user' => $user,
-      'cartItems' => $cartItems,
-      'totalPrice' => $totalPrice
+        'user' => $user,
+        'cartItems' => $cartItems,
+        'totalPrice' => $totalPrice
     ]);
-  }
+}
+
+
+
 
   /**
    * Store a newly created resource in storage.
