@@ -56,6 +56,7 @@ class CustomizeController extends Controller
             'cakeMessage' => $request->input('cakeMessage'),
             'cakePrice' => $request->input('cakePrice'),
             'created_at' => now(),
+            'updated_at' => null,
             'orderStatus' => 1
         ]);
         return redirect('/customer');
@@ -82,6 +83,7 @@ class CustomizeController extends Controller
             'cakeMessage' => $request->input('cakeMessage'),
             'cakePrice' => null,
             'created_at' => now(),
+            'updated_at' => null,
             'orderStatus' => 1
         ]);
 
@@ -137,6 +139,7 @@ class CustomizeController extends Controller
       'payment_intent_id' => $paymentIntentId,
       'notes' => $orderNotes,
       'created_at' => now(),
+      
     ]);
 
     //update order status to "Processing" of customize_orders table

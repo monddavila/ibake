@@ -46,7 +46,7 @@
                           {{ $value->created_at ? \Carbon\Carbon::parse($value->created_at)->format('d M Y') : '-' }}
                       </td>
                       <td>
-                          {{ $value->created_at ? \Carbon\Carbon::parse($value->updated_at)->format('d M Y') : '-' }}
+                          {{ $value->updated_at ? \Carbon\Carbon::parse($value->updated_at)->format('d M Y') : '-' }}
                       </td>
                       <td>
                                 @if (!empty($value->cakeOrderImage))

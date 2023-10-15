@@ -9745,8 +9745,9 @@ textarea.is-invalid.tt-hint {
   @media (prefers-reduced-motion: reduce) {
     .btn, .fc button, .ajax-upload-dragdrop .ajax-file-upload, .swal2-modal .swal2-buttonswrapper .swal2-styled, .swal2-modal .swal2-buttonswrapper .swal2-styled.swal2-confirm, .swal2-modal .swal2-buttonswrapper .swal2-styled.swal2-cancel {
       transition: none; } }
+      /* button hover color - teammed */
   .btn:hover, .fc button:hover, .ajax-upload-dragdrop .ajax-file-upload:hover, .swal2-modal .swal2-buttonswrapper .swal2-styled:hover {
-    color: #ffffff; }
+    color: #000000; }
   .btn-check:focus + .btn, .fc .btn-check:focus + button, .ajax-upload-dragdrop .btn-check:focus + .ajax-file-upload, .swal2-modal .swal2-buttonswrapper .btn-check:focus + .swal2-styled, .btn:focus, .fc button:focus, .ajax-upload-dragdrop .ajax-file-upload:focus, .swal2-modal .swal2-buttonswrapper .swal2-styled:focus {
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); }
@@ -10005,10 +10006,10 @@ textarea.is-invalid.tt-hint {
   .btn-outline-primary:disabled, .btn-outline-primary.disabled {
     color: #0090e7;
     background-color: transparent; }
-
+/* action button color - teammed */
 .btn-outline-secondary, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-cancel {
-  color: #e4eaec;
-  border-color: #e4eaec; }
+  color: #0b2e3a;
+  border-color: #040708; }
   .btn-outline-secondary:hover, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-cancel:hover {
     color: #000;
     background-color: #e4eaec;
@@ -10019,7 +10020,7 @@ textarea.is-invalid.tt-hint {
   .btn-check:active + .btn-outline-secondary,
   .editable-container.editable-inline .editableform .control-group .editable-buttons .btn-check:active + .editable-cancel, .btn-outline-secondary:active, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-cancel:active, .btn-outline-secondary.active, .editable-container.editable-inline .editableform .control-group .editable-buttons .active.editable-cancel, .btn-outline-secondary.dropdown-toggle.show, .editable-container.editable-inline .editableform .control-group .editable-buttons .dropdown-toggle.show.editable-cancel {
     color: #000;
-    background-color: #e4eaec;
+    background-color: #767c7e;
     border-color: #e4eaec; }
     .btn-check:checked + .btn-outline-secondary:focus, .editable-container.editable-inline .editableform .control-group .editable-buttons .btn-check:checked + .editable-cancel:focus,
     .btn-check:active + .btn-outline-secondary:focus,
@@ -10721,7 +10722,7 @@ textarea.is-invalid.tt-hint {
   .nav-tabs .nav-link.active,
   .nav-tabs .nav-item.show .nav-link {
     color: #ffffff;
-    background-color: black;
+    background-color: rgb(250, 249, 249);
     border-color: #2c2e33 #2c2e33 black; }
   .nav-tabs .dropdown-menu {
     margin-top: -1px;
@@ -17313,7 +17314,8 @@ code {
   font-weight: normal;
   font-size: 0.875rem;
   padding: 0.625rem 0.6875rem;
-  background-color: #2A3038;
+  /* modal input box colore - teammed */
+  background-color: #999ead;
   border-radius: 2px;
   color: #ffffff; }
   .form-control:focus, .asColorPicker-input:focus, .dataTables_wrapper select:focus, .jsgrid .jsgrid-table .jsgrid-filter-row input:focus[type=text],
@@ -20620,7 +20622,8 @@ div.tagsinput {
         .sidebar .nav.sub-menu .nav-item:hover {
           background: transparent; }
     .sidebar .nav:not(.sub-menu) > .nav-item:hover:not(.nav-category):not(.account-dropdown) > .nav-link {
-      background: #0f1015;
+      /* bg color nav hover - teammed */
+      background: #dba39a;
       color: color(white); }
     .sidebar .nav .menu-items:nth-child(5n+1) .nav-link .menu-icon i {
       color: #0090e7; }
