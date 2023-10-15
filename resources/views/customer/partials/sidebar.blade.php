@@ -16,7 +16,7 @@
           <div class="profile-name">
 
             @if (auth()->check())
-            <h5 class="mb-0 font-weight-normal">{{ auth()->user()->firstname }}</h5>
+            <h5 class="mb-0 font-weight-normal">Hi {{ auth()->user()->firstname }} {{ auth()->user()->lastname }} !</h5>
             @endif
 
             <span>
@@ -33,6 +33,11 @@
               @else
               <p>Staff</p>
               @endif
+
+              <a href="{{ route('home') }}" class="btn btn-light">
+                  <i class="fas fa-home"></i> Return
+              </a>
+
             </span>
 
           </div>
@@ -80,7 +85,7 @@
       </div>
     </li>
     <li class="nav-item nav-category">
-      <span class="nav-link">Navigation</span>
+      <span class="nav-link">My Account</span>
     </li>
     <li class="nav-item menu-items">
       <a class="nav-link" href="#">

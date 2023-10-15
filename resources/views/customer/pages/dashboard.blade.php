@@ -41,7 +41,12 @@
                             <div class="badge badge-outline-info">Paid</div>
                           <?php endif ?>
                       </td>
-                      <td><a href="" type="button" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID  }}">{{ $value->orderID  }}</a></td>
+                      <td>
+    <a href="#" class="btn" style="text-decoration: none; color: grey ;" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID }}" onmouseover="this.style.color='red'" onmouseout="this.style.color='grey'">
+        {{ $value->orderID }}
+    </a>
+</td>
+
                       <td>
                           {{ $value->created_at ? \Carbon\Carbon::parse($value->created_at)->format('d M Y') : '-' }}
                       </td>
