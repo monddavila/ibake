@@ -2,6 +2,9 @@
 <div class="shop-item col-lg-4 col-md-6 col-sm-12">
   <div class="inner-box">
     <div class="image-box">
+      @if ($product->availability == 0)
+      <div class="unavailable-tag">Not available</div>
+      @endif
       <figure class="image"><a href="{{ route('item', $product->id) }}"><img src="{{ asset($product->image) }}" alt=""></a></figure>
       <div class="btn-box"><a href="{{ route('item', $product->id) }}">View Product</a></div>
     </div>

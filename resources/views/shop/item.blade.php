@@ -47,9 +47,11 @@
                 <div class="basic-details">
                   <div class="row clearfix">
                     <div class="image-column col-md-6 col-sm-12">
+                  
                       <figure class="image"><a href="{{ asset($product->image) }}" class="lightbox-image"
                           title="Image Caption Here"><img src="{{ asset($product->image) }}" alt=""><span
                             class="icon fa fa-search"></span></a></figure>
+                   
                     </div>
                     <div class="info-column col-md-6 col-sm-12">
                       <div class="details-header">
@@ -97,6 +99,9 @@
                           <input type="hidden" name="product_name" value="{{ $product->name }}">
                           <input type="hidden" name="product_price" value="{{ $product->price }}">
                           <input type="hidden" name="product_image" value="{{ $product->image }}">
+                         
+                          @if ($product->availability == 1)
+      
                           <div class="item-quantity">Quantity <input class="quantity" type="number" value="1"
                               name="qty"></div>
                           <div class="cart-msg-container pt-5">
@@ -104,6 +109,10 @@
                           <button type="submit" class="theme-btn add-to-cart"><span class="btn-title"
                               data-token="{{ csrf_token() }}">Add To
                               Cart</span></button>
+                          @else <p class="warning-button" style="color: red;">
+                                    <i class="fas fa-exclamation-circle"></i> Item Not Available
+                                </p>
+                          @endif
                         </form>
 
 
