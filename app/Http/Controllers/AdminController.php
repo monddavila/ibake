@@ -166,14 +166,16 @@ class AdminController extends Controller
 
   public function __viewCustomOrders()
   {
-    $orders = DB::table('customize_orders')
-    ->select('*')
-    ->orderBy('orderStatus', 'asc')
-    ->orderBy('created_at', 'desc')
-    ->paginate(10);
+    $orders = CustomizeOrder::with('user')
+        ->where('orderStatus', '!=', 4) // Exclude rows with orderStatus 4 or processing already
+        ->orderBy('orderStatus', 'asc')
+        ->orderBy('created_at', 'desc')
+        ->paginate(10);
 
     return view('admin.pages.orders.customize-orders', compact('orders'));
   }
+
+
   public function __updateCustomerOrders(Request $request, $id)
   {
 

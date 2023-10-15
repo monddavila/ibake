@@ -29,7 +29,10 @@
                           <th> Action </th>
                           <th> Order No. </th>
                           <th> Request Date </th>
-                          <th> Image </th>
+                          <th> Date Needed </th>
+                          <th> Requestor </th>
+                          <th> Phone No. </th>
+                          <th> Uploaded Sample </th>
                           <th> Message </th>
                           <th> Price </th>
                         </tr>
@@ -60,17 +63,28 @@
                                 @endif
                             </td>
                             <td>
-                                {{ $value->created_at ? \Carbon\Carbon::parse($value->created_at)->format('d M Y') : 'N/A' }}
+                                {{ $value->created_at ? \Carbon\Carbon::parse($value->created_at)->format('d M Y') : '-' }}
+                            </td>
+                            <td>date needed</td>
+                            <td>{{ $value->user->firstname }} {{ $value->user->lastname }}</td>
+                            <td>{{ $value->user->phone }}</td>
+                            <td>
+                                @if (!empty($value->cakeOrderImage))
+                                    <a href="{{ asset($value->cakeOrderImage) }}" target="_blank" class="btn btn-light">View Image</a>
+                                @else
+                                    -
+                                @endif
                             </td>
                             <td>
-                              @if(!empty($value->cakeOrderImage))
-                                <a href="{{ asset($value->cakeOrderImage)  }}">{{ $value->cakeOrderImage  }}</a>
-                              @else
-                                -
-                              @endif
+                                <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $value->cakeMessage  }}</textarea>
                             </td>
-                            <td>{{ $value->cakeMessage  }}</td>
-                            <td> &#8369; {{ number_format($value->cakePrice, 2) }}</td>
+                            <td>
+                                @if (!empty($value->cakePrice) && !is_null($value->cakePrice))
+                                    &#8369; {{ number_format($value->cakePrice, 2) }}
+                                @else
+                                    -
+                                @endif
+                            </td>
                           </tr>
                           <!-- Modal -->
                           <div class="modal fade" id="staticBackdrop{{ $value->orderID  }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

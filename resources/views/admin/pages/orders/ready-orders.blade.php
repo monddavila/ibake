@@ -29,12 +29,13 @@
                       <thead>
                         <tr>
                           <th></th>
-                          <th> Recepient Name </th>
                           <th> Order ID </th>
                           <th> Order Date</th>
+                          <th> Order Prepared</th>
                           <th> <a href="{{ route('readyOrders') }}?sort_by=delivery_date">Delivery Date</a></th>
                           <th> Delivery Time </th>
-                          <th> Recepient Phone </th>
+                          <th> Recipient Name </th>
+                          <th> Recipient Phone </th>
                           <th> Delivery Address </th>
                           <th> Shipping Method </th>
                           <th> Delivery Notes </th>
@@ -57,13 +58,14 @@
                               <button class="btn btn-md btn-inverse-success order-details-btn">Manage
                                 Order</button>
                             </td>
+                            <td>{{ $order->order_id }}</td>
+                            <td>{{ $order->created_at->format('d M Y') }}</td>
+                            <td>{{ $order->updated_at->format('d M Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($order->delivery_date)->format('d M Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</td>
                             <td>
                               <span class="ps-2">{{ $order->recipient_name }}</span>
                             </td>
-                            <td>{{ $order->order_id }}</td>
-                            <td>{{ $order->created_at->format('d M Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($order->delivery_date)->format('d M Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</td>
                             <td>+63{{ $order->recipient_phone }}</td>
                             <td>
                                 <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->delivery_address }}</textarea>
@@ -157,12 +159,13 @@
                       <thead>
                         <tr>
                           <th></th>
-                          <th> Recepient Name </th>
                           <th> Order ID </th>
                           <th> Order Date</th>
+                          <th> Order Prepared</th>
                           <th> <a href="{{ route('readyOrders') }}?sort_by=delivery_date">Delivery Date</a></th>
                           <th> Delivery Time </th>
-                          <th> Recepient Phone </th>
+                          <th> Recipient Name </th>
+                          <th> Recipient Phone </th>
                           <th> Delivery Address </th>
                           <th> Shipping Method </th>
                           <th> Delivery Notes </th>
@@ -185,13 +188,14 @@
                               <button class="btn btn-md btn-inverse-success order-details-btn">Manage
                                 Order</button>
                             </td>
+                            <td>{{ $order->customizeOrder->orderID }}</td>
+                            <td>{{ $order->created_at->format('d M Y') }}</td>
+                            <td>{{ $order->updated_at->format('d M Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($order->delivery_date)->format('d M Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</td>
                             <td>
                               <span class="ps-2">{{ $order->recipient_name }}</span>
                             </td>
-                            <td>{{ $order->customizeOrder->orderID }}</td>
-                            <td>{{ $order->created_at->format('d M Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($order->delivery_date)->format('d M Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</td>
                             <td>+63{{ $order->recipient_phone }}</td>
                             <td>
                                 <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->delivery_address }}</textarea>
@@ -300,7 +304,7 @@
   <script>
     document.querySelectorAll(".ready-button").forEach(function(button) {
     button.addEventListener("click", function (event) {
-        if (!confirm("Mark order as completed? Order must be delivered or picked up.")) {
+        if (!confirm("Mark order as completed? Order must be delivered or picked up already.")) {
             event.preventDefault(); // Prevent the form submission if the user cancels
         }
     });
