@@ -55,12 +55,14 @@
                                 @if ($value->orderStatus == 4)
                                     <!-- Common content when the condition is met -->
                                     <span>{{ $value->orderID }}</span>
-                                @else
-                                    <!-- Content for the modal when the condition is not met -->
-                                    <a href="#" style="text-decoration: none; color: yellow;" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID }}">
-                                        {{ $value->orderID }}
-                                    </a>
-                                @endif
+                                    @else
+                                        <!-- Content for the modal when the condition is not met -->
+                                        <a href="#" style="text-decoration: none; color: brown; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID }}" onmouseover="this.style.color='red'" onmouseout="this.style.color='brown'">
+                                            {{ $value->orderID }}
+                                        </a>
+                                    @endif
+
+
                             </td>
                             <td>
                                 {{ $value->created_at ? \Carbon\Carbon::parse($value->created_at)->format('d M Y') : '-' }}
@@ -70,7 +72,7 @@
                             <td>{{ $value->user->phone }}</td>
                             <td>
                                 @if (!empty($value->cakeOrderImage))
-                                    <a href="{{ asset($value->cakeOrderImage) }}" target="_blank" class="btn btn-light">
+                                    <a href="{{ asset($value->cakeOrderImage) }}" target="_blank" class="btn btn-secondary">
                                         <i class="fas fa-eye"></i> View Image
                                     </a>
                                 @else
