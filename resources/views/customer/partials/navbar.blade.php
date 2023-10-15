@@ -10,6 +10,14 @@
         </button>
 
         <ul class="navbar-nav navbar-nav-right">
+
+             <li class="nav-item dropdown d-none d-lg-block">
+                <a href="{{ route('home') }}" class="nav-link btn btn-primary create-new-button">
+                    <i class="fas fa-home"></i> Home
+                </a>
+            </li>
+
+
             <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-bs-toggle="dropdown">
                     <div class="navbar-profile">

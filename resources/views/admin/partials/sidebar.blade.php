@@ -33,6 +33,11 @@
               @else
               <p>Staff</p>
               @endif
+
+              <a href="{{ route('home') }}" class="btn btn-light">
+                  <i class="fas fa-home"></i> Return
+              </a>
+              
             </span>
 
           </div>
