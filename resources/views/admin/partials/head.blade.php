@@ -17,7 +17,8 @@
 <!-- inject:css -->
 <!-- endinject -->
 <!-- Layout styles -->
-<link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}?v=2"><!--implemented cache busting/ -->
+
 <!-- End layout styles -->
 <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.png') }}" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
