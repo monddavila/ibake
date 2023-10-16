@@ -143,9 +143,9 @@
                                       
                                       @if($value->isSelectionOrder == 2)
                                       <label>Enter Details/Remarks</label>
-                                      <textarea class="form-control" name="invoice_details" rows="10" spellcheck="false" style="color:white;" required></textarea><br>
+                                      <textarea class="form-control" name="invoice_details" rows="10" spellcheck="false" required></textarea><br>
                                       <label>Enter Price (Enter 0 for rejected order)</label>
-                                      <input type="number" class="form-control" name="cakePrice" style="color:white;" required>
+                                      <input type="number" class="form-control" name="cakePrice" required>
                                       @endif
                                       
                                       <div class="modal-footer">

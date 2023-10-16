@@ -61,7 +61,7 @@ class LoginController extends Controller
    * Customers will be redirected to the homepage later in the development.
    * 
    */
-  public function redirect()
+  /*public function redirect()
   {
     if (
       !empty(Auth::user()) && Auth::user()->usertype == 1
@@ -69,7 +69,7 @@ class LoginController extends Controller
       return view('admin.home');
     }
     return redirect(route('home'));
-  }
+  }*/
 
   /**
    * User log in method
@@ -80,13 +80,16 @@ class LoginController extends Controller
     $request->session()->invalidate();
     $request->session()->regenerateToken();
 
-    return redirect(route('home'));
+    return redirect(route('login'));
   }
 
-  public function create()
+  public function switchUser()
   {
-    return view('auth.register');
+    dd('test');
+      Auth::logout();
+      return redirect()->route('login');
   }
+
 
   /**
    *  Store a newly created user in storage.

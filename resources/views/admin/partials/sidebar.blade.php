@@ -106,7 +106,7 @@
       </a>
       <div class="collapse" id="orders">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="{{ route('customOrders') }}">Customize Cake Requests</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('customOrders') }}">Custom Cake Requests</a></li>
           <li class="nav-item">
               <a class="nav-link" href="{{ route('activeOrders') }}" style="color: orange;">Pending Orders</a>
           </li>
