@@ -96,14 +96,14 @@
       </a>
     </li>
     <li class="nav-item menu-items">
-  <a class="nav-link" href="#orders" aria-expanded="true" aria-controls="orders">
+  <a class="nav-link" href="#orders" data-bs-toggle="collapse" aria-expanded="false" aria-controls="orders">
     <span class="menu-icon">
       <i class="mdi mdi-basket"></i>
     </span>
     <span class="menu-title">Orders</span>
     <i class="menu-arrow"></i>
   </a>
-  <div id="orders">
+  <div class="collapse" id="orders">
     <ul class="nav flex-column sub-menu">
       <li class="nav-item"><a class="nav-link" href="{{ route('customer') }}">Customize Cake Requests</a></li>
       <li class="nav-item"><a class="nav-link" href="{{ route('customerActiveOrder') }}">Active Orders</a></li>
