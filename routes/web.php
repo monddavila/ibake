@@ -205,6 +205,7 @@ Route::middleware(['auth'])
  */
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/switch-user', [LoginController::class, 'switchUser'])->name('switch')->middleware('auth');
 Route::get('/register', [LoginController::class, 'create'])->name('register')->withoutMiddleware('auth');
 // For storing new account to database
 Route::post('/register', [LoginController::class, 'store'])->name('register.store');

@@ -8995,8 +8995,9 @@ progress {
   .jsgrid .jsgrid-table .jsgrid-filter-row select:focus, .jsgrid .jsgrid-table .jsgrid-filter-row input:focus[type=number], .select2-container--default .select2-selection--single:focus, .select2-container--default .select2-selection--single .select2-search__field:focus, .typeahead:focus,
   .tt-query:focus,
   .tt-hint:focus {
-    color: #212529;
-    background-color: #fff;
+    /* text color inside textarea in form -teamed*/
+    color: #ffffff;
+    background-color: #ffffff;
     border-color: #86b7fe;
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); }
@@ -17314,15 +17315,17 @@ code {
   font-weight: normal;
   font-size: 0.875rem;
   padding: 0.625rem 0.6875rem;
-  /* modal input box colore - teammed */
-  background-color: #999ead;
+  /* modal input box color - teammed */
+  background-color: #ffffff;
   border-radius: 2px;
-  color: #ffffff; }
+  /* input box text color - teammed */
+  color: #000000; }
   .form-control:focus, .asColorPicker-input:focus, .dataTables_wrapper select:focus, .jsgrid .jsgrid-table .jsgrid-filter-row input:focus[type=text],
   .jsgrid .jsgrid-table .jsgrid-filter-row select:focus, .jsgrid .jsgrid-table .jsgrid-filter-row input:focus[type=number], .select2-container--default .select2-selection--single:focus, .select2-container--default .select2-selection--single .select2-search__field:focus, .typeahead:focus,
   .tt-query:focus,
   .tt-hint:focus {
     border: 1px solid rgba(71, 164, 71, 0.5);
+     /* input box bgcolor while typing- teammed */
     background-color: #2A3038; }
   .form-control.form-control-lg, .form-control-lg.asColorPicker-input, .dataTables_wrapper select.form-control-lg, .jsgrid .jsgrid-table .jsgrid-filter-row input.form-control-lg[type=text],
   .jsgrid .jsgrid-table .jsgrid-filter-row select.form-control-lg, .jsgrid .jsgrid-table .jsgrid-filter-row input.form-control-lg[type=number], .select2-container--default .form-control-lg.select2-selection--single, .select2-container--default .select2-selection--single .form-control-lg.select2-search__field, .form-control-lg.typeahead,
@@ -18269,7 +18272,7 @@ div.tagsinput {
 /* Tables */
 .table, .jsgrid .jsgrid-table {
   margin-bottom: 0;
-  color: #6c7293; }
+  color: #373b3e; }
   .table thead th, .jsgrid .jsgrid-table thead th {
     border-top: 0;
     border-bottom-width: 1px;
@@ -19535,13 +19538,15 @@ body.avgrund-active {
 
 /* Select2 */
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
+  /* select area color mouse hovered - teammed */
   background: #0090e7; }
 
 .select2-container--default .select2-selection--single,
 .select2-container--default .select2-dropdown,
 .select2-container--default .select2-selection--multiple {
   border-color: #2c2e33;
-  background: #000000; }
+    /* select area list and text box color- teammed */
+  background: #ffffff; }
   .select2-container--default .select2-selection--single .select2-search__field,
   .select2-container--default .select2-dropdown .select2-search__field,
   .select2-container--default .select2-selection--multiple .select2-search__field {
@@ -19550,7 +19555,8 @@ body.avgrund-active {
 .select2-container--default .select2-selection--single {
   height: auto; }
   .select2-container--default .select2-selection--single .select2-selection__rendered {
-    color: #ffffff;
+    /* select 2 selected item font color - teammed */
+    color: #000000;
     line-height: 14px; }
 
 .select2-container--default .select2-dropdown {

@@ -53,19 +53,33 @@
                     aria-labelledby="profileDropdown">
                     <h6 class="p-3 mb-0">Profile</h6>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item preview-item">
+                    <a href="{{ route('home') }}" class="dropdown-item preview-item">
                         <div class="preview-thumbnail">
                             <div class="preview-icon bg-dark rounded-circle">
-                                <i class="mdi mdi-settings text-success"></i>
+                                <i class="mdi mdi-home text-success"></i>
                             </div>
                         </div>
                         <div class="preview-item-content">
-                            <p class="preview-subject mb-1">Settings</p>
+                            <p class="preview-subject mb-1">Home</p>
                         </div>
                     </a>
+
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item preview-item" href="{{ route('switch') }}">
+                        <div class="preview-thumbnail">
+                            <div class="preview-icon bg-dark rounded-circle">
+                                <i class="mdi mdi-account-switch text-primary"></i>
+                            </div>
+                        </div>
+                        <div class="preview-item-content">
+                            <p class="preview-subject mb-1">Switch User</p>
+                        </div>
+                    </a>
+
+
                     <div class="dropdown-divider"></div>
                     <!-- Includes logout function-->
-                    <a class="dropdown-item preview-item" href="{{ route('logout') }}"
+                    <a class="dropdown-item preview-item"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <div class="preview-thumbnail">
                             <div class="preview-icon bg-dark rounded-circle">
@@ -80,6 +94,7 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
+                  
 
                 </div>
             </li>
