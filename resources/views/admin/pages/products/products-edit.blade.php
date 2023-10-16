@@ -165,6 +165,7 @@
         </div>
         @endif
       </div>
+      @include('admin.partials.footer')
       <!-- main-panel ends -->
     </div>
 

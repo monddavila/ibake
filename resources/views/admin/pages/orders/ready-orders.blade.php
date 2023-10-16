@@ -292,6 +292,7 @@
 
 
         </div>
+        @include('admin.partials.footer')
       </div>
 
       <!-- main-panel ends -->

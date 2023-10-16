@@ -66,6 +66,7 @@
         </div>
 
       </div>
+      @include('admin.partials.footer')
       <!-- content-wrapper ends -->
     </div>
     <!-- main-panel ends -->

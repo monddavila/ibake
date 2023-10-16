@@ -17,7 +17,7 @@
 <!-- inject:css -->
 <!-- endinject -->
 <!-- Layout styles -->
-<link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}?v=2"><!--implemented cache busting/ -->
+<link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}?v=3"><!--implemented cache busting/ -->
 
 <!-- End layout styles -->
 <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.png') }}" />
