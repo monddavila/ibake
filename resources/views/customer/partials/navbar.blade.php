@@ -11,11 +11,12 @@
 
         <ul class="navbar-nav navbar-nav-right">
 
-             <li class="nav-item dropdown d-none d-lg-block">
-                <a href="{{ route('home') }}" class="nav-link btn btn-primary create-new-button">
-                    <i class="fas fa-home"></i> Home
-                </a>
-            </li>
+        <li class="nav-item dropdown d-none d-lg-block">
+    <a href="{{ route('home') }}" class="nav-link btn create-new-button" style="background-color: #e5acac; border: 1px solid #ffffff;">
+        <i class="fas fa-home"></i> Home
+    </a>
+</li>
+
 
 
             <li class="nav-item dropdown">

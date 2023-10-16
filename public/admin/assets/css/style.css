@@ -20732,12 +20732,13 @@ div.tagsinput {
             display: block; }
         .sidebar-icon-only .sidebar .nav .nav-item .collapse {
           display: none; }
+          /* collapsed side navbar bg color of menu -teammed */
         .sidebar-icon-only .sidebar .nav .nav-item.hover-open .nav-link .menu-title {
           display: -webkit-flex;
           display: flex;
           -webkit-align-items: center;
           align-items: center;
-          background: #0f1015;
+          background: #ebc69c;
           padding: 0.5rem 1.4rem;
           left: 70px;
           position: absolute;
@@ -20759,7 +20760,8 @@ div.tagsinput {
         .sidebar-icon-only .sidebar .nav .nav-item.hover-open .collapsing {
           display: block;
           padding: .5rem 0;
-          background: #0f1015;
+          /* collapsed side navbar bg color of lists -teammed */
+          background: #F5EBE0;
           border-radius: 0 0 5px 0;
           position: absolute;
           left: 70px;
