@@ -112,7 +112,7 @@ class ShopController extends Controller
       {
             $products = Product::whereBetween('price', [$request->minPrice, $request->maxPrice])
             ->orderBy($request->sortBy, $request->sortOrder)
-            ->get();
+            ->paginate(9);
     
 
             // Fetch unique category IDs
