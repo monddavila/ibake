@@ -142,6 +142,7 @@ Route::group(['prefix' => 'orders'], function () {
 
   Route::middleware(['auth']) ->post('/update-status/{id}', [AdminController::class, 'processOrderStatus'])->name('processOrderStatus');
   
+  Route::middleware(['auth']) ->get('/search-order', [AdminController::class, 'SearchCustomOrders'])->name('searchOrders');
 });
 
 /**

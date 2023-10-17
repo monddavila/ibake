@@ -30,9 +30,15 @@
                         <tr>
                           <th></th>
                           <th> Order ID </th>
-                          <th> Order Date</th>
+                          <th> Order Date
+                          <a href="{{ route('cancelledOrders') }}?sort_by=created_at&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                          <a href="{{ route('cancelledOrders') }}?sort_by=created_at&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                          </th>
                           <th> Order Cancelled</th>
-                          <th> <a href="{{ route('cancelledOrders') }}?sort_by=delivery_date">Delivery Date</a></th>
+                          <th> Delivery Date
+                          <a href="{{ route('cancelledOrders') }}?sort_by=delivery_date&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                          <a href="{{ route('cancelledOrders') }}?sort_by=delivery_date&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                          </th>
                           <th> Delivery Time </th>
                           <th> Recipient Name </th>
                           <th> Recipient Phone </th>
@@ -160,9 +166,15 @@
                         <tr>
                           <th></th>
                           <th> Order ID </th>
-                          <th> Order Date</th>
+                          <th> Order Date
+                          <a href="{{ route('cancelledOrders') }}?sort_by=created_at&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                          <a href="{{ route('cancelledOrders') }}?sort_by=created_at&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                          </th>
                           <th> Order Cancelled</th>
-                          <th> <a href="{{ route('cancelledOrders') }}?sort_by=delivery_date">Delivery Date</a></th>
+                          <th> Delivery Date
+                          <a href="{{ route('cancelledOrders') }}?sort_by=delivery_date&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                          <a href="{{ route('cancelledOrders') }}?sort_by=delivery_date&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                          </th>
                           <th> Delivery Time </th>
                           <th> Recipient Name </th>
                           <th> Recipient Phone </th>

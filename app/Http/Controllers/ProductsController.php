@@ -20,7 +20,12 @@ class ProductsController extends Controller
    */
   public function index()
   {
-    $products = DB::table('products')
+    /*$products = DB::table('products')
+        ->join('categories', 'products.category_id', '=', 'categories.id')
+        ->select('products.*', 'categories.name as category_name')
+        ->paginate(10);*/
+
+        $products = Product::with('category')
         ->join('categories', 'products.category_id', '=', 'categories.id')
         ->select('products.*', 'categories.name as category_name')
         ->paginate(10);
@@ -183,9 +188,19 @@ class ProductsController extends Controller
 
     // Perform the necessary database query based on the search query and sorting options
     // Example query for item search and sorting:
-    $results = Product::where('name', 'like', '%' . $query . '%')
+      /*$results = Product::with('category')
+      ->where('name', 'like', '%' . $query . '%')
       ->orderBy($sortBy, $sortDirection)
-      ->get();
+      ->get();*/
+
+      $results = Product::with('category')
+    ->join('categories', 'products.category_id', '=', 'categories.id')
+    ->select('products.*', 'categories.name as category_name')
+    ->where('products.name', 'like', '%' . $query . '%')
+    ->orderBy($sortBy, $sortDirection)
+    ->paginate(10);
+
+  
 
     $html = view('admin.pages.products.products-list-table')->with(
       ['products' => $results]

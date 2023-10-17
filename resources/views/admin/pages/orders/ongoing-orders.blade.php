@@ -30,8 +30,14 @@
                         <tr>
                           <th></th>
                           <th> Order ID </th>
-                          <th> Processing Started</th>
-                          <th> <a href="{{ route('ongoingOrders') }}?sort_by=delivery_date">Delivery Date</a></th>
+                          <th> Processing Started
+                          <a href="{{ route('ongoingOrders') }}?sort_by=updated_at&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                          <a href="{{ route('ongoingOrders') }}?sort_by=updated_at&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                          </th>
+                          <th> Delivery Date
+                          <a href="{{ route('ongoingOrders') }}?sort_by=delivery_date&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                          <a href="{{ route('ongoingOrders') }}?sort_by=delivery_date&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                          </th>
                           <th> Delivery Time </th>
                           <th> Recipient Name </th>
                           <th> Recipient Phone </th>
@@ -158,8 +164,14 @@
                         <tr>
                           <th></th>
                           <th> Order ID </th>
-                          <th> Processing Started</th>
-                          <th> <a href="{{ route('ongoingOrders') }}?sort_by=delivery_date">Delivery Date</a></th>
+                          <th> Processing Started
+                          <a href="{{ route('ongoingOrders') }}?sort_by=updated_at&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                          <a href="{{ route('ongoingOrders') }}?sort_by=updated_at&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                          </th>
+                          <th> Delivery Date
+                          <a href="{{ route('ongoingOrders') }}?sort_by=delivery_date&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                          <a href="{{ route('ongoingOrders') }}?sort_by=delivery_date&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                          </th>
                           <th> Delivery Time </th>
                           <th> Recipient Name </th>
                           <th> Recipient Phone </th>

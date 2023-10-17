@@ -1,6 +1,6 @@
 <!-- Stylesheets -->
 <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
-<link href="{{ asset('css/style.css') }}?v=1.1" rel="stylesheet"><!--implemented cache busting/ -->
+<link href="{{ asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}" rel="stylesheet"><!--implemented cache busting/ -->
 <link href="{{ asset('css/responsive.css') }}" rel="stylesheet">
 <link href="{{ asset('plugins/revolution/css/settings.css') }}" rel="stylesheet" type="text/css">
 <!-- REVOLUTION SETTINGS STYLES -->

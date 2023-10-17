@@ -1,7 +1,7 @@
 $(document).ready(function () {
     // Handle search input changes
-    $("#user-search-input").on("input", function () {
-        // console.log($("#user-search-input").val());
+    $("#orderId-search-input").on("input", function () {
+         //console.log($("#orderId-search-input").val());
         loadData();
     });
 
@@ -45,16 +45,16 @@ $(document).ready(function () {
             .removeClass("ascending descending current-sort text-black")
             .find(".sort-icon")
             .remove();
-        $("#user-search-input").val("");
+        $("#orderId-search-input").val("");
         location.reload();
     });
 });
 
-function loadData(sortBy = "updated_at", sortDirection = "asc") {
-    const searchQuery = $("#user-search-input").val();
+function loadData(sortBy = "created_at", sortDirection = "asc") {
+    const searchQuery = $("#orderId-search-input").val();
     console.log(searchQuery);
     $.ajax({
-        url: "/user/search",
+        url: "/orders/search-order",
         method: "GET",
         data: {
             query: searchQuery,
@@ -62,7 +62,7 @@ function loadData(sortBy = "updated_at", sortDirection = "asc") {
             sortDirection: sortDirection,
         },
         success: function (res) {
-            $("#users-table-body").html(res.html);
+            $("#custom-orders-body").html(res.html);
         },
         error: function (err) {
             console.error(err);
