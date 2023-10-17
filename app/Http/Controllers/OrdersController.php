@@ -226,7 +226,7 @@ class OrdersController extends Controller
 
     if (isset($request->sort_by) && isset($request->order_by)) {
       $activeCustomOrders = $activeCustomOrders->orderBy($request->sort_by, $request->order_by);
-  }
+    }
 
     $activeCustomOrders = $activeCustomOrders->paginate(10); // Adjust the number of items per page
 

@@ -14,16 +14,24 @@ use App\Models\CustomizeOrder;
 
 class CustomerController extends Controller
 {
-    public function index(){
-        $orders = DB::table('customize_orders')
-                    ->select('*')
-                    ->where('customize_orders.userID', Auth::user()->id)
-                    ->orderBy('orderStatus', 'asc')
-                    ->orderBy('created_at', 'desc')
-                    ->get();
-
-        return view('customer.chome', compact('orders'));
-    }
+  public function index(Request $request)
+  {
+      $orders = DB::table('customize_orders')
+          ->select('*')
+          ->where('customize_orders.userID', Auth::user()->id);
+  
+      if (isset($request->sort_by) && isset($request->order_by)) {
+          $orders = $orders->orderBy($request->sort_by, $request->order_by);
+      }
+  
+      $orders = $orders
+          ->orderBy('orderStatus', 'asc')
+          ->orderBy('created_at', 'desc')
+          ->get();
+  
+      return view('customer.chome', compact('orders'));
+  }
+  
 
     function customerActiveOrders(Request $request)
   {
@@ -33,9 +41,9 @@ class CustomerController extends Controller
         ->with('orderItems.product') // Eager load the related OrderItem;
         ->whereIn('order_status', ['Pending', 'Processing', 'Ready', 'On Delivery']);
 
-      if(isset($request->sort_by)){
-        $activeOrders = $activeOrders->orderBy($request->sort_by,'ASC');
-      }
+        if (isset($request->sort_by) && isset($request->order_by)) {
+          $activeOrders = $activeOrders->orderBy($request->sort_by, $request->order_by);
+        }
 
       $activeOrders = $activeOrders->get()
         ->map(function ($order) {
@@ -47,8 +55,8 @@ class CustomerController extends Controller
       $activeCustomOrders = CustomizeOrderDetail::where('user_id', $userId)
       ->whereIn('order_status', ['Pending', 'Processing', 'Ready', 'On Delivery']);
       
-      if(isset($request->sort_by)){
-        $activeCustomOrders = $activeCustomOrders->orderBy($request->sort_by,'ASC');
+      if (isset($request->sort_by) && isset($request->order_by)) {
+        $activeCustomOrders = $activeCustomOrders->orderBy($request->sort_by, $request->order_by);
       }
       
       $activeCustomOrders = $activeCustomOrders->get()
@@ -77,9 +85,9 @@ class CustomerController extends Controller
         ->with('orderItems.product') // Eager load the related OrderItem;
         ->whereIn('order_status', ['Completed', 'Cancelled', 'Refunded']);
 
-      if(isset($request->sort_by)){
-        $completedOrders = $completedOrders->orderBy($request->sort_by,'ASC');
-      }
+        if (isset($request->sort_by) && isset($request->order_by)) {
+          $completedOrders = $completedOrders->orderBy($request->sort_by, $request->order_by);
+        }
 
       $completedOrders = $completedOrders->get()
         ->map(function ($order) {
@@ -91,8 +99,8 @@ class CustomerController extends Controller
       $completedCustomOrders = CustomizeOrderDetail::where('user_id', $userId)
       ->whereIn('order_status', ['Completed', 'Cancelled', 'Refunded']);
       
-      if(isset($request->sort_by)){
-        $completedCustomOrders = $completedCustomOrders->orderBy($request->sort_by,'ASC');
+      if (isset($request->sort_by) && isset($request->order_by)) {
+        $completedCustomOrders = $completedCustomOrders->orderBy($request->sort_by, $request->order_by);
       }
       
       $completedCustomOrders = $completedCustomOrders->get()

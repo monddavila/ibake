@@ -30,14 +30,20 @@
                         <tr>
                           <th></th>
                           <th> Order ID </th>
-                          <th> Order Date</th>
-                          <th> <a href="{{ route('customerCompletedOrder') }}?sort_by=delivery_date">Delivery Date</a></th>
+                          <th> Order Requested
+                          <a href="{{ route('customerCompletedOrder') }}?sort_by=created_at&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                          <a href="{{ route('customerCompletedOrder') }}?sort_by=created_at&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                          </th>
+                          <th> Order Completed
+                          <a href="{{ route('customerCompletedOrder') }}?sort_by=updated_at&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                          <a href="{{ route('customerCompletedOrder') }}?sort_by=updated_at&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                          </th>
+                          <th> Delivery Date</th>
                           <th> Delivery Time </th>
                           <th> Recipient Name </th>
                           <th> Recipient Phone </th>
                           <th> Delivery Address </th>
                           <th> Shipping Method </th>
-                          <th> Delivery Notes </th>
                           <th> Order Status </th>
                         </tr>
                       </thead>
@@ -59,6 +65,7 @@
                             </td>
                             <td>{{ $order->order_id }}</td>
                             <td>{{ $order->created_at->format('d M Y') }}</td>
+                            <td>{{ $order->updated_at->format('d M Y') }}</td>
                             <td>{{ $order->delivery_date }}</td>
                             <td>{{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</td>
                             <td>
@@ -69,9 +76,6 @@
                                 <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->delivery_address }}</textarea>
                             </td>
                             <td>{{ $order->shipping_method }}</td>
-                            <td>
-                                <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->notes }}</textarea>
-                            </td>
                             <td>
                             <?php if ($order->order_status == 'Completed'): ?>
                                     <div class="badge badge-outline-success">Completed</div>
@@ -163,14 +167,20 @@
                         <tr>
                           <th></th>
                           <th> Order ID </th>
-                          <th> Order Date</th>
-                          <th> <a href="{{ route('customerCompletedOrder') }}?sort_by=delivery_date">Delivery Date</a></th>
+                          <th> Order Requested
+                          <a href="{{ route('customerCompletedOrder') }}?sort_by=created_at&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                          <a href="{{ route('customerCompletedOrder') }}?sort_by=created_at&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                          </th>
+                          <th> Order Completed
+                          <a href="{{ route('customerCompletedOrder') }}?sort_by=updated_at&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                          <a href="{{ route('customerCompletedOrder') }}?sort_by=updated_at&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                          </th>
+                          <th> Delivery Date</th>
                           <th> Delivery Time </th>
                           <th> Recipient Name </th>
                           <th> Recipient Phone </th>
                           <th> Delivery Address </th>
                           <th> Shipping Method </th>
-                          <th> Delivery Notes </th>
                           <th> Order Status </th>
                         </tr>
                       </thead>
@@ -192,6 +202,7 @@
                             </td>
                             <td>{{ $order->customizeOrder->orderID }}</td>
                             <td>{{ $order->created_at->format('d M Y') }}</td>
+                            <td>{{ $order->updated_at->format('d M Y') }}</td>
                             <td>{{ $order->delivery_date }}</td>
                             <td>{{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</td>
                             <td>
@@ -202,9 +213,6 @@
                                 <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->delivery_address }}</textarea>
                             </td>
                             <td>{{ $order->shipping_method }}</td>
-                            <td>
-                                <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->notes }}</textarea>
-                            </td>
                             <td>
                               <div class="badge badge-outline-success">{{ $order->order_status }}</div>
                             </td>

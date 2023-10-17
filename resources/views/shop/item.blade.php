@@ -102,8 +102,12 @@
                          
                           @if ($product->availability == 1)
       
-                          <div class="item-quantity">Quantity <input class="quantity" type="number" value="1"
-                              name="qty"></div>
+                          <div class="item-quantity">
+                              Quantity <input class="quantity" type="number" value="1" name="qty" style="border: 1px solid #ccc; padding: 2px; width: 50px; text-align: center;">
+                          </div>
+
+
+
                           <div class="cart-msg-container pt-5">
                           </div>
                           <button type="submit" class="theme-btn add-to-cart"><span class="btn-title"
@@ -117,15 +121,15 @@
 
 
                         <ul class="product-meta">
-                          <li class="posted_in">Category: <a href="#">{{ $product->category->name }}</a></li>
-                          <li class="posted_in">Tag: <a href="#">
+                          <li class="posted_in">Category: <span style="color: #ff91a4;">{{ $product->category->name }}</span></li>
+                          <li class="posted_in">Tag:
                             @foreach ($tags as $tag)
-                              {{ $tag->name }}
+                            <span style="color: #ff91a4;">{{ $tag->name }}</span>
                               @unless ($loop->last)
                               ,
                               @endunless
                             @endforeach
-                          </a></li>
+                          </li>
                           
                         </ul>
                       </div>
@@ -305,14 +309,14 @@
             <aside class="sidebar theiaStickySidebar">
               <div class="sticky-sidebar">
                 <!-- Search Widget -->
-                <div class="sidebar-widget search-widget">
+                {{--<div class="sidebar-widget search-widget">
                   <form method="post" action="contact.html">
                     <div class="form-group">
                       <input type="search" name="search-field" value="" placeholder="Search products…" required>
                       <button type="submit"><span class="icon fa fa-search"></span></button>
                     </div>
                   </form>
-                </div>
+                </div> --}}
 
                 <!-- Cart Widget -->
                 <div class='sidebar-widget cart-widget' id="cart-widget-container">
