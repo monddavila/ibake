@@ -8,7 +8,13 @@
   <td>{{ $product->category_name }}</td>
   <td>{{ $product->rating }}</td>
   <td>{{ $product->isfeatured ? 'Yes' : 'No' }}</td>
-  <td>{{ $product->availability ? 'Available' : 'Unavailable' }}</td>
+  <td>
+    @if (!$product->availability)
+        <span style="color: red;">Unavailable</span>
+    @else
+        Available
+    @endif
+  </td>
   {{-- <td><a href="#"><i class="mdi mdi-image-area product-img"></i></a></td> --}}
   <td>
     <a href="{{ route('admin.viewEditProducts', $product->id) }}">

@@ -110,15 +110,34 @@ class ShopController extends Controller
   
       public function filterShop(Request $request)
       {
-          $products = Product::where('availability', 1)
-              ->whereBetween('price', [$request->minPrice, $request->maxPrice])
-              ->orderBy($request->sortBy, $request->sortOrder)
-              ->get();
+            $products = Product::whereBetween('price', [$request->minPrice, $request->maxPrice])
+            ->orderBy($request->sortBy, $request->sortOrder)
+            ->get();
+    
+
+            // Fetch unique category IDs
+            $productTags = Product::select('category_id')->distinct()->get();
+        
+            // Fetch category names associated with those IDs
+            $categoryNames = Category::whereIn('id', $productTags->pluck('category_id'))->pluck('name');
+        
+            // Calculate average product ratings
+            $averageRatings = DB::table('reviews')
+                ->select('product_id', DB::raw('AVG(rating) as average_rating'))
+                ->groupBy('product_id')
+                ->get();
   
-          $shopItems = view('shop.shop-item-card')->with(['products' => $products])->render();
+          $shopItems = view('shop.shop-item-card')->with([
+            'products' => $products,
+            'productTags' => $productTags,
+            'categoryNames' => $categoryNames, 
+            'averageRatings' => $averageRatings, 
+            ])->render();
   
           return response()->json(['shopItems' => $shopItems]);
       }
+
+     
 
       public function tags()
       {

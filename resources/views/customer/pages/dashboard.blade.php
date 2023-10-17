@@ -9,12 +9,24 @@
               <table class="table" id="orders-table">
                 <thead>
                   <tr>
-                    <th> Status </th>
+                    <th> Status
+                      <a href="{{ route('customer') }}?sort_by=orderStatus&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                      <a href="{{ route('customer') }}?sort_by=orderStatus&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                    </th>
                     <th> Order No. </th>
-                    <th> Date Requested</th>
-                    <th> Request Reviewed </th>
+                    <th> Date Requested
+                      <a href="{{ route('customer') }}?sort_by=created_at&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                      <a href="{{ route('customer') }}?sort_by=created_at&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                    </th>
+                    <th> Request Reviewed
+                      <a href="{{ route('customer') }}?sort_by=updated_at&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                      <a href="{{ route('customer') }}?sort_by=updated_at&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                    </th>
                     <th> Uploaded Image </th>
-                    <th> Price </th>
+                    <th> Price
+                      <a href="{{ route('customer') }}?sort_by=cakePrice&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                      <a href="{{ route('customer') }}?sort_by=cakePrice&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
