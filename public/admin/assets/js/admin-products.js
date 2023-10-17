@@ -3,7 +3,7 @@ $(document).ready(function () {
     $("#product-search-input").on("input", function () {
         // Remove sorting
         $(".sortable")
-            .removeClass("ascending descending current-sort text-white")
+            .removeClass("ascending descending current-sort text-black")
             .find(".sort-icon")
             .remove();
 
@@ -15,11 +15,11 @@ $(document).ready(function () {
         // Remove sorting and indicator classes from all sortable columns
         $(".sortable")
             .not($(this))
-            .removeClass("ascending descending current-sort text-white")
+            .removeClass("ascending descending current-sort text-black")
             .find(".sort-icon")
             .remove();
 
-        $(this).addClass("current-sort text-white");
+        $(this).addClass("current-sort text-black");
 
         // Toggle the ascending/descending classes
         if ($(this).hasClass("sort-asc")) {
@@ -72,7 +72,7 @@ $(document).ready(function () {
         // Remove sorting and indicator classes from all sortable columns
         $(".sortable")
             .not($(this))
-            .removeClass("ascending descending current-sort text-white")
+            .removeClass("ascending descending current-sort text-black")
             .find(".sort-icon")
             .remove();
         $("#product-search-input").val("");

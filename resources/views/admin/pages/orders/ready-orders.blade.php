@@ -31,8 +31,14 @@
                           <th></th>
                           <th> Order ID </th>
                           <th> Order Date</th>
-                          <th> Order Prepared</th>
-                          <th> <a href="{{ route('readyOrders') }}?sort_by=delivery_date">Delivery Date</a></th>
+                          <th> Order Prepared
+                          <a href="{{ route('readyOrders') }}?sort_by=updated_at&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                          <a href="{{ route('readyOrders') }}?sort_by=updated_at&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                          </th>
+                          <th> Delivery Date
+                          <a href="{{ route('readyOrders') }}?sort_by=delivery_date&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                          <a href="{{ route('readyOrders') }}?sort_by=delivery_date&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                          </th>
                           <th> Delivery Time </th>
                           <th> Recipient Name </th>
                           <th> Recipient Phone </th>
@@ -161,8 +167,14 @@
                           <th></th>
                           <th> Order ID </th>
                           <th> Order Date</th>
-                          <th> Order Prepared</th>
-                          <th> <a href="{{ route('readyOrders') }}?sort_by=delivery_date">Delivery Date</a></th>
+                          <th> Order Prepared
+                          <a href="{{ route('readyOrders') }}?sort_by=updated_at&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                          <a href="{{ route('readyOrders') }}?sort_by=updated_at&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                          </th>
+                          <th> Delivery Date
+                          <a href="{{ route('readyOrders') }}?sort_by=delivery_date&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
+                          <a href="{{ route('readyOrders') }}?sort_by=delivery_date&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
+                          </th>
                           <th> Delivery Time </th>
                           <th> Recipient Name </th>
                           <th> Recipient Phone </th>

@@ -47,14 +47,14 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th class="sortable" id="id" data-sort="id">ID</th>
+                      <th class="sortable" id="id" data-sort="id">ID <i class="sort-icon mdi mdi-sort"></i></th>
                       <th class="sortable" id="image" data-sort="image">Image</th>
-                      <th class="sortable" id="sort-name" data-sort="name">Product Name</th>
-                      <th class="sortable" id="sort-price" data-sort="price">Price</th>
-                      <th class="sortable" id="sort-category" data-sort="category_name">Category</th>
-                      <th class="sortable" id="sort-rate" data-sort="rating">Rating</th>
-                      <th class="sortable" id="sort-isfeatured" data-sort="isfeatured">is Featured</th>
-                      <th class="sortable" id="sort-available" data-sort="availability">Availability</th>
+                      <th class="sortable" id="sort-name" data-sort="name">Product Name <i class="sort-icon mdi mdi-sort"></i></th>
+                      <th class="sortable" id="sort-price" data-sort="price">Price <i class="sort-icon mdi mdi-sort"></i></th>
+                      <th class="sortable" id="sort-category" data-sort="categories.name">Category <i class="sort-icon mdi mdi-sort"></i></th>
+                      <th class="sortable" id="sort-rate" data-sort="rating">Rating <i class="sort-icon mdi mdi-sort"></i></th>
+                      <th class="sortable" id="sort-isfeatured" data-sort="isfeatured">is Featured <i class="sort-icon mdi mdi-sort"></i></th>
+                      <th class="sortable" id="sort-available" data-sort="availability">Availability <i class="sort-icon mdi mdi-sort"></i></th>
                       <th></th>
                       <th></th>
                     </tr>
@@ -96,7 +96,7 @@
 
   <!-- plugins:js -->
   @include('admin.partials.script')
-  <script src="{{ asset('admin/assets/js/admin-products.js') }}"></script>
+  <script src="{{ asset('admin/assets/js/admin-products.js') }}?v={{ filemtime(public_path('admin/assets/js/admin-products.js')) }}"></script>
   <!-- CSS -->
 
   <!-- JavaScript -->

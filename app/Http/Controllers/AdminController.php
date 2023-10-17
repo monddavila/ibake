@@ -166,14 +166,57 @@ class AdminController extends Controller
 
   public function __viewCustomOrders()
   {
+    /*$orders = CustomizeOrder::join('users', 'customize_orders.userID', '=', 'users.id')
+    ->where('customize_orders.orderStatus', '!=', 4)
+    ->orderBy('customize_orders.orderStatus', 'asc')
+    ->orderBy('customize_orders.created_at', 'desc')
+    ->paginate(10);*/
+
     $orders = CustomizeOrder::with('user')
-        ->where('orderStatus', '!=', 4) // Exclude rows with orderStatus 4 or processing already
-        ->orderBy('orderStatus', 'asc')
-        ->orderBy('created_at', 'desc')
+        ->join('users', 'customize_orders.userID', '=', 'users.id')
+        ->select('customize_orders.*', 'users.firstname as user_name')
+        ->where('orderStatus', '!=', 4)
+        ->orderBy('customize_orders.orderStatus', 'asc')
+        ->orderBy('customize_orders.created_at', 'desc')
         ->paginate(10);
+
 
     return view('admin.pages.orders.customize-orders', compact('orders'));
   }
+
+public function SearchCustomOrders(Request $request)
+{
+    $query = $request->input('query');
+    $sortBy = $request->input('sortBy');
+    $sortDirection = $request->input('sortDirection');
+
+    
+    /*$results = CustomizeOrder::with('user')
+        ->where('orderStatus', '!=', 4) // Exclude rows with orderStatus 4 or processing already
+        ->where('orderID', 'like', '%' . $query . '%')
+        ->orderBy($sortBy, $sortDirection)
+        ->paginate(10); */
+
+        $results = CustomizeOrder::with('user')
+        ->join('users', 'customize_orders.userID', '=', 'users.id')
+        ->select('customize_orders.*', 'users.firstname as user_name')
+        ->where('orderStatus', '!=', 4)
+        ->where('customize_orders.orderID', 'like', '%' . $query . '%')
+        ->orderBy($sortBy, $sortDirection)
+        ->paginate(10);
+
+
+
+
+    $html = view('admin.pages.orders.customize-orders-table')->with(['orders' => $results])->render();
+
+    return response()->json(['html' => $html]);
+    
+    
+}
+
+
+
 
 
   public function __updateCustomerOrders(Request $request, $id)

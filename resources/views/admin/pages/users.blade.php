@@ -74,7 +74,7 @@
 
   <!-- plugins:js -->
   @include('admin.partials.script')
-  <script src="{{ asset('admin/assets/js/admin-users.js') }}"></script>
+  <script src="{{ asset('admin/assets/js/admin-users.js') }}?v={{ filemtime(public_path('admin/assets/js/admin-users.js')) }}"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

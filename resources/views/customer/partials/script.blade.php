@@ -20,8 +20,9 @@
 <script src="{{ asset('admin/assets/js/todolist.js') }}"></script>
 <!-- endinject -->
 <!-- Custom js for this page -->
-<script src="{{ asset('admin/assets/js/dashboard.js') }}"></script>
-<script src="{{ asset('admin/assets/js/file-upload.js') }}"></script>
-<script src="{{ asset('admin/assets/js/typeahead.js') }}"></script>
-<script src="{{ asset('admin/assets/js/select2.js') }}"></script>
+<script src="{{ asset('admin/assets/js/dashboard.js') }}?v={{ filemtime(public_path('admin/assets/js/dashboard.js')) }}"></script>
+<script src="{{ asset('admin/assets/js/file-upload.js') }}?v={{ filemtime(public_path('admin/assets/js/file-upload.js')) }}"></script>
+<script src="{{ asset('admin/assets/js/typeahead.js') }}?v={{ filemtime(public_path('admin/assets/js/typeahead.js')) }}"></script>
+<script src="{{ asset('admin/assets/js/select2.js') }}?v={{ filemtime(public_path('admin/assets/js/select2.js')) }}"></script>
+
 

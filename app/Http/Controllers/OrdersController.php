@@ -215,18 +215,18 @@ class OrdersController extends Controller
     $activeOrders = Order::where('order_status', 'Pending')
         ->with('orderItems.product');
 
-    if (isset($request->sort_by)) {
-        $activeOrders = $activeOrders->orderBy($request->sort_by, 'ASC');
-    }
+        if (isset($request->sort_by) && isset($request->order_by)) {
+          $activeOrders = $activeOrders->orderBy($request->sort_by, $request->order_by);
+      }
 
     $activeOrders = $activeOrders->paginate(10); // Adjust the number of items per page
 
     // Active Custom Cake Orders
     $activeCustomOrders = CustomizeOrderDetail::where('order_status', 'Pending');
 
-    if (isset($request->sort_by)) {
-        $activeCustomOrders = $activeCustomOrders->orderBy($request->sort_by, 'ASC');
-    }
+    if (isset($request->sort_by) && isset($request->order_by)) {
+      $activeCustomOrders = $activeCustomOrders->orderBy($request->sort_by, $request->order_by);
+  }
 
     $activeCustomOrders = $activeCustomOrders->paginate(10); // Adjust the number of items per page
 
@@ -242,20 +242,21 @@ class OrdersController extends Controller
     $ongoingOrders = Order::where('order_status', 'Processing')
         ->with('orderItems.product');
 
-    if (isset($request->sort_by)) {
-        $ongoingOrders = $ongoingOrders->orderBy($request->sort_by, 'ASC');
-    }
+        if (isset($request->sort_by) && isset($request->order_by)) {
+          $ongoingOrders = $ongoingOrders->orderBy($request->sort_by, $request->order_by);
+      }
+      
 
     $ongoingOrders = $ongoingOrders->paginate(10); // Adjust the number of items per page
 
     // Ongoing Custom Cake Orders
     $ongoingCustomOrders = CustomizeOrderDetail::where('order_status', 'Processing');
 
-    if (isset($request->sort_by)) {
-        $ongoingCustomOrders = $ongoingCustomOrders->orderBy($request->sort_by, 'ASC');
+    if (isset($request->sort_by) && isset($request->order_by)) {
+      $ongoingCustomOrders = $ongoingCustomOrders->orderBy($request->sort_by, $request->order_by);
     }
 
-    $ongoingCustomOrders = $ongoingCustomOrders->paginate(0); // Adjust the number of items per page
+    $ongoingCustomOrders = $ongoingCustomOrders->paginate(10); // Adjust the number of items per page
 
     $orderDetails = CustomizeOrderDetail::where('order_status', 'Processing')
         ->with('CustomizeOrder')
@@ -275,20 +276,20 @@ function completedOrders(Request $request)
     $completedOrders = Order::where('order_status', 'Completed')
         ->with('orderItems.product');
 
-    if (isset($request->sort_by)) {
-        $completedOrders = $completedOrders->orderBy($request->sort_by, 'ASC');
-    }
+        if (isset($request->sort_by) && isset($request->order_by)) {
+          $completedOrders = $completedOrders->orderBy($request->sort_by, $request->order_by);
+        }
 
-    $completedOrders = $completedOrders->paginate(1); // Adjust the number of items per page
+    $completedOrders = $completedOrders->paginate(10); // Adjust the number of items per page
 
     // Completed Custom Cake Orders
     $completedCustomOrders = CustomizeOrderDetail::where('order_status', 'Completed');
 
-    if (isset($request->sort_by)) {
-        $completedCustomOrders = $completedCustomOrders->orderBy($request->sort_by, 'ASC');
+    if (isset($request->sort_by) && isset($request->order_by)) {
+      $completedCustomOrders = $completedCustomOrders->orderBy($request->sort_by, $request->order_by);
     }
 
-    $completedCustomOrders = $completedCustomOrders->paginate(1); // Adjust the number of items per page
+    $completedCustomOrders = $completedCustomOrders->paginate(10); // Adjust the number of items per page
 
     $orderDetails = CustomizeOrderDetail::where('order_status', 'Completed')
         ->with('CustomizeOrder')
@@ -309,17 +310,17 @@ function completedOrders(Request $request)
     $readyOrders = Order::where('order_status', 'On Delivery')
         ->with('orderItems.product');
 
-    if (isset($request->sort_by)) {
-        $readyOrders = $readyOrders->orderBy($request->sort_by, 'ASC');
-    }
+        if (isset($request->sort_by) && isset($request->order_by)) {
+          $readyOrders = $readyOrders->orderBy($request->sort_by, $request->order_by);
+        }
 
     $readyOrders = $readyOrders->paginate(10); // Adjust the number of items per page
 
     // Ready Custom Cake Orders
     $readyCustomOrders = CustomizeOrderDetail::where('order_status', 'On Delivery');
 
-    if (isset($request->sort_by)) {
-        $readyCustomOrders = $readyCustomOrders->orderBy($request->sort_by, 'ASC');
+    if (isset($request->sort_by) && isset($request->order_by)) {
+      $readyCustomOrders = $readyCustomOrders->orderBy($request->sort_by, $request->order_by);
     }
 
     $readyCustomOrders = $readyCustomOrders->paginate(10); // Adjust the number of items per page
@@ -341,17 +342,17 @@ function completedOrders(Request $request)
     $cancelledOrders = Order::where('order_status', 'Cancelled')
         ->with('orderItems.product');
 
-    if (isset($request->sort_by)) {
-        $cancelledOrders = $cancelledOrders->orderBy($request->sort_by, 'DESC');
-    }
+        if (isset($request->sort_by) && isset($request->order_by)) {
+          $cancelledOrders = $cancelledOrders->orderBy($request->sort_by, $request->order_by);
+        }
 
     $cancelledOrders = $cancelledOrders->paginate(10); // Adjust the number of items per page
 
     // Cancelled Custom Cake Orders
     $cancelledCustomOrders = CustomizeOrderDetail::where('order_status', 'Cancelled');
 
-    if (isset($request->sort_by)) {
-        $cancelledCustomOrders = $cancelledCustomOrders->orderBy($request->sort_by, 'DESC');
+    if (isset($request->sort_by) && isset($request->order_by)) {
+      $cancelledCustomOrders = $cancelledCustomOrders->orderBy($request->sort_by, $request->order_by);
     }
 
     $cancelledCustomOrders = $cancelledCustomOrders->paginate(10); // Adjust the number of items per page
