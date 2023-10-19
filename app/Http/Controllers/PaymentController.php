@@ -23,23 +23,35 @@ class PaymentController extends Controller
         // Validate the form data
         $validator = Validator::make($request->all(), [
             'recipient_name' => 'required|string|max:100',
-            'street_address' => 'required|string|max:50',
-            'town' => 'required|string|max:50',
-            'province' => 'required|string|max:50',
-            'postcode' => 'nullable|string|max:10',
             'recipient_email' => 'required|email|max:50',
             'recipient_phone' => ['required', 'string', 'max:11', 'regex:' . $phoneValidationPattern],
             'shipping_method' => 'required|string|max:255',
             'delivery_date' => 'required|date',
             'delivery_time' => 'required|date_format:H:i',
-            'payment_method' => 'required|string|in:card,wallet,bank', // Valid payment methods
+            'payment_method' => 'required|string|max:255',
             'order_notes' => 'nullable|string|max:1500',
+        ], [
+            'delivery_date.required' => 'The date field is required.',
         ]);
-
+        
+        // Conditional Validation
+        $validator->sometimes('street_address', ['required', 'string', 'max:100'], function ($input) {
+            return $input['shipping_method'] === 'Delivery';
+        });
+        
+        $validator->sometimes('town', ['required', 'string', 'max:50'], function ($input) {
+            return $input['shipping_method'] === 'Delivery';
+        });
+        
+        $validator->sometimes('province', ['required', 'string', 'max:50'], function ($input) {
+            return $input['shipping_method'] === 'Delivery';
+        });
+        
         // Check if validation fails
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
+        
 
         // Save the form data to a session variable
         $request->session()->put('order_data', $request->all());
@@ -62,23 +74,35 @@ class PaymentController extends Controller
         // Validate the form data
         $validator = Validator::make($request->all(), [
             'recipient_name' => 'required|string|max:100',
-            'street_address' => 'required|string|max:50',
-            'town' => 'required|string|max:50',
-            'province' => 'required|string|max:50',
-            'postcode' => 'nullable|string|max:10',
             'recipient_email' => 'required|email|max:50',
             'recipient_phone' => ['required', 'string', 'max:11', 'regex:' . $phoneValidationPattern],
             'shipping_method' => 'required|string|max:255',
             'delivery_date' => 'required|date',
             'delivery_time' => 'required|date_format:H:i',
-            'payment_method' => 'required|string|in:card,wallet,bank', // Valid payment methods
+            'payment_method' => 'required|string|max:255',
             'order_notes' => 'nullable|string|max:1500',
+        ], [
+            'delivery_date.required' => 'The date field is required.',
         ]);
-
+        
+        // Conditional Validation
+        $validator->sometimes('street_address', ['required', 'string', 'max:100'], function ($input) {
+            return $input['shipping_method'] === 'Delivery';
+        });
+        
+        $validator->sometimes('town', ['required', 'string', 'max:50'], function ($input) {
+            return $input['shipping_method'] === 'Delivery';
+        });
+        
+        $validator->sometimes('province', ['required', 'string', 'max:50'], function ($input) {
+            return $input['shipping_method'] === 'Delivery';
+        });
+        
         // Check if validation fails
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
+        
 
         // Save the form data to a session variable
         $request->session()->put('customOrder_data', $request->all());

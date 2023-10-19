@@ -8,7 +8,7 @@
     <!-- Header Section -->
     @include('partials.head')
     <!-- <link href="{{ asset('css/cake.css') }}" rel="stylesheet"> -->
-    <link href="{{ asset('css/cake-main.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/cake-main.css') }}?v={{ filemtime(public_path('css/cake-main.css')) }}" rel="stylesheet">
 </head>
 
 <body>
@@ -80,7 +80,10 @@
                                     </ul>
                                     <h4 class="mt-3 d-flex justify-content-between">
                                         <p>Total:</p>    
-                                        <span id="cakePrice"></span>
+                                        <span class="d-flex align-items-center">
+                                            <span class="peso">₱</span>
+                                            <span class="cakePrice" id="cakePrice">1000</span>
+                                        </span>
                                     </h4>
                                     <hr>
                                 </div>
@@ -95,7 +98,7 @@
                                             <span class="align-left font-italic font-light-weight">12 Servings</span>
                                             </div>
                                             <p class="font-weight-bold">
-                                                <span class="cake-price">999</span>PHP
+                                                <span>₱</span> <span class="cake-price">999</span>
                                             </p>
                                         </div>
                                     </button>
@@ -107,7 +110,7 @@
                                             <span class="align-left font-italic font-light-weight">24 Servings</span>
                                             </div>
                                             <p class="font-weight-bold">
-                                                <span class="cake-price">1499</span>PHP
+                                             <span>₱</span> <span class="cake-price">1499</span>
                                             </p>
                                         </div>
                                     </button>
@@ -119,7 +122,7 @@
                                             <span class="align-left font-italic font-light-weight">32 Servings</span>
                                             </div>
                                             <p class="font-weight-bold">
-                                                <span class="cake-price">1899</span>PHP
+                                             <span>₱</span> <span class="cake-price">1899</span>
                                             </p>
                                         </div>
                                     </button>
@@ -142,6 +145,16 @@
                                             </div>
                                         </div>
                                     </button>
+                                    <hr>
+                                    {{--1st Step Start code block - teammed--}}
+                                    <button type="button" class="btn sizes container-fluid   py-1 ">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                            <p class="cake-flavor font-weight-bold text-left">Vanilla</p>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    {{--1st Step Start code block - teammed--}}
                                     <hr>
                                     <button type="button" class="btn sizes container-fluid   py-1 ">
                                         <div class="d-flex justify-content-between">
@@ -351,9 +364,12 @@
                                             </div>
                                             <div class="go-back mt-5 text-center container-fluid d-none justify-content-end justify-items-center">
                                                 <button type="submit" class="btn btn-primary btn-sm form-control" id="cOrderbtn">Order</button>
-                                                <button class="btn btn-default form-control" id="editChoices">Edit choices</button>
-                                            </div>
+
                                         </form>
+                       
+                                            <button type="button" class="btn btn-default form-control" id="editChoices">Edit choices</button>
+                                        
+                                        </div>
                                     <?php }else{?>
                                         <div class="alert alert-warning" role="alert">
                                           Please <a href="{{ route('login') }}">login</a> to proceed your Order...
@@ -548,6 +564,13 @@
                         var cssVariableName = "--cake-flavor-bg";
                         var cssVariableValue = "#fc5a8d "; // pink
                         document.getElementById('cakeType').style.setProperty(cssVariableName, cssVariableValue);
+                        //2nd Step Start code block - teammed//
+                    } else if(yourCakeBuild.flavor=='Vanilla'){
+                        $('#cakeType').removeStyle('--cake-flavor-bg')
+                        var cssVariableName = "--cake-flavor-bg";
+                        var cssVariableValue = "#F3E5AB";
+                        document.getElementById('cakeType').style.setProperty(cssVariableName, cssVariableValue);
+                        //2nd Step code block end - teammed//
                     } else if(yourCakeBuild.flavor=='Ube'){
                         $('#cakeType').removeStyle('--cake-flavor-bg')
                         var cssVariableName = "--cake-flavor-bg";

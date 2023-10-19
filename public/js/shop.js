@@ -1,11 +1,11 @@
 $(document).ready(function () {
     loadCartWidget();
 
-    //reset selected sort and price filter  then reload page
+    //reset selected sort and price filter
     $("#view-all-shop").on("click", function () {
         $("#min-price").val(0);
         $("#max-price").val(10000);
-        $("select[name='sort-order']").val("created_at");
+        $("select[name='sort-order']").val("");
         location.reload();
     });
 

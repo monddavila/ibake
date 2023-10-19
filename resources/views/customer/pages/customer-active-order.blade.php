@@ -78,17 +78,19 @@
                                 <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->notes }}</textarea>
                             </td>
                             <td>
-                                <?php if ($order->order_status == 'Pending'): ?>
-                                    <div class="badge badge-outline-warning">Pending</div>
-                                  <?php elseif($order->order_status == 'Processing'): ?>
-                                    <div class="badge badge-outline-primary">Processing</div>
-                                  <?php elseif($order->order_status == 'Ready'): ?>
-                                    <div class="badge badge-outline-success">Ready</div>
-                                  <?php elseif($order->order_status == 'On Delivery'): ?>
-                                    <div class="badge badge-outline-info">On Delivery</div>
-                                <?php endif ?>
-                            </td>
-                          </tr>
+                              <?php if ($order->order_status == 'Pending'): ?>
+                                  <div class="badge badge-outline-warning">In Queue</div>
+                              <?php elseif ($order->order_status == 'Processing'): ?>
+                                  <div class="badge badge-outline-primary">In Progress</div>
+                              <?php elseif ($order->order_status == 'On Delivery'): ?>
+                                  <?php if ($order->shipping_method == 'Delivery'): ?>
+                                      <div class="badge badge-outline-info">On Delivery</div>
+                                  <?php else: ?>
+                                      <div class="badge badge-outline-info">Ready for Pickup</div>
+                                  <?php endif ?>
+                              <?php endif ?>
+                          </td>
+                        </tr>
 
                             <!-- Modal -->
                             <div class="modal fade" id="staticBackdrop{{ $order->order_id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -218,20 +220,18 @@
                                 <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->notes }}</textarea>
                             </td>
                             <td>
-                                <?php if ($order->order_status == 'Pending'): ?>
-                                    <div class="badge badge-outline-warning">Pending</div>
-                                  <?php elseif($order->order_status == 'Processing'): ?>
-                                    <div class="badge badge-outline-primary">Processing</div>
-                                  <?php elseif($order->order_status == 'Ready'): ?>
-                                    <div class="badge badge-outline-success">Ready</div>
-                                  <?php elseif($order->order_status == 'On Delivery'): ?>
-                                    @if ($order->shipping_method === 'Pickup')
-                                    <div class="badge badge-outline-info">For Pickup</div>
-                                    @else
-                                    <div class="badge badge-outline-info">On Delivery</div>
-                                    @endif
-                                <?php endif ?>
-                            </td>
+                              <?php if ($order->order_status == 'Pending'): ?>
+                                  <div class="badge badge-outline-warning">In Queue</div>
+                              <?php elseif ($order->order_status == 'Processing'): ?>
+                                  <div class="badge badge-outline-primary">In Progress</div>
+                              <?php elseif ($order->order_status == 'On Delivery'): ?>
+                                  <?php if ($order->shipping_method == 'Delivery'): ?>
+                                      <div class="badge badge-outline-info">On Delivery</div>
+                                  <?php else: ?>
+                                      <div class="badge badge-outline-info">Ready for Pickup</div>
+                                  <?php endif ?>
+                              <?php endif ?>
+                          </td>
                           </tr>
 
                           <!-- Modal -->

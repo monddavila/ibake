@@ -1,5 +1,22 @@
 <div class="main-panel">
   <div class="content-wrapper">
+              
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-between align-items-center">
+                    {{ session('error') }}
+                    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+                </div>
+            @endif
+
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+                </div>
+            @endif
+
+
+
     <div class="row ">
       <div class="col-12 grid-margin">
         <div class="card">
@@ -13,7 +30,7 @@
                       <a href="{{ route('customer') }}?sort_by=orderStatus&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
                       <a href="{{ route('customer') }}?sort_by=orderStatus&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
                     </th>
-                    <th> Order No. </th>
+                    <th> Request No. </th>
                     <th> Date Requested
                       <a href="{{ route('customer') }}?sort_by=created_at&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
                       <a href="{{ route('customer') }}?sort_by=created_at&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
@@ -41,23 +58,45 @@
                     <tr>
                       <td>
                           <?php if ($value->orderStatus == 1): ?>
-                            <div class="badge badge-outline-warning">Awaiting Approval</div>
+                              <div class="d-flex align-items-center">
+                                  <div class="badge badge-outline-warning">Awaiting Approval</div>
+                                  <form action="{{ route('cake-request.cancel', ['id' => $value->orderID]) }}" method="post">
+                                      @csrf
+                                      <button id="cancel-request" type="submit" class="badge badge-outline-success btn-danger" style="text-decoration: none;"
+                                          onclick="confirmCancel('{{ $value->orderID }}', event)">Cancel</button>
+                                  </form>
+                              </div>
                           <?php elseif($value->orderStatus == 2): ?>
-                            <form action="{{ route('cake-request.process', ['id' => $value->orderID]) }}" method="post"> 
-                              @csrf
-                              <button type="submit" class="badge badge-outline-success btn-success" style="text-decoration: none;">Pay Now</button>
-                            </form>
+                              <form action="{{ route('cake-request.process', ['id' => $value->orderID]) }}" method="post">
+                                  @csrf
+                                  <button type="submit" class="badge badge-outline-success btn-success" style="text-decoration: none;">Pay Now</button>
+                              </form>
                           <?php elseif($value->orderStatus == 3): ?>
-                            <div class="badge badge-outline-danger">Rejected</div>
+                              <div class="badge badge-outline-danger">Rejected</div>
                           <?php elseif($value->orderStatus == 4): ?>
-                            <div class="badge badge-outline-info">Paid</div>
+                              <div class="badge badge-outline-primary">Paid</div>
+                          <?php elseif($value->orderStatus == 5): ?>
+                              <div class="badge badge-outline-info">Cancelled</div>
                           <?php endif ?>
                       </td>
+
+                              <script>
+                                  function confirmCancel(orderID, event) {
+                                      if (confirm("Are you sure you want to cancel this custom cake request?")) {
+                                          // If the user confirms, do nothing (let the form submit)
+                                      } else {
+                                          // If the user cancels, prevent the default form submission
+                                          event.preventDefault();
+                                      }
+                                  }
+                              </script>
+
+
                       <td>
-    <a href="#" class="btn" style="text-decoration: none; color: grey ;" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID }}" onmouseover="this.style.color='red'" onmouseout="this.style.color='grey'">
-        {{ $value->orderID }}
-    </a>
-</td>
+                          <a href="#" class="btn" style="text-decoration: none; color: grey ;" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID }}" onmouseover="this.style.color='red'" onmouseout="this.style.color='grey'">
+                              {{ $value->orderID }}
+                          </a>
+                      </td>
 
                       <td>
                           {{ $value->created_at ? \Carbon\Carbon::parse($value->created_at)->format('d M Y') : '-' }}
@@ -157,6 +196,8 @@
     </div>
   </div>
   <!-- content-wrapper ends -->
+  
+
   <footer class="footer">
     <div class="d-sm-flex justify-content-center justify-content-sm-between">
       <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © iBake Tiers of Joy

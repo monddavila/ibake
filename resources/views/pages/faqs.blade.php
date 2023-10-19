@@ -50,7 +50,7 @@
                             <div class="acc-btn active"><div class="icon-outer"><span class="icon fa fa-plus"></span> </div>Where is your shop located?</div>
                             <div class="acc-content current">
                                 <div class="content">
-                                    <div class="text">You can place orders online, but you can still visit our physical store at 35 National Road, Brgy. Sta. Rosa, Bayombong, Nueva Vizcaya, 3700. For your convenience, here's a link to our location on Google Maps: <a href='https://goo.gl/maps/XtUzXry1pdDA2wmc6' target='_blank' style='color: black;'>Click here for directions</a>
+                                    <div class="text">You can place orders online, but you can still visit our physical store at 35 National Road, Brgy. Sta. Rosa, Bayombong, Nueva Vizcaya, 3700 (Near GT Oil and NVMMC Clinic). For your convenience, here's a link to our location on Google Maps: <a href='https://goo.gl/maps/XtUzXry1pdDA2wmc6' target='_blank' style='color: black;'>Click here for directions</a>
 .</div>
                                 </div>
                             </div>

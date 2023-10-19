@@ -72,8 +72,8 @@
 
                             <ul class="contact-info">
                                 <li>35 National Road, Brgy. Sta. Rosa, Bayombong, Nueva Vizcaya, 3700</li>
-                                <li><a href="tel:+639064300383">+63 9064300383</a><br><a href="tel:12032842919">+1
-                                        203-284-2919</a></li>
+                                <li><a href="tel:+639064300383">+63 9064300383</a><br><a href="tel:12032842919">
+                                +63 9214784688</a></li>
                                 <li><a href="mailto:info@ibake.com">info@ibake.com</a><br> <a
                                         href="mailto:sales@ibake.com">sales@ibake.com</a></li>
                             </ul>
