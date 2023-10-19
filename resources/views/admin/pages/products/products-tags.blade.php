@@ -22,7 +22,7 @@
                 <div class="page-header">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item custom-breadcrumb">Products</li>
-                        <li class="breadcrumb-item custom-breadcrumb" aria-current="page">Category</li>
+                        <li class="breadcrumb-item custom-breadcrumb" aria-current="page">Tags</li>
                     </ol>
                 </div>
 
@@ -37,7 +37,7 @@
                                         aria-label="Close"></button>
                                 </div>
                                 @endif
-                                <h4 class="card-title">Categories List</h4>
+                                <h4 class="card-title">Tags List</h4>
                             </div>
                             <div class="row">
                                 <div class="col-md-7">
@@ -46,7 +46,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="sortable" id="sort-id" data-sort="name">ID</th>
-                                                    <th class="sortable col-lg-3" id="sort-name" data-sort="name">Category
+                                                    <th class="sortable col-lg-3" id="sort-name" data-sort="name">Tag
                                                         Name</th>
                                                     <th class="sortable" id="sort-description"
                                                         data-sort="description">Description</th>
@@ -57,7 +57,7 @@
 
                                                 </tr>
                                             </thead>
-                                            @foreach ($categories as $category)
+                                            @foreach ($tags as $category)
                                             <tr>
                                                 <td>{{ $category->id }}</td>
                                                 <td>{{ $category->name }}</td>
@@ -88,13 +88,13 @@
                                             </tbody>
                                         </table>
                                         <!-- Pagination Links -->
-                                        {{ $categories->links() }}
+                                        {{ $tags->links() }}
                                     </div>
                                 </div>
 
                                 <div class="col-md-5">
                                     <div class="container" style="margin-top: 10px;">
-                                        <div><h3>Add New Category</h3></div>
+                                        <div><h3>Add New Tag</h3></div>
                                         @if(session()->has('message-1'))
                                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                                             {{ session()->get('message-1') }}
@@ -112,7 +112,7 @@
                                                             <td>
                                                                 <!-- Name Field -->
                                                                 <label for="name"
-                                                                    class="product-input-label">Category Name</label><br>
+                                                                    class="product-input-label">Tag Name</label><br>
                                                                 <input type="text" id="name" name="name" required
                                                                     style="width:100%">
                                                                 @error('name')
@@ -157,9 +157,9 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
+                                            <h5 class="modal-title" id="editCategoryModalLabel">Edit Tag</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                
                                             </button>
                                         </div>
                                         <form id="editCategoryForm" method="POST"
@@ -169,7 +169,7 @@
                                             <div class="modal-body">
                                                 <input type="hidden" id="editCategoryId" name="id">
                                                 <div class="form-group">
-                                                    <label for="editCategoryName">Category Name</label>
+                                                    <label for="editCategoryName">Tag Name</label>
                                                     <input type="text" class="form-control"
                                                         id="editCategoryName" name="name" required>
                                                 </div>
@@ -180,8 +180,7 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                 <button type="submit" class="btn btn-primary">Save Changes</button>
                                             </div>
                                         </form>

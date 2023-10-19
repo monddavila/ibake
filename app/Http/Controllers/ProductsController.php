@@ -297,6 +297,82 @@ class ProductsController extends Controller
     return redirect()->route('admin.viewCategories');
   }
 
+
+  public function viewTags()
+  {
+    //
+    $tags = DB::table('tags')->paginate(10);
+
+    return view('admin.pages.products.products-tags')->with(
+      ['tags' => $tags]
+    );
+  }
+
+  public function addTags(Request $request)
+  {
+
+    $request->validate([
+      'name' => 'required|string|max:50|unique:tags',
+      'description' => 'required|string|max:100',
+    ]);
+
+    $currentTimestamp = now();
+
+    $tag = new Tag();
+    $tag->name = $request->name;
+    $tag->description = $request->description;
+    $tag->created_at = $currentTimestamp;
+    $tag->updated_at = $currentTimestamp;
+
+    $tag->save();
+  
+
+    // Optionally, you can add a success message to the session
+    session()->flash('message-1', 'Additional tag added successfully.');
+
+    return redirect(route('admin.viewTags'));
+  }
+
+  public function deleteTags($id)
+  {
+    // Find the user by ID
+    $tag = Tag::findOrFail($id);
+
+    // Delete the user
+    $tag->delete();
+
+    // Optionally, you can add a success message to the session
+    session()->flash('message-2', 'Selected tag deleted successfully.');
+
+    // Redirect to the user list or any other desired page
+    return redirect()->route('admin.viewTags');
+  }
+
+  public function updateTags(Request $request)
+  {
+
+    // Get the current timestamp
+    $currentTimestamp = now();
+
+    $request->validate([
+        'name' => 'required|string|max:50',
+        'description' => 'required|string|max:100',
+    ]);
+
+    $tag = Tag::findOrFail($request->id);
+    $tag->name = $request->name;
+    $tag->description = $request->description;
+    $tag->updated_at = $currentTimestamp;
+    $tag->save();
+
+    // Optionally, you can add a success message to the session
+    session()->flash('message-3', 'Tag updated successfully.');
+
+    return redirect()->route('admin.viewTags');
+  }
+
+  /************************************************ */
+
   public function viewReviews()
 {
   

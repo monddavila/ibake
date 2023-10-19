@@ -42,9 +42,9 @@
 
           </div>
         </div>
-        <a href="#" id="profile-dropdown" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
+        <a href="#settings" id="profile-dropdown" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
         <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
-          <a href="#" class="dropdown-item preview-item">
+          <a href="{{ route('viewCustomerAccount') }}" class="dropdown-item preview-item">
             <div class="preview-thumbnail">
               <div class="preview-icon bg-dark rounded-circle">
                 <i class="mdi mdi-settings text-primary"></i>
@@ -55,7 +55,7 @@
             </div>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item preview-item">
+          <a href="{{ route('viewCustomerPassword') }}" class="dropdown-item preview-item">
             <div class="preview-thumbnail">
               <div class="preview-icon bg-dark rounded-circle">
                 <i class="mdi mdi-onepassword  text-info"></i>
@@ -96,22 +96,40 @@
       </a>
     </li>
     <li class="nav-item menu-items">
-  <a class="nav-link" href="#orders" data-bs-toggle="collapse" aria-expanded="false" aria-controls="orders">
-    <span class="menu-icon">
-      <i class="mdi mdi-basket"></i>
-    </span>
-    <span class="menu-title">Orders</span>
-    <i class="menu-arrow"></i>
-  </a>
-  <div class="collapse" id="orders">
-    <ul class="nav flex-column sub-menu">
-      <li class="nav-item"><a class="nav-link" href="{{ route('customer') }}">Custom Cake Requests</a></li>
-      <li class="nav-item"><a class="nav-link" href="{{ route('customerActiveOrder') }}">Active Orders</a></li>
-      <li class="nav-item"><a class="nav-link" href="{{ route('customerCompletedOrder') }}">Order History</a></li>
+      <a class="nav-link" href="#orders" data-bs-toggle="collapse" aria-expanded="false" aria-controls="orders">
+        <span class="menu-icon">
+          <i class="mdi mdi-basket"></i>
+        </span>
+        <span class="menu-title">Orders</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="orders">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"><a class="nav-link" href="{{ route('customer') }}">Custom Cake Requests</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('customerActiveOrder') }}">Active Orders</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('customerCompletedOrder') }}">Order History</a></li>
 
-    </ul>
-  </div>
-</li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="nav-item menu-items">
+      <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+        <span class="menu-icon">
+          <i class="mdi mdi-security"></i>
+        </span>
+        <span class="menu-title">Settings</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="auth">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="{{ route('viewCustomerAccount') }}"> Account Profile
+            </a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('viewCustomerPassword') }}">Change Password</a>
+          </li>
+        </ul>
+      </div>
+    </li>
 
   </ul>
 </nav>

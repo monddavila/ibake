@@ -98,6 +98,11 @@ Route::group(['prefix' => 'products', 'middleware' => ['auth']], function () {
   Route::post('/add-category', [ProductsController::class, 'addCategories'])->name('addCategory');
   Route::get('/delete-category/{id}', [ProductsController::class, 'deleteCategories'])->name('deleteCategory');
   Route::patch('/update-category', [ProductsController::class, 'updateCategories'])->name('updateCategory');
+  /*Categories Section*/
+  Route::get('/tags', [ProductsController::class, 'viewTags'])->name('admin.viewTags');
+  Route::post('/add-tags', [ProductsController::class, 'addTags'])->name('addTag');
+  Route::get('/delete-tag/{id}', [ProductsController::class, 'deleteTags'])->name('deleteTag');
+  Route::patch('/update-tag', [ProductsController::class, 'updateTags'])->name('updateTag');
 /*Reviews Section*/
   Route::get('/reviews', [ProductsController::class, 'viewReviews'])->name('viewReview');
   Route::get('/get-reviews', [ProductsController::class, 'getReviews'])->name('getReviews');
@@ -111,6 +116,13 @@ Route::group(['prefix' => 'customer'], function () {
   Route::middleware(['auth']) ->get('/', [CustomerController::class, 'index'])->name('customer');
   Route::middleware(['auth']) ->get('active-orders', [CustomerController::class, 'customerActiveOrders'])->name('customerActiveOrder');
   Route::middleware(['auth']) ->get('order-history', [CustomerController::class, 'customerCompletedOrders'])->name('customerCompletedOrder');
+
+  Route::middleware(['auth']) ->get('account-profile', [CustomerController::class, 'viewCustomerAccount'])->name('viewCustomerAccount');
+  Route::middleware(['auth']) ->post('update-account-profile/{id}', [CustomerController::class, 'updateCustomerAccount'])->name('updateCustomerAccount');
+
+  Route::middleware(['auth']) ->get('change-password', [CustomerController::class, 'viewCustomerPassword'])->name('viewCustomerPassword');
+  Route::middleware(['auth']) ->post('change-password', [CustomerController::class, 'updateCustomerPassword'])->name('updateCustomerPassword');
+  
 });
 
 
