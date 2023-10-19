@@ -70,12 +70,12 @@
                                 </label>
                             </div>
                             <p class="sign-up">Don't have an Account?<a href="{{ route('register') }}"> Sign Up</a></p>
-                            <div class="form-group pass">
+                            {{--<div class="form-group pass">
                                 @if (Route::has('password.request'))
                                     <a href="{{ route('password.request') }}"
                                         class="psw">{{ __('Forgot your password?') }}</a>
                                 @endif
-                            </div>
+                            </div>--}}
                         </form>
                     </div>
                     <!--End Login Form -->
