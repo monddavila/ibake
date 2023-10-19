@@ -104,7 +104,7 @@
           <div class="sidebar-side sticky-container col-lg-3 col-md-12 col-sm-12">
             <aside class="sidebar theiaStickySidebar">
               <div class="sticky-sidebar">
-                <!-- Search Widget -->
+                {{--<!-- Search Widget -->
                 <div class="sidebar-widget search-widget">
                   <form method="post" action="#">
                     <div class="form-group">
@@ -112,7 +112,7 @@
                       <button type="submit"><span class="icon fa fa-search"></span></button>
                     </div>
                   </form>
-                </div>
+                </div>--}}
 
                 <!-- Cart Widget -->
                 <div class='sidebar-widget cart-widget' id="cart-widget-container">
