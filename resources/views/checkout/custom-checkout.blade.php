@@ -68,7 +68,7 @@
 
                   <!--Form Group-->
                   <div class="form-group">
-                    <div class="field-label">Delivery address <sup>*</sup></div>
+                    <div class="field-label">Delivery address <sup>*</sup><sup style="font-style: italic; color: #5fcac7; font-size: smaller;"> Required for Delivery</sup></div>
                     <input type="text" name="street_address" value="" placeholder="Unit No./Building Name/Street/Barangay">
                                         @error('street_address')
                                         <div class="text-danger">{{ $message }}</div>
@@ -77,7 +77,7 @@
 
                   <!--Form Group-->
                   <div class="form-group">
-                      <div class="field-label">Town / City <sup>*</sup></div>
+                      <div class="field-label">Town / City <sup>*</sup><sup style="font-style: italic; color: #5fcac7; font-size: smaller;"> Required for Delivery</sup></div>
                       <select name="town">
                           <option value="" disabled selected>Select</option>
                           <option value="Alfonso Castañeda">Alfonso Castañeda</option>
@@ -113,7 +113,7 @@
 
                   <!--Form Group-->
                   <div class="form-group">
-                    <div class="field-label">Postcode/ ZIP</div>
+                    <div class="field-label">Postcode/ ZIP <sup style="font-style: italic; color: #5fcac7; font-size: smaller;"> Optional but recommended</sup></div>
                     <input type="text" name="postcode" value="" placeholder="">
                                         @error('postcode')
                                         <div class="text-danger">{{ $message }}</div>
@@ -322,14 +322,14 @@
         const selectedDate = new Date(this.value);
 
         if (selectedDate < minDate) {
-          alert("Delivery date should be at least two days from today.");
+          alert("Delivery/Pickup date should be at least two days from today.");
           this.value = ""; // Clear the input value
         }
       });
     });
   </script>
 
-  <!-- Time of Delivery Validation (8 am to 6 pm) -->
+  <!-- Time of Delivery Validation (8 am to 5:30 pm) -->
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const deliveryTimeInput = document.getElementById("delivery-time");
@@ -339,7 +339,7 @@
       validStartTime.setHours(8, 0, 0, 0); // 8:00 AM
 
       const validEndTime = new Date();
-      validEndTime.setHours(18, 0, 0, 0); // 6:00 PM
+      validEndTime.setHours(17, 30, 0, 0); // 5:30 PM
 
       // Add an event listener to check the selected time on change
       deliveryTimeInput.addEventListener("change", function() {
@@ -348,8 +348,8 @@
         selectedTime.setHours(parseInt(selectedTimeParts[0]), parseInt(selectedTimeParts[1]), 0, 0);
 
         if (selectedTime < validStartTime || selectedTime > validEndTime) {
-          alert("Delivery time should be between 8 AM and 6 PM.");
-          this.value = "09:30"; // Reset the time to the default value
+          alert("Delivery/Pickup time should be between 8:00 AM and 5:30 PM.");
+          this.value = "08:30"; // Reset the time to the default value
         }
       });
     });

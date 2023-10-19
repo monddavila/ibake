@@ -67,7 +67,7 @@
 
                   <!--Form Group-->
                   <div class="form-group">
-                    <div class="field-label">Delivery address <sup>*</sup></div>
+                    <div class="field-label">Delivery address <sup>*</sup><sup style="font-style: italic; color: #5fcac7; font-size: smaller;"> Required for Delivery</sup></div>
                     <input type="text" name="street_address" value="" placeholder="Unit No./Building Name/Street/Barangay">
                                         @error('street_address')
                                         <div class="text-danger">{{ $message }}</div>
@@ -76,7 +76,7 @@
 
                   <!-- Form Group -->
                   <div class="form-group">
-                      <div class="field-label">Town / City <sup>*</sup></div>
+                      <div class="field-label">Town / City <sup>*</sup><sup style="font-style: italic; color: #5fcac7; font-size: smaller;"> Required for Delivery</sup></div>
                       <select name="town">
                           <option value="" disabled selected>Select</option>
                           <option value="Alfonso Castañeda">Alfonso Castañeda</option>
@@ -113,7 +113,7 @@
 
                   <!--Form Group-->
                   <div class="form-group">
-                    <div class="field-label">Postcode/ ZIP </div>
+                    <div class="field-label">Postcode/ ZIP <sup style="font-style: italic; color: #5fcac7; font-size: smaller;"> Optional but recommended</sup></div>
                     <input type="text" name="postcode" value="" placeholder="">
                                         @error('postcode')
                                         <div class="text-danger">{{ $message }}</div>
@@ -301,29 +301,65 @@
     document.addEventListener("DOMContentLoaded", function() {
       const deliveryDateInput = document.getElementById("delivery-date");
 
-      // Get today's date and add two days
-      const minDate = new Date();
-      minDate.setDate(minDate.getDate() + 2);
+      // Get today's date
+      const today = new Date();
+      
+      // Calculate the minimum date (e.g., 1 day from today)
+      const minDate = new Date(today);
+      minDate.setDate(today.getDate() + 1);
 
-      // Format the minimum date as YYYY-MM-DD for input validation
-      const minDateString = minDate.toISOString().split("T")[0];
-
+      // Format the minimum date in 'YYYY-MM-DD' format
+      const year = minDate.getFullYear();
+      const month = String(minDate.getMonth() + 1).padStart(2, "0");
+      const day = String(minDate.getDate()).padStart(2, "0");
+      const minDateString = `${year}-${month}-${day}`;
+      
       // Set the minimum attribute of the input field
       deliveryDateInput.min = minDateString;
+
+      // Check if the selected date is a Sunday
+      function isSunday(date) {
+        return date.getDay() === 0; // 0 corresponds to Sunday
+      }
+
+      // Add an event listener to the input
+      deliveryDateInput.addEventListener("click", function() {
+        // Set the default date (e.g., 1 day from today)
+        const defaultDate = new Date(today);
+        defaultDate.setDate(today.getDate() + 1);
+
+        // Format the default date in 'YYYY-MM-DD' format
+        const year = defaultDate.getFullYear();
+        const month = String(defaultDate.getMonth() + 1).padStart(2, "0");
+        const day = String(defaultDate.getDate()).padStart(2, "0");
+        const formattedDate = `${year}-${month}-${day}`;
+
+        // Set the value of the input to the default date
+        deliveryDateInput.value = formattedDate;
+      });
 
       // Add an event listener to check the selected date on change
       deliveryDateInput.addEventListener("change", function() {
         const selectedDate = new Date(this.value);
 
         if (selectedDate < minDate) {
-          alert("Delivery date should be at least two days from today.");
+          alert("Delivery/Pickup date should be at least two days from today.");
+          this.value = ""; // Clear the input value
+        }
+
+        // Check if the selected date is a Sunday and show an alert
+        if (isSunday(selectedDate)) {
+          alert("The shop is closed on Sundays. Please select a different date.");
           this.value = ""; // Clear the input value
         }
       });
     });
   </script>
 
-  <!-- Time of Delivery Validation (8 am to 6 pm) -->
+
+
+
+  <!-- Time of Delivery Validation (8 am to 5:30 pm) -->
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const deliveryTimeInput = document.getElementById("delivery-time");
@@ -333,7 +369,7 @@
       validStartTime.setHours(8, 0, 0, 0); // 8:00 AM
 
       const validEndTime = new Date();
-      validEndTime.setHours(18, 0, 0, 0); // 6:00 PM
+      validEndTime.setHours(17, 30, 0, 0); // 5:30 PM
 
       // Add an event listener to check the selected time on change
       deliveryTimeInput.addEventListener("change", function() {
@@ -342,8 +378,8 @@
         selectedTime.setHours(parseInt(selectedTimeParts[0]), parseInt(selectedTimeParts[1]), 0, 0);
 
         if (selectedTime < validStartTime || selectedTime > validEndTime) {
-          alert("Delivery time should be between 8 AM and 6 PM.");
-          this.value = "09:30"; // Reset the time to the default value
+          alert("Delivery/Pickup time should be between 8:00 AM and 5:30 PM.");
+          this.value = "08:30"; // Reset the time to the default value
         }
       });
     });

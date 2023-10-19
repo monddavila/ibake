@@ -87,9 +87,32 @@
                                     
                                     @foreach ($orderDetails as $order)
                                         <p>Order ID: {{ $order->order_id }}</p>
-                                        <p>Order Status: <span class="size-label font-weight-bold text-left">{{ $order->order_status }}</span></p>
-                                        <p>Scheduled Delivery Date: {{ $order->delivery_date }}</p>
-                                        <p>Scheduled Delivery Time: {{ $order->delivery_time }}</p>
+                                            <?php if ($order->order_status == 'Pending'): ?>
+                                                    <p>Order Status: <span class="size-label font-weight-bold text-left">In Queue</span></p>
+                                                <?php elseif ($order->order_status == 'Processing'): ?>
+                                                    <p>Order Status: <span class="size-label font-weight-bold text-left">Being Prepared</span></p>
+                                                <?php elseif ($order->order_status == 'On Delivery'): ?>
+                                                    <?php if ($order->shipping_method == 'Delivery'): ?>
+                                                            <p>Order Status: <span class="size-label font-weight-bold text-left">On Delivery</span></p>
+
+                                                        <?php else: ?>
+                                                            <p>Order Status: <span class="size-label font-weight-bold text-left">Ready for Pick-up</span></p>
+
+                                                        <?php endif ?>
+                                                <?php elseif ($order->order_status == 'Completed'): ?>
+                                                    <p>Order Status: <span class="size-label font-weight-bold text-left">Order Completed</span></p>
+                                                <?php elseif ($order->order_status == 'Cancelled'): ?>
+                                                    <p>Order Status: <span class="size-label font-weight-bold text-left">Order Cancelled</span></p>
+                                            <?php endif ?>
+
+                                            <?php if ($order->shipping_method == 'Delivery'): ?>
+                                            <p>Scheduled Delivery Date: {{ \Carbon\Carbon::parse($order->delivery_date)->format('d-M-Y') }}</p>
+                                            <p>Scheduled Delivery Time: {{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</p>
+                                            <?php else: ?>
+                                            <p>Scheduled Pick-up Date: {{ \Carbon\Carbon::parse($order->delivery_date)->format('d-M-Y') }}</p>
+                                            <p>Scheduled Pick-up Time: {{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</p>
+                                            <?php endif ?>
+                                        
                                         <p>Shipping Method: {{ $order->shipping_method }}</p>
                                         <p>Recipient Name: {{ $order->recipient_name }}</p>
                                         <br>
@@ -116,9 +139,31 @@
                                     
                                     @foreach ($customizeOrderDetails as $order)
                                         <p>Order ID: {{ $order->customizeOrder->orderID }}</p>
-                                        <p>Order Status: <span class="size-label font-weight-bold text-left">{{ $order->order_status }}</span></p>
-                                        <p>Scheduled Delivery Date: {{ $order->delivery_date }}</p>
-                                        <p>Scheduled Delivery Time: {{ $order->delivery_time }}</p>
+                                            <?php if ($order->order_status == 'Pending'): ?>
+                                                    <p>Order Status: <span class="size-label font-weight-bold text-left">In Queue</span></p>
+                                                <?php elseif ($order->order_status == 'Processing'): ?>
+                                                    <p>Order Status: <span class="size-label font-weight-bold text-left">Being Prepared</span></p>
+                                                <?php elseif ($order->order_status == 'On Delivery'): ?>
+                                                    <?php if ($order->shipping_method == 'Delivery'): ?>
+                                                            <p>Order Status: <span class="size-label font-weight-bold text-left">On Delivery</span></p>
+                                                            
+                                                        <?php else: ?>
+                                                            <p>Order Status: <span class="size-label font-weight-bold text-left">Ready for Pick-up</span></p>
+                                                        
+                                                        <?php endif ?>
+                                                <?php elseif ($order->order_status == 'Completed'): ?>
+                                                    <p>Order Status: <span class="size-label font-weight-bold text-left">Order Completed</span></p>
+                                                <?php elseif ($order->order_status == 'Cancelled'): ?>
+                                                    <p>Order Status: <span class="size-label font-weight-bold text-left">Order Cancelled</span></p>
+                                            <?php endif ?>
+
+                                            <?php if ($order->shipping_method == 'Delivery'): ?>
+                                            <p>Scheduled Delivery Date: {{ \Carbon\Carbon::parse($order->delivery_date)->format('d-M-Y') }}</p>
+                                            <p>Scheduled Delivery Time: {{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</p>
+                                            <?php else: ?>
+                                            <p>Scheduled Pick-up Date: {{ \Carbon\Carbon::parse($order->delivery_date)->format('d-M-Y') }}</p>
+                                            <p>Scheduled Pick-up Time: {{ \Carbon\Carbon::parse($order->delivery_time)->format('g:i A') }}</p>
+                                            <?php endif ?>
                                         <p>Shipping Method: {{ $order->shipping_method }}</p>
                                         <p>Recipient Name: {{ $order->recipient_name }}</p>
                                         <br>

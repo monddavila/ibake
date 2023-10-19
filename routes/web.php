@@ -198,6 +198,10 @@ Route::middleware(['auth'])
     ->name('cake-request.process');
 
 Route::middleware(['auth'])
+    ->post('/cake-request/cancel/{id}', [CustomizeController::class, 'cancelOrderRequest'])
+    ->name('cake-request.cancel');
+
+Route::middleware(['auth'])
     ->get('/store-custom-order', [CustomizeController::class, 'storeCustomOrder'])
     ->name('storeCustomOrder');
 

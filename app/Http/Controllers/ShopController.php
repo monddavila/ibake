@@ -36,7 +36,7 @@ class ShopController extends Controller
    public function index(Request $request)
    {
 
-       $products = Product::paginate(9);
+       $products = Product::paginate(12);
 
        // Fetch unique category IDs
        $productTags = Product::select('category_id')->distinct()->get();
@@ -108,34 +108,35 @@ class ShopController extends Controller
   }
   
   
-      public function filterShop(Request $request)
-      {
-            $products = Product::whereBetween('price', [$request->minPrice, $request->maxPrice])
-            ->orderBy($request->sortBy, $request->sortOrder)
-            ->paginate(9);
-    
-
-            // Fetch unique category IDs
-            $productTags = Product::select('category_id')->distinct()->get();
-        
-            // Fetch category names associated with those IDs
-            $categoryNames = Category::whereIn('id', $productTags->pluck('category_id'))->pluck('name');
-        
-            // Calculate average product ratings
-            $averageRatings = DB::table('reviews')
-                ->select('product_id', DB::raw('AVG(rating) as average_rating'))
-                ->groupBy('product_id')
-                ->get();
+  public function filterShop(Request $request)
+  {
+      $products = Product::whereBetween('price', [$request->minPrice, $request->maxPrice])
+          ->orderBy($request->sortBy, $request->sortOrder)
+          ->paginate(12);
+     
   
-          $shopItems = view('shop.shop-item-card')->with([
-            'products' => $products,
-            'productTags' => $productTags,
-            'categoryNames' => $categoryNames, 
-            'averageRatings' => $averageRatings, 
-            ])->render();
+      // Fetch unique category IDs
+      $productTags = Product::select('category_id')->distinct()->get();
   
-          return response()->json(['shopItems' => $shopItems]);
-      }
+      // Fetch category names associated with those IDs
+      $categoryNames = Category::whereIn('id', $productTags->pluck('category_id'))->pluck('name');
+  
+      // Calculate average product ratings
+      $averageRatings = DB::table('reviews')
+          ->select('product_id', DB::raw('AVG(rating) as average_rating'))
+          ->groupBy('product_id')
+          ->get();
+  
+      $shopItems = view('shop.shop-item-card')->with([
+          'products' => $products,
+          'productTags' => $productTags,
+          'categoryNames' => $categoryNames,
+          'averageRatings' => $averageRatings,
+      ])->render();
+  
+      return response()->json(['shopItems' => $shopItems]);
+  }
+  
 
      
 

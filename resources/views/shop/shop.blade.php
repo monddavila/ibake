@@ -75,6 +75,7 @@
                       <option value="" disabled selected>Sort by</option>
                       <option value="created_at">Sort by newness</option>
                       <option value="rating">Sort by average rating</option>
+                      <option value="availability-desc">Sort by availability</option>
                       <option value="price">Sort by price: low to high</option>
                       <option value="price-desc">Sort by price: high to low</option>
                     </select>
@@ -92,7 +93,7 @@
               </div>
                   <!-- Pagination Links -->
                   <div class="pagination-wrap">
-                  {{ $products->links() }}
+                  {{ $products->render(); }}
                   </div>
             </div>
           </div>

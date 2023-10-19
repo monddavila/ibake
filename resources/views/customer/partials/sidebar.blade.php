@@ -105,7 +105,7 @@
   </a>
   <div class="collapse" id="orders">
     <ul class="nav flex-column sub-menu">
-      <li class="nav-item"><a class="nav-link" href="{{ route('customer') }}">Customize Cake Requests</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('customer') }}">Custom Cake Requests</a></li>
       <li class="nav-item"><a class="nav-link" href="{{ route('customerActiveOrder') }}">Active Orders</a></li>
       <li class="nav-item"><a class="nav-link" href="{{ route('customerCompletedOrder') }}">Order History</a></li>
 

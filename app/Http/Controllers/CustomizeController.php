@@ -91,7 +91,7 @@ class CustomizeController extends Controller
     }
 
     public function storeCustomOrder(Request $request)
-  {
+    {
     // Retrieve PayMongo Payment IDs
     $paymentSessionId = Session::get('paymentSession_id');
     $paymentIntentId = Session::get('paymentIntent_id');
@@ -156,7 +156,36 @@ class CustomizeController extends Controller
     session()->forget(['paymentSession_id', 'paymentIntent_id']);
 
     return redirect()->route('customer');
-  }
+    }
+
+
+    public function cancelOrderRequest(Request $request, $id)
+    {
+    $order = DB::table('customize_orders')->where('customize_orders.orderID', $id)->first();
+
+    if (!$order) {
+        // Handle the case where the order doesn't exist
+        return redirect(route('customOrders'))->with('error', 'Order not found.');
+    }
+
+    // Get the user ID of the logged-in user
+    $loggedInUserId = Auth::id();
+
+    if ($order->userID !== $loggedInUserId) {
+        // The logged-in user does not have permission to cancel this order
+        return redirect(route('customOrders'))->with('error', 'You do not have permission to cancel this order.');
+    }
+
+    // Update the order
+    $update = DB::table('customize_orders')
+        ->where('customize_orders.orderID', $id)
+        ->update([
+            'updated_at' => now(),
+            'orderStatus' => 5,
+        ]);
+
+    return redirect(route('customer'))->with('success', 'Order canceled successfully.');
+    }
 
     /**
      * Display the specified resource.
