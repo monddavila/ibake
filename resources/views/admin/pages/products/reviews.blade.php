@@ -22,7 +22,7 @@
                 <div class="page-header">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item custom-breadcrumb">Products</li>
-                        <li class="breadcrumb-item custom-breadcrumb" aria-current="page">View Reviews</li>
+                        <li class="breadcrumb-item custom-breadcrumb" aria-current="page">Reviews</li>
                     </ol>
                 </div>
 

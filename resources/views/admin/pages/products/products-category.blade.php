@@ -22,7 +22,7 @@
                 <div class="page-header">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item custom-breadcrumb">Products</li>
-                        <li class="breadcrumb-item custom-breadcrumb" aria-current="page">Category</li>
+                        <li class="breadcrumb-item custom-breadcrumb" aria-current="page">Categories</li>
                     </ol>
                 </div>
 
@@ -158,8 +158,8 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                
                                             </button>
                                         </div>
                                         <form id="editCategoryForm" method="POST"
@@ -180,8 +180,7 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                 <button type="submit" class="btn btn-primary">Save Changes</button>
                                             </div>
                                         </form>

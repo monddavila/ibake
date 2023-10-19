@@ -108,7 +108,8 @@
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"><a class="nav-link" href="{{ route('customOrders') }}">Custom Cake Requests</a></li>
           <li class="nav-item">
-              <a class="nav-link" href="{{ route('activeOrders') }}" style="color: orange;">Pending Orders</a>
+          <a class="nav-link" href="{{ route('activeOrders') }}" style="background-color: #FFD700;">Pending Orders</a>
+
           </li>
           <li class="nav-item"><a class="nav-link" href="{{ route('ongoingOrders') }}">In Progress Orders</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('readyOrders') }}">Dispatched Orders</a></li>
@@ -145,15 +146,15 @@
       <div class="collapse" id="products">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"><a class="nav-link" href="{{ route('viewReview') }}">Reviews</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewCategories') }}">Category</a></li>
-          <li class="nav-item"><a class="nav-link" href="">Tags</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewCategories') }}">Categories</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewTags') }}">Tags</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewProducts') }}">View Products</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewAddProducts') }}">Add a product</a></li>
         </ul>
       </div>
     </li>
 
-    <li class="nav-item menu-items">
+    {{--<li class="nav-item menu-items">
       <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
         <span class="menu-icon">
           <i class="mdi mdi-laptop"></i>
@@ -169,7 +170,7 @@
           <li class="nav-item"> <a class="nav-link" href="admin/pages/ui-features/typography.html">Typography</a></li>
         </ul>
       </div>
-    </li>
+    </li>--}}
 
     <li class="nav-item menu-items">
       <a class="nav-link" href="admin/pages/tables/basic-table.html">
@@ -179,14 +180,14 @@
         <span class="menu-title">Reports</span>
       </a>
     </li>
-    <li class="nav-item menu-items">
+    {{--<li class="nav-item menu-items">
       <a class="nav-link" href="admin/pages/charts/chartjs.html">
         <span class="menu-icon">
           <i class="mdi mdi-chart-bar"></i>
         </span>
         <span class="menu-title">Charts</span>
       </a>
-    </li>
+    </li>--}}
 
     <li class="nav-item menu-items">
       <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
@@ -198,22 +199,20 @@
       </a>
       <div class="collapse" id="auth">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="admin/pages/samples/blank-page.html"> System
+          <li class="nav-item"> <a class="nav-link" href="admin/pages/samples/blank-page.html"> Account
             </a></li>
-          <li class="nav-item"> <a class="nav-link" href="admin/pages/samples/error-404.html"> API </a>
-          </li>
-          <li class="nav-item"> <a class="nav-link" href="admin/pages/samples/error-500.html"> 3rd Party Tools </a>
+          <li class="nav-item"> <a class="nav-link" href="admin/pages/samples/error-500.html">Privileges</a>
           </li>
         </ul>
       </div>
     </li>
-    <li class="nav-item menu-items">
+    {{--<li class="nav-item menu-items">
       <a class="nav-link" href="http://www.bootstrapdash.com/demo/corona-free/jquery/documentation/documentation.html">
         <span class="menu-icon">
           <i class="mdi mdi-file-document-box"></i>
         </span>
         <span class="menu-title">Documentation</span>
       </a>
-    </li>
+    </li>--}}
   </ul>
 </nav>
