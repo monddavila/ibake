@@ -18,9 +18,8 @@ class CustomerController extends Controller
 {
   public function index(Request $request)
   {
-      $orders = DB::table('customize_orders')
-          ->select('*')
-          ->where('customize_orders.userID', Auth::user()->id);
+      $orders = CustomizeOrder::with('CustomizeOrderDetail') 
+          ->where('userID', Auth::user()->id);
   
       if (isset($request->sort_by) && isset($request->order_by)) {
           $orders = $orders->orderBy($request->sort_by, $request->order_by);

@@ -30,5 +30,10 @@ class CustomizeOrder extends Model
     return $this->belongsTo(User::class, 'userID');
     }
 
+    public function customizeOrderDetail()
+    {
+    return $this->hasOne(CustomizeOrderDetail::class, 'customOrder_id', 'id');
+    }
+
  
 }

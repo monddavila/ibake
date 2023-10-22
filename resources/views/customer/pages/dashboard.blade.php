@@ -35,15 +35,18 @@
                       <a href="{{ route('customer') }}?sort_by=created_at&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
                       <a href="{{ route('customer') }}?sort_by=created_at&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
                     </th>
+                    <th>Date Needed</th>
                     <th> Request Reviewed
                       <a href="{{ route('customer') }}?sort_by=updated_at&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
                       <a href="{{ route('customer') }}?sort_by=updated_at&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
                     </th>
                     <th> Uploaded Image </th>
+                    <th>Payment Option</th>
                     <th> Price
                       <a href="{{ route('customer') }}?sort_by=cakePrice&order_by=asc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-up"></i></a>
                       <a href="{{ route('customer') }}?sort_by=cakePrice&order_by=desc" style="text-decoration: none; color: black;"><i class="sort-icon mdi mdi-arrow-down"></i></a>
                     </th>
+                    <th>Balance</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -71,12 +74,25 @@
                                   @csrf
                                   <button type="submit" class="badge badge-outline-success btn-success" style="text-decoration: none;">Pay Now</button>
                               </form>
-                          <?php elseif($value->orderStatus == 3): ?>
+                          <?php elseif($value->orderStatus == 5): ?>
                               <div class="badge badge-outline-danger">Rejected</div>
                           <?php elseif($value->orderStatus == 4): ?>
-                              <div class="badge badge-outline-primary">Paid</div>
-                          <?php elseif($value->orderStatus == 5): ?>
+                              <div class="badge badge-outline-primary">Fully Paid</div>
+                          <?php elseif($value->orderStatus == 7): ?>
                               <div class="badge badge-outline-info">Cancelled</div>
+                          <?php elseif($value->orderStatus == 3): ?>
+                            <form action="{{ route('payment-balance.process', ['id' => $value->orderID]) }}" method="post">
+                              @csrf
+
+                                @if ($value->customizeOrderDetail)
+                                    @if ($value->customizeOrderDetail->payment_option == 'Half-online')
+                                        <button type="submit" class="badge badge-outline-success btn-success" style="text-decoration: none;">Pay Balance</button>
+                                    @elseif ($value->customizeOrderDetail->payment_option == 'Half-cod')
+                                        <div class="badge badge-outline-success">Partially Paid</div>
+                                    @endif
+                                </form>
+                                @endif
+
                           <?php endif ?>
                       </td>
 
@@ -96,11 +112,13 @@
                           <a href="#" class="btn" style="text-decoration: none; color: grey ;" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID }}" onmouseover="this.style.color='red'" onmouseout="this.style.color='grey'">
                               {{ $value->orderID }}
                           </a>
+
                       </td>
 
                       <td>
                           {{ $value->created_at ? \Carbon\Carbon::parse($value->created_at)->format('d M Y') : '-' }}
                       </td>
+                      <td>Date Needed</td>
                       <td>
                           {{ $value->updated_at ? \Carbon\Carbon::parse($value->updated_at)->format('d M Y') : '-' }}
                       </td>
@@ -112,12 +130,31 @@
                                 @endif
                             </td>
                             <td>
+                                @if ($value->customizeOrderDetail)
+                                    {{ $value->customizeOrderDetail->payment_option }}
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td>
                                 @if (!empty($value->cakePrice) && !is_null($value->cakePrice))
                                     &#8369; {{ number_format($value->cakePrice, 2) }}
                                 @else
                                     -
                                 @endif
                             </td>
+                      <td>
+                                @if ($value->customizeOrderDetail)
+                                      @if($value->customizeOrderDetail->payment_balance !== null)
+                                       &#8369; {{ $value->customizeOrderDetail->payment_balance }}
+                                      @else
+                                      -
+                                      @endif
+                                @else
+                                    -
+                                @endif
+                      </td>
+
                     </tr>
                     <div class="modal fade" id="staticBackdrop{{ $value->orderID  }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog">
