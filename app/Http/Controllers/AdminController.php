@@ -167,7 +167,7 @@ class AdminController extends Controller
   public function __viewCustomOrders()
   {
     /*$orders = CustomizeOrder::join('users', 'customize_orders.userID', '=', 'users.id')
-    ->where('customize_orders.orderStatus', '!=', 4)
+    ->where('customize_orders.orderStatus', '!=', 4)  4 is fully paid
     ->orderBy('customize_orders.orderStatus', 'asc')
     ->orderBy('customize_orders.created_at', 'desc')
     ->paginate(10);*/
@@ -175,7 +175,8 @@ class AdminController extends Controller
     $orders = CustomizeOrder::with('user')
         ->join('users', 'customize_orders.userID', '=', 'users.id')
         ->select('customize_orders.*', 'users.firstname as user_name')
-        ->where('orderStatus', '!=', 4)
+        ->where('orderStatus', '!=', 4) // fully paid and in queue orders
+        ->where('orderStatus', '!=', 7) //cancelled requests
         ->orderBy('customize_orders.orderStatus', 'asc')
         ->orderBy('customize_orders.created_at', 'desc')
         ->paginate(10);
@@ -192,7 +193,7 @@ public function SearchCustomOrders(Request $request)
 
     
     /*$results = CustomizeOrder::with('user')
-        ->where('orderStatus', '!=', 4) // Exclude rows with orderStatus 4 or processing already
+        ->where('orderStatus', '!=', 4) // Exclude rows with orderStatus 4 or fully paid
         ->where('orderID', 'like', '%' . $query . '%')
         ->orderBy($sortBy, $sortDirection)
         ->paginate(10); */
@@ -261,7 +262,7 @@ public function SearchCustomOrders(Request $request)
                     ->update([
                               'invoice_details' => $request->input('invoice_details'),
                               'updated_at' => now(),
-                              'orderStatus' => 3,
+                              'orderStatus' => 5,
                     ]);
 
     //Sending Email if customize order request is declined"

@@ -204,10 +204,18 @@ Route::middleware(['auth'])
     ->get('/cake-request/checkout/{id}', [CustomizeController::class, 'showCheckoutForm'])
     ->name('cake-request.checkout');
 
+Route::middleware(['auth'])
+    ->get('/payment-balance/checkout/{id}', [CustomizeController::class, 'showBalanceCheckoutForm'])
+    ->name('payment-balance.checkout');
+
 // POST route for processing the form submission
 Route::middleware(['auth'])
     ->post('/cake-request/checkout/{id}', [CustomizeController::class, 'customCheckout'])
     ->name('cake-request.process');
+
+Route::middleware(['auth'])
+    ->post('/payment-balance/checkout/{id}', [CustomizeController::class, 'customBalanceCheckout'])
+    ->name('payment-balance.process');
 
 Route::middleware(['auth'])
     ->post('/cake-request/cancel/{id}', [CustomizeController::class, 'cancelOrderRequest'])
@@ -216,6 +224,10 @@ Route::middleware(['auth'])
 Route::middleware(['auth'])
     ->get('/store-custom-order', [CustomizeController::class, 'storeCustomOrder'])
     ->name('storeCustomOrder');
+
+    Route::middleware(['auth'])
+    ->get('/update-custom-order-balance', [CustomizeController::class, 'updateCustomOrderBalance'])
+    ->name('updateCustomOrderBalance');
 
 /**
  * Login and Register Routes
@@ -254,7 +266,9 @@ Route::get('refund-status/{id}',[PaymentController::class,'refundStatus']);
 
 Route::middleware(['auth']) ->post('place-order',[PaymentController::class,'placeOrder'])->name('placeOrder');
 Route::middleware(['auth']) ->post('place-custom-order/{id}',[PaymentController::class,'placeCustomOrder'])->name('placeCustomOrder');
+Route::middleware(['auth']) ->post('place-custom-order-balance/{id}',[PaymentController::class,'placeCustomOrderBalance'])->name('placeCustomOrderBalance');
 Route::middleware(['auth']) ->get('pay-custom-order/{id}', [PaymentController::class, 'custom_pay'])->name('custompay');
+Route::middleware(['auth']) ->get('pay-custom-order-balance/{id}', [PaymentController::class, 'customBalancePay'])->name('customBalancePay');
 /**
  * SMS Gateway - SMS controller
  */

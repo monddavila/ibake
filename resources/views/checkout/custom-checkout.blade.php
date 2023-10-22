@@ -7,6 +7,21 @@
 
   <!-- Stylesheets -->
   @include('partials.head')
+
+  <style>
+  .btn-group-toggle .btn {
+    flex: 1;
+    text-align: center;
+    background-color: #5fcac7  !important;
+    color: white !important;
+  }
+
+  .btn-group-toggle .btn.active {
+    background-color: #ff91a4 !important;
+    color: black !important;
+  }
+</style>
+
 </head>
 
 <body>
@@ -244,26 +259,55 @@
             <!--Payment Box-->
             <div class="payment-box">
               <div class="upper-box">
+
+              <div class="sec-title">
+                <h5>Payment Method</h5><br>
+                <p>Please select your payment option*</p>
+              </div>
+
+                <!--Payment Type Box-->
+                <div class="payment-type d-flex justify-content-center">
+
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                      <input type="radio" name="payment_option" id="option1" value="Full" autocomplete="off" checked><strong>Full Payment</strong><br>
+                      <span class="small-text">Pay the full amount now</span>
+                    </label>
+                    <label class="btn btn-secondary">
+                      <input type="radio" name="payment_option" id="option2" value="Half-online" autocomplete="off"><strong>50% Downpayment</strong><br>
+                      <span class="small-text">Pay remaining amount online</span>
+                    </label>
+                    <label class="btn btn-secondary">
+                      <input type="radio" name="payment_option" id="option3" value="Half-cod" autocomplete="off"><strong>50% Downpayment</strong><br>
+                      <span class="small-text">Pay remaining amount with cash upon delivery/pick-up</span>
+                    </label>
+                  </div>
+                </div>
+
+
+                <!--Payment Type Box End-->
+
                 <!--Payment Options-->
                 <div class="payment-options">
                     <div class="text">The shipping fee is not included in the total price. 
                       You will pay the shipping fee when you receive your order. For more information, please see our <a href="{{route('terms')}}" target="_blank">Terms & Services.</a></div><br>
                   <ul>
+
                     <li>
                       <div class="radio-option">
-                        <input type="radio" name="payment_method" id="payment-1" value="card"
-                          checked>
-                        <label for="payment-1"><strong>Credit Or Debit Card</strong><span class="small-text">
-                        We accept Visa and Mastercard debit and credit cards, make your payment directly using your card details. 
-                        Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</span></label>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="radio-option">
-                        <input type="radio" name="payment_method" id="payment-2" value="wallet">
-                        <label for="payment-2"><strong>Digital Wallets</strong><span class="small-text">
+                        <input type="radio" name="payment_method" id="payment-1" value="wallet" checked>
+                        <label for="payment-1"><strong>Digital Wallets</strong><span class="small-text">
                         Pay with your favorite digital wallet, such as GCash and Maya. Please use your Order ID as the payment reference. 
                         Your order won’t be shipped until the funds have cleared in our account.</span></label>
+                      </div>
+                    </li>
+                    
+                    <li>
+                      <div class="radio-option">
+                        <input type="radio" name="payment_method" id="payment-2" value="card">
+                        <label for="payment-2"><strong>Credit Or Debit Card</strong><span class="small-text">
+                        We accept Visa and Mastercard debit and credit cards, make your payment directly using your card details. 
+                        Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</span></label>
                       </div>
                     </li>
 

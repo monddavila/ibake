@@ -76,7 +76,7 @@ class OrdersController extends Controller
 
     $recipientName = $orderData['recipient_name'];
     $streetAddress = $orderData['street_address'];
-    $town = $orderData['town'];
+    //$town = $orderData['town'];
     $province = $orderData['province'];
     $postcode = $orderData['postcode'];
     $recipientEmail = $orderData['recipient_email'];
@@ -87,7 +87,22 @@ class OrdersController extends Controller
     $paymentMethod = $orderData['payment_method'];
     $orderNotes = $orderData['order_notes'];
 
-    $address = $streetAddress . ', ' . $town . ',' . $province . ',' . $postcode;
+
+        // Check if 'town' exists in the session
+    if (isset($orderData['town'])) {
+      $town = $orderData['town'];
+    } else {
+      // Set a default value if 'town' doesn't exist in the session
+      $town = null;
+    }
+
+    if($shippingMethod == 'Delivery'){
+      $address = $streetAddress . ', ' . $town . ',' . $province . ',' . $postcode;
+    }else{
+      $address = "";
+    }
+
+
     //check order total price
     $cartItems = (new CartsController())->userCart();
     $totalPrice = 0;

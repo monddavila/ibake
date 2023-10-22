@@ -96,17 +96,29 @@ class CustomizeController extends Controller
     $paymentSessionId = Session::get('paymentSession_id');
     $paymentIntentId = Session::get('paymentIntent_id');
     
-    // Retrieve Custom Order ID
+    // Retrieve customize_order id of the the order to display in customize_order_details
     $customOrder_id = session('customOrder_id');
     // Retrieve Item's Order ID
     $customize_order_id = session('customize_order_id');
+
+    // Retrieve remaining balance payment for cake if half paid
+    $CakePrice_bal = Session::get('custom_cakeBal'); //add to payments table new migration!!
+
 
     // Retrieve Orders form data from the session
     $customOrderData = $request->session()->get('customOrder_data');
 
     $recipientName = $customOrderData['recipient_name'];
     $streetAddress = $customOrderData['street_address'];
-    $town = $customOrderData['town'];
+    
+    if (session()->has('customOrderData') && isset(session('customOrderData')['town'])) {
+        $town = session('customOrderData')['town'];
+    } else {
+        $town = null;
+    }
+    
+
+    
     $province = $customOrderData['province'];
     $postcode = $customOrderData['postcode'];
     $recipientEmail = $customOrderData['recipient_email'];
@@ -114,17 +126,31 @@ class CustomizeController extends Controller
     $shippingMethod = $customOrderData['shipping_method'];
     $deliveryDate = $customOrderData['delivery_date'];
     $deliveryTime = $customOrderData['delivery_time'];
+    $paymentOption = $customOrderData['payment_option'];
     $paymentMethod = $customOrderData['payment_method'];
     $orderNotes = $customOrderData['order_notes'];
 
-    $address = $streetAddress . ', ' . $town . ',' . $province . ',' . $postcode;
+    if($shippingMethod == 'Delivery'){
+        $address = $streetAddress . ', ' . $town . ',' . $province . ',' . $postcode;
+    }else{
+        $address = "";
+    }
+    
     //retrieve cake price
     $cakePrice = session('cakePrice');
+
+    if($CakePrice_bal == null){
+        $paymentStatus = 'Fully Paid';
+    }else{
+        $paymentStatus = 'Partially Paid';
+    }
+
 
     //store data to orders table
     $order = CustomizeOrderDetail::create([
       'user_id' => Auth::id(),
       'customOrder_id' => $customOrder_id,
+      'order_id' => $customize_order_id,//add new migration
       'recipient_name' => $recipientName,
       'recipient_email' => $recipientEmail,
       'recipient_phone' => $recipientPhone,
@@ -133,8 +159,10 @@ class CustomizeController extends Controller
       'delivery_time' => $deliveryTime,
       'delivery_address' => $address,
       'total_price' => $cakePrice,
+      'payment_option' => $paymentOption, //add new migration
+      'payment_balance' => $CakePrice_bal, //add new migration
       'payment_method' => $paymentMethod,
-      'payment_status' => 'Paid',
+      'payment_status' => $paymentStatus,
       'payment_session_id' => $paymentSessionId,
       'payment_intent_id' => $paymentIntentId,
       'notes' => $orderNotes,
@@ -142,21 +170,70 @@ class CustomizeController extends Controller
       
     ]);
 
+    if($paymentOption == 'Full'){
+        $orderStatus = 4;//4 is Fully Paid
+    }else{
+        $orderStatus = 3;//3 is half paid
+    }
+
     //update order status to "Processing" of customize_orders table
     $update = DB::table('customize_orders')
                     ->where('customize_orders.orderID', $customize_order_id)
                     ->update([
-                              'orderStatus' => 4,
+                              'orderStatus' => $orderStatus,
+                              'updated_at' => now(),  
                     ]);
 
     // Clear the session variable if needed
     $request->session()->forget('customOrder_data');
     $request->session()->forget('customOrder_id');
     $request->session()->forget('cakePrice');
+    $request->session()->forget('custom_cakeBal'); //check if still needed!
     session()->forget(['paymentSession_id', 'paymentIntent_id']);
 
     return redirect()->route('customer');
     }
+
+
+    public function updateCustomOrderBalance(Request $request)
+    {
+    
+    
+    // Retrieve customize_order id of the the order to display in customize_order_details
+    $customOrder_id = session('customBalance_customizeOrder_id');
+    // Retrieve Item's Order ID
+    $customize_order_id = session('customBalanceOrder_id');
+    // Retrieve PayMongo Payment IDs
+    $BalancePaymentIntent = session('BalancePaymentIntent_id'); 
+
+
+    //update order status to "Processing" of customize_orders table
+    $update = DB::table('customize_orders')
+                    ->where('customize_orders.orderID', $customize_order_id)
+                    ->update([
+                              'orderStatus' => 4, //4 is fully paid
+                    ]);
+
+    //update order status to "Processing" of customize_orders table
+    $update = DB::table('customize_order_details')
+                    ->where('customize_order_details.customOrder_id', $customOrder_id)
+                    ->update([
+                            'payment_status' => 'Fully Paid',
+                            'payment_balance' => null,   
+                            'payment_intent_id_balance' => $BalancePaymentIntent,
+                    ]);
+
+    // Clear the session variable if needed
+    session()->forget('customBalance_customizeOrder_id');
+    session()->forget('customBalanceOrder_id');
+    session()->forget('BalancePaymentIntent_id');
+
+
+    return redirect()->route('customer');
+
+    }
+
+
 
 
     public function cancelOrderRequest(Request $request, $id)
@@ -181,7 +258,7 @@ class CustomizeController extends Controller
         ->where('customize_orders.orderID', $id)
         ->update([
             'updated_at' => now(),
-            'orderStatus' => 5,
+            'orderStatus' => 7,
         ]);
 
     return redirect(route('customer'))->with('success', 'Order canceled successfully.');
@@ -248,10 +325,31 @@ class CustomizeController extends Controller
             'customOrderId' => $customOrderId,
         ]);
     }
+
+    public function showBalanceCheckoutForm($id)
+    {
+        $user = Auth::user();
+        $customOrderId = $id;
+
+        $orders =  CustomizeOrder::with('CustomizeOrderDetail')
+                    ->where('customize_orders.orderID', $id)
+                    ->get();
+
+        return view('checkout.custom-checkout-balance')->with([
+            'user' => $user,
+            'orders' => $orders,
+            'customOrderId' => $customOrderId,
+        ]);
+    }
+
     public function customCheckout(Request $request, $id)
     {
-       // dd('I was called');
         return redirect()->route('cake-request.checkout', ['id' => $id]);
+    }
+
+    public function customBalanceCheckout(Request $request, $id)
+    {
+        return redirect()->route('payment-balance.checkout', ['id' => $id]);
     }
 
 }

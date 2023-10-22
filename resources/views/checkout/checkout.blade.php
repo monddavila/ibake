@@ -245,19 +245,19 @@
                   <ul>
                     <li>
                       <div class="radio-option">
-                        <input type="radio" name="payment_method" id="payment-1" value="card"
-                          checked>
-                        <label for="payment-1"><strong>Credit Or Debit Card</strong><span class="small-text">
-                        We accept Visa and Mastercard debit and credit cards, make your payment directly using your card details. 
-                        Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</span></label>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="radio-option">
-                        <input type="radio" name="payment_method" id="payment-2" value="wallet">
-                        <label for="payment-2"><strong>Digital Wallets</strong><span class="small-text">
+                        <input type="radio" name="payment_method" id="payment-1" value="wallet" checked>
+                        <label for="payment-1"><strong>Digital Wallets</strong><span class="small-text">
                         Pay with your favorite digital wallet, such as GCash and Maya. Please use your Order ID as the payment reference. 
                         Your order won’t be shipped until the funds have cleared in our account.</span></label>
+                      </div>
+                    </li>
+                    
+                    <li>
+                      <div class="radio-option">
+                        <input type="radio" name="payment_method" id="payment-2" value="card">
+                        <label for="payment-2"><strong>Credit Or Debit Card</strong><span class="small-text">
+                        We accept Visa and Mastercard debit and credit cards, make your payment directly using your card details. 
+                        Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</span></label>
                       </div>
                     </li>
 

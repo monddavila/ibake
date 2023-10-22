@@ -5,14 +5,18 @@
                                   <a href="" type="button" style="text-decoration: none;" class="badge badge-outline-success btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID  }}">View Request</a>
                               @elseif($value->orderStatus == 2)
                                   <button type="button" class="btn badge-outline-success">Approved</button>
-                              @elseif($value->orderStatus == 3)
+                              @elseif($value->orderStatus == 5)
                                   <button type="button" class="btn badge-outline-danger">Rejected</button>
-                                  @elseif($value->orderStatus == 4)
-                                  <div class="badge badge-outline-warning">Pocessed</div>
+                              @elseif($value->orderStatus == 3)
+                                  <div class="badge badge-outline-warning">Partially Paid</div>
+                              @elseif($value->orderStatus == 4)
+                                  <div class="badge badge-outline-warning">Fully Paid</div>
+                              @elseif($value->orderStatus == 7)
+                                  <div class="badge badge-outline-warning">Cancelled</div>
                               @endif
                             </td>
                             <td>
-                                @if ($value->orderStatus == 4)
+                                @if ($value->orderStatus == 3 || $value->orderStatus == 7)
                                     <!-- Common content when the condition is met -->
                                     <span>{{ $value->orderID }}</span>
                                     @else
@@ -20,7 +24,7 @@
                                         <a href="#" style="text-decoration: none; color: brown; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $value->orderID }}" onmouseover="this.style.color='red'" onmouseout="this.style.color='brown'">
                                             {{ $value->orderID }}
                                         </a>
-                                    @endif
+                                @endif
 
 
                             </td>
