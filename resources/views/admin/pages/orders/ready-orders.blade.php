@@ -278,13 +278,38 @@
                                     <form action="{{ route('processOrderStatus', ['id' => $order->customizeOrder->orderID]) }}" method="post"> 
                                         @csrf
                                         <input type="hidden" value="2" name="isSelectionOrder">
-                                        
+
+                                        {{--Validate payment status before proceeding to complete order--}}
+
+                                        @if ($order->payment_status == "Partially Paid" && $order->payment_option == "Half-online")
+                                        <hr>
+                                        <p> The customer's payment balance has not yet been processed, so their order cannot be completed. Please ask the customer to pay their balance online to complete their order.</p>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn badge-outline-success ready-button" name="action" value="Complete">Complete Order</button>
-
                                         </div>
+                                        @elseif ($order->payment_status == "Partially Paid" && $order->payment_option == "Half-cod")
+      
+                                        <hr>
+                                            <div class="d-flex justify-content-center">
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" id="confirmPayment" required>
+                                                    <label class="form-check-label" for="confirmPayment" style="color:blue">Check to confirm that the balance payment is already settled<br>
+                                                    <span style="color:black">(Payment balance due upon delivery or pickup)</span></label>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn badge-outline-success ready-button" id="confirmPaymentButton" name="action" value="Complete" disabled>Complete Order</button>
+                                            </div>
+                                        @else
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn badge-outline-success ready-button"  name="action" value="Complete">Complete Order</button>
+                                            </div>
+                                        @endif
                                     </form>
+
                                   </div>
                                 </div>
                               </div>
@@ -314,14 +339,39 @@
 
 
   <!-- plugins:js -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get references to the checkbox and button elements
+        var confirmPaymentCheckbox = document.getElementById("confirmPayment");
+        var confirmPaymentButton = document.getElementById("confirmPaymentButton");
+
+        // Function to handle the checkbox change event
+        function handleCheckboxChange() {
+            if (confirmPaymentCheckbox.checked) {
+                confirmPaymentButton.removeAttribute("disabled");
+            } else {
+                confirmPaymentButton.setAttribute("disabled", "disabled");
+            }
+        }
+
+        // Attach an event listener to the checkbox to handle changes
+        confirmPaymentCheckbox.addEventListener("change", handleCheckboxChange);
+
+        // Initially set the button state based on the checkbox state
+        handleCheckboxChange();
+    });
+  </script>
+
+
   <script>
     document.querySelectorAll(".ready-button").forEach(function(button) {
     button.addEventListener("click", function (event) {
         if (!confirm("Mark order as completed? Order must be delivered or picked up already.")) {
             event.preventDefault(); // Prevent the form submission if the user cancels
         }
-    });
-});
+     });
+  });
 
   </script>
 

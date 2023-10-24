@@ -360,7 +360,26 @@ public function SearchCustomOrders(Request $request)
 
         return redirect(route('readyOrders'));
       }elseif ($orderStatus == 'Completed'){
+
+      //code block to update payment_status to Fully Paid
+
+      $update = DB::table('customize_orders')
+                    ->where('customize_orders.orderID', $id)
+                    ->update([
+                              'updated_at' => now(),
+                              'orderStatus' => 4,
+                              
+                    ]);
+    
+      $update = DB::table('customize_order_details')
+                    ->join('customize_orders', 'customize_order_details.customOrder_id', '=', 'customize_orders.id')
+                    ->where('customize_orders.orderID', $id)
+                    ->update([
+                        'customize_order_details.payment_status' => 'Fully Paid',
+                    ]);
+        
         return redirect(route('completedOrders'));
+        
       }elseif ($orderStatus == 'Pending'){
         return redirect(route('activeOrders'));
       }
