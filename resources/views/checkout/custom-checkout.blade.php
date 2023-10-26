@@ -80,42 +80,51 @@
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                   </div>
-
-                  <!--Form Group-->
+                    
+                  <!-- Form Group -->
                   <div class="form-group">
-                    <div class="field-label">Delivery address <sup>*</sup><sup style="font-style: italic; color: #5fcac7; font-size: smaller;"> Required for Delivery</sup></div>
-                    <input type="text" name="street_address" value="" placeholder="Unit No./Building Name/Street/Barangay">
-                                        @error('street_address')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                      <div class="field-label">Delivery address <sup>*</sup><sup style="font-style: italic; color: #5fcac7; font-size: smaller;"> Required for Delivery</sup></div>
+                      <input type="text" name="street_address" 
+                            value="{{ !is_null($location) ? $location : '' }}" 
+                            placeholder="{{ !is_null($location) ? '' : 'Unit No./Building Name/Street/Barangay' }}"
+                            {{ !is_null($location) ? 'readonly' : "" }}>
+                      @error('street_address')
+                      <div class="text-danger">{{ $message }}</div>
+                      @enderror
                   </div>
 
-                  <!--Form Group-->
                   <div class="form-group">
-                      <div class="field-label">Town / City <sup>*</sup><sup style="font-style: italic; color: #5fcac7; font-size: smaller;"> Required for Delivery</sup></div>
-                      <select name="town">
-                          <option value="" disabled selected>Select</option>
-                          <option value="Alfonso Castañeda">Alfonso Castañeda</option>
-                          <option value="Ambaguio">Ambaguio</option>
-                          <option value="Aritao">Aritao</option>
-                          <option value="Bambang">Bambang</option>
-                          <option value="Bayombong">Bayombong</option>
-                          <option value="Diadi">Diadi</option>
-                          <option value="	Dupax del Norte">	Dupax del Norte</option>
-                          <option value="	Dupax del Sur">	Dupax del Sur</option>
-                          <option value="Kasibu">Kasibu</option>
-                          <option value="Kayapa">Kayapa</option>
-                          <option value="Quezon">Quezon</option>
-                          <option value="Santa Fe">Santa Fe</option>
-                          <option value="Solano">Solano</option>
-                          <option value="Villaverde">Villaverde</option>
+                  <div class="field-label">Town / City <sup>*</sup><sup style="font-style: italic; color: #5fcac7; font-size: smaller;"> Required for Delivery</sup></div>
+                  <select name="town" @if($town) disabled @endif>
+                      @if (!$town)
+                      <option value="" disabled selected>Select</option>
+                      @endif
+                    <option value="Alfonso Castañeda" {{ $town == 'Alfonso Castañeda' ? 'selected' : '' }}>Alfonso Castañeda</option>
+                    <option value="Ambaguio" {{ $town == 'Ambaguio' ? 'selected' : '' }}>Ambaguio</option>
+                    <option value="Aritao" {{ $town == 'Aritao' ? 'selected' : '' }}>Aritao</option>
+                    <option value="Bambang" {{ $town == 'Bambang' ? 'selected' : '' }}>Bambang</option>
+                    <option value="Bayombong" {{ $town == 'Bayombong' ? 'selected' : '' }}>Bayombong</option>
+                    <option value="Diadi" {{ $town == 'Diadi' ? 'selected' : '' }}>Diadi</option>
+                    <option value="Dupax del Norte" {{ $town == 'Dupax del Norte' ? 'selected' : '' }}>Dupax del Norte</option>
+                    <option value="Dupax del Sur" {{ $town == 'Dupax del Sur' ? 'selected' : '' }}>Dupax del Sur</option>
+                    <option value="Kasibu" {{ $town == 'Kasibu' ? 'selected' : '' }}>Kasibu</option>
+                    <option value="Kayapa" {{ $town == 'Kayapa' ? 'selected' : '' }}>Kayapa</option>
+                    <option value="Quezon" {{ $town == 'Quezon' ? 'selected' : '' }}>Quezon</option>
+                    <option value="Santa Fe" {{ $town == 'Santa Fe' ? 'selected' : '' }}>Santa Fe</option>
+                    <option value="Solano" {{ $town == 'Solano' ? 'selected' : '' }}>Solano</option>
+                    <option value="Villaverde" {{ $town == 'Villaverde' ? 'selected' : '' }}>Villaverde</option>
+                    <!-- Add similar lines for other options based on $town -->
+                  </select>
+                  @error('town')
+                  <div class="text-danger">{{ $message }}</div>
+                  @enderror
 
-                          <!-- Add more options as needed -->
-                      </select>
-                                      @error('town')
-                                      <div class="text-danger">{{ $message }}</div>
-                                      @enderror
-                  </div>
+                    @if ($town)
+                        <input type="hidden" name="town" value="{{$town}}">
+                    @endif
+                </div>
+
+
 
                   <!--Form Group-->
                   <div class="form-group">
@@ -129,11 +138,15 @@
                   <!--Form Group-->
                   <div class="form-group">
                     <div class="field-label">Postcode/ ZIP <sup style="font-style: italic; color: #5fcac7; font-size: smaller;"> Optional but recommended</sup></div>
-                    <input type="text" name="postcode" value="" placeholder="">
+                    <input type="text" name="postcode" value=""
+                            value="{{ !is_null($postalcode) ? $postalcode : '' }}" 
+                            placeholder="{{ !is_null($postalcode) ? $postalcode : '' }}"
+                            {{ !is_null($location) ? 'readonly' : "" }}>
                                         @error('postcode')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                   </div>
+
                 </div>
               </div>
 
@@ -157,46 +170,54 @@
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                   </div>
+                  
 
-                  <!--Form Group-->
                   <div class="form-group">
                     <div class="field-label">Shipping Options <sup>*</sup></div>
                     <div style="display: flex; justify-content: space-between;">
-                      <div style="width: 48%;">
-                        <div class="radio-option">
-                          <input type="radio" name="shipping_method" id="shipping-1" value="Pickup" checked>
-                          <label for="shipping-2">Pick-Up</label>
+                        <div style="width: 48%;">
+                            <div class="radio-option">
+                                <input type="radio" name="shipping_method" id="shipping-1" value="Pickup" {{ !$orders->first()->shipping_method || $orders->first()->shipping_method !== 'Delivery' ? 'checked' : '' }} {{ $orders->first()->shipping_method ? 'disabled' : '' }}>
+                                <label for="shipping-1">Pick-Up</label>
+                            </div>
                         </div>
-                      </div>
-                      <div style="width: 48%;">
-                        <div class="radio-option">
-                          <input type="radio" name="shipping_method" id="shipping-2" value="Delivery">
-                          <label for="shipping-1">Delivery</label>
+                        <div style="width: 48%;">
+                            <div class="radio-option">
+                                <input type="radio" name="shipping_method" id="shipping-2" value="Delivery" {{ $orders->first()->shipping_method === 'Delivery' ? 'checked' : '' }} {{ $orders->first()->shipping_method ? 'disabled' : '' }}>
+                                <label for="shipping-2">Delivery</label>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                                        @error('shipping_method')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                  </div>
+                    @error('shipping_method')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
 
-                  <!--Form Group-->
-                  <div class="form-group ">
-                    <div class="field-label">Delivery/Pick-up Date <sup>*</sup></div>
-                    <input type="date" id="delivery-date" name="delivery_date">
-                                        @error('delivery_date')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                  </div>
+                    @if ($orders->first()->shipping_method)
+                        <input type="hidden" name="shipping_method" value="{{ $orders->first()->shipping_method }}">
+                    @endif
+
+                </div>
+
 
                   <!--Form Group-->
                   <div class="form-group">
-                    <div class="field-label">Delivery/Pick-up Time <sup>*</sup></div>
-                    <input type="time" id="delivery-time" name="delivery_time" value="08:00">
-                                        @error('delivery_time')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                    <div class="field-label">Delivery/Pick-up Date <sup>*</sup></div>
+                    <input type="date" id="delivery-date" name="delivery_date" value="{{$orders->first()->delivery_date }}" @if($orders->first()->delivery_date) readonly @endif>
+                    @error('delivery_date')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                   </div>
+
+
+                  <!--Form Group-->
+                  <div class="form-group">
+                      <div class="field-label">Delivery/Pick-up Time <sup>*</sup></div>
+                      <input type="time" id="delivery-time" name="delivery_time" value="{{ $orders->first()->delivery_time ? date('H:i', strtotime($orders->first()->delivery_time)) : '' }}" @if ($orders->first()->delivery_time) readonly @endif pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]">
+                      @error('delivery_time')
+                      <div class="text-danger">{{ $message }}</div>
+                      @enderror
+                  </div>
+
 
                   <!--Form Group-->
                   <div class="form-group ">
@@ -346,32 +367,34 @@
   <!-- Scroll To Top -->
   @include('partials.scroll-to-top')
 
-  <!-- Date of Delivery Validation (2 Days from today) -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const deliveryDateInput = document.getElementById("delivery-date");
+  @if (is_null($orders->first()->delivery_time))
+    <!-- Date of Delivery Validation (7 Days from today) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const deliveryDateInput = document.getElementById("delivery-date");
 
-      // Get today's date and add two days
-      const minDate = new Date();
-      minDate.setDate(minDate.getDate() + 2);
+            // Get today's date and add two days
+            const minDate = new Date();
+            minDate.setDate(minDate.getDate() + 6);
 
-      // Format the minimum date as YYYY-MM-DD for input validation
-      const minDateString = minDate.toISOString().split("T")[0];
+            // Format the minimum date as YYYY-MM-DD for input validation
+            const minDateString = minDate.toISOString().split("T")[0];
 
-      // Set the minimum attribute of the input field
-      deliveryDateInput.min = minDateString;
+            // Set the minimum attribute of the input field
+            deliveryDateInput.min = minDateString;
 
-      // Add an event listener to check the selected date on change
-      deliveryDateInput.addEventListener("change", function() {
-        const selectedDate = new Date(this.value);
+            // Add an event listener to check the selected date on change
+            deliveryDateInput.addEventListener("change", function() {
+                const selectedDate = new Date(this.value);
 
-        if (selectedDate < minDate) {
-          alert("Delivery/Pickup date should be at least two days from today.");
-          this.value = ""; // Clear the input value
-        }
-      });
-    });
-  </script>
+                if (selectedDate < minDate) {
+                    alert("Delivery/Pickup date should be at least 7 days from today.");
+                    this.value = ""; // Clear the input value
+                }
+            });
+        });
+    </script>
+  @endif
 
   <!-- Time of Delivery Validation (8 am to 5:30 pm) -->
   <script>

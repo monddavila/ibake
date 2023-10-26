@@ -65,7 +65,7 @@ class CustomizeController extends Controller
         if($shippingMethod == 'Delivery'){
             $address = $location . ', ' . $town . ',' . $province . ',' . $postcode;
         }else{
-            $address = "";
+            $address = null;
         }
 
         DB::table('customize_orders')->insert([
@@ -131,7 +131,7 @@ class CustomizeController extends Controller
         if($shippingMethod == 'Delivery'){
             $address = $location . ', ' . $town . ',' . $province . ',' . $postcode;
         }else{
-            $address = "";
+            $address = null;
         }
 
 
@@ -429,16 +429,48 @@ class CustomizeController extends Controller
         $customOrderId = $id;
 
         $orders = DB::table('customize_orders')
-                    ->select('*')
-                    ->where('customize_orders.orderID', $id)
-                    ->get();
+            ->select('*')
+            ->where('customize_orders.orderID', $id)
+            ->get();
+
+        $address = $orders->first()->address;
+
+        // Initialize variables
+        $location = null;
+        $town = null;
+        $province = null;
+        $postalcode = null; 
+
+        if ($address) {
+            $addressParts = explode(',', $address);
+
+            // Trim spaces from the parts
+            $addressParts = array_map('trim', $addressParts);
+
+            // Ensure there are at least three parts (location, town, and province)
+            if (count($addressParts) >= 3) {
+                $location = $addressParts[0];
+                $town = $addressParts[1];
+                $province = $addressParts[2];
+
+                // Check if postal code exists (fourth part)
+                if (count($addressParts) >= 4) {
+                    $postalcode = $addressParts[3];
+                }
+            }
+        }
 
         return view('checkout.custom-checkout')->with([
             'user' => $user,
             'orders' => $orders,
             'customOrderId' => $customOrderId,
+            'location' => $location,
+            'town' => $town,
+            'province' => $province,
+            'postalcode' => $postalcode,
         ]);
     }
+
 
     public function showBalanceCheckoutForm($id)
     {
