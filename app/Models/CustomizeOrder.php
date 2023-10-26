@@ -22,7 +22,16 @@ class CustomizeOrder extends Model
                                 'cakeDecoration',
                                 'cakeMessage',
                                 'cakePrice',
-                                'orderStatus'
+                                'orderStatus',
+                                'cake_size',
+                                'cake_flavor',
+                                'cake_icing',
+                                'celebrant_name',
+                                'celebrant_birthday',
+                                'shipping_method',
+                                'delivery_date',
+                                'delivery_time',
+                                'address',
                         ];
 
     public function user()

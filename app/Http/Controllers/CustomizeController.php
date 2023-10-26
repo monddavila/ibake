@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductsController;
 use App\Models\CustomizeOrderDetail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class CustomizeController extends Controller
 {
@@ -41,6 +42,32 @@ class CustomizeController extends Controller
      */
     public function store(Request $request)
     {
+
+        $celebrantName = $request->input('celebrant_name_1');
+        $celebrantBirthday = $request->input('celebrant_birthday_1');
+        $shippingMethod = $request->input('shipping_method_1');
+        $deliveryDate = $request->input('delivery_date_1');
+        $deliveryTime = $request->input('delivery_time_1');
+        $location = $request->input('location_1');
+        $town = $request->input('town_1');
+        $province = $request->input('province_1');
+        $postcode = $request->input('postcode_1');
+
+
+        // Check if 'town' exists in the session
+        if (isset($town)) {
+            $town = $request->input('town');
+        } else {
+            // Set a default value if 'town' doesn't exist in the session
+            $town = null;
+        }
+    
+        if($shippingMethod == 'Delivery'){
+            $address = $location . ', ' . $town . ',' . $province . ',' . $postcode;
+        }else{
+            $address = "";
+        }
+
         DB::table('customize_orders')->insert([
             'userID' => $request->user()->id,
             'orderID' => date("sdmY"),
@@ -55,17 +82,62 @@ class CustomizeController extends Controller
             'cakeDecoration' => $request->input('cakeDecoration'),
             'cakeMessage' => $request->input('cakeMessage'),
             'cakePrice' => $request->input('cakePrice'),
+            'cake_size' => null,
+            'cake_flavor' => null,
+            'cake_icing' => null,
+            'celebrant_name' => $celebrantName,
+            'celebrant_birthday' => $celebrantBirthday,
+            'shipping_method' => $shippingMethod,
+            'delivery_date' => $deliveryDate,
+            'delivery_time' => $deliveryTime,
+            'address' => $address,
             'created_at' => now(),
             'updated_at' => null,
             'orderStatus' => 1
         ]);
+
+
         return redirect('/customer');
     }
 
     public function ___insertCustomOrderImage(Request $request)
     {
+        // Access data from Step 1
+        $cakeOrderImage = $request->file('cakeOrderImage');
+        $cakeMessage = $request->input('cakeMessage');
+
+        // Access data from Step 2
+        $cakeSizeDetail = $request->input('cake_size');
+        $icing = $request->input('icing');
+        $cakeFlavor = $request->input('cake_flavor');
+        $celebrantName = $request->input('celebrant_name');
+        $celebrantBirthday = $request->input('celebrant_birthday');
+        $shippingMethod = $request->input('shipping_method');
+        $deliveryDate = $request->input('delivery_date');
+        $deliveryTime = $request->input('delivery_time');
+        $location = $request->input('location');
+        $town = $request->input('town');
+        $province = $request->input('province');
+        $postcode = $request->input('postcode');
+
+         // Check if 'town' exists in the session
+        if (isset($town)) {
+            $town = $request->input('town');
+        } else {
+            // Set a default value if 'town' doesn't exist in the session
+            $town = null;
+        }
+    
+        if($shippingMethod == 'Delivery'){
+            $address = $location . ', ' . $town . ',' . $province . ',' . $postcode;
+        }else{
+            $address = "";
+        }
+
+
+
         $directory = 'images' . DIRECTORY_SEPARATOR . 'customerUploadedOrderCake';
-        $newImgName = uniqid() . '-' . $request->name . '.' . $request->cakeOrderImage->getClientOriginalExtension();
+        $newImgName = uniqid() . '.' . $request->cakeOrderImage->getClientOriginalExtension();
         $stored = $request->file('cakeOrderImage')->move($directory, $newImgName);
 
         DB::table('customize_orders')->insert([
@@ -80,8 +152,17 @@ class CustomizeController extends Controller
             'cakeTopBorder' => null,
             'cakeBottomBorder' => null,
             'cakeDecoration' => null,
-            'cakeMessage' => $request->input('cakeMessage'),
+            'cakeMessage' => $cakeMessage,
             'cakePrice' => null,
+            'cake_size' => $cakeSizeDetail,
+            'cake_flavor' => $cakeFlavor,
+            'cake_icing' => $icing,
+            'celebrant_name' => $celebrantName,
+            'celebrant_birthday' => $celebrantBirthday,
+            'shipping_method' => $shippingMethod,
+            'delivery_date' => $deliveryDate,
+            'delivery_time' => $deliveryTime,
+            'address' => $address,
             'created_at' => now(),
             'updated_at' => null,
             'orderStatus' => 1
@@ -89,6 +170,39 @@ class CustomizeController extends Controller
 
         return redirect('/customer');
     }
+
+    
+
+    public function validateCustomOrder(Request $request)
+    {
+    $rules = [
+        'cake_size' => 'required',
+        'cake_flavor' => 'required',
+        'icing' => 'required',
+        'shipping_method' => 'required',
+        'delivery_date' => 'required',
+        'delivery_time' => 'required',
+    ];
+
+    if ($request->input('shipping_method') === 'Delivery') {
+        $rules['location'] = 'required';
+        $rules['town'] = 'required';
+        $rules['province'] = 'required';
+    }
+
+    $validator = Validator::make($request->all(), $rules);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'success' => false,
+            'errors' => $validator->errors()
+        ]);
+    }
+
+    return response()->json(['success' => true]);
+    }
+
+
 
     public function storeCustomOrder(Request $request)
     {

@@ -528,136 +528,33 @@
                                     <button class="btn" id="nextStep">Next</button>
                                 </div>
                                     <?php if (Auth::check()) { ?>
-                                            <div class="go-back mt-5 text-center container-fluid d-none justify-content-end justify-items-center" id="cake-builder-buttons">
-                                                <button type="button" class="btn btn-primary btn-sm form-control" id="cOrderbtn">Proceed</button>
-                                                <button type="button" class="btn btn-default form-control" id="editChoices">Edit choices</button>
+                                        <form method="POST" action="{{ route('custom-orders') }}">
+                                            @csrf
+                                            <div style="display:none;">
+                                                <input type="" value="" id="cakeSizeval" name="cakeSize">
+                                                <input type="" value="" id="cakeFlavorval" name="cakeFlavor">
+                                                <input type="" value="" id="cakeFillingval" name="cakeFilling">
+                                                <input type="" value="" id="cakeIcingval" name="cakeIcing">
+                                                <input type="" value="" id="cakeTopBorderval" name="cakeTopBorder">
+                                                <input type="" value="" id="cakeBottomBorderval" name="cakeBottomBorder">
+                                                <input type="" value="" id="cakeDecorationval" name="cakeDecoration">
+                                                <input type="" value="" id="cakeMessageval" name="cakeMessage">
+                                                <input type="" value="" id="cakePriceval" name="cakePrice">
                                             </div>
+                                            <div class="go-back mt-5 text-center container-fluid d-none justify-content-end justify-items-center">
+                                                <button type="submit" class="btn btn-primary btn-sm form-control" id="cOrderbtn">Proceed</button>
+
+                                        </form>
+                       
+                                            <button type="button" class="btn btn-default form-control" id="editChoices">Edit choices</button>
+                                        
+                                        </div>
                                     <?php }else{?>
-                                            <div class="alert alert-warning" role="alert">
-                                                Please <a href="{{ route('login') }}">login</a> to proceed your Order...
-                                            </div>
+                                        <div class="alert alert-warning" role="alert">
+                                          Please <a href="{{ route('login') }}">login</a> to proceed your Order...
+                                        </div>
                                     <?php } ?>
 
-                                            <form id="custom-form_1"method="POST" action="{{ route('custom-orders') }}" enctype="multipart/form-data">
-                                                @csrf
-                                                    <input type="hidden" id="custom-form-action_1" value="{{ route('custom-orders') }}">
-
-                                                <div id="cakebuild-step" style="display: none">
-                                                    
-                                                            <div class="title text-center">
-                                                                <h5>Custom Cake Order Details</h5>
-                                                            </div>
-                                                            <br>
-                                                            <div class="inner-column">
-
-                                                                <div style="display:none;">
-                                                                    <input type="" value="" id="cakeSizeval" name="cakeSize">
-                                                                    <input type="" value="" id="cakeFlavorval" name="cakeFlavor">
-                                                                    <input type="" value="" id="cakeFillingval" name="cakeFilling">
-                                                                    <input type="" value="" id="cakeIcingval" name="cakeIcing">
-                                                                    <input type="" value="" id="cakeTopBorderval" name="cakeTopBorder">
-                                                                    <input type="" value="" id="cakeBottomBorderval" name="cakeBottomBorder">
-                                                                    <input type="" value="" id="cakeDecorationval" name="cakeDecoration">
-                                                                    <input type="" value="" id="cakeMessageval" name="cakeMessage">
-                                                                    <input type="" value="" id="cakePriceval" name="cakePrice">
-                                                                </div>
-                                                                
-                                                                <div class="form-group">
-                                                                    <label for="celebrant_name_1">Name of Celebrant <span>(optional)</span></span></label>
-                                                                    <input type="text" class="form-control" id="celebrant_name_1" name="celebrant_name_1">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="celebrant_birthday_1">Birthday of Celebrant <span>(optional)</span></label>
-                                                                    <div class="row">
-                                                                        <div class="col-6">
-                                                                            <input type="date" class="form-control" id="celebrant_birthday_1" name="celebrant_birthday_1">
-                                                                        </div>
-                                                                        <div class="col-6">
-                                                                            <input type="text" class="form-control" id="celebrant_age_1" name="celebrant_age_1" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="shipping_method_1">Shipping Method *</label>
-                                                                    <select class="form-control" id="shipping_method_1" name="shipping_method_1" required onchange="toggleLocationFields_1()">
-                                                                        <option value="Pickup">Pickup</option>
-                                                                        <option value="Delivery">Delivery</option>
-                                                                    </select>
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label for="delivery_date_1">Date Needed * <span style="color: blue"><em>(at least 7 days from today)</em></span></label>
-                                                                    <input type="date" class="form-control" id="delivery_date" name="delivery_date_1" required>
-                                                                                @error('delivery_date_1"')
-                                                                                <span class="text-danger">{{ $message }}</span>
-                                                                                @enderror
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="delivery_time_1">Time of Delivery/Pickup *</label>
-                                                                    <input type="time" class="form-control" id="delivery_time" name="delivery_time_1" required>
-                                                                                @error('delivery_time_1"')
-                                                                                <span class="text-danger">{{ $message }}</span>
-                                                                                @enderror
-                                                                </div>
-
-                                                                <div id="locationFieldsContainer_1" style="display: none">
-                                                                    <div class="form-group">
-                                                                        <label for="location_1">Location/Venue *</label>
-                                                                        <input type="text" class="form-control" id="location_1" name="location_1" placeholder="Unit No./Building Name/Street/Barangay">
-                                                                                @error('location_1"')
-                                                                                <span class="text-danger">{{ $message }}</span>
-                                                                                @enderror
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label for="town_1">Town/  City *</label>
-                                                                        <select class="form-control" name="town_1" id="town_1">
-                                                                            <option value="" disabled selected>Select</option>
-                                                                            <option value="Alfonso Castañeda">Alfonso Castañeda</option>
-                                                                            <option value="Ambaguio">Ambaguio</option>
-                                                                            <option value="Aritao">Aritao</option>
-                                                                            <option value="Bambang">Bambang</option>
-                                                                            <option value="Bayombong">Bayombong</option>
-                                                                            <option value="Diadi">Diadi</option>
-                                                                            <option value="	Dupax del Norte">	Dupax del Norte</option>
-                                                                            <option value="	Dupax del Sur">	Dupax del Sur</option>
-                                                                            <option value="Kasibu">Kasibu</option>
-                                                                            <option value="Kayapa">Kayapa</option>
-                                                                            <option value="Quezon">Quezon</option>
-                                                                            <option value="Santa Fe">Santa Fe</option>
-                                                                            <option value="Solano">Solano</option>
-                                                                            <option value="Villaverde">Villaverde</option>
-                                                                        </select>
-                                                                                @error('town_1"')
-                                                                                <span class="text-danger">{{ $message }}</span>
-                                                                                @enderror
-                                                                    </div>
-                                                                
-                                                                    <div class="form-group">
-                                                                        <label for="province_1">Province*</label>
-                                                                        <input type="text" class="form-control" id="province_1" name="province_1"  value="Nueva Vizcaya" placeholder="Nueva Vizcaya" readonly>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                    <label for="postcode_1">Postcode <span>(optional)</span></label>
-                                                                    <input type="text" class="form-control" id="postcode_1" name="postcode_1">
-                                                                    </div>
-
-                                                                </div>
-                                                                
-
-                                                                <button class="btn btn-secondary" type="button" id="previous-button">Previous</button>
-                                                                <button class="btn btn-primary" type="submit" id="submit-button_1">Submit</button>
-
-
-                                                            </div>
-                                                      
-                                                </div>
-                                            </form> 
-
-
-
-
-                                    
-                                   
                             </div>
                         </div>
                     </div>
@@ -1423,69 +1320,6 @@
     </script>
 
     <script>
-    document.getElementById("cOrderbtn").addEventListener("click", function () {
-        // Hide buttons and show the "cakebuild-step" section
-        document.getElementById("cOrderbtn").style.display = "none";
-        document.getElementById("editChoices").style.display = "none";
-        document.getElementById("cakebuild-step").style.display = "block";
-    });
-
-    document.getElementById("previous-button").addEventListener("click", function () {
-        // Show buttons and hide the "cakebuild-step" section
-        document.getElementById("cOrderbtn").style.display = "block";
-        document.getElementById("editChoices").style.display = "block";
-        document.getElementById("cakebuild-step").style.display = "none";
-    });
-    </script>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const shippingMethod1 = document.getElementById('shipping_method_1');
-        const location1 = document.getElementById('location_1');
-        const town1 = document.getElementById('town_1');
-
-        // Function to enable or disable required attribute
-        function toggleRequiredAttribute(element, required) {
-            if (required) {
-                element.setAttribute('required', 'required');
-            } else {
-                element.removeAttribute('required');
-            }
-        }
-
-        // Initial state
-        toggleRequiredAttribute(location1, false);
-        toggleRequiredAttribute(town1, false);
-
-        // Listen for changes in shipping_method_1
-        shippingMethod1.addEventListener('change', function () {
-            const selectedValue = this.value;
-            if (selectedValue === 'Delivery') {
-                toggleRequiredAttribute(location1, true);
-                toggleRequiredAttribute(town1, true);
-            } else {
-                toggleRequiredAttribute(location1, false);
-                toggleRequiredAttribute(town1, false);
-            }
-        });
-    });
-    </script>
-
-
-    <script>
-        function toggleLocationFields_1() {
-        const shippingMethod_1 = document.getElementById('shipping_method_1').value;
-        const locationFieldsContainer_1 = document.getElementById('locationFieldsContainer_1');
-
-        if (shippingMethod_1 === 'Delivery') {
-            locationFieldsContainer_1.style.display = 'block';
-        } else {
-            locationFieldsContainer_1.style.display = 'none';
-        }
-    }
-    </script>
-
-    <script>
         function toggleLocationFields() {
         const shippingMethod = document.getElementById('shipping_method').value;
         const locationFieldsContainer = document.getElementById('locationFieldsContainer');
@@ -1496,23 +1330,6 @@
             locationFieldsContainer.style.display = 'none';
         }
     }
-    </script>
-
-    <script>
-     document.getElementById('celebrant_birthday_1').addEventListener('change', function () {
-    const dob = new Date(this.value);
-    const today = new Date();
-    let age = today.getFullYear() - dob.getFullYear();
-    
-    // Check if the birthday for this year has occurred or not
-    if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) {
-        age--;
-    }
-
-    // Display the age
-    document.getElementById('celebrant_age_1').value = age + ' yrs old, current age';
-    });
-
     </script>
     
     <script>
@@ -1528,7 +1345,8 @@
 
     // Display the age
     document.getElementById('celebrant_age').value = age + ' yrs old, current age';
-    });
+});
+
 
     </script>
 
