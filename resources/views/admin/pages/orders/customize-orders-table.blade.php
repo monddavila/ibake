@@ -31,7 +31,9 @@
                             <td>
                                 {{ $value->created_at ? \Carbon\Carbon::parse($value->created_at)->format('d M Y') : '-' }}
                             </td>
-                            <td>date needed</td>
+                            <td>
+                                 {{ $value->delivery_date ? \Carbon\Carbon::parse($value->delivery_date)->format('d M Y') : '-' }}
+                            </td>
                             <td>{{ $value->user->firstname }} {{ $value->user->lastname }}</td>
                             <td>{{ $value->user->phone }}</td>
                             <td>

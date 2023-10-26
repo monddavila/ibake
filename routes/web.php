@@ -163,6 +163,9 @@ Route::group(['prefix' => 'orders'], function () {
 Route::group(['prefix' => 'custom-orders'], function () {
   Route::post('/', [CustomizeController::class, 'store'])->name('custom-orders');
   Route::post('/upload-order-photo', [CustomizeController::class, '___insertCustomOrderImage'])->name('customer.upload-order-photo');
+
+  Route::post('/validate-order', [CustomizeController::class, 'validateCustomOrder'])->name('validateCustomOrder');
+
 });
 
 

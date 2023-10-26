@@ -118,7 +118,9 @@
                       <td>
                           {{ $value->created_at ? \Carbon\Carbon::parse($value->created_at)->format('d M Y') : '-' }}
                       </td>
-                      <td>Date Needed</td>
+                      <td>
+                          {{ $value->delivery_date ? \Carbon\Carbon::parse($value->delivery_date)->format('d M Y') : '-' }}
+                      </td>
                       <td>
                           {{ $value->updated_at ? \Carbon\Carbon::parse($value->updated_at)->format('d M Y') : '-' }}
                       </td>
