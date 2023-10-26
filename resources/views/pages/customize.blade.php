@@ -587,14 +587,14 @@
 
                                                                 <div class="form-group">
                                                                     <label for="delivery_date_1">Date Needed * <span style="color: blue"><em>(at least 7 days from today)</em></span></label>
-                                                                    <input type="date" class="form-control" id="delivery_date" name="delivery_date_1" required>
+                                                                    <input type="date" class="form-control" id="delivery_date_1" name="delivery_date_1" required>
                                                                                 @error('delivery_date_1"')
                                                                                 <span class="text-danger">{{ $message }}</span>
                                                                                 @enderror
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="delivery_time_1">Time of Delivery/Pickup *</label>
-                                                                    <input type="time" class="form-control" id="delivery_time" name="delivery_time_1" required>
+                                                                    <input type="time" class="form-control" id="delivery_time_1" name="delivery_time_1" required>
                                                                                 @error('delivery_time_1"')
                                                                                 <span class="text-danger">{{ $message }}</span>
                                                                                 @enderror
@@ -1531,6 +1531,59 @@
     });
 
     </script>
+
+    <!-- Custom Cake Builder - Date of Delivery Validation (7 Days from today) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const deliveryDateInput = document.getElementById("delivery_date_1");
+
+      // Get today's date and add two days
+      const minDate = new Date();
+      minDate.setDate(minDate.getDate() + 7);
+
+      // Format the minimum date as YYYY-MM-DD for input validation
+      const minDateString = minDate.toISOString().split("T")[0];
+
+      // Set the minimum attribute of the input field
+      deliveryDateInput.min = minDateString;
+
+      // Add an event listener to check the selected date on change
+      deliveryDateInput.addEventListener("change", function() {
+        const selectedDate = new Date(this.value);
+
+        if (selectedDate < minDate) {
+          alert("Delivery/Pickup date should be at least 7 days from today.");
+          this.value = ""; // Clear the input value
+        }
+      });
+    });
+  </script>
+
+  <!-- Custom Cake Builder -  Time of Delivery Validation (8 am to 5:30 pm) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const deliveryTimeInput = document.getElementById("delivery_time_1");
+
+      // Set the range for valid delivery times (8 AM to 6 PM)
+      const validStartTime = new Date();
+      validStartTime.setHours(8, 0, 0, 0); // 8:00 AM
+
+      const validEndTime = new Date();
+      validEndTime.setHours(17, 30, 0, 0); // 5:30 PM
+
+      // Add an event listener to check the selected time on change
+      deliveryTimeInput.addEventListener("change", function() {
+        const selectedTimeParts = this.value.split(":");
+        const selectedTime = new Date();
+        selectedTime.setHours(parseInt(selectedTimeParts[0]), parseInt(selectedTimeParts[1]), 0, 0);
+
+        if (selectedTime < validStartTime || selectedTime > validEndTime) {
+          alert("Delivery/Pickup time should be between 8:00 AM and 5:30 PM.");
+          this.value = "08:30"; // Reset the time to the default value
+        }
+      });
+    });
+  </script>
 
     <!-- Date of Delivery Validation (7 Days from today) -->
   <script>
