@@ -63,17 +63,24 @@
                           <?php if ($value->orderStatus == 1): ?>
                               <div class="d-flex align-items-center">
                                   <div class="badge badge-outline-warning">Awaiting Approval</div>
-                                  <form action="{{ route('cake-request.cancel', ['id' => $value->orderID]) }}" method="post">
+                                  <form action="{{ route('cake-request.cancel', ['id' => $value->orderID]) }}" method="post" style="margin-left: 10px;">
                                       @csrf
                                       <button id="cancel-request" type="submit" class="badge badge-outline-success btn-danger" style="text-decoration: none;"
                                           onclick="confirmCancel('{{ $value->orderID }}', event)">Cancel</button>
                                   </form>
                               </div>
                           <?php elseif($value->orderStatus == 2): ?>
+                            <div class="d-flex align-items-center">
                               <form action="{{ route('cake-request.process', ['id' => $value->orderID]) }}" method="post">
                                   @csrf
                                   <button type="submit" class="badge badge-outline-success btn-success" style="text-decoration: none;">Pay Now</button>
                               </form>
+                              <form action="{{ route('cake-request.cancel', ['id' => $value->orderID]) }}" method="post" style="margin-left: 10px;">
+                                      @csrf
+                                      <button id="cancel-request" type="submit" class="badge badge-outline-success btn-secondary" style="text-decoration: none;"
+                                          onclick="confirmCancel('{{ $value->orderID }}', event)">Cancel</button>
+                              </form>
+                            </div>
                           <?php elseif($value->orderStatus == 5): ?>
                               <div class="badge badge-outline-danger">Rejected</div>
                           <?php elseif($value->orderStatus == 4): ?>
@@ -170,6 +177,7 @@
                                     <div align="center">
                                       <img src="{{ asset($value->cakeOrderImage) }}" style="max-width: auto;max-height: 250px;">
                                     </div>
+
                                   @endif
                                   <!-- details -->
                                   @if($value->isSelectionOrder == 1)
@@ -189,9 +197,60 @@
                                           <span><i>{{ $value->cakeBottomBorder }}</i></span><br>
                                         <label>Decoration:</label>
                                           <span><i>{{ $value->cakeDecoration }}</i></span><br>
-                                        <label>Message:</label>
+                                        <label>Cake Dedication:</label>
                                           <span><i>{{ $value->cakeMessage }}</i></span><br>
-                                        <hr>
+                                        <label>Celebrant Name:</label>
+                                          <span><i>{{ $value->celebrant_name}}</i></span><br>
+                                        <label>Celebrant Birthday:</label>
+                                              @php
+                                                  $birthday = $value->celebrant_birthday;
+
+                                                  if ($birthday) {
+                                                      $parsedDate1 = date('F-d-Y', strtotime($birthday));
+                                                  }
+                                              @endphp
+
+                                              @if (isset($parsedDate1))
+                                                  <span><i>{{$parsedDate1 }}</i></span>
+                                              @endif
+                                              <br>
+                                              @php
+                                                  $birthday = $value->celebrant_birthday;
+                                                  $age = null;
+
+                                                  if ($birthday !== null) {
+                                                      $birthday = date('Y-m-d', strtotime($birthday));
+                                                      $currentDate = \Carbon\Carbon::now();
+
+                                                      $age = $currentDate->diffInYears($birthday);
+                                                  }
+                                              @endphp
+
+                                              @if ($age !== null)
+                                                  <span><i> (currently {{ $age }} years old)</i></span><br>
+                                              @endif
+                                          <hr>         
+                                                      @if ($value->customizeOrderDetail)
+                                                      <label>Payment Option:</label>
+                                                      <span><i>{{ $value->customizeOrderDetail->payment_option }}</i></span><br>
+                                                      @endif
+                                                      <label>Shipping Method:</label>
+                                                      <span><i>{{ $value->shipping_method }}</i></span><br>
+                                                      <label>Date Needed:</label>
+                                                      <span><i>{{ \Carbon\Carbon::parse($value->delivery_date)->format('d M Y') }}</i></span><br>
+                                                      <label>Time:</label>
+                                                      <span><i>{{ \Carbon\Carbon::parse($value->delivery_time)->format('g:i A') }}</i></span><br>
+                                                      @if ($value->shipping_method == 'Delivery')
+                                                      <label>Address:</label>
+                                                      <span><i>{{ $value->address }}</i></span><br>
+                                                      @endif
+                                                      @if ($value->customizeOrderDetail)
+                                                        @if($value->customizeOrderDetail->payment_balance > 0)
+                                                        <label style="color:blue">Payment Balance:</label>
+                                                        <span style="color:blue"><i>₱ {{ $value->customizeOrderDetail->payment_balance }}</i></span><br>
+                                                        @endif
+                                                      @endif
+                                          <hr>
                                         <div align="right">
                                           <span>&#8369; {{ number_format($value->cakePrice, 2) }}</span>
                                         </div>
@@ -200,17 +259,74 @@
                                   @endif
                                   @if($value->isSelectionOrder == 2)
                                   <hr>
-                                    <label>Info.:</label>
+                                    <label>Additional Order Information:</label>
                                     <textarea class="form-control" rows="10" spellcheck="false" style="color:black;" readonly>{{ $value->cakeMessage  }}</textarea>
+                                    <hr>
+                                          <label>Cake Size:</label>
+                                            <span><i>{{ $value->cake_size}}</i></span><br>
+                                          <label>Cake Flavor:</label>
+                                            <span><i>{{ $value->cake_flavor }}</i></span><br>
+                                          <label>Cake Icing:</label>
+                                            <span><i>{{ $value->cake_icing }}</i></span><br>
+                                          <label>Celebrant Name:</label>
+                                            <span><i>{{ $value->celebrant_name}}</i></span><br>
+                                          <label>Celebrant Birthday:</label>
+                                              @php
+                                                  $birthday = $value->celebrant_birthday;
+
+                                                  if ($birthday) {
+                                                      $parsedDate2 = date('F-d-Y', strtotime($birthday));
+                                                  }
+                                              @endphp
+
+                                              @if (isset($parsedDate2))
+                                                  <span><i>{{$parsedDate2 }}</i></span>
+                                              @endif
+                                              <br>
+                                              @php
+                                                  $birthday = $value->celebrant_birthday;
+                                                  $age = null;
+
+                                                  if ($birthday !== null) {
+                                                      $birthday = date('Y-m-d', strtotime($birthday));
+                                                      $currentDate = \Carbon\Carbon::now();
+
+                                                      $age = $currentDate->diffInYears($birthday);
+                                                  }
+                                              @endphp
+
+                                              @if ($age !== null)
+                                                  <span><i> (currently {{ $age }} years old)</i></span><br>
+                                              @endif
+                                                      <label>Shipping Method:</label>
+                                                      <span><i>{{ $value->shipping_method }}</i></span><br>
+                                                      <label>Date Needed:</label>
+                                                      <span><i>{{ \Carbon\Carbon::parse($value->delivery_date)->format('d M Y') }}</i></span><br>
+                                                      <label>Time:</label>
+                                                      <span><i>{{ \Carbon\Carbon::parse($value->delivery_time)->format('g:i A') }}</i></span><br>
+                                                      @if ($value->shipping_method == 'Delivery')
+                                                      <label>Address:</label>
+                                                      <span><i>{{ $value->address }}</i></span><br>
+                                                      @endif
                                     @if($value->orderStatus == 2)
                                     <hr> 
-                                      <label>Details:</label>
-                                        <textarea class="form-control" name="invoice_details" rows="10" spellcheck="false" style="color:black;" readonly>{{ $value->invoice_details }}</textarea><br>
+                                      <label>Remarks:</label>
+                                        <textarea class="form-control" name="invoice_details" rows="10" spellcheck="false" style="color:black;" readonly>{{ $value->invoice_details }}</textarea>
+                                        
+                                        <hr>
                                       <label>Product Price</label>
                                       <input type="text" class="form-control" value="&#8369; {{number_format($value->cakePrice, 2)}}" name="cakePrice" style="color: black;" readonly>
                                     @endif  
 
                                     @if($value->orderStatus == 3)
+                                    <hr> 
+                                      <label>Remarks:</label>
+                                        <textarea class="form-control" name="invoice_details" rows="10" spellcheck="false" style="color:black;" readonly>{{ $value->invoice_details }}</textarea><br>
+                                      <label>Payment Balance</label>
+                                      <input type="text" class="form-control" value="&#8369; {{number_format($value->customizeOrderDetail->payment_balance, 2)}}" name="cakePrice" style="color: black;" readonly>
+                                    @endif
+
+                                    @if($value->orderStatus == 5)
                                     <hr> 
                                       <label>Rejection Details:</label>
                                         <textarea class="form-control" name="rejection_details" rows="10" spellcheck="false" style="color:black;" readonly>{{ $value->invoice_details }}</textarea><br>

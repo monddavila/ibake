@@ -108,7 +108,7 @@
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"><a class="nav-link" href="{{ route('customOrders') }}">Custom Cake Requests</a></li>
           <li class="nav-item">
-          <a class="nav-link" href="{{ route('activeOrders') }}" style="background-color: #FFD700;">Pending Orders</a>
+          <a class="nav-link" href="{{ route('activeOrders') }}">Pending Orders</a>
 
           </li>
           <li class="nav-item"><a class="nav-link" href="{{ route('ongoingOrders') }}">In Progress Orders</a></li>

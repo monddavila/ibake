@@ -88,6 +88,7 @@ class CustomizeController extends Controller
             'cake_icing' => null,
             'celebrant_name' => $celebrantName,
             'celebrant_birthday' => $celebrantBirthday,
+            'budget' => null,
             'shipping_method' => $shippingMethod,
             'delivery_date' => $deliveryDate,
             'delivery_time' => $deliveryTime,
@@ -113,6 +114,7 @@ class CustomizeController extends Controller
         $cakeFlavor = $request->input('cake_flavor');
         $celebrantName = $request->input('celebrant_name');
         $celebrantBirthday = $request->input('celebrant_birthday');
+        $budget = $request->input('budget');
         $shippingMethod = $request->input('shipping_method');
         $deliveryDate = $request->input('delivery_date');
         $deliveryTime = $request->input('delivery_time');
@@ -160,6 +162,7 @@ class CustomizeController extends Controller
             'cake_icing' => $icing,
             'celebrant_name' => $celebrantName,
             'celebrant_birthday' => $celebrantBirthday,
+            'budget' => $budget,
             'shipping_method' => $shippingMethod,
             'delivery_date' => $deliveryDate,
             'delivery_time' => $deliveryTime,
@@ -180,6 +183,7 @@ class CustomizeController extends Controller
         'cake_size' => 'required',
         'cake_flavor' => 'required',
         'icing' => 'required',
+        'budget' => 'required',
         'shipping_method' => 'required',
         'delivery_date' => 'required',
         'delivery_time' => 'required',

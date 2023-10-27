@@ -73,7 +73,7 @@
                                   <!-- details -->
                                   @if($value->isSelectionOrder == 1)
                                     <div class="card">
-                                      <div class="card-body">
+                                      <div class="card-body"> 
                                         <label>Size:</label>
                                           <span><i>{{ $value->cakeSize }}</i></span><br>
                                         <label>Flavor:</label>
@@ -88,24 +88,59 @@
                                           <span><i>{{ $value->cakeBottomBorder }}</i></span><br>
                                         <label>Decoration:</label>
                                           <span><i>{{ $value->cakeDecoration }}</i></span><br>
-                                        <label>Cake Message:</label>
+                                        <label>Cake Dedication/Message:</label>
                                           <span><i>{{ $value->cakeMessage }}</i></span><br>
                                         <hr>
                                         <label>Celebrant Name:</label>
                                           <span><i>{{ $value->celebrant_name }}</i></span><br>
                                         <label>Celebrant Birthday:</label>
-                                          <span><i>{{ $value->celebrant_birthday }}</i></span><br>
+                                          @php
+                                              $birthday = $value->celebrant_birthday;
+
+                                              if ($birthday) {
+                                                  $parsedDate = date('F-d-Y', strtotime($birthday));
+                                              }
+                                          @endphp
+
+                                          @if (isset($parsedDate))
+                                              <span><i>{{ $parsedDate }}</i></span>
+                                          @endif
+                                          <br>
+                                          @php
+                                              $birthday = $value->celebrant_birthday;
+                                              $age = null;
+
+                                              if ($birthday !== null) {
+                                                  $birthday = date('Y-m-d', strtotime($birthday));
+                                                  $currentDate = \Carbon\Carbon::now();
+
+                                                  $age = $currentDate->diffInYears($birthday);
+                                              }
+                                          @endphp
+
+                                          @if ($age !== null)
+                                              <span><i> (currently {{ $age }} years old)</i></span><br>
+                                          @endif
+                                          
+
                                         <label>Shipping Method:</label>
                                           <span><i>{{ $value->shipping_method }}</i></span><br>
                                         <label>Date Needed:</label>
-                                          <span><i>{{ $value->delivery_date }}</i></span><br>
-                                        <label>Delivery/Pickup Time:</label>
-                                          <span><i>{{ $value->delivery_time }}</i></span><br>
+                                          <span><i>{{ date('F-d-Y', strtotime($value->delivery_date)) }}</i></span><br>
+                                          @if($value->shipping_method == 'Delivery')
+                                        <label>Delivery Time:</label>
+                                          <span><i>{{ date('h:i A', strtotime($value->delivery_time)) }}</i></span><br>
+                                          @else
+                                        <label>Pickup Time:</label>
+                                          <span><i>{{ date('h:i A', strtotime($value->delivery_time)) }}</i></span><br>
+                                          @endif
+                                          @if($value->shipping_method == 'Delivery')
                                         <label>Address:</label>
                                           <span><i>{{ $value->address }}</i></span><br>
+                                          @endif
                                         <hr>
                                         <div align="right">
-                                          <span>&#8369; {{ number_format($value->cakePrice, 2) }}</span>
+                                          <span><strong>&#8369; {{ number_format($value->cakePrice, 2) }}</strong></span>
                                         </div>
                                       </div>
                                     </div>
@@ -121,21 +156,59 @@
                                           <span><i>{{ $value->cake_flavor }}</i></span><br>
                                         <label>Cake Icing:</label>
                                           <span><i>{{ $value->cake_icing }}</i></span><br>
+                                        <label>Budget:</label>
+                                          <span><i>{{ $value->budget }}</i></span><br>
                                     <hr>
                                         <label>Celebrant Name:</label>
                                           <span><i>{{ $value->celebrant_name }}</i></span><br>
                                         <label>Celebrant Birthday:</label>
-                                          <span><i>{{ $value->celebrant_birthday }}</i></span><br>
+                                          @php
+                                              $birthday = $value->celebrant_birthday;
+
+                                              if ($birthday) {
+                                                  $parsedDate2 = date('F-d-Y', strtotime($birthday));
+                                              }
+                                          @endphp
+
+                                          @if (isset($parsedDate2))
+                                              <span><i>{{$parsedDate2 }}</i></span>
+                                          @endif
+                                          <br>
+                                          @php
+                                              $birthday = $value->celebrant_birthday;
+                                              $age = null;
+
+                                              if ($birthday !== null) {
+                                                  $birthday = date('Y-m-d', strtotime($birthday));
+                                                  $currentDate = \Carbon\Carbon::now();
+
+                                                  $age = $currentDate->diffInYears($birthday);
+                                              }
+                                          @endphp
+
+                                          @if ($age !== null)
+                                              <span><i> (currently {{ $age }} years old)</i></span><br>
+                                          @endif
+                                          
+                                          
                                         <label>Shipping Method:</label>
                                           <span><i>{{ $value->shipping_method }}</i></span><br>
                                         <label>Date Needed:</label>
-                                          <span><i>{{ $value->delivery_date }}</i></span><br>
-                                        <label>Delivery/Pickup Time:</label>
-                                          <span><i>{{ $value->delivery_time }}</i></span><br>
+                                          <span><i>{{ date('F-d-Y', strtotime($value->delivery_date)) }}</i></span><br>
+                                          @if($value->shipping_method == 'Delivery')
+                                        <label>Delivery Time:</label>
+                                          <span><i>{{ date('h:i A', strtotime($value->delivery_time)) }}</i></span><br>
+                                          @else
+                                        <label>Pickup Time:</label>
+                                          <span><i>{{ date('h:i A', strtotime($value->delivery_time)) }}</i></span><br>
+                                          @endif
+                                          @if($value->shipping_method == 'Delivery')
                                         <label>Address:</label>
                                           <span><i>{{ $value->address }}</i></span><br>
+                                          @endif
                                         <hr>
-                                  <hr>
+                                        
+                                  
                                   @endif
                                   <form action="{{ route('processOrder', ['id' => $value->orderID]) }}" method="post"> 
                                       @csrf
