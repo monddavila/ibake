@@ -130,7 +130,11 @@
                                                       <span><i>{{ $order->payment_status }}</i></span><br>
                                                       <label>Recipient Name:</label>
                                                       <span><i>{{ $order->recipient_name}}</i></span><br>
+                                                      @if($order->order_status == 'Completed')
                                                       <label>Date Completed:</label>
+                                                      @else
+                                                      <label>Date Cancelled:</label>
+                                                      @endif
                                                       <span><i>{{ $order->updated_at->format('d M Y') }}</i></span><br>
                                                       <label>Shipping Method:</label>
                                                       <span><i>{{ $order->shipping_method }}</i></span><br>
@@ -315,7 +319,11 @@
                                                       <span><i>{{ $order->payment_option }}</i></span><br>
                                                       <label>Recipient Name:</label>
                                                       <span><i>{{ $order->recipient_name}}</i></span><br>
+                                                      @if($order->order_status == 'Completed')
                                                       <label>Date Completed:</label>
+                                                      @else
+                                                      <label>Date Cancelled:</label>
+                                                      @endif
                                                       <span><i>{{ $order->updated_at->format('d M Y') }}</i></span><br>
                                                       <label>Shipping Method:</label>
                                                       <span><i>{{ $order->shipping_method }}</i></span><br>
@@ -385,7 +393,11 @@
                                                       <span><i>{{ $order->payment_option }}</i></span><br>
                                                       <label>Recipient Name:</label>
                                                       <span><i>{{ $order->recipient_name}}</i></span><br>
+                                                      @if($order->order_status == 'Completed')
                                                       <label>Date Completed:</label>
+                                                      @else
+                                                      <label>Date Cancelled:</label>
+                                                      @endif
                                                       <span><i>{{ $order->updated_at->format('d M Y') }}</i></span><br>
                                                       <label>Shipping Method:</label>
                                                       <span><i>{{ $order->shipping_method }}</i></span><br>
