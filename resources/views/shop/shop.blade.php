@@ -223,6 +223,7 @@
   <script src="js/sticky_sidebar.min.js"></script>
   <script src="js/script.js"></script>
   <script src="{{ asset('js/shop.js') }}?v={{ filemtime(public_path('js/shop.js')) }}"></script>
+  <script src="//code.tidio.co/rxspxjqfeocjtadtyjrdmxudlhr0m8vc.js" async></script>
 </body>
 
 </html>
