@@ -686,7 +686,7 @@
                 </ul>
               </div>
               <div class="table-footer">
-                <a href="{{ route('shop') }}" class="theme-btn btn-style-two regular"><span></span>Order
+                <a href="{{ route('customize') }}" class="theme-btn btn-style-two regular"><span></span>Order
                   Now<span></span></a>
               </div>
             </div>
@@ -770,7 +770,7 @@
                 </ul>
               </div>
               <div class="table-footer">
-                <a href="{{ route('shop') }}" class="theme-btn btn-style-two regular"><span></span>Order
+                <a href="{{ route('customize') }}" class="theme-btn btn-style-two regular"><span></span>Order
                   Now<span></span></a>
               </div>
             </div>

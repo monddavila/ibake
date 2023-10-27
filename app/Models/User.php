@@ -72,6 +72,11 @@ class User extends Authenticatable
     return $this->hasOne(Cart::class);
   }
 
+  public function userCustomizeOrderDetail()
+  {
+    return $this->hasMany(CustomizeOrderDetail::class);
+  }
+
   public function role()
   {
     return $this->belongsTo(Role::class, 'role_id');

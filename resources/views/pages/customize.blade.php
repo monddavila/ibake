@@ -507,7 +507,7 @@
                                 </div>
 
                                 <div id="slide8" class="mt-2 steps d-none">
-                                    <h5 class="mb-2">Message:</h5>
+                                    <h5 class="mb-2">Cake Dedication/Message:</h5>
                                     <button type="button" class="btn sizes container-fluid  py-1 ">
                                         <div class="d-flex justify-content-between">
                                             <div>
@@ -751,7 +751,7 @@
                                 <br>
                                 <div class="inner-column">
                                     <input type="file" name="cakeOrderImage" accept="image/gif, image/jpg, image/png, image/jpeg" onchange="loadFile(event)" required="" rows="4" colspan="100" style="width:100%; border:2px solid black; border-radius:12px;padding:10px;"><br><br>
-                                    <textarea class="cake-message" name="cakeMessage" rows="4" colspan="100" style="width:100%; border:2px solid black; border-radius:12px;padding:10px;" placeholder="Additional Description or Information..." name="cakeImageDetails"></textarea>
+                                    <textarea class="cake-message" name="cakeMessage" rows="4" colspan="100" style="width:100%; border:2px solid black; border-radius:12px;padding:10px;" placeholder="Please provide any additional information or instructions for your cake, such as a personalized message. Let us know if you would like to include, remove, or change anything on the sample cake." name="cakeImageDetails"></textarea>
                                     <?php if (Auth::check()) { ?>
                                  
                                         <button class="btn btn-primary" type="button" onclick="nextStep(2)">Proceed</button>
@@ -775,12 +775,13 @@
                             <div class="column col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                 <div class="title">
                                     <div class="icon"><img src="images/icons/icon-devider-gray.png" alt=""></div>
-                                    <h4>Custom Cake Order Details</h4>
+                                    <h4>Custom Cake Order Details</h4><br>
+                                    <h7><em>We will do our best to respond within 1-2 days, but please note that custom cake requests require at least 7 days notice for lead time to prepare.</em></h7>
                                 </div>
                                 <br>
                                 <div class="inner-column">
                                     <div class="form-group">
-                                        <label for="cake_size">Cake Size <span style="color: blue"><em>(include dimensions and layers sizes if needed)</em></span></label>
+                                        <label for="cake_size">Cake Size * <span style="color: blue"><em>(include cake dimensions and layer sizes, if desired.)</em></span></label>
                                         <input type="text" class="form-control" id="cake_size" name="cake_size" required>
                                         <span class="text-danger" id="cake_size-error"></span>
 
@@ -818,6 +819,20 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="budget">Budget Expectations *</label>
+                                        <select class="form-control" id="budget" name="budget" required>
+                                            <option value="₱0-₱2,500" selected>₱0-₱2,500</option>
+                                            <option value="₱2,500-₱3,000">₱2,500-₱3,000</option>
+                                            <option value="₱3,000-₱3,500">₱3,000-₱3,500</option>
+                                            <option value="₱3,500-₱4,000">₱3,500-₱4,000</option>
+                                            <option value="₱4,000-₱4,500">₱4,000-₱4,500</option>
+                                            <option value="₱4,500-₱5,000">₱4,500-₱5,000</option>
+                                            <option value="₱5,000-above">₱5,000-above</option>
+                                        </select>
+                                        <span class="text-danger" id="budget-error"></span>
+                                    </div>
+
                                     <div class="form-group">
                                         <label for="shipping_method">Shipping Method *</label>
                                         <select class="form-control" id="shipping_method" name="shipping_method" required onchange="toggleLocationFields()">

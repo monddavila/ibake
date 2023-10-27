@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\Cart;
+use App\Models\User;
 use App\Models\Product;
 use App\Models\CartItem;
 use App\Models\CustomizeOrderDetail;
@@ -237,7 +238,8 @@ class OrdersController extends Controller
     $activeOrders = $activeOrders->paginate(10); // Adjust the number of items per page
 
     // Active Custom Cake Orders
-    $activeCustomOrders = CustomizeOrderDetail::where('order_status', 'Pending');
+    $activeCustomOrders = CustomizeOrderDetail::where('order_status', 'Pending')
+    ->with('user') ;
 
     if (isset($request->sort_by) && isset($request->order_by)) {
       $activeCustomOrders = $activeCustomOrders->orderBy($request->sort_by, $request->order_by);

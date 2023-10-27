@@ -28,6 +28,7 @@ class CustomizeOrder extends Model
                                 'cake_icing',
                                 'celebrant_name',
                                 'celebrant_birthday',
+                                'budget',
                                 'shipping_method',
                                 'delivery_date',
                                 'delivery_time',
