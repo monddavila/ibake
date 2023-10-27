@@ -9,33 +9,28 @@
     @include('partials.head')
 </head>
 
-<!-- Nabvar Section -->
-@include('partials.navbar')
+    <!-- Nabvar Section -->
+    @include('partials.navbar')
 
-<body>
+    <!--Page Title-->
+    <section class="page-title" style="background-image:url(images/background/background-6.jpg)">
+        <div class="auto-container">
+            <h1>My account</h1>
+            <ul class="page-breadcrumb">
+                <li><a href="\">home</a></li>
+                <li>My account</li>
+            </ul>
+        </div>
+    </section>
+    <!--End Page Title-->
 
-    <div class="page-wrapper">
-        
+    <!--Regiter Section-->
 
-        <!--Regiter Section-->
-
-        @if (session('status'))
+    @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600">
                 {{ session('status') }}
             </div>
         @endif
-
-        <!--Page Title-->
-        <section class="page-title" style="background-image:url(images/background/background-6.jpg)">
-            <div class="auto-container">
-                <h1>Create an account</h1>
-                <ul class="page-breadcrumb">
-                    <li><a href="{{ route('home') }}">home</a></li>
-                    <li>My account</li>
-                </ul>
-            </div>
-        </section>
-        <!--End Page Title-->
 
         <section class="login-section">
             <div class="auto-container">
@@ -142,8 +137,25 @@
         </section>
         <!--End Regiter Section-->
 
-        <!-- Footer Section -->
-        @include('partials.footer')
+            <!-- Footer Section -->
+            @include('partials.footer')
+
+    </div><!-- End Page Wrapper -->
+
+    <!-- Scroll To Top -->
+    @include('partials.scroll-to-top')
+
+    <script src="js/jquery.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.fancybox.js"></script>
+    <script src="js/owl.js"></script>
+    <script src="js/wow.js"></script>
+    <script src="js/appear.js"></script>
+    <script src="js/select2.min.js"></script>
+    <script src="js/sticky_sidebar.min.js"></script>
+    <script src="js/script.js"></script>
+
 </body>
 
 </html>
