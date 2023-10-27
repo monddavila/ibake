@@ -73,7 +73,7 @@
                                     <div class="form-group">
                                         <x-label for="email" value="{{ __('Email*') }}" />
                                         <x-input id="email" class="block mt-1 w-full" type="email" name="email"
-                                            placeholder="Valid Email Adress" required autofocus />
+                                            placeholder="Valid Email Address" required autofocus />
                                         @error('email')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -125,7 +125,7 @@
                                     </div>
 
                                     <p class="sign-up text-center">Already have an Account?<a href="{{ route('login') }}"> Sign In</a></p>
-                                    <p class="terms">By creating an account you are accepting our<a href="#"> Terms & Conditions</a></p>
+                                    <p class="terms">By creating an account you are accepting our<a href="{{ route('terms') }}"> Terms & Conditions</a></p>
 
                                 </div>
                             </div>

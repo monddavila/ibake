@@ -91,6 +91,19 @@
                                         <label>Cake Message:</label>
                                           <span><i>{{ $value->cakeMessage }}</i></span><br>
                                         <hr>
+                                        <label>Celebrant Name:</label>
+                                          <span><i>{{ $value->celebrant_name }}</i></span><br>
+                                        <label>Celebrant Birthday:</label>
+                                          <span><i>{{ $value->celebrant_birthday }}</i></span><br>
+                                        <label>Shipping Method:</label>
+                                          <span><i>{{ $value->shipping_method }}</i></span><br>
+                                        <label>Date Needed:</label>
+                                          <span><i>{{ $value->delivery_date }}</i></span><br>
+                                        <label>Delivery/Pickup Time:</label>
+                                          <span><i>{{ $value->delivery_time }}</i></span><br>
+                                        <label>Address:</label>
+                                          <span><i>{{ $value->address }}</i></span><br>
+                                        <hr>
                                         <div align="right">
                                           <span>&#8369; {{ number_format($value->cakePrice, 2) }}</span>
                                         </div>
@@ -101,6 +114,27 @@
                                   <hr>
                                     <label>Additional Info.</label>
                                     <textarea class="form-control" rows="10" spellcheck="false" style="color:black;" readonly>{{ $value->cakeMessage  }}</textarea>
+                                    <hr>
+                                        <label>Cake Size:</label>
+                                          <span><i>{{ $value->cake_size}}</i></span><br>
+                                        <label>Cake Flavor:</label>
+                                          <span><i>{{ $value->cake_flavor }}</i></span><br>
+                                        <label>Cake Icing:</label>
+                                          <span><i>{{ $value->cake_icing }}</i></span><br>
+                                    <hr>
+                                        <label>Celebrant Name:</label>
+                                          <span><i>{{ $value->celebrant_name }}</i></span><br>
+                                        <label>Celebrant Birthday:</label>
+                                          <span><i>{{ $value->celebrant_birthday }}</i></span><br>
+                                        <label>Shipping Method:</label>
+                                          <span><i>{{ $value->shipping_method }}</i></span><br>
+                                        <label>Date Needed:</label>
+                                          <span><i>{{ $value->delivery_date }}</i></span><br>
+                                        <label>Delivery/Pickup Time:</label>
+                                          <span><i>{{ $value->delivery_time }}</i></span><br>
+                                        <label>Address:</label>
+                                          <span><i>{{ $value->address }}</i></span><br>
+                                        <hr>
                                   <hr>
                                   @endif
                                   <form action="{{ route('processOrder', ['id' => $value->orderID]) }}" method="post"> 

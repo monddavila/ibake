@@ -340,6 +340,7 @@
   <script src="{{ asset('customer/assets/js/customer-orders.js') }}"></script>
   <!-- JavaScript -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="//code.tidio.co/rxspxjqfeocjtadtyjrdmxudlhr0m8vc.js" async></script>
 
   
 

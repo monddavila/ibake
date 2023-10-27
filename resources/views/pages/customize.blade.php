@@ -580,7 +580,7 @@
                                                                 <div class="form-group">
                                                                     <label for="shipping_method_1">Shipping Method *</label>
                                                                     <select class="form-control" id="shipping_method_1" name="shipping_method_1" required onchange="toggleLocationFields_1()">
-                                                                        <option value="Pickup">Pickup</option>
+                                                                        <option value="Pickup" selected>Pickup</option>
                                                                         <option value="Delivery">Delivery</option>
                                                                     </select>
                                                                 </div>
@@ -618,8 +618,8 @@
                                                                             <option value="Bambang">Bambang</option>
                                                                             <option value="Bayombong">Bayombong</option>
                                                                             <option value="Diadi">Diadi</option>
-                                                                            <option value="	Dupax del Norte">	Dupax del Norte</option>
-                                                                            <option value="	Dupax del Sur">	Dupax del Sur</option>
+                                                                            <option value="Dupax del Norte">Dupax del Norte</option>
+                                                                            <option value="Dupax del Sur">Dupax del Sur</option>
                                                                             <option value="Kasibu">Kasibu</option>
                                                                             <option value="Kayapa">Kayapa</option>
                                                                             <option value="Quezon">Quezon</option>
@@ -821,7 +821,7 @@
                                     <div class="form-group">
                                         <label for="shipping_method">Shipping Method *</label>
                                         <select class="form-control" id="shipping_method" name="shipping_method" required onchange="toggleLocationFields()">
-                                            <option value="Pickup">Pickup</option>
+                                            <option value="Pickup" selected>Pickup</option>
                                             <option value="Delivery">Delivery</option>
                                         </select>
                                     </div>
@@ -853,8 +853,8 @@
                                                 <option value="Bambang">Bambang</option>
                                                 <option value="Bayombong">Bayombong</option>
                                                 <option value="Diadi">Diadi</option>
-                                                <option value="	Dupax del Norte">	Dupax del Norte</option>
-                                                <option value="	Dupax del Sur">	Dupax del Sur</option>
+                                                <option value="Dupax del Norte">Dupax del Norte</option>
+                                                <option value="Dupax del Sur">Dupax del Sur</option>
                                                 <option value="Kasibu">Kasibu</option>
                                                 <option value="Kayapa">Kayapa</option>
                                                 <option value="Quezon">Quezon</option>
