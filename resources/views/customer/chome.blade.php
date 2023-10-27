@@ -26,6 +26,7 @@
   
   @include('customer.partials.script')
  <!-- <script src="{{ asset('admin/assets/js/dashboard-orders.js') }}"></script> -->
+ <script src="//code.tidio.co/rxspxjqfeocjtadtyjrdmxudlhr0m8vc.js" async></script>
 </body>
 
 </html>

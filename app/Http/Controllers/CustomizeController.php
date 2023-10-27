@@ -42,6 +42,7 @@ class CustomizeController extends Controller
      */
     public function store(Request $request)
     {
+        
 
         $celebrantName = $request->input('celebrant_name_1');
         $celebrantBirthday = $request->input('celebrant_birthday_1');
@@ -49,21 +50,21 @@ class CustomizeController extends Controller
         $deliveryDate = $request->input('delivery_date_1');
         $deliveryTime = $request->input('delivery_time_1');
         $location = $request->input('location_1');
-        $town = $request->input('town_1');
+        $town = $request->input('town_1', null);
         $province = $request->input('province_1');
         $postcode = $request->input('postcode_1');
+        
 
-
-        // Check if 'town' exists in the session
+        /* Check if 'town' exists in the session
         if (isset($town)) {
             $town = $request->input('town');
         } else {
             // Set a default value if 'town' doesn't exist in the session
             $town = null;
-        }
+        } */
     
         if($shippingMethod == 'Delivery'){
-            $address = $location . ', ' . $town . ',' . $province . ',' . $postcode;
+            $address = $location . ',' . $town . ',' . $province . ',' . $postcode;
         }else{
             $address = null;
         }
@@ -116,20 +117,20 @@ class CustomizeController extends Controller
         $deliveryDate = $request->input('delivery_date');
         $deliveryTime = $request->input('delivery_time');
         $location = $request->input('location');
-        $town = $request->input('town');
+        $town = $request->input('town', null);
         $province = $request->input('province');
         $postcode = $request->input('postcode');
 
-         // Check if 'town' exists in the session
+         /* Check if 'town' exists in the session
         if (isset($town)) {
             $town = $request->input('town');
         } else {
             // Set a default value if 'town' doesn't exist in the session
             $town = null;
-        }
+        } */
     
         if($shippingMethod == 'Delivery'){
-            $address = $location . ', ' . $town . ',' . $province . ',' . $postcode;
+            $address = $location . ',' . $town . ',' . $province . ',' . $postcode;
         }else{
             $address = null;
         }
