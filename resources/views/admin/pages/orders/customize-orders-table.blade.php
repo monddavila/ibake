@@ -136,7 +136,8 @@
                                           @endif
                                           @if($value->shipping_method == 'Delivery')
                                         <label>Address:</label>
-                                          <span><i>{{ $value->address }}</i></span><br>
+
+                                          <span><i>{{ str_replace('||', ', ', $value->address) }}</i></span><br>
                                           @endif
                                         <hr>
                                         <div align="right">
@@ -204,7 +205,7 @@
                                           @endif
                                           @if($value->shipping_method == 'Delivery')
                                         <label>Address:</label>
-                                          <span><i>{{ $value->address }}</i></span><br>
+                                          <span><i>{{ str_replace('||', ', ', $value->address) }}</i></span><br>
                                           @endif
                                         <hr>
                                         

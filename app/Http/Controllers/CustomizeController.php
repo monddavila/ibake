@@ -64,7 +64,7 @@ class CustomizeController extends Controller
         } */
     
         if($shippingMethod == 'Delivery'){
-            $address = $location . ',' . $town . ',' . $province . ',' . $postcode;
+            $address = $location . '||' . $town . '||' . $province . '||' . $postcode;
         }else{
             $address = null;
         }
@@ -132,7 +132,7 @@ class CustomizeController extends Controller
         } */
     
         if($shippingMethod == 'Delivery'){
-            $address = $location . ',' . $town . ',' . $province . ',' . $postcode;
+            $address = $location . '||' . $town . '||' . $province . '||' . $postcode;
         }else{
             $address = null;
         }
@@ -230,12 +230,11 @@ class CustomizeController extends Controller
     $recipientName = $customOrderData['recipient_name'];
     $streetAddress = $customOrderData['street_address'];
     
-    if (session()->has('customOrderData') && isset(session('customOrderData')['town'])) {
-        $town = session('customOrderData')['town'];
+    if (session()->has('customOrder_data') && isset(session('customOrder_data')['town'])) {
+        $town = session('customOrder_data')['town'];
     } else {
         $town = null;
     }
-    
 
     
     $province = $customOrderData['province'];
@@ -250,11 +249,11 @@ class CustomizeController extends Controller
     $orderNotes = $customOrderData['order_notes'];
 
     if($shippingMethod == 'Delivery'){
-        $address = $streetAddress . ', ' . $town . ',' . $province . ',' . $postcode;
+        $address = $streetAddress . '||' . $town . '||' . $province . '||' . $postcode;
     }else{
         $address = "";
     }
-    
+
     //retrieve cake price
     $cakePrice = session('cakePrice');
 
@@ -269,7 +268,7 @@ class CustomizeController extends Controller
     $order = CustomizeOrderDetail::create([
       'user_id' => Auth::id(),
       'customOrder_id' => $customOrder_id,
-      'order_id' => $customize_order_id,//add new migration
+      'order_id' => $customize_order_id,
       'recipient_name' => $recipientName,
       'recipient_email' => $recipientEmail,
       'recipient_phone' => $recipientPhone,
@@ -278,8 +277,8 @@ class CustomizeController extends Controller
       'delivery_time' => $deliveryTime,
       'delivery_address' => $address,
       'total_price' => $cakePrice,
-      'payment_option' => $paymentOption, //add new migration
-      'payment_balance' => $CakePrice_bal, //add new migration
+      'payment_option' => $paymentOption, 
+      'payment_balance' => $CakePrice_bal, 
       'payment_method' => $paymentMethod,
       'payment_status' => $paymentStatus,
       'payment_session_id' => $paymentSessionId,
@@ -290,9 +289,9 @@ class CustomizeController extends Controller
     ]);
 
     if($paymentOption == 'Full'){
-        $orderStatus = 4;//4 is Fully Paid
+        $orderStatus = 4;//4 is Fully Payment
     }else{
-        $orderStatus = 3;//3 is half paid
+        $orderStatus = 3;//3 is half paid/Down payment
     }
 
     //update order status to "Processing" of customize_orders table
@@ -380,7 +379,8 @@ class CustomizeController extends Controller
             'orderStatus' => 7,
         ]);
 
-    return redirect(route('customer'))->with('success', 'Order canceled successfully.');
+    return redirect(route('customer'))->with('success', 'Your custom cake order, Request No. ' . $id . ' canceled.');
+
     }
 
     /**
@@ -439,6 +439,7 @@ class CustomizeController extends Controller
             ->get();
 
         $address = $orders->first()->address;
+        $shipping_method = $orders->first()->shipping_method;
 
         // Initialize variables
         $location = null;
@@ -446,11 +447,16 @@ class CustomizeController extends Controller
         $province = null;
         $postalcode = null; 
 
+        
+
         if ($address) {
-            $addressParts = explode(',', $address);
+            $addressParts = explode('||', $address);
 
             // Trim spaces from the parts
             $addressParts = array_map('trim', $addressParts);
+            
+            
+            
 
             // Ensure there are at least three parts (location, town, and province)
             if (count($addressParts) >= 3) {
@@ -465,6 +471,7 @@ class CustomizeController extends Controller
             }
         }
 
+
         return view('checkout.custom-checkout')->with([
             'user' => $user,
             'orders' => $orders,
@@ -473,6 +480,7 @@ class CustomizeController extends Controller
             'town' => $town,
             'province' => $province,
             'postalcode' => $postalcode,
+            'shipping_method' => $shipping_method,
         ]);
     }
 

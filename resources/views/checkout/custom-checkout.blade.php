@@ -83,19 +83,19 @@
                     
                   <!-- Form Group -->
                   <div class="form-group">
-                      <div class="field-label">Delivery address <sup>*</sup><sup style="font-style: italic; color: #5fcac7; font-size: smaller;"> Required for Delivery</sup></div>
+                      <div class="field-label">Delivery address</div>
                       <input type="text" name="street_address" 
                             value="{{ !is_null($location) ? $location : '' }}" 
-                            placeholder="{{ !is_null($location) ? '' : 'Unit No./Building Name/Street/Barangay' }}"
-                            {{ !is_null($location) ? 'readonly' : "" }}>
+                            placeholder="{{ !is_null($location) ? '' : '' }}"
+                            {{ !is_null($location) ? 'readonly' : 'readonly' }}>
                       @error('street_address')
                       <div class="text-danger">{{ $message }}</div>
                       @enderror
                   </div>
 
                   <div class="form-group">
-                  <div class="field-label">Town / City <sup>*</sup><sup style="font-style: italic; color: #5fcac7; font-size: smaller;"> Required for Delivery</sup></div>
-                  <select name="town" @if($town) disabled @endif>
+                  <div class="field-label">Town / City</div>
+                  <select name="town" disabled>
                       @if (!$town)
                       <option value="" disabled selected>Select</option>
                       @endif
@@ -121,6 +121,8 @@
 
                     @if ($town)
                         <input type="hidden" name="town" value="{{$town}}">
+                        @else
+                        <input type="hidden" name="town" value="">
                     @endif
                 </div>
 
@@ -129,7 +131,7 @@
                   <!--Form Group-->
                   <div class="form-group">
                     <div class="field-label">Province </div>
-                    <input type="text" name="province" value="Nueva Vizcaya" placeholder="" readonly>
+                    <input type="text" name="province" @if($shipping_method == 'Delivery')value="Nueva Vizcaya"@else value="" @endif placeholder="" readonly>
                                         @error('province')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -137,11 +139,11 @@
 
                   <!--Form Group-->
                   <div class="form-group">
-                    <div class="field-label">Postcode/ ZIP <sup style="font-style: italic; color: #5fcac7; font-size: smaller;"> Optional but recommended</sup></div>
+                    <div class="field-label">Postcode/ ZIP </div>
                     <input type="text" name="postcode" value=""
                             value="{{ !is_null($postalcode) ? $postalcode : '' }}" 
                             placeholder="{{ !is_null($postalcode) ? $postalcode : '' }}"
-                            {{ !is_null($location) ? 'readonly' : "" }}>
+                            {{ !is_null($location) ? 'readonly' : 'readonly' }}>
                                         @error('postcode')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -173,7 +175,7 @@
                   
 
                   <div class="form-group">
-                    <div class="field-label">Shipping Options <sup>*</sup></div>
+                    <div class="field-label">Shipping Options </div>
                     <div style="display: flex; justify-content: space-between;">
                         <div style="width: 48%;">
                             <div class="radio-option">
@@ -201,7 +203,11 @@
 
                   <!--Form Group-->
                   <div class="form-group">
-                    <div class="field-label">Delivery/Pick-up Date <sup>*</sup></div>
+                    @if ($shipping_method == 'Delivery')
+                    <div class="field-label">Delivery Date </div>
+                    @else
+                    <div class="field-label">Pick-up Date </div>
+                    @endif
                     <input type="date" id="delivery-date" name="delivery_date" value="{{$orders->first()->delivery_date }}" @if($orders->first()->delivery_date) readonly @endif>
                     @error('delivery_date')
                     <div class="text-danger">{{ $message }}</div>
@@ -211,7 +217,11 @@
 
                   <!--Form Group-->
                   <div class="form-group">
-                      <div class="field-label">Delivery/Pick-up Time <sup>*</sup></div>
+                       @if ($shipping_method == 'Delivery')
+                      <div class="field-label">Delivery Time </div>
+                      @else
+                      <div class="field-label">Pick-up Time </div>
+                      @endif
                       <input type="time" id="delivery-time" name="delivery_time" value="{{ $orders->first()->delivery_time ? date('H:i', strtotime($orders->first()->delivery_time)) : '' }}" @if ($orders->first()->delivery_time) readonly @endif pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]">
                       @error('delivery_time')
                       <div class="text-danger">{{ $message }}</div>

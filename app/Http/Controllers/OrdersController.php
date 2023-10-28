@@ -98,7 +98,7 @@ class OrdersController extends Controller
     }
 
     if($shippingMethod == 'Delivery'){
-      $address = $streetAddress . ', ' . $town . ',' . $province . ',' . $postcode;
+      $address = $streetAddress . ',' . $town . ',' . $province . ',' . $postcode;
     }else{
       $address = "";
     }

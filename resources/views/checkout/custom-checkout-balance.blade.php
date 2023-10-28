@@ -93,11 +93,14 @@
                                         @enderror
                   </div>
 
+                  @if($orders->first()->customizeOrderDetail->shipping_method == 'Delivery')
                   <!--Form Group-->
                   <div class="form-group">
                     <div class="field-label">Delivery address</div>
-                    <textarea name="street_address" readonly>{{ $orders->first()->customizeOrderDetail->delivery_address }}</textarea>
+                    <textarea name="street_address" readonly>{{ str_replace('||', ', ', $orders->first()->customizeOrderDetail->delivery_address) }}</textarea>
                   </div>
+                  @endif
+
 
                  
 
@@ -117,13 +120,22 @@
 
                   <!--Form Group-->
                   <div class="form-group">
-                    <div class="field-label">Delivery/Pick-up Date</div>
+                   @if($orders->first()->customizeOrderDetail->shipping_method == 'Delivery')
+                    <div class="field-label">Delivery Date</div>
+                    @else
+                    <div class="field-label">Pick-up Date</div>
+                    @endif
+
                     <input type="text" name="delivery_date" value="{{ date('d-F-Y', strtotime($orders->first()->customizeOrderDetail->delivery_date)) }}" readonly>
                   </div>
 
                   <!--Form Group-->
                   <div class="form-group">
-                    <div class="field-label">Delivery/Pick-up Time</div>
+                    @if($orders->first()->customizeOrderDetail->shipping_method == 'Delivery')
+                    <div class="field-label">Delivery Time</div>
+                    @else
+                    <div class="field-label">Pick-up Time</div>
+                    @endif
                     <input type="text" name="delivery_time" value="{{ date('g:i A', strtotime($orders->first()->customizeOrderDetail->delivery_time)) }}" readonly>
                   </div>
 

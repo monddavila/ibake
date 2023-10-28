@@ -235,7 +235,7 @@
                             </td>
                             <td>+63{{ $order->recipient_phone }}</td>
                             <td>
-                                <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->delivery_address }}</textarea>
+                                <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ str_replace('||', ', ', $order->delivery_address) }}</textarea>
                             </td>
                             <td>{{ $order->shipping_method }}</td>
                             <td>{{ $order->payment_status }}</td>
@@ -338,7 +338,7 @@
                                                       <span><i>{{ $order->notes }}</i></span><br>
                                                       @if ($order->shipping_method == 'Delivery')
                                                       <label>Address:</label>
-                                                      <span><i>{{ $order->delivery_address }}</i></span><br>
+                                                      <span><i>{{ str_replace('||', ', ', $order->delivery_address) }}</i></span><br>
                                                       @endif
                                           <hr>
                                           <div align="right">
@@ -411,7 +411,7 @@
                                                       <span><i>{{ $order->notes }}</i></span><br>
                                                       @if ($order->shipping_method == 'Delivery')
                                                       <label>Address:</label>
-                                                      <span><i>{{ $order->delivery_address }}</i></span><br>
+                                                      <span><i>{{ str_replace('||', ', ', $order->delivery_address) }}</i></span><br>
                                                       @endif
                                     <hr>
                                     <div align="right">

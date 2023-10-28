@@ -4,14 +4,14 @@
             @if (session('error'))
                 <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-between align-items-center">
                     {{ session('error') }}
-                    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
 
             @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center">
+                <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-between align-items-center">
                     {{ session('success') }}
-                    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
 
@@ -85,6 +85,8 @@
                               <div class="badge badge-outline-danger">Rejected</div>
                           <?php elseif($value->orderStatus == 4): ?>
                               <div class="badge badge-outline-primary">Fully Paid</div>
+                          <?php elseif($value->orderStatus == 6): ?>
+                              <div class="badge badge-outline-dark">Revoked</div>
                           <?php elseif($value->orderStatus == 7): ?>
                               <div class="badge badge-outline-info">Cancelled</div>
                           <?php elseif($value->orderStatus == 3): ?>
@@ -242,7 +244,7 @@
                                                       <span><i>{{ \Carbon\Carbon::parse($value->delivery_time)->format('g:i A') }}</i></span><br>
                                                       @if ($value->shipping_method == 'Delivery')
                                                       <label>Address:</label>
-                                                      <span><i>{{ $value->address }}</i></span><br>
+                                                      <span><i>{{ str_replace('||', ', ', $value->address) }}</i></span><br>
                                                       @endif
                                                       @if ($value->customizeOrderDetail)
                                                         @if($value->customizeOrderDetail->payment_balance > 0)
@@ -306,7 +308,7 @@
                                                       <span><i>{{ \Carbon\Carbon::parse($value->delivery_time)->format('g:i A') }}</i></span><br>
                                                       @if ($value->shipping_method == 'Delivery')
                                                       <label>Address:</label>
-                                                      <span><i>{{ $value->address }}</i></span><br>
+                                                      <span><i>{{ str_replace('||', ', ', $value->address) }}</i></span><br>
                                                       @endif
                                     @if($value->orderStatus == 2)
                                     <hr> 
