@@ -141,7 +141,7 @@
                                                       <span><i>{{ $order->notes }}</i></span><br>
                                                       @if ($order->shipping_method == 'Delivery')
                                                       <label>Address:</label>
-                                                      <span><i>{{ $order->delivery_address }}</i></span><br>
+                                                      <span><i>{{ str_replace('||', ', ', $order->delivery_address) }}</i></span><br>
                                                       @endif
                                                   </div>
                                                 </div>
@@ -330,7 +330,7 @@
                                                       <span><i>{{ $order->notes }}</i></span><br>
                                                       @if ($order->shipping_method == 'Delivery')
                                                       <label>Address:</label>
-                                                      <span><i>{{ $order->delivery_address }}</i></span><br>
+                                                      <span><i>{{ str_replace('||', ', ', $order->delivery_address) }}</i></span><br>
                                                       @endif
                                           <hr>
                                           <div align="right">
@@ -398,7 +398,7 @@
                                                       <span><i>{{ $order->notes }}</i></span><br>
                                                       @if ($order->shipping_method == 'Delivery')
                                                       <label>Address:</label>
-                                                      <span><i>{{ $order->delivery_address }}</i></span><br>
+                                                      <span><i>{{ str_replace('||', ', ', $order->delivery_address) }}</i></span><br>
                                                       @endif
                                     <hr>
                                     <div align="right">

@@ -73,7 +73,7 @@
                             </td>
                             <td>+63{{ $order->recipient_phone }}</td>
                             <td>
-                                <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->delivery_address }}</textarea>
+                                <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ str_replace('||', ', ', $order->delivery_address) }}</textarea>
                             </td>
                             <td>{{ $order->shipping_method }}</td>
                             <td>
@@ -146,7 +146,7 @@
                                                       <span><i>{{ $order->notes }}</i></span><br>
                                                       @if ($order->shipping_method == 'Delivery')
                                                       <label>Address:</label>
-                                                      <span><i>{{ $order->delivery_address }}</i></span><br>
+                                                      <span><i>{{ str_replace('||', ', ', $order->delivery_address) }}</i></span><br>
                                                       @endif
                                                   </div>
                                                 </div>
@@ -237,11 +237,17 @@
                             </td>
                             <td>+63{{ $order->recipient_phone }}</td>
                             <td>
-                                <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ $order->delivery_address }}</textarea>
+                                <textarea readonly style="width: 175px; height: 35px; overflow: auto;">{{ str_replace('||', ', ', $order->delivery_address) }}</textarea>
                             </td>
                             <td>{{ $order->shipping_method }}</td>
                             <td>
-                              <div class="badge badge-outline-success">{{ $order->order_status }}</div>
+                            <?php if ($order->order_status == 'Completed'): ?>
+                                    <div class="badge badge-outline-success">Completed</div>
+                                  <?php elseif($order->order_status == 'Refunded'): ?>
+                                    <div class="badge badge-outline-warning">Processing</div>
+                                  <?php elseif($order->order_status == 'Cancelled'): ?>
+                                    <div class="badge badge-outline-danger">Cancelled</div>
+                                <?php endif ?>
                             </td>
                           </tr>
 
@@ -335,7 +341,7 @@
                                                       <span><i>{{ $order->notes }}</i></span><br>
                                                       @if ($order->shipping_method == 'Delivery')
                                                       <label>Address:</label>
-                                                      <span><i>{{ $order->delivery_address }}</i></span><br>
+                                                      <span><i>{{ str_replace('||', ', ', $order->delivery_address) }}</i></span><br>
                                                       @endif
                                           <hr>
                                          
@@ -409,7 +415,7 @@
                                                       <span><i>{{ $order->notes }}</i></span><br>
                                                       @if ($order->shipping_method == 'Delivery')
                                                       <label>Address:</label>
-                                                      <span><i>{{ $order->delivery_address }}</i></span><br>
+                                                      <span><i>{{ str_replace('||', ', ', $order->delivery_address) }}</i></span><br>
                                                       @endif
                                     <hr>
                                     <div align="right">

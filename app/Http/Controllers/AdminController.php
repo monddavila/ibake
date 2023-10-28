@@ -176,9 +176,10 @@ class AdminController extends Controller
         ->join('users', 'customize_orders.userID', '=', 'users.id')
         ->select('customize_orders.*', 'users.firstname as user_name')
         ->where('orderStatus', '!=', 4) // fully paid and in queue orders
+        ->where('orderStatus', '!=', 6) //revoked orders
         ->where('orderStatus', '!=', 7) //cancelled requests
         ->orderBy('customize_orders.orderStatus', 'asc')
-        ->orderBy('customize_orders.created_at', 'desc')
+        ->orderBy('customize_orders.delivery_date', 'asc')
         ->paginate(10);
 
 
@@ -201,7 +202,8 @@ public function SearchCustomOrders(Request $request)
         $results = CustomizeOrder::with('user')
         ->join('users', 'customize_orders.userID', '=', 'users.id')
         ->select('customize_orders.*', 'users.firstname as user_name')
-        ->where('orderStatus', '!=', 4)
+        ->where('orderStatus', '!=', 4) //4 is fully paid
+        ->where('orderStatus', '!=', 6) //6 is revoked order
         ->where('customize_orders.orderID', 'like', '%' . $query . '%')
         ->orderBy($sortBy, $sortDirection)
         ->paginate(10);
@@ -332,11 +334,30 @@ public function SearchCustomOrders(Request $request)
                         'customize_order_details.updated_at' => now(),
                         'customize_order_details.order_status' => $orderStatus,
                     ]);
+                    
     }
       if($orderStatus == 'Processing'){
+
         return redirect(route('activeOrders'));
+
       }elseif ($orderStatus == 'Cancelled'){
+        $update = DB::table('customize_orders')
+                    ->where('customize_orders.orderID', $id)
+                    ->update([
+
+                              'orderStatus' => 6, //is is revoked order - cancelled by admin
+                              
+                    ]);
+
+        $update = DB::table('customize_order_details')
+                    ->join('customize_orders', 'customize_order_details.customOrder_id', '=', 'customize_orders.id')
+                    ->where('customize_orders.orderID', $id)
+                    ->update([
+                        'customize_order_details.payment_balance' => null,
+                    ]);
+
         return redirect(route('cancelledOrders'));
+
       }elseif ($orderStatus == 'On Delivery'){
 
         //CODE BLOCK FOR EMAIL SENDING TO CUSTOMER if order is ready for pickup or on delivery"
@@ -359,6 +380,7 @@ public function SearchCustomOrders(Request $request)
         $user->notify(new OrderStatusUpdated($order, $customOrder, $orderId));
 
         return redirect(route('readyOrders'));
+
       }elseif ($orderStatus == 'Completed'){
 
       //code block to update payment_status to Fully Paid
@@ -366,7 +388,6 @@ public function SearchCustomOrders(Request $request)
       $update = DB::table('customize_orders')
                     ->where('customize_orders.orderID', $id)
                     ->update([
-                              'updated_at' => now(),
                               'orderStatus' => 4,
                               
                     ]);
@@ -376,6 +397,7 @@ public function SearchCustomOrders(Request $request)
                     ->where('customize_orders.orderID', $id)
                     ->update([
                         'customize_order_details.payment_status' => 'Fully Paid',
+                        'customize_order_details.payment_balance' => null,
                     ]);
         
         return redirect(route('completedOrders'));

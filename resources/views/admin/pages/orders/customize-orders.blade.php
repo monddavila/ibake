@@ -39,7 +39,7 @@
                           <th class="sortable" id="sort-orderStatus" data-sort="orderStatus"> Action <i class="sort-icon mdi mdi-sort"></i></th>
                           <th class="sortable" id="sort-orderID" data-sort="orderID"> Order No. <i class="sort-icon mdi mdi-sort"></i></th>
                           <th class="sortable" id="sort-created_at" data-sort="created_at">Request Date <i class="sort-icon mdi mdi-sort"></i></th>
-                          <th class="sortable" id="sort-date_needed" data-sort="date_needed"> Date Needed <i class="sort-icon mdi mdi-sort"></i></th>
+                          <th class="sortable" id="sort-date_needed" data-sort="delivery_date"> Date Needed <i class="sort-icon mdi mdi-sort"></i></th>
                           <th class="sortable" id="sort-name" data-sort="users.firstname"> Requestor </th>
                           <th> Phone No. </th>
                           <th> Uploaded Sample </th>
