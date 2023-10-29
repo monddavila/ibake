@@ -59,9 +59,11 @@
                         @foreach ($completedOrders as $order)
                           <tr>
                           
-                            <td data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $order->order_id }}">
-                              <button class="btn btn-md btn-inverse-success order-details-btn">View
-                                Order</button>
+                            <td>
+                            <div class="d-flex align-items-center">
+                            <button class="btn btn-md btn-inverse-success order-details-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $order->order_id }}">View
+                                & Add Review</button>
+                            </div>
                             </td>
                             <td>{{ $order->order_id }}</td>
                             <td>{{ $order->created_at->format('d M Y') }}</td>
@@ -117,8 +119,14 @@
                                                             <a href="{{ asset($orderItem->product->image) }}" data-lightbox="image">
                                                                 <img src="{{ asset($orderItem->product->image) }}" style="float: right; max-width: auto; max-height: 80px;">
                                                             </a>
+                                                            
                                                         </div>
                                                       </div>
+                                                                @if ($order->order_status == 'Completed')
+                                                              <a href="/shop/item/{{ $orderItem->product->id }}#add-review" target="_blank">
+                                                                <button type="submit" class="badge badge-outline-success btn-inverse-primary" style="text-decoration: none;">Rate & Review</button>
+                                                              </a>
+                                                                 @endif
                                                     </div>
                                                       <hr>
                                                       @php
@@ -223,9 +231,17 @@
                         @foreach ($completedCustomOrders as $order)
                           <tr>
                           
-                            <td data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $order->customizeOrder->orderID  }}">
-                              <button class="btn btn-md btn-inverse-success order-details-btn">View
+                            <td>
+                            <div class="d-flex align-items-center">
+                              <button class="btn btn-md btn-inverse-success order-details-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $order->customizeOrder->orderID  }}">View
                                 Order</button>
+                                @if ($order->order_status == 'Completed') <!-- Teammed-->
+                                <form action="" method="" style="margin-left: 10px;">
+                                  @csrf
+                                  <button type="submit" class="badge badge-outline-success btn-inverse-primary" style="text-decoration: none;">Rate & Review</button>
+                              </form>
+                                 @endif
+                            </div>
                             </td>
                             <td>{{ $order->customizeOrder->orderID }}</td>
                             <td>{{ $order->created_at->format('d M Y') }}</td>
