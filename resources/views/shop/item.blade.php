@@ -16,6 +16,15 @@
 
     <!-- Main Header-->
     @include('partials.navbar')
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        
+        .selected {
+            color: gold; /* Selected star color */
+        }
+    </style>
+
     <!--End Main Header -->
 
     <!--Page Title-->
@@ -130,7 +139,7 @@
                               @endunless
                             @endforeach
                           </li>
-                          
+
                         </ul>
                       </div>
                     </div>
@@ -167,7 +176,9 @@
                         <!--Reviews Container-->
                         <div class="comments-area">
 
-                        @if ($reviewCount > 0)
+                            @if (!$reviewCount)
+                            <br><p style="text-align: center;">No reviews available for this product.</p><br>
+                            @endif
                             <!--Comment Box-->
                             @foreach ($reviews as $review)
                             {{ $review->user->name }}
@@ -218,9 +229,62 @@
                                   {{ $reviews->links() }}
                               </div>
 
-                        @else
-                        <p>No reviews available for this product.</p>
-                        @endif
+                              <!-- Review Form -->
+                                @auth
+                                <div class="comment-form" id="add-review">
+                                    <div class="sub-title" style="padding-top: 20px;"><h5>Add a review</h5></div>
+
+                                    <div class="form-outer">
+                                            @if(session('error'))
+                                                <div class="alert alert-danger alert-dismissible fade show">
+                                                    {{ session('error') }}
+                                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                </div>
+                                            @endif
+
+
+                                        <p>Your email address will not be published. Required fields are marked *</p>
+                                        <div class="rating-box">
+                                            <div class="field-label">Your Rating *</div>
+                                            <div class="rating">
+                                            <span  class="star selected" data-rating="1"><span class="fa fa-star"></span></span>
+                                            <span class="star selected" data-rating="2"><span class="fa fa-star"></span></span>
+                                            <span class="star selected" data-rating="3"><span class="fa fa-star"></span></span>
+                                            <span class="star selected" data-rating="4"><span class="fa fa-star"></span></span>
+                                            <span class="star selected"  data-rating="5"><span class="fa fa-star"></span></span>
+                                            </div>
+                                            
+                                        </div>
+                                        <form method="post" action="{{ route('sendReviews') }}">
+                                          @csrf
+                                            <div class="row clearfix">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                                    <div class="field-label">Your review *</div>
+                                                    <textarea name="message" placeholder="Place your product reviews/comments here" style="height: 100px;" required></textarea>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+                                                    <div class="field-label">Name </div>
+                                                    <input type="text" name="name" value="{{ auth()->user()->firstname }} {{ auth()->user()->lastname }}" readonly>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+                                                    <div class="field-label">Email </div>
+                                                    <input type="email" name="email" value="{{ auth()->user()->email }}" readonly>
+                                                </div>
+                                                
+                                                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                <input type="hidden" name="rating" id="selected-rating" value="">
+
+                                                <div class="col-lg-12 col-md-12 col-sm-12 form-group text-right">
+                                                    <input type="submit" name="submit" value="Submit">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                @endauth 
 
                         </div>
 
@@ -230,6 +294,8 @@
                   </div>
                 </div>
                 <!--End Product Info Tabs-->
+
+                
 
                 <!-- Related Products -->
                 <div class="related-products">
@@ -243,12 +309,14 @@
                     <div class="shop-item col-lg-4 col-md-6 col-sm-12">
                       <div class="inner-box">
                         <div class="image-box">
+                          @if ($product->availability == 0)
+                          <div class="unavailable-tag">Not available</div>
+                          @endif
                           <figure class="image"><a href="{{ route('item', $product->id) }}"><img src="{{ asset($product->image) }}"
                                 alt=""></a>
                           </figure>
 
-                          <div class="btn-box"><a href="{{ route('item', $product->id) }}">Add to
-                              cart</a>
+                          <div class="btn-box"><a href="{{ route('item', $product->id) }}">View Product</a>
                           </div>
                         </div>
                         <div class="lower-content">
@@ -366,6 +434,51 @@
   <script src="{{ asset('js/sticky_sidebar.min.js') }}"></script>
   <script src="{{ asset('js/script.js') }}"></script>
   <script src="{{ asset('js/cart.js') }}"></script>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+    $('.star').on('click', function (e) {
+        e.preventDefault(); // Prevent the page from navigating
+
+        var rating = $(this).data('rating');
+        $('#selected-rating').val(rating); // Set the value of the hidden input
+
+        // Remove the "selected" class from all stars
+        $('.star').removeClass('selected');
+
+        // Add the "selected" class to the clicked star and stars to the left
+        $(this).prevAll().addBack().addClass('selected');
+    });
+
+    // Handle form submission
+    $('form').on('submit', function () {
+        // Set the hidden input value one more time before submitting the form
+        var rating = $('#selected-rating').val();
+        $('#selected-rating').val(rating);
+    });
+  });
+
+</script>
+
+<script>
+    window.onload = function () {
+        // Check if the URL contains a fragment identifier
+        if (window.location.hash) {
+            // Scroll to the element with the matching ID
+            var elementId = window.location.hash.substring(1); // Remove the #
+            var targetElement = document.getElementById(elementId);
+
+            if (targetElement) {
+                // Scroll to the element
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    };
+</script>
+
+
+
 </body>
 
 </html>

@@ -19,6 +19,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\SMSController;
 use App\Http\Controllers\CustomizeController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ReviewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -107,7 +108,13 @@ Route::group(['prefix' => 'products', 'middleware' => ['auth']], function () {
   Route::get('/reviews', [ProductsController::class, 'viewReviews'])->name('viewReview');
   Route::get('/get-reviews', [ProductsController::class, 'getReviews'])->name('getReviews');
 
+  /** Products Reviews*/
+  Route::post('/sendReviews', [ReviewsController::class, 'sendReviews'])->name('sendReviews');
+
 });
+
+
+
 
 /**
  * Customer side
@@ -134,8 +141,12 @@ Route::group(['prefix' => 'shop'], function () {
   Route::get('/filterShop', [ShopController::class, 'filterShop'])->name('shop.filterShop');
   Route::post('/', [ShopController::class, 'index'])->name('shop');
   Route::get('/item/{id}', [ShopController::class, 'show'])->name('item');
+
   
 });
+
+
+
 
 Route::group(['prefix' => 'orders'], function () {
   Route::middleware(['auth']) ->get('/dashboard', [OrdersController::class, 'ordersDashboard']);
