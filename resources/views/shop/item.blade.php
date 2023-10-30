@@ -235,12 +235,25 @@
                                     <div class="sub-title" style="padding-top: 20px;"><h5>Add a review</h5></div>
 
                                     <div class="form-outer">
-                                            @if(session('error'))
-                                                <div class="alert alert-danger alert-dismissible fade show">
-                                                    {{ session('error') }}
-                                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                                </div>
-                                            @endif
+                                              @if (!session('error') && !session('success') && $reviewExists)
+
+                                                  <div class="alert alert-info alert-dismissible fade show">
+                                                    You already have a review for this product, and it will be updated when you submit your changes.
+                                                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                  </div>
+                                              @elseif(session('error'))
+                                                  <div class="alert alert-danger alert-dismissible fade show">
+                                                      {{ session('error') }}
+                                                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                  </div>
+                                              @elseif(session('success'))
+                                                  <div class="alert alert-success alert-dismissible fade show">
+                                                      {{ session('success') }}
+                                                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                  </div>
+                                               @endif
+
+                                                
 
 
                                         <p>Your email address will not be published. Required fields are marked *</p>
@@ -260,7 +273,11 @@
                                             <div class="row clearfix">
                                                 <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                                                     <div class="field-label">Your review *</div>
-                                                    <textarea name="message" placeholder="Place your product reviews/comments here" style="height: 100px;" required></textarea>
+                                                    @if($reviewExists)
+                                                    <textarea name="message" value="{{ $review->comment }}"style="height: 100px;" required maxlength="500">{{ $review->comment }}</textarea>
+                                                    @else
+                                                    <textarea name="message" placeholder="Place your product reviews/comments here" style="height: 100px;" required maxlength="500"></textarea>
+                                                    @endif
                                                 </div>
 
                                                 <div class="col-lg-6 col-md-12 col-sm-12 form-group">
@@ -278,7 +295,11 @@
                                                 <input type="hidden" name="rating" id="selected-rating" value="">
 
                                                 <div class="col-lg-12 col-md-12 col-sm-12 form-group text-right">
+                                                    @if($reviewExists)
+                                                    <input type="submit" name="submit" value="Update">
+                                                    @else
                                                     <input type="submit" name="submit" value="Submit">
+                                                    @endif
                                                 </div>
                                             </div>
                                         </form>

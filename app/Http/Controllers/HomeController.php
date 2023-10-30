@@ -59,6 +59,11 @@ class HomeController extends Controller
     return view('pages.faqs');
   }
 
+  function forgotPassword()
+  {
+    return view('auth.forgot-password');
+  }
+
   function privacy()
   {
     return view('pages.privacy');
