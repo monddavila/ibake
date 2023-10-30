@@ -47,6 +47,7 @@ Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
 Route::get('/faqs', [HomeController::class, 'faqs'])->name('faqs');
 Route::get('/privacy-policy', [HomeController::class, 'privacy'])->name('privacy');
 Route::get('/terms-of-service', [HomeController::class, 'terms'])->name('terms');
+Route::get('/forgot-password', [HomeController::class, 'forgotPassword'])->name('forgotPassword');
 
 Route::get('/track-order', [HomeController::class, 'track'])->name('track');
 Route::post('/track-order', [HomeController::class, 'trackOrderId'])->name('trackOrderId');

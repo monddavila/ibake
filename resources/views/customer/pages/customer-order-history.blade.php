@@ -61,8 +61,13 @@
                           
                             <td>
                             <div class="d-flex align-items-center">
-                            <button class="btn btn-md btn-inverse-success order-details-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $order->order_id }}">View
-                                & Add Review</button>
+                            <button class="btn btn-md btn-inverse-success order-details-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $order->order_id }}">
+                                @if($order->order_status == 'Completed')  
+                                View & Add Review</button>
+                                @else
+                                View Order</button>
+                                @endif
+
                             </div>
                             </td>
                             <td>{{ $order->order_id }}</td>

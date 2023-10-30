@@ -68,6 +68,8 @@ class ShopController extends Controller
     $product = Product::find($id);
     $categoryId = $product->category_id;
     $tags = $product->tags;
+    $user = auth()->user();
+    $user_id = $user->id;
 
     // Query for related products (random 3) excluding the current product
     $relatedProducts = Product::where('category_id', $categoryId)
@@ -93,6 +95,17 @@ class ShopController extends Controller
     ->groupBy('product_id')
     ->get();
 
+    /* Query to check if the user has already a review with the specific product */
+    $reviewExists = Review::where('product_id', $id)
+    ->where('user_id', $user_id)
+    ->with('user')
+    ->exists();
+
+    $userReview = Review::with('user')
+    ->where('product_id', $id) 
+    ->where('user_id', $user_id) 
+    ->get();
+
 
     return view('shop.item')
       ->with([
@@ -104,6 +117,8 @@ class ShopController extends Controller
         'averageRating' => $averageRating,
         'productRatings' => $productRatings,
         'tags' => $tags,
+        'reviewExists' => $reviewExists,
+        'userReview' => $userReview,
       ]);
   }
   
