@@ -45,5 +45,10 @@ class CustomizeOrder extends Model
     return $this->hasOne(CustomizeOrderDetail::class, 'customOrder_id', 'id');
     }
 
+    public function reviews()
+    {
+    return $this->hasOne(Review::class, 'order_id', 'orderID');
+    }
+
  
 }

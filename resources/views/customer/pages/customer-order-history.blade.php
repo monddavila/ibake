@@ -241,9 +241,9 @@
                               <button class="btn btn-md btn-inverse-success order-details-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ $order->customizeOrder->orderID  }}">View
                                 Order</button>
                                 @if ($order->order_status == 'Completed') <!-- Teammed-->
-                                <form action="" method="" style="margin-left: 10px;">
+                                <form action="{{ route('addCustomCakeReview', ['id' => $order->customizeOrder->orderID]) }}" method="POST" style="margin-left: 10px;" target="_blank">
                                   @csrf
-                                  <button type="submit" class="badge badge-outline-success btn-inverse-primary" style="text-decoration: none;">Rate & Review</button>
+                                  <button type="submit" class="badge badge-outline-success btn-inverse-primary" style="text-decoration: none;" >Rate & Review</button>
                               </form>
                                  @endif
                             </div>

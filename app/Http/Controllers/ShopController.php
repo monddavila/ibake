@@ -68,8 +68,30 @@ class ShopController extends Controller
     $product = Product::find($id);
     $categoryId = $product->category_id;
     $tags = $product->tags;
+    $userReview=null;
+    $reviewExists=null;
+    $cartItems=null;
     $user = auth()->user();
+    if($user){
     $user_id = $user->id;
+
+    /* Query to check if the user has already a review with the specific product */
+    $reviewExists = Review::where('product_id', $id)
+    ->where('user_id', $user_id)
+    ->with('user')
+    ->exists();
+
+    $userReview = Review::with('user')
+    ->where('product_id', $id) 
+    ->where('user_id', $user_id) 
+    ->get();
+
+    if (Cart::where('user_id', auth()->user()->id)->exists()) {
+
+        $cartItems = $this->userCartItems($id);
+    }
+
+    }
 
     // Query for related products (random 3) excluding the current product
     $relatedProducts = Product::where('category_id', $categoryId)
@@ -95,16 +117,8 @@ class ShopController extends Controller
     ->groupBy('product_id')
     ->get();
 
-    /* Query to check if the user has already a review with the specific product */
-    $reviewExists = Review::where('product_id', $id)
-    ->where('user_id', $user_id)
-    ->with('user')
-    ->exists();
+    
 
-    $userReview = Review::with('user')
-    ->where('product_id', $id) 
-    ->where('user_id', $user_id) 
-    ->get();
 
 
     return view('shop.item')
@@ -119,7 +133,30 @@ class ShopController extends Controller
         'tags' => $tags,
         'reviewExists' => $reviewExists,
         'userReview' => $userReview,
+        'cartItems' => $cartItems,
       ]);
+  }
+
+  public function userCartItems($id)
+  {
+    // Get the user's cart Id
+    $cartId = Cart::where('user_id', auth()->user()->id)->first()->id;
+    // Get product name, price, and quantity of the user's cart
+    $userCart = CartItem::where('cart_id', $cartId)
+      ->where('product_id', $id)
+      ->join('products', 'cart_items.product_id', '=', 'products.id')
+      ->select(
+        'cart_items.cart_id',
+        'cart_items.product_id',
+        'cart_items.quantity',
+        'products.name',
+        'products.price',
+        'products.available_qty',
+        'products.image'
+      )
+      ->first();
+
+    return $userCart;
   }
   
   

@@ -114,6 +114,11 @@ Route::group(['prefix' => 'products', 'middleware' => ['auth']], function () {
 
 });
 
+/** Custom Cake Reviews*/
+Route::post('/customize-cake-review/{id}', [ReviewsController::class, 'addCustomCakeReview'])->name('addCustomCakeReview');
+Route::get('/customize-cake-review/{id}', [ReviewsController::class, 'addCustomCakeReview'])->name('addCustomCakeReview');
+Route::post('/send-custom-cake-review', [ReviewsController::class, 'sendCustomReviews'])->name('sendCustomReviews');
+
 
 
 

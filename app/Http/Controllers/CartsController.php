@@ -168,6 +168,7 @@ class CartsController extends Controller
         'cart_items.quantity',
         'products.name',
         'products.price',
+        'products.available_qty',
         'products.image'
       )
       ->get();
@@ -181,7 +182,7 @@ class CartsController extends Controller
       $cartItems = $this->userCart();
       $cartWidget = view('shop.cart-widget')
         ->with([
-          'userCart' => $cartItems->take(2),
+          'userCart' => $cartItems->take(3),
           'cartItemCount' => count($cartItems)
         ])
         ->render();
@@ -192,8 +193,8 @@ class CartsController extends Controller
 
       // Check if item is in cart
       if (!empty($sessionCart)) {
-        // Get first two items
-        $userCart = count($sessionCart) > 2 ? array_slice($sessionCart, 0, 2) : $sessionCart;
+        // Get first three items
+        $userCart = count($sessionCart) > 3 ? array_slice($sessionCart, 0, 3) : $sessionCart;
         $cartWidget = view('shop.cart-widget')
           ->with([
             'userCart' => $userCart,
