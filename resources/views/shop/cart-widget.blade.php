@@ -31,8 +31,8 @@
 
 <!-- Cart Footer -->
 <div class="cart-footer">
-  @if ($cartItemCount > 2)
-  <div class="shopping-cart-total">There are {{ $cartItemCount - 2 }} item(s) more in the cart.</div>
+  @if ($cartItemCount > 3)
+  <div class="shopping-cart-total">There are {{ $cartItemCount - 3 }} item(s) more in the cart.</div>
   @endif
 
   <!-- Display the Subtotal -->

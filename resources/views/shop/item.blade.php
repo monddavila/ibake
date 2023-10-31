@@ -98,8 +98,9 @@
                         <div class="item-price">Php {{ number_format($product->price, 2) }}</div>
                         {{-- Short item description beside item image --}}
                         <div class="text">{{ $product->item_description }}</div>
+
+                        <div class="text">Available Quantity: <strong>@if(!$product->available_qty)0 @else{{ $product->available_qty }}@endif</strong></div> {{--teammed--}}
                       </div>
-                      {{-- {{ dd($product) }} --}}
 
                       <div class="other-options clearfix">
                         <form id="addToCartForm">
@@ -110,16 +111,36 @@
                           <input type="hidden" name="product_image" value="{{ $product->image }}">
                          
                           @if ($product->availability == 1)
-      
+
                           <div class="item-quantity">
-                              Quantity <input class="quantity" type="number" value="1" name="qty" style="border: 1px solid #ccc; padding: 2px; width: 50px; text-align: center;">
+                              Quantity <input class="quantity" type="number" name="qty" style="border: 1px solid #ccc; padding: 2px; width: 50px; text-align: center;" 
+                              @auth 
+                                  @isset($product, $cartItems)
+                                      max="{{ is_null($cartItems->quantity) ? $product->available_qty : $product->available_qty - $cartItems->quantity }}"
+                                      min="0"
+                                      value="{{ ($product->available_qty - $cartItems->quantity) > 0 ? 1 : 0 }}"
+
+
+                                  @else
+                                      max="{{ $product->available_qty }}"
+                                      min="1"
+                                      value="1"
+                                  @endisset
+                                  >
+                              @else
+                                      max="{{ $product->available_qty }}"
+                                      min="1"
+                                      value="1">
+                              @endauth
+
                           </div>
+
 
 
 
                           <div class="cart-msg-container pt-5">
                           </div>
-                          <button type="submit" class="theme-btn add-to-cart"><span class="btn-title"
+                          <button type="submit" class="theme-btn add-to-cart" onclick="location.reload();"><span class="btn-title"
                               data-token="{{ csrf_token() }}">Add To
                               Cart</span></button>
                           @else <p class="warning-button" style="color: red;">
@@ -454,7 +475,9 @@
   <script src="{{ asset('js/select2.min.js') }}"></script>
   <script src="{{ asset('js/sticky_sidebar.min.js') }}"></script>
   <script src="{{ asset('js/script.js') }}"></script>
-  <script src="{{ asset('js/cart.js') }}"></script>
+  <script src="{{ asset('js/cart.js') }}?v={{ filemtime(public_path('js/cart.js')) }}"></script>
+
+
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>

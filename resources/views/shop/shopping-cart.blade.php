@@ -42,6 +42,21 @@
               </button>
           </div>
       @endif
+        
+      <button class="btn btn-info" onclick="window.location.href = '{{ route('shop') }}';" style="margin-top: 10px; margin-bottom: 10px;">
+    <i class="fas fa-shopping-cart"></i>
+    <span class="btn-title">Return to Shop</span>
+</button>
+
+
+
+
+
+
+
+
+
+
         <!--Cart Outer-->
         <div class="cart-outer">
           <div class="table-outer">
@@ -75,8 +90,9 @@
                       <div class="quantity"><label>Quantity</label>
                         <input type="number" class="qty" name="quantity" value="{{ $cartItem->quantity }}"
                           data-cartId="{{ $cartItem->cart_id }}" data-productId="{{ $cartItem->product_id }}"
-                          data-productPrice="{{ $cartItem->price }}" data-token="{{ csrf_token() }}">
+                          data-productPrice="{{ $cartItem->price }}" data-token="{{ csrf_token() }}" min="1" @if(!$cartItem->available_qty) max="1" @else max="{{ $cartItem->available_qty }}" @endif>
                       </div>
+                      
                     </td>
                     <td class="product-subtotal"><span class="amount item-total-price"
                         data-cartId="{{ $cartItem->cart_id }}" data-productId="{{ $cartItem->product_id }}">Php
@@ -109,9 +125,10 @@
               </div>
             </div>
 
-            <div class="pull-right">
-              <button type="button" class="theme-btn cart-btn">update cart</button>
-            </div>
+              <div class="pull-right">
+                <button type="button" class="theme-btn cart-btn" onclick="window.location.reload();">Update Cart</button>
+              </div>
+
           </div>
         </div>
 
@@ -156,7 +173,8 @@
   <script src="js/select2.min.js"></script>
   <script src="js/sticky_sidebar.min.js"></script>
   <script src="js/script.js"></script>
-  <script src="js/cart.js"></script>
+  <script src="js/cart.js?v={{ filemtime(public_path('js/cart.js')) }}"></script>
+
 </body>
 
 </html>
