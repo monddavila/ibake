@@ -69,28 +69,44 @@
           <!-- Main Menu End-->
 
           <div class="outer-box clearfix">
-          <!-- Login/Register Start-->
-              @auth
-              <!-- Logged in -->
-              <?php if (Auth::user()->role_id == 1): ?>
-                <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-dashboard"></i> Admin Panel</a>
-              <?php elseif(Auth::user()->role_id == 2): ?>
-                <a href="{{ route('customer') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-user"></i> My Account</a>
-              <?php elseif(Auth::user()->role_id == 3): ?>
-                <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-dashboard"></i> Admin Panel</a>
-              <?php endif ?>
-              {{-- Logout only works in a form --}}
-              <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button class="theme-btn auth-btn" type="submit"><i class="fa fa-sign-out"></i> Logout</button>
-              </form>
-              @else
-              <!-- Not Logged in -->
-              <a href="{{ route('login') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-sign-in"></i> Log in</a>
-              <a href="{{ route('register') }}" class="theme-btn auth-btn"><i class="fa fa-user-plus"></i> Register</a>
-              @endauth
-              
-          <!-- Login/Register End-->
+                          @auth
+                          <div class="row">
+                            <div class="col-12 col-md-3 align-self-start">
+                              <!-- Shoppping Cart -->
+                              <div class="cart-btn">
+                                  <a href="{{ route('shop') }}"><i class="icon flaticon-commerce"></i> <span class="count">{{$cartItemCount}}</span></a>
+
+                                  <div class="shopping-cart">
+                                    <!--shopping cart content loaded in ajax -->
+                                  </div> 
+                              </div>
+                            </div>
+                          @endauth
+                        <!-- Login/Register Start-->
+                            @auth
+                              <div class="col-12 col-md-9 align-self-start">
+                                <!-- Logged in -->
+                                <?php if (Auth::user()->role_id == 1): ?>
+                                  <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-dashboard"></i> Admin Panel</a>
+                                <?php elseif(Auth::user()->role_id == 2): ?>
+                                  <a href="{{ route('customer') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-user"></i> My Account</a>
+                                <?php elseif(Auth::user()->role_id == 3): ?>
+                                  <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-dashboard"></i> Admin Panel</a>
+                                <?php endif ?>
+                                {{-- Logout only works in a form --}}
+                                <form method="POST" action="{{ route('logout') }}">
+                                  @csrf
+                                  <button class="theme-btn auth-btn" type="submit"><i class="fa fa-sign-out"></i> Logout</button>
+                                </form>
+                            </div>
+                          </div>
+                            @else
+                            <!-- Not Logged in -->
+                            <a href="{{ route('login') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-sign-in"></i> Log in</a>
+                            <a href="{{ route('register') }}" class="theme-btn auth-btn"><i class="fa fa-user-plus"></i> Register</a>
+                            @endauth
+                            
+                        <!-- Login/Register End-->
           </div>
         </div>
       <!-- Nav Box End -->
