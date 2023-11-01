@@ -145,7 +145,6 @@
       </a>
       <div class="collapse" id="products">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="{{ route('viewReview') }}">Reviews</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewCategories') }}">Categories</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewTags') }}">Tags</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewProducts') }}">View Products</a></li>
@@ -173,13 +172,21 @@
     </li>--}}
 
     <li class="nav-item menu-items">
-      <a class="nav-link" href="admin/pages/tables/basic-table.html">
+      <a class="nav-link" data-bs-toggle="collapse" href="#reports" aria-expanded="false" aria-controls="reports">
         <span class="menu-icon">
           <i class="mdi mdi-table-large"></i>
         </span>
         <span class="menu-title">Reports</span>
+        <i class="menu-arrow"></i>
       </a>
+      <div class="collapse" id="reports">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"><a class="nav-link" href="{{ route('viewReview') }}">Product Reviews</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewCategories') }}">Order Reviews</a></li>
+        </ul>
+      </div>
     </li>
+
     {{--<li class="nav-item menu-items">
       <a class="nav-link" href="admin/pages/charts/chartjs.html">
         <span class="menu-icon">

@@ -20,6 +20,16 @@ class PaymentController extends Controller
 
     public function placeOrder(Request $request)
     {
+        //Validate ordered products qty should not exceed product qty available
+        $cartItems = (new CartsController())->userCart();
+
+        foreach ($cartItems as $cartItem) {
+            if ($cartItem->quantity > $cartItem->available_qty) {
+                return back()->with('error', 'Quantity for item <strong>' . $cartItem->name . '</strong> exceeds its available quantity. Please adjust your cart.');
+
+            }
+        }
+
         $phoneValidationPattern = '/^(?:\+63|0)[1-9]\d{9}$/';
         // Validate the form data
         $validator = Validator::make($request->all(), [

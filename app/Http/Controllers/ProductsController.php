@@ -57,12 +57,14 @@ class ProductsController extends Controller
    */
   public function store(StoreProductsRequest $request)
   {
+
     $product = new Product();
     $product->name = $request->name;
     $product->price = $request->price;
     $product->image = $this->storeImage($request); // Assign the image path to the 'image' column
     $product->item_description = $request->item_description;
     $product->category_id = $request->category;
+    $product->available_qty = $request->qty;
     $product->availability = $request->has('is_available');
     $product->isfeatured = $request->has('is_featured');
     $product->save();
@@ -138,6 +140,7 @@ class ProductsController extends Controller
     if ($request->has('price')) {
       $product->price = $request->price;
     }
+    $product->available_qty = $request->qty;
     $product->item_description = $request->item_description;
     $product->category_id = $request->category_id;
     

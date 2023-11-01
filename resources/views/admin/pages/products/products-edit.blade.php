@@ -10,6 +10,9 @@
   <div class="container-scroller">
     <!-- partial:sidebar -->
     @include('admin.partials.sidebar')
+    
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
 
     <!-- partial:navbar -->
     @include('admin.partials.navbar')
@@ -64,7 +67,7 @@
 
                 <div class="row">
                 <div class="col-md-6">
-                    <label for="price" class="product-input-label">Price <span style="color: red;">(No comma ' , ' separator needed)</span></label>
+                    <label for="price" class="product-input-label">Price <span style="color: red;"><em>(No comma ' , ' separator needed)</em></span></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text bg-primary text-white">Php</span>
@@ -93,6 +96,14 @@
 
                 <div class="row">
                   <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Stock Quantity</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="qty" name="qty" placeholder="Price" value="{{ old('price', $product->available_qty) }}" min="0">
+                        </div>
+                      </div>
+                  </div>
+                  <div class="col-md-6">
                       <!-- Product Image Upload -->
                       <div class="form-group">
                           <label>Upload Image</label>
@@ -101,18 +112,11 @@
                       </div>
                       <!-- Product Image Upload End -->
                   </div>
+
               </div>
 
               <div class="row">
-                  <div class="col-md-6">
-                      <!-- Uploaded Product Image -->
-                      <div class="form-group">
-                          <label>Selected Image</label>
-                          <div class="input-group">
-                              <img id="uploaded-img-preview" src="{{ asset($product->image) }}" alt="Product Image 1" class="img-thumbnail" style="max-width: 200px;">
-                          </div>
-                      </div>
-                  </div>
+                  
                   <div class="col-md-6">
                       <!-- Product Image -->
                       <div class="form-group">    
@@ -121,7 +125,16 @@
                               <img src="{{ asset($product->image) }}" alt="Product Image 2" class="img-thumbnail" style="max-width: 200px;">
                           </div>
                       </div>
-                  </div>            
+                  </div> 
+                  <div class="col-md-6">
+                      <!-- Uploaded Product Image -->
+                      <div class="form-group">
+                          <label>Selected Image</label>
+                          <div class="input-group">
+                          <img id="uploaded-img-preview" src="{{ asset('images/profile/upload-image.png') }}" alt="Product Image 1" class="img-thumbnail" style="max-width: 200px;">
+                          </div>
+                      </div>
+                  </div>           
               </div>
               <div class="row">
                 <div class="col-md-6">
