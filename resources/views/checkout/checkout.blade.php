@@ -44,6 +44,7 @@
           </div>
         </div>
 
+
         <!--Checkout Details-->
         <div class="checkout-form-container">
           <div class="sec-title">
@@ -51,6 +52,7 @@
           </div>
           <form method="POST" action="{{ route('placeOrder') }}" class="checkout-form">
             @CSRF
+            
             <div class="row clearfix">
               <!--Column-->
               <div class="column col-lg-6 col-md-12 col-sm-12">
@@ -200,6 +202,13 @@
 
             <!--Order Box-->
             <div class="order-box">
+                  @if(session('error'))
+                      <div class="alert alert-danger">
+                          {!! session('error') !!}
+                      </div>
+                  @endif
+
+
               <table>
                 <thead>
                   <tr>

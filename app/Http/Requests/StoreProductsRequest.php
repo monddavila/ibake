@@ -31,8 +31,10 @@ class StoreProductsRequest extends FormRequest
     $rules = [
       'name' => 'required|unique:products|max:255',
       'price' => 'required|min:0',
+      'qty' => 'required|min:0',
       'item_description' => 'required|max:255',
       'category' => 'required',
+      'tags' => 'required',
       'image' => ['mimes:jpg,png,jpeg', 'max:5048']
     ];
 

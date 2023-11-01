@@ -55,6 +55,7 @@
                       <th class="sortable" id="sort-rate" data-sort="rating">Rating <i class="sort-icon mdi mdi-sort"></i></th>
                       <th class="sortable" id="sort-isfeatured" data-sort="isfeatured">is Featured <i class="sort-icon mdi mdi-sort"></i></th>
                       <th class="sortable" id="sort-available" data-sort="availability">Availability <i class="sort-icon mdi mdi-sort"></i></th>
+                      <th class="sortable" id="sort-qty" data-sort="available_qty">inStock Qty <i class="sort-icon mdi mdi-sort"></i></th>
                       <th></th>
                       <th></th>
                     </tr>
