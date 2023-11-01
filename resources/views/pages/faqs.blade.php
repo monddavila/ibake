@@ -206,6 +206,7 @@
     <script src="js/script.js"></script>
 
     <script src="//code.tidio.co/rxspxjqfeocjtadtyjrdmxudlhr0m8vc.js" async></script>
+    <script src="js/cart.js?v={{ filemtime(public_path('js/cart.js')) }}"></script>
 
 
 </body>

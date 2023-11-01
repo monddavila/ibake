@@ -112,6 +112,7 @@
 <script src="js/appear.js"></script>
 <script src="js/mixitup.js"></script>
 <script src="js/script.js"></script>
+<script src="js/cart.js?v={{ filemtime(public_path('js/cart.js')) }}"></script>
 
 </body>
 </html>

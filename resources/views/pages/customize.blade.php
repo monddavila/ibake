@@ -1726,6 +1726,8 @@
     });
 </script>
 
+<script src="js/cart.js?v={{ filemtime(public_path('js/cart.js')) }}"></script>
+
 
 
 
