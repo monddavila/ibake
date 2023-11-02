@@ -20,6 +20,7 @@ use App\Http\Controllers\SMSController;
 use App\Http\Controllers\CustomizeController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ReviewsController;
+use App\Http\Controllers\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,7 +48,6 @@ Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
 Route::get('/faqs', [HomeController::class, 'faqs'])->name('faqs');
 Route::get('/privacy-policy', [HomeController::class, 'privacy'])->name('privacy');
 Route::get('/terms-of-service', [HomeController::class, 'terms'])->name('terms');
-Route::get('/forgot-password', [HomeController::class, 'forgotPassword'])->name('forgotPassword');
 
 Route::get('/track-order', [HomeController::class, 'track'])->name('track');
 Route::post('/track-order', [HomeController::class, 'trackOrderId'])->name('trackOrderId');
@@ -105,12 +105,19 @@ Route::group(['prefix' => 'products', 'middleware' => ['auth']], function () {
   Route::post('/add-tags', [ProductsController::class, 'addTags'])->name('addTag');
   Route::get('/delete-tag/{id}', [ProductsController::class, 'deleteTags'])->name('deleteTag');
   Route::patch('/update-tag', [ProductsController::class, 'updateTags'])->name('updateTag');
-/*Reviews Section*/
-  Route::get('/reviews', [ProductsController::class, 'viewReviews'])->name('viewReview');
-  Route::get('/get-reviews', [ProductsController::class, 'getReviews'])->name('getReviews');
 
-  /** Products Reviews*/
+  /* Item-Products Reviews*/
   Route::post('/sendReviews', [ReviewsController::class, 'sendReviews'])->name('sendReviews');
+
+});
+
+Route::group(['prefix' => 'reports', 'middleware' => ['auth']], function () {
+/*Admin Panel Reviews Section*/
+Route::get('/reviews', [ProductsController::class, 'viewReviews'])->name('viewReview');
+Route::get('/get-reviews', [ProductsController::class, 'getReviews'])->name('getReviews');
+/*Admin Panel Custom Cake Reviews Section*/
+Route::get('/custom-order-reviews', [ProductsController::class, 'viewCustomReviews'])->name('viewCustomReviews');
+Route::get('/get-custom-reviews', [ProductsController::class, 'getCustomReviews'])->name('getCustomReviews');
 
 });
 
@@ -258,6 +265,15 @@ Route::get('/switch-user', [LoginController::class, 'switchUser'])->name('switch
 Route::get('/register', [LoginController::class, 'create'])->name('register')->withoutMiddleware('auth');
 // For storing new account to database
 Route::post('/register', [LoginController::class, 'store'])->name('register.store');
+
+/*Forgot Password*/
+Route::get('/forgot-password', [ForgotPasswordController::class, 'forgotPassword'])->name('forgotPassword')->middleware('guest');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPasswordPost'])->name('forgotPasswordPost')->middleware('guest');
+
+Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'resetPassword'])->name('resetPassword')->middleware('guest');
+Route::post('/reset-password', [ForgotPasswordController::class, 'resetPasswordPost'])->name('resetPasswordPost')->middleware('guest');
+
+
 
 Route::middleware([
   'auth:sanctum',

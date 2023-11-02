@@ -109,7 +109,7 @@ class LoginController extends Controller
     'email' => 'required|string|email|max:50|unique:users',
     'phone' => ['required', 'string', 'max:11', 'unique:users', 'regex:' . $phoneValidationPattern],
     'address' => 'required|string|max:100',
-    'password' => 'required|string|confirmed',
+    'password' => 'required|string|min:8|max:16|confirmed',
     ]);
 
     $user = User::create([

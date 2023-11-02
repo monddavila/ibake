@@ -110,13 +110,18 @@ class OrdersController extends Controller
     foreach ($cartItems as $cartItem) {
       $totalPrice += ($cartItem->price * $cartItem->quantity);
     }
-    //update all ordered products available qty in products table
+    //update all ordered products available qty in products table and if qty reach 0 will update availabilty status
     foreach ($cartItems as $cartItem) {
-      $newQty = ($cartItem->available_qty - $cartItem->quantity);
+      $newQty = $cartItem->available_qty - $cartItem->quantity;
       $ordered_product_id = $cartItem->product_id;
-
+  
       Product::where('id', $ordered_product_id)->update(['available_qty' => $newQty]);
+  
+      if ($newQty === 0 || $cartItem->available_qty === null) {
+          Product::where('id', $ordered_product_id)->update(['availability' => 0]);
+      }
     }
+  
 
     //store data to orders table
     $order = Order::create([
