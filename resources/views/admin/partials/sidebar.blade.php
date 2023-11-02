@@ -182,7 +182,7 @@
       <div class="collapse" id="reports">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"><a class="nav-link" href="{{ route('viewReview') }}">Product Reviews</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewCategories') }}">Order Reviews</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('viewCustomReviews') }}">Custom Order Reviews</a></li>
         </ul>
       </div>
     </li>

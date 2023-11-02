@@ -45,7 +45,7 @@ class AdminController extends Controller
       'role_id' => 'required',
       'phone' => 'required|string|unique:users',
       'address' => 'required|string|max:255',
-      'password' => 'required|string|confirmed',
+      'password' => 'required|string|min:8|max:16|confirmed',
     ]);
 
 
@@ -115,7 +115,7 @@ class AdminController extends Controller
                   Rule::unique('users')->ignore($user->id),
               ],
               'address' => 'required|string|max:255',
-              'password' => 'nullable|string|confirmed',
+              'password' => 'nullable|string|min:8|max:16|confirmed',
           ]);
 
           $user->firstname = $request->firstname;

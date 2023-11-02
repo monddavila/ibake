@@ -97,7 +97,7 @@ class CustomerController extends Controller
 
     $request->validate([
         'current_password' => 'required|string',
-        'password' => 'required|string|confirmed',
+        'password' => 'required|string|min:8|max:16|confirmed',
     ]);
 
     // Check if the provided current_password matches the user's actual password

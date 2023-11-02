@@ -7,8 +7,8 @@
 </head>
 
 <body>
-    <div class="container-scroller">
-        <!-- partial:sidebar -->
+        <div class="container-scroller">
+
         @include('admin.partials.sidebar')
 
         <!-- partial:navbar -->
@@ -30,18 +30,18 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h4 class="card-title">Products Reviews</h4>
-                            
+                                <h4 class="card-title">Custom Cake Order Reviews</h4>
+                  
                             </div>
                             <div class="col-lg-3">
                                 <div class="add-product-td">
-                                <form id="showReviewsForm" method="GET" action="{{ route('getReviews') }}">
+                                <form id="showReviewsForm" method="GET" action="{{ route('getCustomReviews') }}">
                                     @csrf
-                                    <label for="category" class="product-input-label">Select Product</label>
-                                    <select class="js-example-basic-single" style="width: 100%" name="productId">
-                                        <option value="">Choose Product</option>
-                                        @foreach($products as $product)
-                                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                    <label for="category" class="product-input-label">Select Order ID</label>
+                                    <select class="js-example-basic-single" style="width: 100%" name="orderId">
+                                        <option value="">Choose Order ID</option>
+                                        @foreach( $customReviews as $order)
+                                        <option value="{{ $order->order_id }}">{{ $order->order_id }}</option>
                                         @endforeach
                                     </select>
                                     @if(session()->has('error'))
@@ -51,7 +51,7 @@
                                         </div>
                                     @endif
                                     <button type="submit" class="btn btn-primary btn-fw mt-3">Show</button>
-                                    <a href="{{ route('viewReview') }}" class="btn btn-secondary btn-fw mt-3">Reset</a>
+                                    <a href="{{ route('viewCustomReviews') }}" class="btn btn-secondary btn-fw mt-3">Reset</a>
                                 </form>
 
                                 </div>
@@ -60,7 +60,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th class="sortable" id="user_id">Item</th>
+                                            <th class="sortable" id="user_id">Order ID</th>
                                             <th class="sortable" id="username">User Name</th>
                                             <th class="sortable" id="comment">Comment</th>
                                             <th class="sortable" id="rating">Rating</th>
@@ -71,7 +71,7 @@
 
                                     <tbody>
                                         <div id="reviews-container">
-                                            @include('admin.pages.products.reviews-table')
+                                            @include('admin.pages.products.custom-reviews-table')
                                         </div>
                                     </tbody>
                                 </table>
@@ -88,6 +88,7 @@
 
         <!-- page-body-wrapper ends -->
     </div>
+
 
     <!-- plugins:js -->
     @include('admin.partials.script')

@@ -10,6 +10,8 @@ use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Models\CustomizeOrderDetail;
+use App\Models\CustomCakeReview;
 
 class ProductsController extends Controller
 {
@@ -406,6 +408,40 @@ public function getReviews(Request $request)
 
     // Return the reviews in a blade view
     return view('admin.pages.products.reviews', ['reviews' => $reviews, 'products' => $products]);
+}
+
+public function viewCustomReviews()
+{
+  
+    // Fetch all products for the dropdown
+    $customOrders = CustomizeOrderDetail::all();
+    $customReviews = CustomCakeReview::with('user')->get();
+   
+
+    return view('admin.pages.products.custom-reviews', ['customOrders' => $customOrders, 'customReviews' => $customReviews]);
+}
+
+public function getCustomReviews(Request $request)
+{
+
+    $orderId = $request->input('orderId');
+
+    // Check if productId is empty or zero
+    if (empty($orderId) || $orderId == 0) {
+        
+        return redirect()->route('viewCustomReviews')->with('error', 'Please select a valid product.');
+    }
+
+    $products = Product::all();
+    // Fetch reviews for the selected product
+
+    $customReviews = CustomCakeReview::with('user')
+    ->where('order_id', $orderId)
+    ->get();
+
+
+    // Return the reviews in a blade view
+    return view('admin.pages.products.custom-reviews', ['customReviews' => $customReviews]);
 }
 
 
