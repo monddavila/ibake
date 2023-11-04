@@ -55,19 +55,24 @@
               "AU": 15.45,
               "GB": 25.00,
               "RO": 10.25,
-              "GE": 33.25
+              "GE": 33.25,
+              "PH": 0.00
             }
           }]
         }
       });
     }
     if ($("#transaction-history").length) {
+      var dynamicData = $("#transaction-history").data("chart-data");
+       console.log(dynamicData);
+       
+
       var areaData = {
-        labels: ["Paypal", "Stripe","Cash"],
+        labels: ["E-wallets", "Debit/Credit Cards","Online Banking","Cash"],
         datasets: [{
-            data: [55, 25, 20],
+            data: dynamicData,
             backgroundColor: [
-              "#111111","#00d25b","#ffab00"
+              "#grey","#00d25b","#ffab00",
             ]
           }
         ]

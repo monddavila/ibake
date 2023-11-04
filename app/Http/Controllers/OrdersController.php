@@ -136,7 +136,7 @@ class OrdersController extends Controller
       'delivery_address' => $address,
       'total_price' => $totalPrice,
       'payment_method' => $paymentMethod,
-      'payment_status' => 'Paid',
+      'payment_status' => 'Fully Paid',
       'payment_session_id' => $paymentSessionId,
       'payment_intent_id' => $paymentIntentId,
       'notes' => $orderNotes,
@@ -213,24 +213,7 @@ class OrdersController extends Controller
     //
   }
 
-  /**
-   * Show the orders on Dashboard homepage.
-   *
-   */
-  public function ordersDashboard()
-  {
-    $orders = Order::orderBy('delivery_date')
-      ->take(5)
-      ->get()
-      // copy 'created_at' column to 'order_date' with d M Y format (01 Jan 2023)
-      ->map(function ($order) {
-        $order->order_date = Carbon::parse($order->created_at)->format('d M Y');
-        return $order;
-      });
 
-
-    return response()->json(['orders' => $orders]);
-  }
 
   /**
    * Show the active orders on by accessing
