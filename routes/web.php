@@ -21,6 +21,7 @@ use App\Http\Controllers\CustomizeController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -158,11 +159,16 @@ Route::group(['prefix' => 'shop'], function () {
   
 });
 
+/**
+ * Admin Panel Dashboard and Reports
+ */
+Route::middleware(['auth']) ->get('/dashboard', [DashboardController::class, 'adminIndex'])->name('admin.dashboard');
+Route::middleware(['auth']) ->get('/dashboard-orders', [DashboardController::class, 'ordersDashboard'])->name('ordersDashboard');
+
 
 
 
 Route::group(['prefix' => 'orders'], function () {
-  Route::middleware(['auth']) ->get('/dashboard', [OrdersController::class, 'ordersDashboard']);
   Route::middleware(['auth']) ->get('/active', [OrdersController::class, 'activeOrders'])->name('activeOrders');
   Route::middleware(['auth']) ->get('/ongoing', [OrdersController::class, 'ongoingOrders'])->name('ongoingOrders');
   Route::middleware(['auth']) ->get('/ready', [OrdersController::class, 'readyOrders'])->name('readyOrders');
@@ -275,7 +281,7 @@ Route::post('/reset-password', [ForgotPasswordController::class, 'resetPasswordP
 
 
 
-Route::middleware([
+/*Route::middleware([
   'auth:sanctum',
   config('jetstream.auth_session'),
   'verified'
@@ -283,7 +289,7 @@ Route::middleware([
   Route::get('/dashboard', function () {
     return view('dashboard');
   })->name('dashboard');
-});
+}); */
 
 
 /**
