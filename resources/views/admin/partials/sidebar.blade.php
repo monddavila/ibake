@@ -149,6 +149,7 @@
           <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewTags') }}">Tags</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewProducts') }}">View Products</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewAddProducts') }}">Add a product</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('viewCakeBuilder') }}">Cake Builder</a></li>
         </ul>
       </div>
     </li>

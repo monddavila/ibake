@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\CustomizeOrderDetail;
 use App\Models\CustomCakeReview;
+use App\Models\CakeBuilderDetail;
+use App\Models\FeatureStatus;
 
 class ProductsController extends Controller
 {
@@ -32,7 +34,13 @@ class ProductsController extends Controller
         ->select('products.*', 'categories.name as category_name')
         ->paginate(10);
 
-    return view('admin.pages.products.products-list', ['products' => $products]);
+        $totalInventoryValue = Product::sum(\DB::raw('price * available_qty'));
+
+    return view('admin.pages.products.products-list', [
+      'products' => $products,
+      'totalInventoryValue' => $totalInventoryValue,
+
+    ]);
   }
 
 
@@ -445,6 +453,58 @@ public function getCustomReviews(Request $request)
 }
 
 
+function viewCakeBuilder()
+{
 
-  
+  $cakeBuilder = CakeBuilderDetail::all();
+
+  $cakeBuilderData = DB::table('feature_status')->where('name', 'cake_builder')->first();
+
+  $cakeBuilderStatus = $cakeBuilderData->status;
+
+    return view('admin.pages.products.cake-builder', [
+      'cakeBuilder' => $cakeBuilder,
+      'cakeBuilderStatus' => $cakeBuilderStatus,
+    ]);
+}
+
+public function updateCakeBuilder(Request $request)
+{
+    $sizes = $request->input('size');
+    $prices = $request->input('price');
+    $descriptions = $request->input('description');
+    $checkStatus = $request->input('is_available');
+
+    if(!$checkStatus){
+      $status = 0;
+      }else{
+        $status = $request->input('is_available');
+      }
+
+    // Assuming the sizes, prices, and descriptions arrays are of the same length.
+    $count = count($sizes);
+
+    for ($i = 0; $i < $count; $i++) {
+        $size = $sizes[$i];
+        $price = $prices[$i];
+        $description = $descriptions[$i];
+
+        // Find the CakeBuilderDetail record with the matching size
+        $detail = CakeBuilderDetail::where('size', $size)->first();
+
+        // Update the record with the new data
+        $detail->update([
+            'price' => $price,
+            'description' => $description,
+            'updated_at' => now(),
+        ]);
+    }
+
+    DB::table('feature_status')->where('name', 'cake_builder')->update(['status' => $status]);
+
+    return back()->with('success', 'Cake Builder details updated successfully');
+}
+
+
+
 }

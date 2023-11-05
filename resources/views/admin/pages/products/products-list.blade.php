@@ -40,7 +40,9 @@
                   <input type="text" class="form-control" id="product-search-input" placeholder="Search"
                     aria-label="Search" aria-describedby="search-button">
                   <button class="btn btn-outline-secondary" type="button" id="reset-search-btn">Reset</button>
+                 
                 </div>
+                <h6><span>Remaining Inventory: </span>₱ {{number_format($totalInventoryValue, 2)}}</h6>
                 <div class="mt-2id=" product-list-msg"></div>
               </div>
               <div class="table-responsive">

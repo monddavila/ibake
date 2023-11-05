@@ -108,7 +108,11 @@ Route::group(['prefix' => 'products', 'middleware' => ['auth']], function () {
   Route::patch('/update-tag', [ProductsController::class, 'updateTags'])->name('updateTag');
 
   /* Item-Products Reviews*/
-  Route::post('/sendReviews', [ReviewsController::class, 'sendReviews'])->name('sendReviews');
+  Route::post('/sendReviews', [ProductsController::class, 'sendReviews'])->name('sendReviews');
+
+   /* Cake Builder Edit*/
+   Route::get('/cake-builder', [ProductsController::class, 'viewCakeBuilder'])->name('viewCakeBuilder');
+   Route::post('/cake-builder', [ProductsController::class, 'updateCakeBuilder'])->name('updateCakeBuilder');
 
 });
 
