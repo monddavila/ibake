@@ -97,9 +97,11 @@
                   </div>
               </div>
               <div class="col-3">
-                <div class="icon icon-box-dark">
-                <span class="mdi mdi-note icon-item"></span>
-                </div>
+                <a href="/orders/customize-order-section">
+                  <div class="icon icon-box-dark">
+                      <span class="mdi mdi-note icon-item"></span>
+                  </div>
+                </a>
               </div>
             </div>
             <h6 class="text-muted font-weight-normal text-center">Custom Order Requests</h6>
@@ -116,9 +118,11 @@
                   </div>
               </div>
               <div class="col-3">
-                <div class="icon icon-box-warning ">
-                <span class="mdi mdi-timer-sand icon-item"></span>
-                </div>
+                <a href="/orders/active">
+                  <div class="icon icon-box-warning ">
+                  <span class="mdi mdi-timer-sand icon-item"></span>
+                  </div>
+                </a>
               </div>
             </div>
             <h6 class="text-muted font-weight-normal text-center">Pending Orders</h6>
@@ -135,9 +139,11 @@
                   </div>
               </div>
               <div class="col-3">
-                <div class="icon icon-box-info">
-                  <span class="mdi mdi-cupcake icon-item"></span>
-                </div>
+                <a href="/orders/ongoing">
+                  <div class="icon icon-box-info">
+                    <span class="mdi mdi-cupcake icon-item"></span>
+                  </div>
+                </a>
               </div>
             </div>
             <h6 class="text-muted font-weight-normal text-center">Processing Orders</h6>
@@ -154,9 +160,11 @@
                   </div>
               </div>
               <div class="col-3">
-                <div class="icon icon-box-primary">
-                  <span class="mdi mdi-truck-fast icon-item"></span>
-                </div>
+                <a href="/orders/ready">
+                  <div class="icon icon-box-primary">
+                    <span class="mdi mdi-truck-fast icon-item"></span>
+                  </div>
+                </a>
               </div>
             </div>
             <h6 class="text-muted font-weight-normal text-center">Dispatched Orders</h6>
@@ -174,9 +182,11 @@
                   </div>
               </div>
               <div class="col-3">
-                <div class="icon icon-box-success">
-                  <span class="mdi mdi-check-circle icon-item"></span>
-                </div>
+                <a href="/orders/completed">
+                  <div class="icon icon-box-success">
+                    <span class="mdi mdi-check-circle icon-item"></span>
+                  </div>
+                </a>
               </div>
             </div>
             <h6 class="text-muted font-weight-normal text-center">Completed Orders</h6>
@@ -193,9 +203,11 @@
                   </div>
               </div>
               <div class="col-3">
-                <div class="icon icon-box-danger ">
-                  <span class="mdi mdi-close-circle icon-item"></span>
-                </div>
+                <a href="/orders/cancelled">
+                  <div class="icon icon-box-danger ">
+                    <span class="mdi mdi-close-circle icon-item"></span>
+                  </div>
+                </a>
               </div>
             </div>
             <h6 class="text-muted font-weight-normal text-center">Cancelled Orders</h6>
@@ -218,7 +230,7 @@
                 <p class="text-muted mb-0">Gcash & Maya E-wallet payments</p>
               </div>
               <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                <h6 class="font-weight-bold mb-0">₱ {{number_format($totalEwallets, 2)}}</h6>
+                <h6 class="font-weight-bold mb-0">₱{{number_format($totalEwallets, 2)}}</h6>
               </div>
             </div>
             <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
@@ -227,7 +239,7 @@
                 <p class="text-muted mb-0">Gcash & Maya E-wallet payments</p>
               </div>
               <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                <h6 class="font-weight-bold mb-0">₱ {{number_format($totalCards, 2)}}</h6>
+                <h6 class="font-weight-bold mb-0">₱{{number_format($totalCards, 2)}}</h6>
               </div>
             </div>
             <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
@@ -236,7 +248,7 @@
                 <p class="text-muted mb-0">BPI online banking transactions</p>
               </div>
               <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                <h6 class="font-weight-bold mb-0">₱ {{number_format($totalBank, 2)}}</h6>
+                <h6 class="font-weight-bold mb-0">₱{{number_format($totalBank, 2)}}</h6>
               </div>
             </div>
             <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
@@ -245,7 +257,7 @@
                 <p class="text-muted mb-0">Payments upon delivery or pickup</p>
               </div>
               <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                <h6 class="font-weight-bold mb-0">₱ {{number_format($totalCash, 2)}}</h6>
+                <h6 class="font-weight-bold mb-0">₱{{number_format($totalCash, 2)}}</h6>
               </div>
             </div>
           </div>
@@ -311,7 +323,9 @@
                 <h6 class="text-muted font-weight-normal">Users with Registered Account</h6>
               </div>
               <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-              <i class="icon-lg mdi mdi-account-check text-dark ms-auto"></i>
+                <a href="/user/list">
+                <i class="icon-lg mdi mdi-account-check text-dark ms-auto"></i>
+                </a>
               </div>
             </div>
           </div>
@@ -330,7 +344,9 @@
                 <h6 class="text-muted font-weight-normal">Registered Customers</h6>
               </div>
               <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-              <i class="icon-lg mdi mdi-account-circle text-warning ms-auto"></i>
+                <a href="/user/list">
+                <i class="icon-lg mdi mdi-account-circle text-warning ms-auto"></i>
+                </a>
               </div>
             </div>
           </div>
@@ -349,7 +365,9 @@
                 <h6 class="text-muted font-weight-normal">Total no. of listed Products</h6>
               </div>
               <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                <i class="icon-lg mdi mdi-cupcake text-info ms-auto"></i>
+                <a href="/products/list">
+                  <i class="icon-lg mdi mdi-cupcake text-info ms-auto"></i>
+                </a>
               </div>
             </div>
           </div>
@@ -368,7 +386,9 @@
                 <h6 class="text-muted font-weight-normal">Total no. of Product Categories</h6>
               </div>
               <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                <i class="icon-lg mdi mdi-codepen text-primary ms-auto"></i>
+                <a href="/products/categories">
+                  <i class="icon-lg mdi mdi-codepen text-primary ms-auto"></i>
+                </a>
               </div>
             </div>
           </div>
@@ -387,7 +407,9 @@
                 <h6 class="text-muted font-weight-normal">Total no. of Product Tags</h6>
               </div>
               <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-              <i class="icon-lg mdi mdi-tag text-success ms-auto"></i>
+                <a href="/products/tags">
+                <i class="icon-lg mdi mdi-tag text-success ms-auto"></i>
+                </a>
               </div>
             </div>
           </div>
@@ -406,7 +428,9 @@
                 <h6 class="text-muted font-weight-normal">Total no. of Product & Custom Cake Reviews</h6>
               </div>
               <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                <i class="icon-lg mdi mdi-note text-danger ms-auto"></i>
+                <a href="/reports/reviews">
+                  <i class="icon-lg mdi mdi-note text-danger ms-auto"></i>
+                </a>
               </div>
             </div>
           </div>

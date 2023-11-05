@@ -59,7 +59,7 @@
                     Build your cake of choice with our intuitive cake builder!!
                     </div>
                 </div>
-                <div class="row clearfix" >
+                <div @if(!$cakeBuilderStatus)style="display: none"@endif class="row clearfix" >
                     <div class="column col-xl-6 col-lg-6 col-md-6 col-sm-12">
                         <div class="inner-column">
                             <div class="title">
@@ -94,41 +94,21 @@
 
                                 <div id="slide1" class="mt-2 steps">
                                     <h5 class="mb-2">Size:</h5>
+                                    @foreach ($details as $detail)
                                     <button type="button" class="btn sizes container-fluid  py-1 ">
                                         <div class="d-flex justify-content-between">
                                             <div>
-                                            <p class="size-label font-weight-bold text-left">Small</p>
-                                            <span class="align-left font-italic font-light-weight">12 Servings</span>
+                                            <p class="size-label font-weight-bold text-left">{{ $detail->size }}</p>
+                                            <span class="align-left font-italic font-light-weight">{{ $detail->description }}</span>
                                             </div>
                                             <p class="font-weight-bold">
-                                                <span>₱</span> <span class="cake-price">699</span>
+                                                <span>₱</span> <span class="cake-price">{{ number_format($detail->price, 0) }}</span>
                                             </p>
                                         </div>
                                     </button>
                                     <hr>
-                                    <button type="button" class="btn sizes container-fluid   py-1 ">
-                                        <div class="d-flex justify-content-between">
-                                            <div>
-                                            <p class="size-label font-weight-bold text-left">Medium</p>
-                                            <span class="align-left font-italic font-light-weight">24 Servings</span>
-                                            </div>
-                                            <p class="font-weight-bold">
-                                             <span>₱</span> <span class="cake-price">899</span>
-                                            </p>
-                                        </div>
-                                    </button>
-                                    <hr>
-                                    <button type="button" class="btn sizes container-fluid   py-1 ">
-                                        <div class="d-flex justify-content-between">
-                                            <div>
-                                            <p class="size-label font-weight-bold text-left">Large</p>
-                                            <span class="align-left font-italic font-light-weight">32 Servings</span>
-                                            </div>
-                                            <p class="font-weight-bold">
-                                             <span>₱</span> <span class="cake-price">1099</span>
-                                            </p>
-                                        </div>
-                                    </button>
+                                    @endforeach
+                                    
                                 </div>
 
                                 <div id="slide2" class="mt-2 steps d-none">

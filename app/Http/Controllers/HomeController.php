@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\CustomizeOrderDetail;
 use App\Models\CustomizeOrder;
+use App\Models\CakeBuilderDetail;
+use App\Models\FeatureStatus;
 
 class HomeController extends Controller
 {
@@ -36,8 +38,19 @@ class HomeController extends Controller
 
   function customize()
   {
-    return view('pages.customize');
+    $details = CakeBuilderDetail::all();
+    $cakeBuilderData = DB::table('feature_status')->where('name', 'cake_builder')->first();
+    
+
+    $cakeBuilderStatus = $cakeBuilderData->status;
+
+
+    return view('pages.customize', [
+      'details' => $details,
+      'cakeBuilderStatus' => $cakeBuilderStatus,
+    ]);
   }
+
 
   /**function gallery()
   {
