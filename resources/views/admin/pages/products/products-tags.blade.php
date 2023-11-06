@@ -32,7 +32,6 @@
                 <div class="col-lg-11 grid-margin stretch-card mx-auto">
                     <div class="card">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
                                 @if(session()->has('message-2'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     {{ session()->get('message-2') }}
@@ -40,6 +39,8 @@
                                         aria-label="Close"></button>
                                 </div>
                                 @endif
+                            <div class="d-flex justify-content-between align-items-center">
+                                
                                 <h4 class="card-title">Tags List</h4>
                             </div>
                             <div class="row">
@@ -79,8 +80,8 @@
                                                                 data-category-name="{{ $category->name }}"
                                                                 data-category-description="{{ $category->description }}">Edit</a>
                                                             <a class="dropdown-item" class="btn btn-danger"
-                                                                onclick="return confirm('Are you sure you want to delete this category?')"
-                                                                href="{{ route('deleteCategory', ['id' => $category->id]) }}"style="color: red;">Delete</a>
+                                                                onclick="return confirm('Are you sure you want to delete this tag?')"
+                                                                href="{{ route('deleteTag', ['id' => $category->id]) }}"style="color: red;">Delete</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -106,7 +107,7 @@
                                         </div>
                                         @endif
                                         <form class="admin-add-category" method="POST"
-                                            action="{{ route('addCategory') }}" enctype="multipart/form-data">
+                                            action="{{ route('addTag') }}" enctype="multipart/form-data">
                                             @csrf
                                             <div class="container" style="margin-bottom: 10px;">
                                                 <table class="table">
@@ -166,7 +167,7 @@
                                             </button>
                                         </div>
                                         <form id="editCategoryForm" method="POST"
-                                            action="{{ route('updateCategory') }}" enctype="multipart/form-data">
+                                            action="{{ route('updateTag') }}" enctype="multipart/form-data">
                                             @csrf
                                             @method('PATCH') <!-- Use PATCH method for updating -->
                                             <div class="modal-body">

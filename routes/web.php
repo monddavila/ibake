@@ -101,7 +101,7 @@ Route::group(['prefix' => 'products', 'middleware' => ['auth']], function () {
   Route::post('/add-category', [ProductsController::class, 'addCategories'])->name('addCategory');
   Route::get('/delete-category/{id}', [ProductsController::class, 'deleteCategories'])->name('deleteCategory');
   Route::patch('/update-category', [ProductsController::class, 'updateCategories'])->name('updateCategory');
-  /*Categories Section*/
+  /*Tags Section*/
   Route::get('/tags', [ProductsController::class, 'viewTags'])->name('admin.viewTags');
   Route::post('/add-tags', [ProductsController::class, 'addTags'])->name('addTag');
   Route::get('/delete-tag/{id}', [ProductsController::class, 'deleteTags'])->name('deleteTag');
@@ -110,11 +110,20 @@ Route::group(['prefix' => 'products', 'middleware' => ['auth']], function () {
   /* Item-Products Reviews*/
   Route::post('/sendReviews', [ProductsController::class, 'sendReviews'])->name('sendReviews');
 
-   /* Cake Builder Edit*/
-   Route::get('/cake-builder', [ProductsController::class, 'viewCakeBuilder'])->name('viewCakeBuilder');
-   Route::post('/cake-builder', [ProductsController::class, 'updateCakeBuilder'])->name('updateCakeBuilder');
+});
+Route::group(['prefix' => 'custom', 'middleware' => ['auth']], function () {
+/* Cake Builder Edit*/
+Route::get('/cake-builder', [ProductsController::class, 'viewCakeBuilder'])->name('viewCakeBuilder');
+Route::post('/cake-builder', [ProductsController::class, 'updateCakeBuilder'])->name('updateCakeBuilder');
+
+Route::get('/cake-components', [ProductsController::class, 'viewCakeComponents'])->name('viewCakeComponents');
+Route::post('/add-component', [ProductsController::class, 'addComponents'])->name('addComponents');
+Route::get('/delete-component/{id}', [ProductsController::class, 'deleteComponents'])->name('deleteComponents');
+Route::patch('/update-component', [ProductsController::class, 'updateComponents'])->name('updateComponents');
 
 });
+
+
 
 Route::group(['prefix' => 'reports', 'middleware' => ['auth']], function () {
 /*Admin Panel Reviews Section*/

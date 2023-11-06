@@ -149,7 +149,22 @@
           <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewTags') }}">Tags</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewProducts') }}">View Products</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('admin.viewAddProducts') }}">Add a product</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ route('viewCakeBuilder') }}">Cake Builder</a></li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="nav-item menu-items">
+      <a class="nav-link" data-bs-toggle="collapse" href="#customcake" aria-expanded="false" aria-controls="customcake">
+        <span class="menu-icon">
+        <i class="mdi mdi-cake"></i>
+        </span>
+        <span class="menu-title">Custom Cake</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="customcake">
+        <ul class="nav flex-column sub-menu">
+        <li class="nav-item"><a class="nav-link" href="{{ route('viewCakeBuilder') }}">Cake Builder</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('viewCakeComponents') }}">Cake Components</a></li>
         </ul>
       </div>
     </li>

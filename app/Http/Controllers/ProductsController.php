@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\CustomizeOrderDetail;
 use App\Models\CustomCakeReview;
 use App\Models\CakeBuilderDetail;
+use App\Models\CakeComponent;
 use App\Models\FeatureStatus;
 
 class ProductsController extends Controller
@@ -305,7 +306,7 @@ class ProductsController extends Controller
     $category->save();
 
     // Optionally, you can add a success message to the session
-    session()->flash('message-3', 'Category updated successfully.');
+    session()->flash('message-2', 'Category updated successfully.');
 
     return redirect()->route('admin.viewCategories');
   }
@@ -379,7 +380,7 @@ class ProductsController extends Controller
     $tag->save();
 
     // Optionally, you can add a success message to the session
-    session()->flash('message-3', 'Tag updated successfully.');
+    session()->flash('message-2', 'Tag updated successfully.');
 
     return redirect()->route('admin.viewTags');
   }
@@ -462,7 +463,7 @@ function viewCakeBuilder()
 
   $cakeBuilderStatus = $cakeBuilderData->status;
 
-    return view('admin.pages.products.cake-builder', [
+    return view('admin.pages.customcake.cake-builder', [
       'cakeBuilder' => $cakeBuilder,
       'cakeBuilderStatus' => $cakeBuilderStatus,
     ]);
@@ -505,6 +506,104 @@ public function updateCakeBuilder(Request $request)
     return back()->with('success', 'Cake Builder details updated successfully');
 }
 
+function viewCakeComponents()
+{
+  $components = DB::table('cake_components')->get();
+
+
+  $cakeBuilder =1;
+  return view('admin.pages.customcake.cake-components', [
+    'cakeBuilder' => $cakeBuilder,
+    'components' => $components,
+  ]);
+}
+
+public function addComponents(Request $request)
+  {
+
+
+    if (isset($request->availability)) {
+      // The 'is_available' field is present in the request
+        $status = $request->input('availability');
+    } else {
+        // The 'is_available' field is not present in the request
+        $status = 0;
+    }
+    // Get the current timestamp
+    $currentTimestamp = now();
+
+    $request->validate([
+        'name' => 'required|string|max:30',
+        'layer' => 'required|string|max:20',
+        'color' => 'required|string|max:7',
+    ]);
+
+    $component = new CakeComponent();
+    $component->layer = $request->layer;
+    $component->name = $request->name;
+    $component->color = $request->color;
+    $component->availability = $request->availability;
+    $component->created_at = $currentTimestamp;
+    $component->updated_at = null;
+
+    $component->save();
+  
+
+    // Optionally, you can add a success message to the session
+    session()->flash('message-1', 'New Cake Component added successfully.');
+
+    return redirect(route('viewCakeComponents'));
+  }
+
+  public function deleteComponents($id)
+  {
+    // Find the user by ID
+    $component = CakeComponent::findOrFail($id);
+
+    // Delete the user
+    $component->delete();
+
+    // Optionally, you can add a success message to the session
+    session()->flash('message-2', 'Cake component deleted.');
+
+    // Redirect to the user list or any other desired page
+    return redirect()->route('viewCakeComponents');
+  }
+
+  public function updateComponents(Request $request)
+  {
+
+
+    if (isset($request->is_available)) {
+      // The 'is_available' field is present in the request
+        $status = $request->input('is_available');
+    } else {
+        // The 'is_available' field is not present in the request
+        $status = 0;
+    }
+    
+    // Get the current timestamp
+    $currentTimestamp = now();
+
+    $request->validate([
+        'name' => 'required|string|max:30',
+        'layer' => 'required|string|max:20',
+        'color' => 'required|string|max:7',
+    ]);
+
+    $component = CakeComponent::findOrFail($request->id);
+    $component->layer = $request->layer;
+    $component->name = $request->name;
+    $component->color = $request->color;
+    $component->availability = $status;
+    $component->updated_at = $currentTimestamp;
+    $component->save();
+
+    // Optionally, you can add a success message to the session
+    session()->flash('message-2', 'Cake component updated successfully.');
+
+    return redirect()->route('viewCakeComponents');
+  }
 
 
 }

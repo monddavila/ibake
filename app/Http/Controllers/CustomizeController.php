@@ -42,7 +42,6 @@ class CustomizeController extends Controller
      */
     public function store(Request $request)
     {
-        
 
         $celebrantName = $request->input('celebrant_name_1');
         $celebrantBirthday = $request->input('celebrant_birthday_1');

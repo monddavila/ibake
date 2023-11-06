@@ -32,7 +32,6 @@
                 <div class="col-lg-11 grid-margin stretch-card mx-auto">
                     <div class="card">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
                                 @if(session()->has('message-2'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     {{ session()->get('message-2') }}
@@ -40,6 +39,8 @@
                                         aria-label="Close"></button>
                                 </div>
                                 @endif
+                            <div class="d-flex justify-content-between align-items-center">
+                                
                                 <h4 class="card-title">Categories List</h4>
                             </div>
                             <div class="row">
