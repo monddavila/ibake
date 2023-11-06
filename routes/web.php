@@ -120,6 +120,8 @@ Route::get('/cake-components', [ProductsController::class, 'viewCakeComponents']
 Route::post('/add-component', [ProductsController::class, 'addComponents'])->name('addComponents');
 Route::get('/delete-component/{id}', [ProductsController::class, 'deleteComponents'])->name('deleteComponents');
 Route::patch('/update-component', [ProductsController::class, 'updateComponents'])->name('updateComponents');
+/* Cake Components Filter*/
+Route::get('/get-cake-components', [ProductsController::class, 'getCakeComponents'])->name('getCakeComponents');
 
 });
 

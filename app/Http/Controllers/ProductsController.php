@@ -508,14 +508,35 @@ public function updateCakeBuilder(Request $request)
 
 function viewCakeComponents()
 {
-  $components = DB::table('cake_components')->get();
+  $components = DB::table('cake_components')->paginate(15);
+  $uniqueLayers = CakeComponent::distinct()->pluck('layer');
 
-
-  $cakeBuilder =1;
   return view('admin.pages.customcake.cake-components', [
-    'cakeBuilder' => $cakeBuilder,
     'components' => $components,
+    'uniqueLayers' => $uniqueLayers,
   ]);
+}
+
+public function getCakeComponents(Request $request)
+{
+
+    $selectedLayer = $request->input('selectedLayer');
+
+    if (empty($selectedLayer) || $selectedLayer == 0) {
+        
+        return redirect()->route('viewCakeComponents')->with('error', 'Please select a valid layer.');
+    }
+
+    $uniqueLayers = CakeComponent::distinct()->pluck('layer');
+
+    $components = CakeComponent::where('layer', $selectedLayer)->paginate(15);
+
+
+    // Return the reviews in a blade view
+    return view('admin.pages.customcake.cake-components', [
+      'components' => $components,
+      'uniqueLayers' => $uniqueLayers,
+    ]);
 }
 
 public function addComponents(Request $request)

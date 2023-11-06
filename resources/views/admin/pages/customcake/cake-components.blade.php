@@ -64,6 +64,29 @@
 
                                 <h4 class="card-title">Cake Components</h4>
                             </div>
+                            <div class="col-lg-3">
+                                <div class="add-product-td">
+                                <form id="showReviewsForm" method="GET" action="{{ route('getCakeComponents') }}">
+                                    @csrf
+                                    <label for="category" class="product-input-label">Select Cake Layer</label>
+                                    <select class="js-example-basic-single" style="width: 100%" name="selectedLayer">
+                                        <option value="">Choose Cake Layer</option>
+                                        @foreach ($uniqueLayers as $component)
+                                        <option value="{{$component}}">{{$component}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if(session()->has('error'))
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            {{ session()->get('error') }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    @endif
+                                    <button type="submit" class="btn btn-primary btn-fw mt-3">Show</button>
+                                    <a href="{{ route('viewCakeComponents') }}" class="btn btn-secondary btn-fw mt-3">Reset</a>
+                                </form>
+
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-7">
                                     <div class="table-responsive">
@@ -122,7 +145,7 @@
                                             </tbody>
                                         </table>
                                         <!-- Pagination Links -->
-                                        {{--{{ $components->links() }} --}}
+                                        {{ $components->links() }}
                                     </div>
                                 </div>
 
