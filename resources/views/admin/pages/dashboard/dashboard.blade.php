@@ -236,7 +236,7 @@
             <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
               <div class="text-md-center text-xl-left">
                 <h6 class="mb-1">Debit/Credit Cards</h6>
-                <p class="text-muted mb-0">Gcash & Maya E-wallet payments</p>
+                <p class="text-muted mb-0">Debit/Credit cards payments</p>
               </div>
               <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
                 <h6 class="font-weight-bold mb-0">₱{{number_format($totalCards, 2)}}</h6>
@@ -245,7 +245,7 @@
             <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
               <div class="text-md-center text-xl-left">
                 <h6 class="mb-1">Online Banking</h6>
-                <p class="text-muted mb-0">BPI online banking transactions</p>
+                <p class="text-muted mb-0">Direct online banking transactions</p>
               </div>
               <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
                 <h6 class="font-weight-bold mb-0">₱{{number_format($totalBank, 2)}}</h6>

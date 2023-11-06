@@ -12,6 +12,7 @@ use App\Models\CustomizeOrderDetail;
 use App\Models\CustomizeOrder;
 use App\Models\CakeBuilderDetail;
 use App\Models\FeatureStatus;
+use App\Models\CakeComponent;
 
 class HomeController extends Controller
 {
@@ -40,14 +41,30 @@ class HomeController extends Controller
   {
     $details = CakeBuilderDetail::all();
     $cakeBuilderData = DB::table('feature_status')->where('name', 'cake_builder')->first();
-    
-
     $cakeBuilderStatus = $cakeBuilderData->status;
+
+    $cakeComponents = CakeComponent::all();
+
+    $flavorLayer = CakeComponent::where('layer', 'flavor')->where('availability', '1')->get();
+    $fillingLayer = CakeComponent::where('layer', 'filling')->where('availability', '1')->get();
+    $icingLayer = CakeComponent::where('layer', 'icing')->where('availability', '1')->get();
+    $topLayer = CakeComponent::where('layer', 'topborder')->where('availability', '1')->get();
+    $bottomLayer = CakeComponent::where('layer', 'bottomborder')->where('availability', '1')->get();
+    $decorLayer = CakeComponent::where('layer', 'decoration')->where('availability', '1')->get();
 
 
     return view('pages.customize', [
       'details' => $details,
       'cakeBuilderStatus' => $cakeBuilderStatus,
+      'cakeComponents' => $cakeComponents,
+      'flavorLayer' => $flavorLayer,
+      'fillingLayer' => $fillingLayer,
+      'icingLayer' => $icingLayer,
+      'topLayer' => $topLayer,
+      'bottomLayer' => $bottomLayer,
+      'decorLayer' => $decorLayer,
+
+
     ]);
   }
 
