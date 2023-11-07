@@ -75,7 +75,7 @@
                               <!-- Shoppping Cart -->
    
                               <div class="cart-btn">
-                                  <a href="{{ route('shop') }}"><i class="icon flaticon-commerce"></i> <span class="count">{{$cartItemCount}}</span></a>
+                                  <a href="{{ route('showCart') }}"><i class="icon flaticon-commerce"></i> <span class="count">{{$cartItemCount}}</span></a>
 
                                   <div class="shopping-cart">
                                     <!--shopping cart content loaded in ajax -->
