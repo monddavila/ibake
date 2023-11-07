@@ -17,6 +17,7 @@ use App\Models\User;
 use App\Models\Product;
 use App\Models\CartItem;
 use App\Models\CustomizeOrderDetail;
+use Illuminate\Support\Str;
 
 class OrdersController extends Controller
 {
@@ -41,6 +42,16 @@ class OrdersController extends Controller
     $user = Auth::user();
     $cartItems = (new CartsController())->userCart();
 
+    // Check if the token is already in the session
+    $token = session('payment_token');
+
+    if (!$token) {
+        // Generate and store the token in the session
+        $token = Str::random(32);
+        session(['payment_token' => $token]);
+    }
+
+
     if ($cartItems->isEmpty()) {
         return redirect()->back()->withErrors(['cart' => 'Cannot proceed to checkout. There are no items in the cart.']);
     }
@@ -53,7 +64,8 @@ class OrdersController extends Controller
     return view('checkout.checkout')->with([
         'user' => $user,
         'cartItems' => $cartItems,
-        'totalPrice' => $totalPrice
+        'totalPrice' => $totalPrice,
+        'token' => $token,
     ]);
 }
 
@@ -66,106 +78,117 @@ class OrdersController extends Controller
    * @param  \App\Http\Requests\StoreOrdersRequest  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(Request $request, $token)
   {
-    // Retrieve PayMongo Payment IDs
-    $paymentSessionId = Session::get('paymentSession_id');
-    $paymentIntentId = Session::get('paymentIntent_id');
 
-    // Retrieve Orders form data from the session
-    $orderData = $request->session()->get('order_data');
-
-    $recipientName = $orderData['recipient_name'];
-    $streetAddress = $orderData['street_address'];
-    //$town = $orderData['town'];
-    $province = $orderData['province'];
-    $postcode = $orderData['postcode'];
-    $recipientEmail = $orderData['recipient_email'];
-    $recipientPhone = $orderData['recipient_phone'];
-    $shippingMethod = $orderData['shipping_method'];
-    $deliveryDate = $orderData['delivery_date'];
-    $deliveryTime = $orderData['delivery_time'];
-    $paymentMethod = $orderData['payment_method'];
-    $orderNotes = $orderData['order_notes'];
+    // Check token to prevent resubmission of payment and order storing
+    if($token === $request->session()->get('payment_token')) {
 
 
-        // Check if 'town' exists in the session
-    if (isset($orderData['town'])) {
-      $town = $orderData['town'];
-    } else {
-      // Set a default value if 'town' doesn't exist in the session
-      $town = null;
-    }
+        // Retrieve PayMongo Payment IDs
+        $paymentSessionId = Session::get('paymentSession_id');
+        $paymentIntentId = Session::get('paymentIntent_id');
 
-    if($shippingMethod == 'Delivery'){
-      $address = $streetAddress . ',' . $town . ',' . $province . ',' . $postcode;
+        // Retrieve Orders form data from the session
+        $orderData = $request->session()->get('order_data');
+
+        $recipientName = $orderData['recipient_name'];
+        $streetAddress = $orderData['street_address'];
+        //$town = $orderData['town'];
+        $province = $orderData['province'];
+        $postcode = $orderData['postcode'];
+        $recipientEmail = $orderData['recipient_email'];
+        $recipientPhone = $orderData['recipient_phone'];
+        $shippingMethod = $orderData['shipping_method'];
+        $deliveryDate = $orderData['delivery_date'];
+        $deliveryTime = $orderData['delivery_time'];
+        $paymentMethod = $orderData['payment_method'];
+        $orderNotes = $orderData['order_notes'];
+
+
+            // Check if 'town' exists in the session
+        if (isset($orderData['town'])) {
+          $town = $orderData['town'];
+        } else {
+          // Set a default value if 'town' doesn't exist in the session
+          $town = null;
+        }
+
+        if($shippingMethod == 'Delivery'){
+          $address = $streetAddress . ',' . $town . ',' . $province . ',' . $postcode;
+        }else{
+          $address = "";
+        }
+
+
+        //check order total price
+        $cartItems = (new CartsController())->userCart();
+        $totalPrice = 0;
+        foreach ($cartItems as $cartItem) {
+          $totalPrice += ($cartItem->price * $cartItem->quantity);
+        }
+        //update all ordered products available qty in products table and if qty reach 0 will update availabilty status
+        foreach ($cartItems as $cartItem) {
+          $newQty = $cartItem->available_qty - $cartItem->quantity;
+          $ordered_product_id = $cartItem->product_id;
+      
+          Product::where('id', $ordered_product_id)->update(['available_qty' => $newQty]);
+      
+          if ($newQty === 0 || $cartItem->available_qty === null) {
+              Product::where('id', $ordered_product_id)->update(['availability' => 0]);
+          }
+        }
+      
+
+        //store data to orders table
+        $order = Order::create([
+          'user_id' => Auth::id(),
+          'order_id' => date("sdmY"),
+          'recipient_name' => $recipientName,
+          'recipient_email' => $recipientEmail,
+          'recipient_phone' => $recipientPhone,
+          'shipping_method' => $shippingMethod,
+          'delivery_date' => $deliveryDate,
+          'delivery_time' => $deliveryTime,
+          'delivery_address' => $address,
+          'total_price' => $totalPrice,
+          'payment_method' => $paymentMethod,
+          'payment_status' => 'Fully Paid',
+          'payment_session_id' => $paymentSessionId,
+          'payment_intent_id' => $paymentIntentId,
+          'notes' => $orderNotes,
+          'created_at' => now(),
+        ]);
+
+        //store data to order_items table
+        $orderItem = new OrderItemsController();
+        $orderId = $order->id;
+        foreach ($cartItems as $cartItem) {
+          $productId = $cartItem->product_id;
+          $price = $cartItem->price;
+          $quantity = $cartItem->quantity;
+          $orderItem->store($orderId, $productId, $price, $quantity);
+        }
+
+        //Delete items in the Cart
+        // Get the user's cart ID
+        $userId = Auth::id();
+        $cart = Cart::where('user_id', $userId)->first();
+
+        // Delete all cart items associated with the user's cart
+        CartItem::where('cart_id', $cart->id)->delete();
+
+        // Clear the session variable if needed
+        $request->session()->forget('order_data');
+        $request->session()->forget('check_token');
+        $request->session()->forget('payment_token');
+        session()->forget(['paymentSession_id', 'paymentIntent_id']);
+
+        return redirect()->route('customer');
+
     }else{
-      $address = "";
+      return redirect()->route('shop');
     }
-
-
-    //check order total price
-    $cartItems = (new CartsController())->userCart();
-    $totalPrice = 0;
-    foreach ($cartItems as $cartItem) {
-      $totalPrice += ($cartItem->price * $cartItem->quantity);
-    }
-    //update all ordered products available qty in products table and if qty reach 0 will update availabilty status
-    foreach ($cartItems as $cartItem) {
-      $newQty = $cartItem->available_qty - $cartItem->quantity;
-      $ordered_product_id = $cartItem->product_id;
-  
-      Product::where('id', $ordered_product_id)->update(['available_qty' => $newQty]);
-  
-      if ($newQty === 0 || $cartItem->available_qty === null) {
-          Product::where('id', $ordered_product_id)->update(['availability' => 0]);
-      }
-    }
-  
-
-    //store data to orders table
-    $order = Order::create([
-      'user_id' => Auth::id(),
-      'order_id' => date("sdmY"),
-      'recipient_name' => $recipientName,
-      'recipient_email' => $recipientEmail,
-      'recipient_phone' => $recipientPhone,
-      'shipping_method' => $shippingMethod,
-      'delivery_date' => $deliveryDate,
-      'delivery_time' => $deliveryTime,
-      'delivery_address' => $address,
-      'total_price' => $totalPrice,
-      'payment_method' => $paymentMethod,
-      'payment_status' => 'Fully Paid',
-      'payment_session_id' => $paymentSessionId,
-      'payment_intent_id' => $paymentIntentId,
-      'notes' => $orderNotes,
-      'created_at' => now(),
-    ]);
-
-    //store data to order_items table
-    $orderItem = new OrderItemsController();
-    $orderId = $order->id;
-    foreach ($cartItems as $cartItem) {
-      $productId = $cartItem->product_id;
-      $price = $cartItem->price;
-      $quantity = $cartItem->quantity;
-      $orderItem->store($orderId, $productId, $price, $quantity);
-    }
-
-    //Delete items in the Cart
-    // Get the user's cart ID
-    $userId = Auth::id();
-    $cart = Cart::where('user_id', $userId)->first();
-
-    // Delete all cart items associated with the user's cart
-    CartItem::where('cart_id', $cart->id)->delete();
-
-    // Clear the session variable if needed
-    $request->session()->forget('order_data');
-    session()->forget(['paymentSession_id', 'paymentIntent_id']);
-
-    return redirect()->route('customer');
   }
 
   /**
