@@ -40,6 +40,10 @@ function loadShopItems(minPrice = 0, maxPrice = 10000, sortBy = "updated_at") {
         sortOrder = "desc";
     }
 
+    if (sortBy === "rating") {
+        sortOrder = "desc";
+    }
+
     $.ajax({
         url: "/shop/filterShop",
         method: "GET",
