@@ -108,7 +108,7 @@ Route::group(['prefix' => 'products', 'middleware' => ['auth']], function () {
   Route::patch('/update-tag', [ProductsController::class, 'updateTags'])->name('updateTag');
 
   /* Item-Products Reviews*/
-  Route::post('/sendReviews', [ProductsController::class, 'sendReviews'])->name('sendReviews');
+  Route::post('/sendReviews', [ReviewsController::class, 'sendReviews'])->name('sendReviews');
 
 });
 Route::group(['prefix' => 'custom', 'middleware' => ['auth']], function () {
