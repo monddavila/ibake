@@ -11,6 +11,7 @@ use App\Models\ShopItemTest;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 
 class ShopController extends Controller
 {
@@ -175,9 +176,11 @@ class ShopController extends Controller
   
       // Calculate average product ratings
       $averageRatings = DB::table('reviews')
-          ->select('product_id', DB::raw('AVG(rating) as average_rating'))
-          ->groupBy('product_id')
-          ->get();
+      ->select('product_id', DB::raw('AVG(rating) as average_rating'))
+      ->groupBy('product_id')
+      ->orderBy('average_rating', 'desc')
+      ->get();
+
   
       $shopItems = view('shop.shop-item-card')->with([
           'products' => $products,

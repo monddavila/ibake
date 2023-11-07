@@ -27,6 +27,8 @@ class ReviewsController extends Controller
 
         if($request->input('rating')== null){
             $rating = 5;
+        }else{
+            $rating = $request->input('rating');
         }   
 
             /* Query to check if the user has an order with the specific product */
@@ -57,6 +59,19 @@ class ReviewsController extends Controller
                             'updated_at' => now(),
                         ]);
 
+                        $averageRating = DB::table('reviews')
+                        ->select(DB::raw('AVG(rating) as average_rating'))
+                        ->where('product_id', $product_id)
+                        ->first();
+
+                        $averageRatingValue = $averageRating->average_rating;
+
+                        DB::table('products')
+                        ->where('id', $product_id)
+                        ->update([
+                            'rating' => $averageRatingValue,
+                        ]);
+
                         return redirect()->back()->with('success', 'Your review has been updated!');
 
                 } else {
@@ -72,6 +87,29 @@ class ReviewsController extends Controller
                             'created_at' => now(),
                             'updated_at' => null,
                         ]);
+
+                        $averageRating = DB::table('reviews')
+                        ->select(DB::raw('AVG(rating) as average_rating'))
+                        ->where('product_id', $product_id)
+                        ->first();
+
+                        if($averageRating){
+                            $averageRatingValue = $averageRating->average_rating;
+
+                            DB::table('products')
+                            ->where('id', $product_id)
+                            ->update([
+                                'rating' => $averageRatingValue,
+                            ]);
+
+                        }else{ 
+
+                            DB::table('products')
+                            ->where('id', $product_id)
+                            ->update([
+                                'rating' => $rating,
+                            ]);
+                        }
                 
                 
                         return redirect()->back()->with('success', 'Wer\'e grateful for your feedback. Your review has been added.');

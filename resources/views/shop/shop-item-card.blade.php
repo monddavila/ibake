@@ -13,7 +13,9 @@
 
       @php
       $productId = $product->id; // Retrieve the product ID
+      
       $averageRating = $averageRatings->where('product_id', $productId)->first();
+      
       @endphp
 
       <?php
