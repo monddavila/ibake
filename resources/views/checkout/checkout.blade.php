@@ -52,6 +52,8 @@
           </div>
           <form method="POST" action="{{ route('placeOrder') }}" class="checkout-form">
             @CSRF
+
+            <input type="hidden" name="check_token" value="{{ $token }}">
             
             <div class="row clearfix">
               <!--Column-->

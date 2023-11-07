@@ -241,7 +241,7 @@ Route::group(['prefix' => 'checkout'], function () {
     ->get('/', [OrdersController::class, 'create'])
     ->name('checkout');
   Route::middleware(['auth'])
-    ->get('/create-order', [OrdersController::class, 'store'])
+    ->get('/create-order/{token}', [OrdersController::class, 'store'])
     ->name('create-order');
 });
 /**

@@ -14,6 +14,7 @@ use App\Models\CustomizeOrder;
 
 
 
+
 class PaymentController extends Controller
 {
 
@@ -155,6 +156,9 @@ class PaymentController extends Controller
     $cartItems = (new CartsController())->userCart();
     $totalPrice = 0;
 
+    $orderData = Session::get('order_data');
+    $token = $orderData['check_token'];
+
     // Initialize an array to store line items
     $lineItems = [];
 
@@ -194,7 +198,7 @@ class PaymentController extends Controller
             'attributes' => [
                 'line_items' => $lineItems, // Add the array of line items here
                 'payment_method_types' => $paymentMethodTypes,
-                'success_url' => route('create-order'),
+                'success_url' => route('create-order', ['token' => $token]),
                 'cancel_url' => route('checkout'),
                 'description' => 'iBake Tiers of Joy',
                 'send_email_receipt' => true,
