@@ -270,11 +270,11 @@ Route::middleware(['auth'])
     ->name('cake-request.cancel');
 
 Route::middleware(['auth'])
-    ->get('/store-custom-order', [CustomizeController::class, 'storeCustomOrder'])
+    ->get('/store-custom-order/{token}', [CustomizeController::class, 'storeCustomOrder'])
     ->name('storeCustomOrder');
 
     Route::middleware(['auth'])
-    ->get('/update-custom-order-balance', [CustomizeController::class, 'updateCustomOrderBalance'])
+    ->get('/update-custom-order-balance/{token}', [CustomizeController::class, 'updateCustomOrderBalance'])
     ->name('updateCustomOrderBalance');
 
 /**

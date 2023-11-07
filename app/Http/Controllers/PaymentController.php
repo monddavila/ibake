@@ -139,6 +139,9 @@ class PaymentController extends Controller
     {
         $paymentMethod = $request->input('payment_method');
 
+        $balanceToken = $request->input('balance_check_token');
+        session(['balance_check_token' => $balanceToken]);
+
         if (in_array($paymentMethod, ['card', 'wallet', 'bank'])) {
             // Valid payment method, set it in the session and redirect to 'pay'
             session(['custom_balance_payment_method' => $paymentMethod]);
@@ -232,7 +235,7 @@ class PaymentController extends Controller
         $customOrderData = $request->session()->get('customOrder_data');
         $paymentOption = $customOrderData['payment_option'];
 
-
+        $token = $customOrderData['custom_check_token'];
 
         $items = DB::table('customize_orders')
                     ->select('customize_orders.id','customize_orders.orderID', 'customize_orders.cakePrice')
@@ -294,7 +297,7 @@ class PaymentController extends Controller
                 'attributes' => [
                     'line_items' => $lineItems, // Add the array of line items here
                     'payment_method_types' => $paymentMethodTypes,
-                    'success_url' => route('storeCustomOrder'),
+                    'success_url' => route('storeCustomOrder', ['token' => $token]),
                     'cancel_url' => route('cake-request.process', ['id' => $id]),
                     'description' => $description,
                     'send_email_receipt' => true,
@@ -320,6 +323,8 @@ class PaymentController extends Controller
 
     public function customBalancePay($id, Request $request)
     {
+        $token = Session::get('balance_check_token');
+    
         $order_id= $id;
 
         $order =  CustomizeOrder::with('CustomizeOrderDetail')
@@ -372,7 +377,7 @@ class PaymentController extends Controller
                 'attributes' => [
                     'line_items' => $lineItems, // Add the array of line items here
                     'payment_method_types' => $paymentMethodTypes,
-                    'success_url' => route('updateCustomOrderBalance'),
+                    'success_url' => route('updateCustomOrderBalance', ['token' => $token]),
                     'cancel_url' => route('payment-balance.process', ['id' => $id]),
                     'description' => $description,
                     'send_email_receipt' => true,
