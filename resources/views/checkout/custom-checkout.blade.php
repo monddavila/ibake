@@ -67,6 +67,9 @@
        
           <form method="POST" action="{{ route('placeCustomOrder', ['id' => $customOrderId]) }}" class="checkout-form">
             @CSRF
+
+            <input type="hidden" name="custom_check_token" value="{{ $token }}">
+
             <div class="row clearfix">
               <!--Column-->
               <div class="column col-lg-6 col-md-12 col-sm-12">

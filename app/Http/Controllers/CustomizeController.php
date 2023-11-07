@@ -11,6 +11,7 @@ use App\Models\CustomizeOrderDetail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class CustomizeController extends Controller
 {
@@ -208,146 +209,162 @@ class CustomizeController extends Controller
 
 
 
-    public function storeCustomOrder(Request $request)
+    public function storeCustomOrder(Request $request, $token)
     {
-    // Retrieve PayMongo Payment IDs
-    $paymentSessionId = Session::get('paymentSession_id');
-    $paymentIntentId = Session::get('paymentIntent_id');
-    
-    // Retrieve customize_order id of the the order to display in customize_order_details
-    $customOrder_id = session('customOrder_id');
-    // Retrieve Item's Order ID
-    $customize_order_id = session('customize_order_id');
 
-    // Retrieve remaining balance payment for cake if half paid
-    $CakePrice_bal = Session::get('custom_cakeBal'); //add to payments table new migration!!
+    // Check token to prevent resubmission of payment and order storing
+    if($token === $request->session()->get('custom_payment_token')) {
+
+            // Retrieve PayMongo Payment IDs
+            $paymentSessionId = Session::get('paymentSession_id');
+            $paymentIntentId = Session::get('paymentIntent_id');
+            
+            // Retrieve customize_order id of the the order to display in customize_order_details
+            $customOrder_id = session('customOrder_id');
+            // Retrieve Item's Order ID
+            $customize_order_id = session('customize_order_id');
+
+            // Retrieve remaining balance payment for cake if half paid
+            $CakePrice_bal = Session::get('custom_cakeBal'); //add to payments table new migration!!
 
 
-    // Retrieve Orders form data from the session
-    $customOrderData = $request->session()->get('customOrder_data');
+            // Retrieve Orders form data from the session
+            $customOrderData = $request->session()->get('customOrder_data');
 
-    $recipientName = $customOrderData['recipient_name'];
-    $streetAddress = $customOrderData['street_address'];
-    
-    if (session()->has('customOrder_data') && isset(session('customOrder_data')['town'])) {
-        $town = session('customOrder_data')['town'];
-    } else {
-        $town = null;
+            $recipientName = $customOrderData['recipient_name'];
+            $streetAddress = $customOrderData['street_address'];
+            
+            if (session()->has('customOrder_data') && isset(session('customOrder_data')['town'])) {
+                $town = session('customOrder_data')['town'];
+            } else {
+                $town = null;
+            }
+
+            
+            $province = $customOrderData['province'];
+            $postcode = $customOrderData['postcode'];
+            $recipientEmail = $customOrderData['recipient_email'];
+            $recipientPhone = $customOrderData['recipient_phone'];
+            $shippingMethod = $customOrderData['shipping_method'];
+            $deliveryDate = $customOrderData['delivery_date'];
+            $deliveryTime = $customOrderData['delivery_time'];
+            $paymentOption = $customOrderData['payment_option'];
+            $paymentMethod = $customOrderData['payment_method'];
+            $orderNotes = $customOrderData['order_notes'];
+
+            if($shippingMethod == 'Delivery'){
+                $address = $streetAddress . '||' . $town . '||' . $province . '||' . $postcode;
+            }else{
+                $address = "";
+            }
+
+            //retrieve cake price
+            $cakePrice = session('cakePrice');
+
+            if($CakePrice_bal == null){
+                $paymentStatus = 'Fully Paid';
+            }else{
+                $paymentStatus = 'Partially Paid';
+            }
+
+
+            //store data to orders table
+            $order = CustomizeOrderDetail::create([
+            'user_id' => Auth::id(),
+            'customOrder_id' => $customOrder_id,
+            'order_id' => $customize_order_id,
+            'recipient_name' => $recipientName,
+            'recipient_email' => $recipientEmail,
+            'recipient_phone' => $recipientPhone,
+            'shipping_method' => $shippingMethod,
+            'delivery_date' => $deliveryDate,
+            'delivery_time' => $deliveryTime,
+            'delivery_address' => $address,
+            'total_price' => $cakePrice,
+            'payment_option' => $paymentOption, 
+            'payment_balance' => $CakePrice_bal, 
+            'payment_method' => $paymentMethod,
+            'payment_status' => $paymentStatus,
+            'payment_session_id' => $paymentSessionId,
+            'payment_intent_id' => $paymentIntentId,
+            'notes' => $orderNotes,
+            'created_at' => now(),
+            
+            ]);
+
+            if($paymentOption == 'Full'){
+                $orderStatus = 4;//4 is Fully Payment
+            }else{
+                $orderStatus = 3;//3 is half paid/Down payment
+            }
+
+            //update order status to "Processing" of customize_orders table
+            $update = DB::table('customize_orders')
+                            ->where('customize_orders.orderID', $customize_order_id)
+                            ->update([
+                                    'orderStatus' => $orderStatus,
+                                    'updated_at' => now(),  
+                            ]);
+
+            // Clear the session variable if needed
+            $request->session()->forget('customOrder_data');
+            $request->session()->forget('customOrder_id');
+            $request->session()->forget('cakePrice');
+            $request->session()->forget('custom_cakeBal'); //check if still needed!
+            session()->forget(['paymentSession_id', 'paymentIntent_id']);
+            $request->session()->forget('custom_check_token');
+            $request->session()->forget('custom_payment_token');
+
+            return redirect()->route('customer');
+        }else{
+            return redirect()->route('redirect');
+        }
     }
 
-    
-    $province = $customOrderData['province'];
-    $postcode = $customOrderData['postcode'];
-    $recipientEmail = $customOrderData['recipient_email'];
-    $recipientPhone = $customOrderData['recipient_phone'];
-    $shippingMethod = $customOrderData['shipping_method'];
-    $deliveryDate = $customOrderData['delivery_date'];
-    $deliveryTime = $customOrderData['delivery_time'];
-    $paymentOption = $customOrderData['payment_option'];
-    $paymentMethod = $customOrderData['payment_method'];
-    $orderNotes = $customOrderData['order_notes'];
 
-    if($shippingMethod == 'Delivery'){
-        $address = $streetAddress . '||' . $town . '||' . $province . '||' . $postcode;
-    }else{
-        $address = "";
-    }
-
-    //retrieve cake price
-    $cakePrice = session('cakePrice');
-
-    if($CakePrice_bal == null){
-        $paymentStatus = 'Fully Paid';
-    }else{
-        $paymentStatus = 'Partially Paid';
-    }
-
-
-    //store data to orders table
-    $order = CustomizeOrderDetail::create([
-      'user_id' => Auth::id(),
-      'customOrder_id' => $customOrder_id,
-      'order_id' => $customize_order_id,
-      'recipient_name' => $recipientName,
-      'recipient_email' => $recipientEmail,
-      'recipient_phone' => $recipientPhone,
-      'shipping_method' => $shippingMethod,
-      'delivery_date' => $deliveryDate,
-      'delivery_time' => $deliveryTime,
-      'delivery_address' => $address,
-      'total_price' => $cakePrice,
-      'payment_option' => $paymentOption, 
-      'payment_balance' => $CakePrice_bal, 
-      'payment_method' => $paymentMethod,
-      'payment_status' => $paymentStatus,
-      'payment_session_id' => $paymentSessionId,
-      'payment_intent_id' => $paymentIntentId,
-      'notes' => $orderNotes,
-      'created_at' => now(),
-      
-    ]);
-
-    if($paymentOption == 'Full'){
-        $orderStatus = 4;//4 is Fully Payment
-    }else{
-        $orderStatus = 3;//3 is half paid/Down payment
-    }
-
-    //update order status to "Processing" of customize_orders table
-    $update = DB::table('customize_orders')
-                    ->where('customize_orders.orderID', $customize_order_id)
-                    ->update([
-                              'orderStatus' => $orderStatus,
-                              'updated_at' => now(),  
-                    ]);
-
-    // Clear the session variable if needed
-    $request->session()->forget('customOrder_data');
-    $request->session()->forget('customOrder_id');
-    $request->session()->forget('cakePrice');
-    $request->session()->forget('custom_cakeBal'); //check if still needed!
-    session()->forget(['paymentSession_id', 'paymentIntent_id']);
-
-    return redirect()->route('customer');
-    }
-
-
-    public function updateCustomOrderBalance(Request $request)
+    public function updateCustomOrderBalance(Request $request, $token)
     {
+
+    // Check token to prevent resubmission of payment and order storing
+    if($token === $request->session()->get('balance_payment_token')) {
     
     
-    // Retrieve customize_order id of the the order to display in customize_order_details
-    $customOrder_id = session('customBalance_customizeOrder_id');
-    // Retrieve Item's Order ID
-    $customize_order_id = session('customBalanceOrder_id');
-    // Retrieve PayMongo Payment IDs
-    $BalancePaymentIntent = session('BalancePaymentIntent_id'); 
+            // Retrieve customize_order id of the the order to display in customize_order_details
+            $customOrder_id = session('customBalance_customizeOrder_id');
+            // Retrieve Item's Order ID
+            $customize_order_id = session('customBalanceOrder_id');
+            // Retrieve PayMongo Payment IDs
+            $BalancePaymentIntent = session('BalancePaymentIntent_id'); 
 
 
-    //update order status to "Processing" of customize_orders table
-    $update = DB::table('customize_orders')
-                    ->where('customize_orders.orderID', $customize_order_id)
-                    ->update([
-                              'orderStatus' => 4, //4 is fully paid
-                    ]);
+            //update order status to "Processing" of customize_orders table
+            $update = DB::table('customize_orders')
+                            ->where('customize_orders.orderID', $customize_order_id)
+                            ->update([
+                                    'orderStatus' => 4, //4 is fully paid
+                            ]);
 
-    //update order status to "Processing" of customize_orders table
-    $update = DB::table('customize_order_details')
-                    ->where('customize_order_details.customOrder_id', $customOrder_id)
-                    ->update([
-                            'payment_status' => 'Fully Paid',
-                            'payment_balance' => null,   
-                            'payment_intent_id_balance' => $BalancePaymentIntent,
-                    ]);
+            //update order status to "Processing" of customize_orders table
+            $update = DB::table('customize_order_details')
+                            ->where('customize_order_details.customOrder_id', $customOrder_id)
+                            ->update([
+                                    'payment_status' => 'Fully Paid',
+                                    'payment_balance' => null,   
+                                    'payment_intent_id_balance' => $BalancePaymentIntent,
+                            ]);
 
-    // Clear the session variable if needed
-    session()->forget('customBalance_customizeOrder_id');
-    session()->forget('customBalanceOrder_id');
-    session()->forget('BalancePaymentIntent_id');
+            // Clear the session variable if needed
+            session()->forget('customBalance_customizeOrder_id');
+            session()->forget('customBalanceOrder_id');
+            session()->forget('BalancePaymentIntent_id');
+            $request->session()->forget('balance_check_token');
+            $request->session()->forget('balance_payment_token');
 
 
-    return redirect()->route('customer');
-
+            return redirect()->route('customer');
+        }else{
+            return redirect()->route('redirect');
+        }
     }
 
 
@@ -432,6 +449,14 @@ class CustomizeController extends Controller
         $user = Auth::user();
         $customOrderId = $id;
 
+        $token = session('payment_token');
+
+        if (!$token) {
+            // Generate and store the token in the session
+            $token = Str::random(32);
+            session(['custom_payment_token' => $token]);
+        }
+
         $orders = DB::table('customize_orders')
             ->select('*')
             ->where('customize_orders.orderID', $id)
@@ -480,6 +505,7 @@ class CustomizeController extends Controller
             'province' => $province,
             'postalcode' => $postalcode,
             'shipping_method' => $shipping_method,
+            'token' => $token,
         ]);
     }
 
@@ -489,6 +515,14 @@ class CustomizeController extends Controller
         $user = Auth::user();
         $customOrderId = $id;
 
+        $token = session('payment_token');
+
+        if (!$token) {
+            // Generate and store the token in the session
+            $token = Str::random(32);
+            session(['balance_payment_token' => $token]);
+        }
+
         $orders =  CustomizeOrder::with('CustomizeOrderDetail')
                     ->where('customize_orders.orderID', $id)
                     ->get();
@@ -497,6 +531,7 @@ class CustomizeController extends Controller
             'user' => $user,
             'orders' => $orders,
             'customOrderId' => $customOrderId,
+            'token' => $token,
         ]);
     }
 
