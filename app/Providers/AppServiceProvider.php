@@ -34,13 +34,13 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap(); // Enable Bootstrap pagination
     
         // Share data with partials.navbar view
-        View::composer('partials.navbar', function ($view) {
+        /*View::composer('partials.navbar', function ($view) {
             if (Auth::check()) {
                 $cartsController = new CartsController();
                 $userCartItems = $cartsController->userCart();
                 $userCartItemCount = count($userCartItems);
                 $view->with('userCart', $userCartItems)->with('cartItemCount', $userCartItemCount);
             }
-        });
+        });*/
     }
 }

@@ -73,6 +73,7 @@
                           <div class="row">
                             <div class="col-12 col-md-3 align-self-start">
                               <!-- Shoppping Cart -->
+                              {{--@if($cartItemCount)
                               <div class="cart-btn">
                                   <a href="{{ route('shop') }}"><i class="icon flaticon-commerce"></i> <span class="count">{{$cartItemCount}}</span></a>
 
@@ -80,11 +81,12 @@
                                     <!--shopping cart content loaded in ajax -->
                                   </div> 
                               </div>
+                              @endif--}}
                             </div>
                           @endauth
                         <!-- Login/Register Start-->
                             @auth
-                              <div class="col-12 col-md-9 align-self-start">
+                              <div class="col-12 col-md-12 align-self-start">
                                 <!-- Logged in -->
                                 <?php if (Auth::user()->role_id == 1): ?>
                                   <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-dashboard"></i> Admin Panel</a>
