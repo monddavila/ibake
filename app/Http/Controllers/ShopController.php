@@ -13,6 +13,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 
 class ShopController extends Controller
@@ -52,6 +53,8 @@ class ShopController extends Controller
            ->select('product_id', DB::raw('AVG(rating) as average_rating'))
            ->groupBy('product_id')
            ->get();
+
+        session(['filter_type' => ['type' => '4', 'data' => ' ']]);
    
        return view('shop.shop')->with([
            'products' => $products,
@@ -203,13 +206,16 @@ class ShopController extends Controller
       $category = $request->input('category');
 
       if ($category === 'All') {
-      $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
+
+
+        return redirect()->route('shop');
+      /*$products = Product::join('categories', 'products.category_id', '=', 'categories.id')
       ->select('products.*')
       ->orderBy('products.rating', 'desc')  // Order by the rating column in descending order
-      ->paginate(12);
+      ->paginate(12); 
 
 
-      session(['filter_type' => ['type' => '2', 'data' => $category]]);
+      session(['filter_type' => ['type' => '2', 'data' => $category]]);*/
 
       }else{
         $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
@@ -292,119 +298,71 @@ class ShopController extends Controller
   }
 
   public function sortProducts(Request $request)
-   {
+  {
+    // Retrieve the entire 'filter_type' array from the session
+    $filterType = session('filter_type');
+    // Access specific values from the 'filter_type' array
+    $type = $filterType['type'];
+    $data = $filterType['data'];
 
-    
-      $sort = $request->input('sort-order');
-      
-      // Retrieve the entire 'filter_type' array from the session
-      $filterType = session('filter_type');
-      // Access specific values from the 'filter_type' array
-      $type = $filterType['type'];
-      $data = $filterType['data'];
+    // Set the number of results to show per page
+    $resultsPerPage = 12;
 
-
-      if($type === '1'){
-        //dd('1');
-        $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
-        ->select('products.*')
-        ->where('categories.name', $data);
-    
-        if ($request->input('sort-order') == 'created_at') {
-          $products->orderBy('products.created_at', 'desc');
-      } elseif ($request->input('sort-order') == 'rating') {
-          $products->orderBy('products.rating', 'desc');
-      } elseif ($request->input('sort-order') == 'availability') {
-          $products->orderBy('products.availability', 'desc');
-      } elseif ($request->input('sort-order') == 'price-asc') {
-          $products->orderBy('products.price', 'asc');
-      } elseif ($request->input('sort-order') == 'price-desc') {
-          $products->orderBy('products.price', 'desc');
-      }
-      
-      $products = $products->paginate(12);
-    
-      }elseif($type === '2'){
-
-        $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
-        ->select('products.*');
-
-        if ($request->input('sort-order') == 'created_at') {
-          $products->orderBy('products.created_at', 'desc');
-      } elseif ($request->input('sort-order') == 'rating') {
-          $products->orderBy('products.rating', 'desc');
-      } elseif ($request->input('sort-order') == 'availability') {
-          $products->orderBy('products.availability', 'desc');
-      } elseif ($request->input('sort-order') == 'price-asc') {
-          $products->orderBy('products.price', 'asc');
-      } elseif ($request->input('sort-order') == 'price-desc') {
-          $products->orderBy('products.price', 'desc');
-      }
-      
-      $products = $products->paginate(12);
-
-    }elseif($type === '3'){
-
-        $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
-          ->select('products.*')
-          ->where(function ($queryBuilder) use ($data) {
-            $queryBuilder->where('products.name', 'like', "%$data%")
-                ->orWhere('categories.name', 'like', "%$data%");
-        });
-        if ($request->input('sort-order') == 'created_at') {
-            $products->orderBy('products.created_at', 'desc');
-        } elseif ($request->input('sort-order') == 'rating') {
-            $products->orderBy('products.rating', 'desc');
-        } elseif ($request->input('sort-order') == 'availability') {
-            $products->orderBy('products.availability', 'desc');
-        } elseif ($request->input('sort-order') == 'price-asc') {
-            $products->orderBy('products.price', 'asc');
-        } elseif ($request->input('sort-order') == 'price-desc') {
-            $products->orderBy('products.price', 'desc');
-        }
-
-        $products = $products->paginate(12);
-    }else{
-      $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
-        ->select('products.*');
-
-        if ($request->input('sort-order') == 'created_at') {
-          $products->orderBy('products.created_at', 'desc');
-      } elseif ($request->input('sort-order') == 'rating') {
-          $products->orderBy('products.rating', 'desc');
-      } elseif ($request->input('sort-order') == 'availability') {
-          $products->orderBy('products.availability', 'desc');
-      } elseif ($request->input('sort-order') == 'price-asc') {
-          $products->orderBy('products.price', 'asc');
-      } elseif ($request->input('sort-order') == 'price-desc') {
-          $products->orderBy('products.price', 'desc');
-      }
-      
-      $products = $products->paginate(12);
+    if ($type === '1') {
+        $productsQuery = Product::join('categories', 'products.category_id', '=', 'categories.id')
+            ->select('products.*')
+            ->where('categories.name', $data);
+    } elseif ($type === '2') {
+        $productsQuery = Product::join('categories', 'products.category_id', '=', 'categories.id')
+            ->select('products.*');
+    } elseif ($type === '3') {
+        $productsQuery = Product::join('categories', 'products.category_id', '=', 'categories.id')
+            ->select('products.*')
+            ->where(function ($queryBuilder) use ($data) {
+                $queryBuilder->where('products.name', 'like', "%$data%")
+                    ->orWhere('categories.name', 'like', "%$data%");
+            });
+    } else {
+        $productsQuery = Product::join('categories', 'products.category_id', '=', 'categories.id')
+            ->select('products.*');
     }
-    
 
-      
+    // Apply your order by conditions
+    if ($request->input('sort-order') == 'created_at') {
+        $productsQuery->orderBy('products.created_at', 'desc');
+    } elseif ($request->input('sort-order') == 'rating') {
+        $productsQuery->orderBy('products.rating', 'desc');
+    } elseif ($request->input('sort-order') == 'availability') {
+        $productsQuery->orderBy('products.availability', 'desc');
+    } elseif ($request->input('sort-order') == 'price-asc') {
+        $productsQuery->orderBy('products.price', 'asc');
+    } elseif ($request->input('sort-order') == 'price-desc') {
+        $productsQuery->orderBy('products.price', 'desc');
+    }
 
-       // Fetch unique category IDs
-       $productTags = Product::select('category_id')->distinct()->get();
-   
-       // Fetch category names associated with those IDs
-       $categoryNames = Category::whereIn('id', $productTags->pluck('category_id'))->pluck('name');
-   
-       // Calculate average product ratings
-       $averageRatings = DB::table('reviews')
-           ->select('product_id', DB::raw('AVG(rating) as average_rating'))
-           ->groupBy('product_id')
-           ->get();
-   
-       return view('shop.shop')->with([
-           'products' => $products,
-           'productTags' => $productTags,
-           'categoryNames' => $categoryNames, // Pass category names to the view
-           'averageRatings' => $averageRatings, // Pass average ratings to the view
-       ]);
-   }
+    // Retrieve the products with default Laravel pagination
+    $products = $productsQuery->paginate($resultsPerPage);
+
+    // Fetch unique category IDs
+    $productTags = Product::select('category_id')->distinct()->get();
+
+    // Fetch category names associated with those IDs
+    $categoryNames = Category::whereIn('id', $productTags->pluck('category_id'))->pluck('name');
+
+    // Calculate average product ratings
+    $averageRatings = DB::table('reviews')
+        ->select('product_id', DB::raw('AVG(rating) as average_rating'))
+        ->groupBy('product_id')
+        ->get();
+
+    return view('shop.shop')->with([
+        'products' => $products,
+        'productTags' => $productTags,
+        'categoryNames' => $categoryNames,
+        'averageRatings' => $averageRatings,
+        // ... (other variables)
+    ]);
+  }
 
   
   

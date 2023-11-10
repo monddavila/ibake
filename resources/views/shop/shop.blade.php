@@ -97,8 +97,15 @@
               </div>
                   <!-- Pagination Links -->
                   <div class="pagination-wrap">
-    {{ $products->links() }}
-</div>
+                
+                  <div class="pagination-wrap">
+                  {{ $products->appends(request()->query())->links() }}
+                  </div>
+
+
+                  </div>
+
+
 
 
             </div>
@@ -140,14 +147,15 @@
                         <h3 class="widget-title">Categories</h3>
                         <ul class="tag-list clearfix">
                         <form method="post" action="{{ route('filterCategories') }}">
-                        @csrf
+                            @csrf
                                 <li>
-                                  <a>
+                                <a>
                                     <button type="submit" name="category" value="All" style="color: white; background-color: yourBackgroundColor;">
                                         All
                                     </button>
-                                  </a>
+                                </a>
                                 </li>
+                            
                             @foreach ($categoryNames as $categoryName)
                                 <li>
                                   <a>
