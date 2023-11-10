@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Session;
+
 
 class ShopController extends Controller
 {
@@ -208,6 +210,77 @@ class ShopController extends Controller
   
           return view('shop.tags', compact('tags'));
       }
+
+      public function filterCategories(Request $request, $category)
+   {
+
+
+      $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
+      ->select('products.*')
+      ->where('categories.name', $category)
+      ->orderBy('products.rating', 'desc')  // Order by the rating column in descending order
+      ->paginate(12);
+
+
+
+
+       // Fetch unique category IDs
+       $productTags = Product::select('category_id')->distinct()->get();
+   
+       // Fetch category names associated with those IDs
+       $categoryNames = Category::whereIn('id', $productTags->pluck('category_id'))->pluck('name');
+   
+       // Calculate average product ratings
+       $averageRatings = DB::table('reviews')
+           ->select('product_id', DB::raw('AVG(rating) as average_rating'))
+           ->groupBy('product_id')
+           ->get();
+   
+       return view('shop.shop')->with([
+           'products' => $products,
+           'productTags' => $productTags,
+           'categoryNames' => $categoryNames, // Pass category names to the view
+           'averageRatings' => $averageRatings, // Pass average ratings to the view
+       ]);
+   }
+
+   
+
+   public function searchProducts(Request $request)
+   {
+
+    $query = $request->input('query');
+
+    $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
+    ->select('products.*')
+    ->where(function ($queryBuilder) use ($query) {
+        $queryBuilder->where('products.name', 'like', "%$query%")
+            ->orWhere('categories.name', 'like', "%$query%");
+    })
+    ->orderBy('products.rating', 'desc')  // Order by the rating column in descending order
+    ->paginate(12);
+
+
+       // Fetch unique category IDs
+       $productTags = Product::select('category_id')->distinct()->get();
+   
+       // Fetch category names associated with those IDs
+       $categoryNames = Category::whereIn('id', $productTags->pluck('category_id'))->pluck('name');
+   
+       // Calculate average product ratings
+       $averageRatings = DB::table('reviews')
+           ->select('product_id', DB::raw('AVG(rating) as average_rating'))
+           ->groupBy('product_id')
+           ->get();
+   
+       return view('shop.shop')->with([
+           'products' => $products,
+           'productTags' => $productTags,
+           'categoryNames' => $categoryNames, // Pass category names to the view
+           'averageRatings' => $averageRatings, // Pass average ratings to the view
+           'query' => $query, 
+       ]);
+   }
   
   
 

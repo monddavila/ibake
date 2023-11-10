@@ -513,26 +513,40 @@ class CustomizeController extends Controller
     public function showBalanceCheckoutForm($id)
     {
         $user = Auth::user();
+        $user_id = $user->id;
         $customOrderId = $id;
 
-        $token = session('payment_token');
+        $checkBalance = CustomizeOrderDetail::join('customize_orders', 'customize_order_details.customOrder_id', '=', 'customize_orders.id')
+        ->where('customize_orders.orderID', $id)
+        ->where('customize_order_details.user_id', $user_id)
+        ->where('customize_order_details.payment_option', 'Half-online')
+        ->where('customize_order_details.payment_balance', '>', 0)
+        ->exists();
 
-        if (!$token) {
-            // Generate and store the token in the session
-            $token = Str::random(32);
-            session(['balance_payment_token' => $token]);
+        if($checkBalance){
+        
+
+            $token = session('payment_token');
+
+            if (!$token) {
+                // Generate and store the token in the session
+                $token = Str::random(32);
+                session(['balance_payment_token' => $token]);
+            }
+
+            $orders =  CustomizeOrder::with('CustomizeOrderDetail')
+                        ->where('customize_orders.orderID', $id)
+                        ->get();
+
+            return view('checkout.custom-checkout-balance')->with([
+                'user' => $user,
+                'orders' => $orders,
+                'customOrderId' => $customOrderId,
+                'token' => $token,
+            ]);
+        }else{
+            return redirect()->route('redirect');
         }
-
-        $orders =  CustomizeOrder::with('CustomizeOrderDetail')
-                    ->where('customize_orders.orderID', $id)
-                    ->get();
-
-        return view('checkout.custom-checkout-balance')->with([
-            'user' => $user,
-            'orders' => $orders,
-            'customOrderId' => $customOrderId,
-            'token' => $token,
-        ]);
     }
 
     public function customCheckout(Request $request, $id)

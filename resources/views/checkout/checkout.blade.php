@@ -419,7 +419,7 @@
   <script src="js/select2.min.js"></script>
   <script src="js/sticky_sidebar.min.js"></script>
   <script src="js/script.js"></script>
-  <script src="{{ asset('js/checkout.js') }}"></script>
+  <script src="{{ asset('js/cart.js') }}?v={{ filemtime(public_path('js/cart.js')) }}"></script>
 </body>
 
 </html>

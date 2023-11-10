@@ -171,6 +171,10 @@ Route::group(['prefix' => 'shop'], function () {
   Route::post('/', [ShopController::class, 'index'])->name('shop');
   Route::get('/item/{id}', [ShopController::class, 'show'])->name('item');
 
+  Route::get('/filter/{category}', [ShopController::class, 'filterCategories'])->name('filterCategories');
+  Route::post('/search', [ShopController::class, 'searchProducts'])->name('searchProducts');
+  //Route::get('/search/{query}', [ShopController::class, 'viewSearchProducts'])->name('viewSearchProducts');
+
   
 });
 
