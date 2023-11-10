@@ -21,7 +21,7 @@
 
 
     <!--Page Title-->
-    <section class="page-title" style="background-image:url(images/background/background-6.jpg)">
+    <section class="page-title" style="background-image:url({{ asset('images/background/background-6.jpg') }})">
       <div class="auto-container">
         <h1>Shop</h1>
         <ul class="page-breadcrumb">
@@ -104,15 +104,16 @@
           <div class="sidebar-side sticky-container col-lg-3 col-md-12 col-sm-12">
             <aside class="sidebar theiaStickySidebar">
               <div class="sticky-sidebar">
-                {{--<!-- Search Widget -->
+                <!-- Search Widget -->
                 <div class="sidebar-widget search-widget">
-                  <form method="post" action="#">
+                  <form method="post" action="{{ route('searchProducts') }}">
+                    @csrf
                     <div class="form-group">
-                      <input type="search" name="search-field" value="" placeholder="Search products…" required>
+                    <input type="search" name="query" value="" placeholder="@if(isset($query) && $query !== null){{ $query }}@else Search products…@endif" required>
                       <button type="submit"><span class="icon fa fa-search"></span></button>
                     </div>
                   </form>
-                </div>--}}
+                </div>
 
                 <!-- Cart Widget -->
                 <div class='sidebar-widget cart-widget' id="cart-widget-container">
@@ -123,6 +124,16 @@
                     </div>
                     <!--end shopping-cart -->
                   </div>
+                </div>
+
+                <!-- Tags Widget -->
+                <div class="sidebar-widget tags-widget">
+                  <h3 class="widget-title">Categories</h3>
+                  <ul class="tag-list clearfix">
+                  @foreach ($categoryNames as $categoryName)
+                  <li><a href="{{ route('filterCategories', ['category' => $categoryName]) }}">{{ $categoryName }}</a></li>
+                  @endforeach
+                  </ul>
                 </div>
 
                 <!-- Range Slider Widget -->
@@ -166,15 +177,7 @@
                   </div>
                 </div>
 
-                <!-- Tags Widget -->
-                <div class="sidebar-widget tags-widget">
-                  <h3 class="widget-title">Categories</h3>
-                  <ul class="tag-list clearfix">
-                  @foreach ($categoryNames as $categoryName)
-                  <li><a href="#">{{ $categoryName }}</a></li>
-                  @endforeach
-                  </ul>
-                </div>
+                
 
               </div>
             </aside>
@@ -211,19 +214,20 @@
     <span class="fa fa-angle-up"></span>
   </div>
 
-  <script src="js/jquery.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery-ui.min.js"></script>
-  <script src="js/jquery.fancybox.js"></script>
-  <script src="js/owl.js"></script>
-  <script src="js/wow.js"></script>
-  <script src="js/appear.js"></script>
-  <script src="js/select2.min.js"></script>
-  <script src="js/sticky_sidebar.min.js"></script>
-  <script src="js/script.js"></script>
-  <script src="{{ asset('js/shop.js') }}?v={{ filemtime(public_path('js/shop.js')) }}"></script>
-  <script src="//code.tidio.co/rxspxjqfeocjtadtyjrdmxudlhr0m8vc.js" async></script>
+<script src="{{ asset('js/jquery.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('js/jquery.fancybox.js') }}"></script>
+<script src="{{ asset('js/owl.js') }}"></script>
+<script src="{{ asset('js/wow.js') }}"></script>
+<script src="{{ asset('js/appear.js') }}"></script>
+<script src="{{ asset('js/select2.min.js') }}"></script>
+<script src="{{ asset('js/sticky_sidebar.min.js') }}"></script>
+<script src="{{ asset('js/script.js') }}"></script>
+<script src="{{ asset('js/shop.js') }}?v={{ filemtime(public_path('js/shop.js')) }}"></script>
+<script src="//code.tidio.co/rxspxjqfeocjtadtyjrdmxudlhr0m8vc.js" async></script>
+
 </body>
 
 </html>

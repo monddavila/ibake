@@ -1,6 +1,6 @@
 <footer class="main-footer">
     <div class="shape_wrapper shape_one">
-        <div class="shape_inner" style="background-image: url(images/background/background-5.jpg);">
+        <div class="shape_inner" style="background-image: url({{ asset('images/background/background-5.jpg') }});">
             <div class="overlay"></div>
         </div>
     </div>
@@ -72,7 +72,7 @@
                 <div class="footer-column col-lg-4 col-md-12 col-sm-12">
                     <!--Footer Column-->
                     <div class="footer-widget logo-widget">
-                        <figure class="footer-logo"><img src="images/ibake-logo/logo-big.png" alt="">
+                        <figure class="footer-logo"><img src="{{ asset('images/ibake-logo/logo-big.png') }}" alt=""></figure>
                         </figure>
                     </div>
                 </div>
