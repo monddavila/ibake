@@ -174,6 +174,9 @@ Route::group(['prefix' => 'shop'], function () {
   Route::post('/filter-by-category', [ShopController::class, 'filterCategories'])->name('filterCategories');
   Route::post('/search', [ShopController::class, 'searchProducts'])->name('searchProducts');
   Route::post('/sort', [ShopController::class, 'sortProducts'])->name('sortProducts');
+  Route::get('/filter-by-category', [ShopController::class, 'filterCategories'])->name('filterCategories');
+  Route::get('/search', [ShopController::class, 'searchProducts'])->name('searchProducts');
+  Route::get('/sort', [ShopController::class, 'sortProducts'])->name('sortProducts');
 
   
 });
