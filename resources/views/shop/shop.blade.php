@@ -6,6 +6,9 @@
   <title>iBake - Tiers of Joy | Shop</title>
 
   @include('partials.head')
+
+
+
 </head>
 
 <body>
@@ -68,23 +71,24 @@
             <div class="our-shop">
               <div class="shop-upper-box clearfix">
                 <div class="items-label">Showing all {{ count($products) }} results</div>
-                <form method="post" action="{{ route('shop') }}">
-                  @csrf
-                  <div class="orderby">
-                    <select name="sort-order" class="sortby-select">
-                      <option value="" disabled selected>Sort by</option>
-                      <option value="created_at">Sort by newness</option>
-                      <option value="rating">Sort by average rating</option>
-                      <option value="availability-desc">Sort by availability</option>
-                      <option value="price">Sort by price: low to high</option>
-                      <option value="price-desc">Sort by price: high to low</option>
-                    </select>
 
-                    <noscript>
-                      <input type="submit" value="Sort" />
-                    </noscript>
-                  </div>
+                <form method="post" action="{{ route('sortProducts') }}" id="searchForm">
+                    @csrf
+
+                    <div class="orderby">
+                        <select name="sort-order" class="sortby-select" id="sort-order-select">
+                            <option value="" disabled selected>Sort by</option>
+                            <option value="created_at">Sort by newness</option>
+                            <option value="rating">Sort by average rating</option>
+                            <option value="availability">Sort by availability</option>
+                            <option value="price-asc">Sort by price: low to high</option>
+                            <option value="price-desc">Sort by price: high to low</option>
+                        </select>
+                    </div>
                 </form>
+
+
+                
               </div>
 
 
@@ -93,8 +97,10 @@
               </div>
                   <!-- Pagination Links -->
                   <div class="pagination-wrap">
-                  {{ $products->render(); }}
-                  </div>
+    {{ $products->links() }}
+</div>
+
+
             </div>
           </div>
 
@@ -106,14 +112,16 @@
               <div class="sticky-sidebar">
                 <!-- Search Widget -->
                 <div class="sidebar-widget search-widget">
-                  <form method="post" action="{{ route('searchProducts') }}">
+                <form method="post" action="{{ route('searchProducts') }}">
                     @csrf
                     <div class="form-group">
                     <input type="search" name="query" value="" placeholder="@if(isset($query) && $query !== null){{ $query }}@else Search products…@endif" required>
                       <button type="submit"><span class="icon fa fa-search"></span></button>
                     </div>
-                  </form>
+                </form>
+                  
                 </div>
+     
 
                 <!-- Cart Widget -->
                 <div class='sidebar-widget cart-widget' id="cart-widget-container">
@@ -127,17 +135,35 @@
                 </div>
 
                 <!-- Tags Widget -->
-                <div class="sidebar-widget tags-widget">
-                  <h3 class="widget-title">Categories</h3>
-                  <ul class="tag-list clearfix">
-                  @foreach ($categoryNames as $categoryName)
-                  <li><a href="{{ route('filterCategories', ['category' => $categoryName]) }}">{{ $categoryName }}</a></li>
-                  @endforeach
-                  </ul>
-                </div>
+                
+                    <div class="sidebar-widget tags-widget">
+                        <h3 class="widget-title">Categories</h3>
+                        <ul class="tag-list clearfix">
+                        <form method="post" action="{{ route('filterCategories') }}">
+                        @csrf
+                                <li>
+                                  <a>
+                                    <button type="submit" name="category" value="All" style="color: white; background-color: yourBackgroundColor;">
+                                        All
+                                    </button>
+                                  </a>
+                                </li>
+                            @foreach ($categoryNames as $categoryName)
+                                <li>
+                                  <a>
+                                    <button type="submit" name="category" value="{{ $categoryName }}" style="color: white; background-color: yourBackgroundColor;">
+                                        {{ $categoryName }}
+                                    </button>
+                                  </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                      </form>
+ 
 
                 <!-- Range Slider Widget -->
-                <div class="sidebar-widget rangeslider-widget">
+                {{--<div class="sidebar-widget rangeslider-widget">
                   <div class="widget-content">
                     <h3 class="widget-title">Price Filter</h3>
 
@@ -159,7 +185,7 @@
                           </div>
                         </div>
 
-                        {{-- Show an error if the min/max price entered is not numeric --}}
+                        Show an error if the min/max price entered is not numeric
                         @if ($errors->has('max-price') || $errors->has('min-price'))
                         <span class="text-red-500">Please enter a numeric value</span>
                         @endif
@@ -175,7 +201,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> --}}
 
                 
 
@@ -225,8 +251,22 @@
 <script src="{{ asset('js/select2.min.js') }}"></script>
 <script src="{{ asset('js/sticky_sidebar.min.js') }}"></script>
 <script src="{{ asset('js/script.js') }}"></script>
-<script src="{{ asset('js/shop.js') }}?v={{ filemtime(public_path('js/shop.js')) }}"></script>
+
 <script src="//code.tidio.co/rxspxjqfeocjtadtyjrdmxudlhr0m8vc.js" async></script>
+
+
+<script>
+  $(document).ready(function () {
+    $('#sort-order-select').change(function () {
+        console.log('Dropdown value changed'); // Add this line for debugging
+        $('#searchForm').submit();
+    });
+});
+</script>
+
+<script src="{{ asset('js/shop.js') }}?v={{ filemtime(public_path('js/shop.js')) }}"></script>
+
+</script>
 
 </body>
 

@@ -165,6 +165,8 @@ class ShopController extends Controller
   
   public function filterShop(Request $request)
   {
+
+    //dd($request->minPrice);
       $products = Product::whereBetween('price', [$request->minPrice, $request->maxPrice])
           ->orderBy($request->sortBy, $request->sortOrder)
           ->paginate(12);
@@ -193,36 +195,32 @@ class ShopController extends Controller
   
       return response()->json(['shopItems' => $shopItems]);
   }
-  
 
-     
 
-      public function tags()
-      {
-          // Replace '1' with the ID of the product you want to find
-          $productId = 1;
-          $product = Product::find($productId);
-          
-          $tags = $product->tags;
-
-          dd($tags);
-          
-  
-          return view('shop.tags', compact('tags'));
-      }
-
-      public function filterCategories(Request $request, $category)
+      public function filterCategories(Request $request)
    {
 
+      $category = $request->input('category');
 
+      if ($category === 'All') {
       $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
       ->select('products.*')
-      ->where('categories.name', $category)
       ->orderBy('products.rating', 'desc')  // Order by the rating column in descending order
       ->paginate(12);
 
 
+      session(['filter_type' => ['type' => '2', 'data' => $category]]);
 
+      }else{
+        $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
+        ->select('products.*')
+        ->where('categories.name', $category)
+        ->orderBy('products.rating', 'desc')  // Order by the rating column in descending order
+        ->paginate(12);
+
+        
+      session(['filter_type' => ['type' => '1', 'data' => $category]]);
+      }
 
        // Fetch unique category IDs
        $productTags = Product::select('category_id')->distinct()->get();
@@ -247,19 +245,146 @@ class ShopController extends Controller
    
 
    public function searchProducts(Request $request)
+  {
+      $query = $request->input('query');
+    
+
+      // Initial query without any filters
+      $productsQuery = Product::join('categories', 'products.category_id', '=', 'categories.id')
+          ->select('products.*');
+
+      // Apply search filter if query is present
+      if ($request->has('query') && !is_null($request->input('query'))) {
+          $productsQuery->where(function ($queryBuilder) use ($query) {
+              $queryBuilder->where('products.name', 'like', "%$query%")
+                  ->orWhere('categories.name', 'like', "%$query%");
+          });
+
+          session(['filter_type' => ['type' => '3', 'data' => $query]]);
+      }
+      
+
+
+      // Apply additional filters or ordering as needed
+      $products = $productsQuery
+          ->orderBy('products.rating', 'desc')  // Order by the rating column in descending order
+          ->paginate(12);
+
+      // Fetch unique category IDs
+      $productTags = Product::select('category_id')->distinct()->get();
+
+      // Fetch category names associated with those IDs
+      $categoryNames = Category::whereIn('id', $productTags->pluck('category_id'))->pluck('name');
+
+      // Calculate average product ratings
+      $averageRatings = DB::table('reviews')
+          ->select('product_id', DB::raw('AVG(rating) as average_rating'))
+          ->groupBy('product_id')
+          ->get();
+
+      return view('shop.shop')->with([
+          'products' => $products,
+          'productTags' => $productTags,
+          'categoryNames' => $categoryNames, // Pass category names to the view
+          'averageRatings' => $averageRatings, // Pass average ratings to the view
+          'query' => $query,
+      ]);
+  }
+
+  public function sortProducts(Request $request)
    {
 
-    $query = $request->input('query');
+    
+      $sort = $request->input('sort-order');
+      
+      // Retrieve the entire 'filter_type' array from the session
+      $filterType = session('filter_type');
+      // Access specific values from the 'filter_type' array
+      $type = $filterType['type'];
+      $data = $filterType['data'];
 
-    $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
-    ->select('products.*')
-    ->where(function ($queryBuilder) use ($query) {
-        $queryBuilder->where('products.name', 'like', "%$query%")
-            ->orWhere('categories.name', 'like', "%$query%");
-    })
-    ->orderBy('products.rating', 'desc')  // Order by the rating column in descending order
-    ->paginate(12);
 
+      if($type === '1'){
+        //dd('1');
+        $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
+        ->select('products.*')
+        ->where('categories.name', $data);
+    
+        if ($request->input('sort-order') == 'created_at') {
+          $products->orderBy('products.created_at', 'desc');
+      } elseif ($request->input('sort-order') == 'rating') {
+          $products->orderBy('products.rating', 'desc');
+      } elseif ($request->input('sort-order') == 'availability') {
+          $products->orderBy('products.availability', 'desc');
+      } elseif ($request->input('sort-order') == 'price-asc') {
+          $products->orderBy('products.price', 'asc');
+      } elseif ($request->input('sort-order') == 'price-desc') {
+          $products->orderBy('products.price', 'desc');
+      }
+      
+      $products = $products->paginate(12);
+    
+      }elseif($type === '2'){
+
+        $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
+        ->select('products.*');
+
+        if ($request->input('sort-order') == 'created_at') {
+          $products->orderBy('products.created_at', 'desc');
+      } elseif ($request->input('sort-order') == 'rating') {
+          $products->orderBy('products.rating', 'desc');
+      } elseif ($request->input('sort-order') == 'availability') {
+          $products->orderBy('products.availability', 'desc');
+      } elseif ($request->input('sort-order') == 'price-asc') {
+          $products->orderBy('products.price', 'asc');
+      } elseif ($request->input('sort-order') == 'price-desc') {
+          $products->orderBy('products.price', 'desc');
+      }
+      
+      $products = $products->paginate(12);
+
+    }elseif($type === '3'){
+
+        $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
+          ->select('products.*')
+          ->where(function ($queryBuilder) use ($data) {
+            $queryBuilder->where('products.name', 'like', "%$data%")
+                ->orWhere('categories.name', 'like', "%$data%");
+        });
+        if ($request->input('sort-order') == 'created_at') {
+            $products->orderBy('products.created_at', 'desc');
+        } elseif ($request->input('sort-order') == 'rating') {
+            $products->orderBy('products.rating', 'desc');
+        } elseif ($request->input('sort-order') == 'availability') {
+            $products->orderBy('products.availability', 'desc');
+        } elseif ($request->input('sort-order') == 'price-asc') {
+            $products->orderBy('products.price', 'asc');
+        } elseif ($request->input('sort-order') == 'price-desc') {
+            $products->orderBy('products.price', 'desc');
+        }
+
+        $products = $products->paginate(12);
+    }else{
+      $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
+        ->select('products.*');
+
+        if ($request->input('sort-order') == 'created_at') {
+          $products->orderBy('products.created_at', 'desc');
+      } elseif ($request->input('sort-order') == 'rating') {
+          $products->orderBy('products.rating', 'desc');
+      } elseif ($request->input('sort-order') == 'availability') {
+          $products->orderBy('products.availability', 'desc');
+      } elseif ($request->input('sort-order') == 'price-asc') {
+          $products->orderBy('products.price', 'asc');
+      } elseif ($request->input('sort-order') == 'price-desc') {
+          $products->orderBy('products.price', 'desc');
+      }
+      
+      $products = $products->paginate(12);
+    }
+    
+
+      
 
        // Fetch unique category IDs
        $productTags = Product::select('category_id')->distinct()->get();
@@ -278,9 +403,9 @@ class ShopController extends Controller
            'productTags' => $productTags,
            'categoryNames' => $categoryNames, // Pass category names to the view
            'averageRatings' => $averageRatings, // Pass average ratings to the view
-           'query' => $query, 
        ]);
    }
+
   
   
 

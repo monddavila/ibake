@@ -1,7 +1,7 @@
 $(document).ready(function () {
     loadCartWidget();
 
-    //reset selected sort and price filter
+   /* //reset selected sort and price filter
     $("#view-all-shop").on("click", function () {
         $("#min-price").val(0);
         $("#max-price").val(10000);
@@ -23,9 +23,9 @@ $(document).ready(function () {
         let sortBy = $(this).val();
 
         loadShopItems(minPrice, maxPrice, sortBy);
-    });
+    }); */
 });
-
+/*
 function loadShopItems(minPrice = 0, maxPrice = 10000, sortBy = "updated_at") {
     // Set the sort direction based on the selected value
     var sortOrder = "asc"; // Default to ascending order
@@ -60,7 +60,7 @@ function loadShopItems(minPrice = 0, maxPrice = 10000, sortBy = "updated_at") {
             console.error(err);
         },
     });
-}
+}  */
 
 function loadCartWidget() {
     $.ajax({
