@@ -200,9 +200,10 @@
           <li class="nav-item"><a class="nav-link" href="{{ route('viewReview') }}">Product Reviews</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('viewCustomReviews') }}">Custom Order Reviews</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('ViewCustomerRecords') }}">Customer Records</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ route('viewCustomReviews') }}">Orders Summary</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('shopOrders') }}">Shop Orders List</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('customOrderSummary') }}">Custom Orders List</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('viewSalesReport') }}">Sales Report</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ route('viewCustomReviews') }}">Transaction Record</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('transactionRecords') }}">Transaction Record</a></li>
         </ul>
       </div>
     </li>

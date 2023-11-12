@@ -41,6 +41,8 @@ class DashboardController extends Controller
 
     $totalSales = $paymentsReceived + $customPaymentsReceivedHalf;
 
+    Session::put('totalReceivables', $customPaymentsReceivedHalf);
+
 
     $shopEwallets = Order::where('payment_status', 'Fully Paid')->where('payment_method', 'wallet')->where('order_status', '!=', 'Cancelled')->sum('total_price');
     $shopCard = Order::where('payment_status', 'Fully Paid')->where('payment_method', 'card')->where('order_status', '!=', 'Cancelled')->sum('total_price');
@@ -86,6 +88,12 @@ class DashboardController extends Controller
     $totalCards = $shopCard + $customCard + $customHalfCard+$_customFullCodCard;
     $totalBank = $shopBank + $customBank  + $customHalfBank+$_customFullCodBank;
     $totalCash = $_customHalfCash;
+
+    // Add totals to session
+    Session::put('totalEwallets', $totalEwallets);
+    Session::put('totalCards', $totalCards);
+    Session::put('totalBank', $totalBank);
+    Session::put('totalCash', $totalCash);
     
 
 
