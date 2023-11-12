@@ -17,7 +17,10 @@ class RolesTableSeeder extends Seeder
         $roles = [
             ['name' => 'Admin', 'description' => 'Administrator with full access'],
             ['name' => 'Customer', 'description' => 'End-user of the system, selecting or buying a product'],
-            ['name' => 'Manager', 'description' => 'Responsible for content editing'],
+            ['name' => 'Manager', 'description' => 'Responsible for business operations'],
+            ['name' => 'Owner', 'description' => 'Oversee the business operations'],
+            ['name' => 'Baker', 'description' => 'Bakers can view orders'],
+            ['name' => 'Designer', 'description' => 'Designers can view orders'],
             // Add more role data as needed
         ];
 

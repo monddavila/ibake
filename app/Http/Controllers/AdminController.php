@@ -32,7 +32,8 @@ class AdminController extends Controller
 
   public function showAddUsersForm()
   {
-    return view('admin.pages.users-add');
+    $roles = Role::all();
+    return view('admin.pages.users-add')->with(['roles' => $roles]);
   }
 
   public function addUser(Request $request)
