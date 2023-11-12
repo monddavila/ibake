@@ -21,53 +21,54 @@
         <!-- page breadcrumb-->
         <div class="page-header">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item custom-breadcrumb">User Management</li>
-                    <li class="breadcrumb-item custom-breadcrumb" aria-current="page">User List</li>
+                    <li class="breadcrumb-item custom-breadcrumb">Reports</li>
+                    <li class="breadcrumb-item custom-breadcrumb" aria-current="page">Sales Report</li>
                 </ol>
         </div>
 
         <div class="col-lg-12 grid-margin stretch-card">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">User List</h4>
+              <h4 class="card-title">Sales Record</h4>
               <div class="d-flex justify-content-between align-items-center">
-                <p class="card-description"> All User List </p>
-                <div class="d-flex">
-                  <a href="{{ route('user.form') }}" class="btn btn-primary me-2">+ Add User</a>
-                  <a href="" class="btn btn-success me-2">
+                <p class="card-description"> All records List </p>
+                <a href="" class="btn btn-success me-2">
                       <i class="fas fa-download"></i> Export
                   </a>
-              </div>
+
               </div>
               <div class="col-lg-3">
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" id="user-search-input" placeholder="Search User"
+                  <input type="text" class="form-control" id="user-search-input" placeholder="Search by Order ID"
                     aria-label="Search" aria-describedby="search-button">
                   <button class="btn btn-outline-secondary" type="button" id="reset-search-btn">Reset</button>
                 </div>
               </div>
-              <div class="table-responsive">
+              <div class="table-responsive" style="max-height: 850px; overflow-y: auto;">
                 <table class="table">
                   <thead>
                     <tr>
                       <th>No.</th>
-                      <th>Profile</th>
-                      <th class="sortable" id="sort-firstname" data-sort="firstname">First Name</th>
-                      <th class="sortable" id="sort-lastname" data-sort="lastname">Last Name</th>
-                      <th class="sortable" id="sort-role_id" data-sort="role_id">Role</th>
-                      <th class="sortable" id="sort-email" data-sort="email">Email</th>
-                      <th class="sortable" id="sort-phone" data-sort="phone">Contact No.</th>
-                      <th class="sortable" id="sort-created" data-sort="created_at">Created</th>
-                      <th>Status</th>
-                      <th>Action</th>
+                      <th class="sortable" id="sort-order_id" data-sort="order_id">Order ID</th>
+                      <th>Type</th>
+                      <th class="sortable" id="sort-total_price" data-sort="total_price">Total Price</th>
+                      <th class="sortable" id="order_status" data-sort="payment_option">Payment Option</th>
+                      <th class="sortable" id="order_status" data-sort="order_status">Order Status</th>
+                      <th class="sortable" id="payment_status" data-sort="payment_status">Payment Status</th>
+                      <th class="sortable" id="payment_balance" data-sort="payment_balance">Balance</th>
+                      <th class="sortable" id="created_at" data-sort="created_at">Date of Order</th>
+
                     </tr>
                   </thead>
                   <tbody id='users-table-body'>
-                    @include('admin.pages.users-table')
+                    @include('admin.pages.reports.sales-report-table')
                   </tbody>
                 </table>
                   <!-- Pagination Links -->
-                  {{ $users->links() }}
+                  {{--<div class="d-flex justify-content-left mt-4">
+                      {{ $allOrders->onEachSide(1)->links() }}
+                  </div>--}}
+
               </div>
             </div>
           </div>
@@ -82,7 +83,7 @@
 
   <!-- plugins:js -->
   @include('admin.partials.script')
-  <script src="{{ asset('admin/assets/js/admin-users.js') }}?v={{ filemtime(public_path('admin/assets/js/admin-users.js')) }}"></script>
+  <script src="{{ asset('admin/assets/js/admin-sales.js') }}?v={{ filemtime(public_path('admin/assets/js/admin-sales.js')) }}"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -22,6 +22,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ReportsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -134,6 +135,12 @@ Route::get('/get-reviews', [ProductsController::class, 'getReviews'])->name('get
 /*Admin Panel Custom Cake Reviews Section*/
 Route::get('/custom-order-reviews', [ProductsController::class, 'viewCustomReviews'])->name('viewCustomReviews');
 Route::get('/get-custom-reviews', [ProductsController::class, 'getCustomReviews'])->name('getCustomReviews');
+/*Admin Panel Customer Records Section*/
+Route::get('/customer-records', [ReportsController::class, 'viewCustomerRecords'])->name('ViewCustomerRecords');
+Route::get('/search', [ReportsController::class, 'searchCustomer'])->name('searchCustomer');
+
+Route::get('/sales-report', [ReportsController::class, 'viewSalesReport'])->name('viewSalesReport');
+Route::get('/sales-record', [ReportsController::class, 'searchSalesRecord'])->name('searchSalesRecord');
 
 });
 
