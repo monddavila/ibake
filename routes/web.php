@@ -142,6 +142,10 @@ Route::get('/search', [ReportsController::class, 'searchCustomer'])->name('searc
 Route::get('/sales-report', [ReportsController::class, 'viewSalesReport'])->name('viewSalesReport');
 Route::get('/sales-record', [ReportsController::class, 'searchSalesRecord'])->name('searchSalesRecord');
 
+Route::get('/shop-orders-list', [ReportsController::class, 'shopOrders'])->name('shopOrders');
+Route::get('/custom-orders-list', [ReportsController::class, 'customOrderSummary'])->name('customOrderSummary');
+Route::get('/transactions', [ReportsController::class, 'transactionRecords'])->name('transactionRecords');
+
 });
 
 /** Custom Cake Reviews*/

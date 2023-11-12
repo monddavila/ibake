@@ -126,7 +126,6 @@ class ReportsController extends Controller
                 return $order;
             });
 
-           // dd($orders); 11
 
         $customOrderDetails = CustomizeOrderDetail::with('user')
             ->whereIn('payment_status', ['Fully Paid', 'Partially Paid'])
@@ -141,30 +140,26 @@ class ReportsController extends Controller
                 return $order;
             });
 
-           //dd($customOrderDetails); 18
-
         $allOrders = $orders->concat($customOrderDetails);
 
-        //dd($allOrders);
+        $shopPaymentsReceived = Order::where('payment_status', 'Fully Paid')->where('order_status', '!=', 'Cancelled')->sum('total_price');
+        $customPaymentsReceived = CustomizeOrderDetail::where('payment_status', 'Fully Paid')->where('order_status', '!=', 'Cancelled')->sum('total_price');
+        $customPaymentsReceivedHalf = CustomizeOrderDetail::where('payment_status', 'Partially Paid')->where('order_status', '!=', 'Cancelled')->sum('payment_balance');
+    
+        $paymentsReceived = $shopPaymentsReceived + $customPaymentsReceived + $customPaymentsReceivedHalf ;
+    
+        $totalSales = $paymentsReceived + $customPaymentsReceivedHalf;
+    
 
         return view('admin.pages.reports.sales-report')->with([
             'allOrders' => $allOrders,
+            'paymentsReceived' => $paymentsReceived,
+            'customPaymentsReceivedHalf' => $customPaymentsReceivedHalf,
+            'totalSales' => $totalSales,
 
         ]);
     }
 
-
-
-/* $totalInventoryValue = Product::sum(\DB::raw('price * available_qty'));
-
-    $shopPaymentsReceived = Order::where('payment_status', 'Fully Paid')->where('order_status', '!=', 'Cancelled')->sum('total_price');
-    $customPaymentsReceived = CustomizeOrderDetail::where('payment_status', 'Fully Paid')->where('order_status', '!=', 'Cancelled')->sum('total_price');
-    $customPaymentsReceivedHalf = CustomizeOrderDetail::where('payment_status', 'Partially Paid')->where('order_status', '!=', 'Cancelled')->sum('payment_balance');
-
-    $paymentsReceived = $shopPaymentsReceived + $customPaymentsReceived + $customPaymentsReceivedHalf ;
-
-    $totalSales = $paymentsReceived + $customPaymentsReceivedHalf;
-    */
 
     public function searchSalesRecord(Request $request)
     {
@@ -217,4 +212,80 @@ class ReportsController extends Controller
       return response()->json(['html' => $html]);
 
     }
+
+        function shopOrders(Request $request)
+    {
+        // Completed Shop Orders
+        $shopOrders = Order::
+            with('orderItems.product');
+
+            if (isset($request->sort_by) && isset($request->order_by)) {
+            $shopOrders = $shopOrders->orderBy($request->sort_by, $request->order_by);
+            }
+
+        $shopOrders = $shopOrders->paginate(15);
+
+        $orderDetails = CustomizeOrderDetail::where('order_status', 'Completed')
+            ->with('CustomizeOrder')
+            ->get();
+
+        return view('admin.pages.reports.shop-orders')->with([
+            'shopOrders' => $shopOrders,
+            'orderDetails' => $orderDetails,
+        ]);
+    }
+
+    public function customOrderSummary(Request $request)
+    {
+        // Completed Custom Cake Orders
+        $shopCustomOrders = CustomizeOrderDetail::orderBy('created_at', 'desc')->paginate(15);
+
+        if (isset($request->sort_by) && isset($request->order_by)) {
+            $shopCustomOrders = CustomizeOrderDetail::orderBy($request->sort_by, $request->order_by)->paginate(15);
+        }
+
+        $orderDetails = CustomizeOrderDetail::where('order_status', 'Completed')
+            ->with('CustomizeOrder')
+            ->get();
+
+        return view('admin.pages.reports.custom-orders')->with([
+            'shopCustomOrders' => $shopCustomOrders,
+            'orderDetails' => $orderDetails,
+        ]);
+    }
+
+    public function transactionRecords(Request $request)
+    {
+        $totalEwallets = Session::has('totalEwallets') ? Session::get('totalEwallets') : 0;
+        $totalCards = Session::has('totalCards') ? Session::get('totalCards') : 0;
+        $totalBank = Session::has('totalBank') ? Session::get('totalBank') : 0;
+        $totalCash = Session::has('totalCash') ? Session::get('totalCash') : 0;
+        $totalReceivables = Session::has('totalReceivables') ? Session::get('totalReceivables') : 0;
+
+        $totalOnhand = $totalEwallets + $totalCards + $totalBank + $totalCash;
+
+        $totalSales = $totalOnhand + $totalReceivables;
+
+        $sellingProducts = OrderItem::select('product_id', DB::raw('SUM(quantity) as total_quantity'), DB::raw('SUM(price) as total_price'))
+        ->groupBy('product_id')
+        ->orderBy('total_quantity', 'desc')
+        ->with('product')
+        ->paginate(8);
+
+
+        return view('admin.pages.reports.transaction-records')->with([
+            'sellingProducts' => $sellingProducts,
+            'totalEwallets' => $totalEwallets,
+            'totalCards' => $totalCards,
+            'totalBank' => $totalBank,
+            'totalCash' => $totalCash,
+            'totalOnhand' => $totalOnhand,
+            'totalReceivables' => $totalReceivables,
+            'totalSales' => $totalSales,
+        ]);
+    }
+
+
+
+
 }
