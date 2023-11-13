@@ -34,7 +34,7 @@
                 <p class="card-description"> All User List </p>
                 <div class="d-flex">
                   <a href="{{ route('user.form') }}" class="btn btn-primary me-2">+ Add User</a>
-                  <a href="" class="btn btn-success me-2">
+                  <a href="{{ route('exportUsersData') }}" target="__blank" class="btn btn-success me-2">
                       <i class="fas fa-download"></i> Export
                   </a>
               </div>

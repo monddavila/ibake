@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -80,6 +81,13 @@ class User extends Authenticatable
   public function role()
   {
     return $this->belongsTo(Role::class, 'role_id');
+  }
+
+  public static function getAllUser(){
+    $result = DB::table('users')
+    ->select('id','firstname','lastname','email','role_id','phone','address','created_at')
+    ->get()->toArray();
+    return $result;
   }
 
 
