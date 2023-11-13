@@ -67,7 +67,7 @@
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" style="display: none;>
                                         <label for="password">Password</label>
                                         <input type="password" class="form-control" id="password" name="password"
                                         placeholder="Enter new password">
@@ -75,7 +75,7 @@
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" style="display: none;>
                                         <label for="password_confirmation">Confirm Password</label>
                                         <input type="password" class="form-control" id="password_confirmation"
                                                name="password_confirmation" placeholder="Confirm Password">

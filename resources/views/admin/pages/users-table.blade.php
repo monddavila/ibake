@@ -18,7 +18,7 @@ $count = 1;
   <td>{{ $user->email }}</td>
   <td>{{ $user->phone }}</td>
   <td>{{ $user->created_at->format('d M Y') }}</td>
-  <td><label class="badge badge-danger">Pending</label></td>
+  
   <td>
     @if ($userType == '1' || $userType == '4')
     <div class="btn-group">
