@@ -36,6 +36,8 @@ class ReportsController extends Controller
                 return $order;
             });
 
+            //dd($orders);
+
         $customOrderDetails = CustomizeOrderDetail::with('user')
             ->where('order_status', '=', 'Completed')
             ->orderBy('created_at', 'desc')
@@ -271,6 +273,8 @@ class ReportsController extends Controller
         ->orderBy('total_quantity', 'desc')
         ->with('product')
         ->paginate(8);
+
+        //dd($sellingProducts);
 
 
         return view('admin.pages.reports.transaction-records')->with([

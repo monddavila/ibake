@@ -152,6 +152,14 @@ Route::get('/transactions', [ReportsController::class, 'transactionRecords'])->n
 /** Export Data- Reports*/
 Route::get('/users-export', [ExportDataController::class, 'exportUsersData'])->name('exportUsersData');
 Route::get('/products-export', [ExportDataController::class, 'exportProductsData'])->name('exportProductsData');
+Route::get('/reviews-export', [ExportDataController::class, 'exportProductReviews'])->name('exportProductReviews');
+Route::get('/custom-reviews-export', [ExportDataController::class, 'exportCustomReviews'])->name('exportCustomReviews');
+Route::get('/customer-records-export', [ExportDataController::class, 'exportCustomerRecords'])->name('exportCustomerRecords');
+Route::get('/shop-orders-export', [ExportDataController::class, 'exportShopRecords'])->name('exportShopRecords');
+Route::get('/custom-orders-export', [ExportDataController::class, 'exportCustomRecords'])->name('exportCustomRecords');
+Route::get('/sales-report-export', [ExportDataController::class, 'exportSalesRecords'])->name('exportSalesRecords');
+Route::get('/sold-products-export', [ExportDataController::class, 'exportSoldProducts'])->name('exportSoldProducts');
+
 
 /** Custom Cake Reviews*/
 Route::post('/customize-cake-review/{id}', [ReviewsController::class, 'addCustomCakeReview'])->name('addCustomCakeReview');

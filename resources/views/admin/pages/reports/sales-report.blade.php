@@ -32,7 +32,7 @@
               <h4 class="card-title">Sales Record</h4>
               <div class="d-flex justify-content-between align-items-center">
                 <p class="card-description"> All records List </p>
-                <a href="" class="btn btn-success me-2">
+                <a href="{{ route('exportSalesRecords') }}" class="btn btn-success me-2">
                       <i class="fas fa-download"></i> Export
                   </a>
 
