@@ -65,7 +65,7 @@
                       <th class="sortable" id="sort-email" data-sort="email">Email</th>
                       <th class="sortable" id="sort-phone" data-sort="phone">Contact No.</th>
                       <th class="sortable" id="sort-created" data-sort="created_at">Created</th>
-                      <th>Status</th>
+                    
                       <th>Action</th>
                     </tr>
                   </thead>
