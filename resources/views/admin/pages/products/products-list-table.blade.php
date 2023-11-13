@@ -4,7 +4,7 @@
   <td><img src="{{ asset($product->image) }}" class="product-name" alt="Product Image" data-toggle="modal" data-target="#productImageModal" data-imgPath="{{ $product->image }}"></td>
   <td class="product-name" data-toggle="modal" data-target="#productImageModal" data-imgPath="{{ $product->image }}">{{
     $product->name }}</td>
-  <td>{{ $product->price }}</td>
+  <td>Php {{ number_format($product->price, 2) }}</td>
   <td>{{ $product->category_name }}</td>
   <td>{{ $product->rating }}</td>
   <td>{{ $product->isfeatured ? 'Yes' : 'No' }}</td>
