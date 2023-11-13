@@ -471,7 +471,7 @@ function viewCakeBuilder()
 
 public function updateCakeBuilder(Request $request)
 {
-  //dd($request);
+  
     $sizes = $request->input('size');
     $prices = $request->input('price');
     $descriptions = $request->input('description');
