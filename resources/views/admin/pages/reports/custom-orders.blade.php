@@ -25,7 +25,7 @@
                 <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                   <h4 class="card-title">Custom Cake Orders</h4>
-                  <a href="" class="btn btn-success me-2">
+                  <a href="{{ route('exportCustomRecords') }}" class="btn btn-success me-2">
                       <i class="fas fa-download"></i> Export
                   </a>
                   </div>

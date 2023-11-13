@@ -83,12 +83,17 @@ class User extends Authenticatable
     return $this->belongsTo(Role::class, 'role_id');
   }
 
-  public static function getAllUser(){
+  public static function getAllUser()
+  {
     $result = DB::table('users')
-    ->select('id','firstname','lastname','email','role_id','phone','address','created_at')
-    ->get()->toArray();
+        ->select('users.id', 'users.firstname', 'users.lastname', 'users.email', 'roles.name as role_name', 'users.phone', 'users.address', 'users.created_at')
+        ->join('roles', 'users.role_id', '=', 'roles.id')
+        ->get()
+        ->toArray();
+
     return $result;
   }
+
 
 
 }

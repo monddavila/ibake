@@ -31,7 +31,7 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h4 class="card-title">Products Reviews</h4>
-                                <a href="" class="btn btn-success me-2">
+                                <a href="{{ route('exportProductReviews') }}" class="btn btn-success me-2">
                                     <i class="fas fa-download"></i> Export
                                 </a>
                             

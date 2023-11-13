@@ -44,12 +44,17 @@ class Product extends Model
         return $this->hasMany(OrderItem::class, 'product_id');
     }
 
-    public static function getAllProduct(){
-        $result = DB::table('products')
-        ->select('id','name','price','item_description','category_id','rating','available_qty','availability','isfeatured','created_at')
-        ->get()->toArray();
-        return $result;
-      }
+    public static function getAllProduct()
+    {
+    $result = DB::table('products')
+        ->select('products.id', 'products.name', 'products.price', 'products.item_description', 'categories.name as category_name', 'products.rating', 'products.available_qty', 'products.availability', 'products.isfeatured', 'products.created_at')
+        ->join('categories', 'products.category_id', '=', 'categories.id')
+        ->get()
+        ->toArray();
+
+    return $result;
+    }
+
 
     
 }
