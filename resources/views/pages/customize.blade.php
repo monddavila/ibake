@@ -102,7 +102,7 @@
                                             <span class="align-left font-italic font-light-weight">{{ $detail->description }}</span>
                                             </div>
                                             <p class="font-weight-bold">
-                                                <span>₱</span> <span class="cake-price">{{ number_format($detail->price, 0) }}</span>
+                                                <span>₱</span> <span class="cake-price">{{ $detail->price }}</span>
                                             </p>
                                         </div>
                                     </button>

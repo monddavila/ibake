@@ -23,6 +23,7 @@ use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\ExportDataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -147,6 +148,8 @@ Route::get('/custom-orders-list', [ReportsController::class, 'customOrderSummary
 Route::get('/transactions', [ReportsController::class, 'transactionRecords'])->name('transactionRecords');
 
 });
+
+Route::get('/users-export', [ExportDataController::class, 'exportUsersData'])->name('exportUsersData');
 
 /** Custom Cake Reviews*/
 Route::post('/customize-cake-review/{id}', [ReviewsController::class, 'addCustomCakeReview'])->name('addCustomCakeReview');
