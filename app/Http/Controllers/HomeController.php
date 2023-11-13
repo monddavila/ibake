@@ -166,11 +166,17 @@ class HomeController extends Controller
 
     switch ($userRole) {
         case 1:
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('user.list');
         case 2:
             return view('home');
         case 3:
-            return view('home'); // to be updated
+          return redirect()->route('admin.dashboard');
+        case 4:
+          return redirect()->route('admin.dashboard');
+        case 5:
+          return redirect()->route('activeOrders');
+        case 6:
+          return redirect()->route('activeOrders');
         default:
             return view('home');
     }

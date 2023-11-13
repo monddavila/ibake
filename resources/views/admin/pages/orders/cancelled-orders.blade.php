@@ -152,14 +152,18 @@
                                                     </div>
                                                   </div>
                                         </div>
-                                              
+                                        @php
+                                            $userType = auth()->user()->role_id;
+                                        @endphp
                                       <form action="{{ route('processOrderStatus', ['id' => $order->order_id]) }}" method="post"> 
                                           @csrf
                                           <input type="hidden" value="1" name="isSelectionOrder">
                                           
                                           <div class="modal-footer">
                                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                              @if ($userType == '3' || $userType == '4')
                                               <button type="submit" class="btn badge-outline-warning reconsider-button" name="action" value="Reconsider">Reconsider Order</button>
+                                              @endif
 
                                           </div>
                                       </form>
@@ -355,7 +359,9 @@
                                         
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            @if ($userType == '3' || $userType == '4')
                                             <button type="submit" class="btn badge-outline-warning reconsider-button" name="action" value="Reconsider">Reconsider Order</button>
+                                            @endif
 
                                         </div>
                                     </form>

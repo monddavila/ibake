@@ -1,3 +1,5 @@
+
+
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
     <a class="sidebar-brand brand-logo" href="/"><img src="{{ asset('admin/assets/images/logo.png') }}"
@@ -16,7 +18,7 @@
           <div class="profile-name">
 
             @if (auth()->check())
-            <h5 class="mb-0 font-weight-normal">{{ auth()->user()->firstname }}</h5>
+            <h5 class="mb-0 font-weight-normal">Hi {{ auth()->user()->firstname }}!</h5>
             @endif
 
             <span>
@@ -27,11 +29,17 @@
               @if ($userType == '1')
               <p>Adminstrator</p>
               @elseif($userType == '3')
-              <p>Manager</p>
+              <p>Business Manager</p>
               @elseif($userType == '2')
               <p>Customer</p>
+              @elseif($userType == '4')
+              <p>Business Owner</p>
+              @elseif($userType == '5')
+              <p>Baker</p>
+              @elseif($userType == '6')
+              <p>Designer</p>
               @else
-              <p>Staff</p>
+              <p>Guest</p>
               @endif
 
               <a href="{{ route('home') }}" class="btn btn-light">
@@ -87,6 +95,7 @@
     <li class="nav-item nav-category">
       <span class="nav-link">Navigation</span>
     </li>
+    @if ($userType == '3' || $userType == '4')
     <li class="nav-item menu-items">
       <a class="nav-link" href="/redirect">
         <span class="menu-icon">
@@ -95,7 +104,9 @@
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
-
+    @endif
+  
+    @if ($userType == '3' || $userType == '4'|| $userType == '5'|| $userType == '6')
     <li class="nav-item menu-items">
       <a class="nav-link" data-bs-toggle="collapse" href="#orders" aria-expanded="false" aria-controls="orders">
         <span class="menu-icon">
@@ -106,7 +117,9 @@
       </a>
       <div class="collapse" id="orders">
         <ul class="nav flex-column sub-menu">
+          @if ($userType != '2' && $userType != '5' && $userType != '6')
           <li class="nav-item"><a class="nav-link" href="{{ route('customOrders') }}">Custom Cake Requests</a></li>
+          @endif
           <li class="nav-item">
           <a class="nav-link" href="{{ route('activeOrders') }}">Pending Orders</a>
 
@@ -118,7 +131,9 @@
         </ul>
       </div>
     </li>
+    @endif
 
+    @if ($userType == '1' || $userType == '3' || $userType == '4')
     <li class="nav-item menu-items">
       <a class="nav-link" data-bs-toggle="collapse" href="#users" aria-expanded="false" aria-controls="users">
         <span class="menu-icon">
@@ -130,11 +145,15 @@
       <div class="collapse" id="users">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="{{ route('user.list') }}">Users</a></li>
+          @if ($userType == '1' || $userType == '4')
           <li class="nav-item"> <a class="nav-link" href="{{ route('user.form') }}">Add User</a></li>
+          @endif
         </ul>
       </div>
     </li>
+    @endif
 
+    @if ($userType == '3' || $userType == '4')
     <li class="nav-item menu-items">
       <a class="nav-link" data-bs-toggle="collapse" href="#products" aria-expanded="false" aria-controls="products">
         <span class="menu-icon">
@@ -152,7 +171,9 @@
         </ul>
       </div>
     </li>
+    @endif
 
+    @if ($userType == '3' || $userType == '4')
     <li class="nav-item menu-items">
       <a class="nav-link" data-bs-toggle="collapse" href="#customcake" aria-expanded="false" aria-controls="customcake">
         <span class="menu-icon">
@@ -168,6 +189,7 @@
         </ul>
       </div>
     </li>
+    @endif
 
     {{--<li class="nav-item menu-items">
       <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
@@ -187,6 +209,7 @@
       </div>
     </li>--}}
 
+    @if ($userType == '3' || $userType == '4')
     <li class="nav-item menu-items">
       <a class="nav-link" data-bs-toggle="collapse" href="#reports" aria-expanded="false" aria-controls="reports">
         <span class="menu-icon">
@@ -207,6 +230,7 @@
         </ul>
       </div>
     </li>
+    @endif
 
     {{--<li class="nav-item menu-items">
       <a class="nav-link" href="admin/pages/charts/chartjs.html">
@@ -217,6 +241,7 @@
       </a>
     </li>--}}
 
+    @if ($userType == '1')
     <li class="nav-item menu-items">
       <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
         <span class="menu-icon">
@@ -234,6 +259,8 @@
         </ul>
       </div>
     </li>
+      @endif
+
     {{--<li class="nav-item menu-items">
       <a class="nav-link" href="http://www.bootstrapdash.com/demo/corona-free/jquery/documentation/documentation.html">
         <span class="menu-icon">

@@ -25,6 +25,9 @@
                     <li class="breadcrumb-item custom-breadcrumb" aria-current="page">User List</li>
                 </ol>
         </div>
+        @php
+            $userType = auth()->user()->role_id;
+        @endphp
 
         <div class="col-lg-12 grid-margin stretch-card">
           <div class="card">
@@ -33,10 +36,14 @@
               <div class="d-flex justify-content-between align-items-center">
                 <p class="card-description"> All User List </p>
                 <div class="d-flex">
+                @if ($userType == '1' || $userType == '4')
                   <a href="{{ route('user.form') }}" class="btn btn-primary me-2">+ Add User</a>
+                @endif
+                @if ($userType == '3' || $userType == '4')
                   <a href="{{ route('exportUsersData') }}" target="__blank" class="btn btn-success me-2">
                       <i class="fas fa-download"></i> Export
                   </a>
+                @endif
               </div>
               </div>
               <div class="col-lg-3">

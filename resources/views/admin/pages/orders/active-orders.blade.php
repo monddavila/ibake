@@ -149,11 +149,15 @@
                                       <form action="{{ route('processOrderStatus', ['id' => $order->order_id]) }}" method="post"> 
                                           @csrf
                                           <input type="hidden" value="1" name="isSelectionOrder">
-                                          
+                                          @php
+                                              $userType = auth()->user()->role_id;
+                                          @endphp
                                           <div class="modal-footer">
                                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                              @if ($userType == '3' || $userType == '4')
                                               <button type="submit" class="btn badge-outline-success process-button " name="action" value="Process">Process</button>
                                               <button type="submit" class="btn badge-outline-danger cancel-button" name="action" value="Cancel">Cancel Order</button>
+                                              @endif
 
                                           </div>
                                       </form>
@@ -396,8 +400,10 @@
                                         
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            @if ($userType == '3' || $userType == '4')
                                             <button type="submit" class="btn badge-outline-success process-button" name="action" value="Process">Process</button>
                                             <button type="submit" class="btn badge-outline-danger cancel-button" name="action" value="Cancel">Cancel Order</button>
+                                            @endif
 
                                         </div>
                                     </form>

@@ -471,6 +471,7 @@ function viewCakeBuilder()
 
 public function updateCakeBuilder(Request $request)
 {
+  //dd($request);
     $sizes = $request->input('size');
     $prices = $request->input('price');
     $descriptions = $request->input('description');
@@ -488,7 +489,7 @@ public function updateCakeBuilder(Request $request)
     for ($i = 0; $i < $count; $i++) {
         $size = $sizes[$i];
         $price = $prices[$i];
-        $description = $descriptions[$i];
+        $info = $descriptions[$i];
 
         // Find the CakeBuilderDetail record with the matching size
         $detail = CakeBuilderDetail::where('size', $size)->first();
@@ -496,10 +497,11 @@ public function updateCakeBuilder(Request $request)
         // Update the record with the new data
         $detail->update([
             'price' => $price,
-            'description' => $description,
+            'description' => $info,
             'updated_at' => now(),
         ]);
     }
+   
 
     DB::table('feature_status')->where('name', 'cake_builder')->update(['status' => $status]);
 

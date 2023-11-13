@@ -221,11 +221,17 @@
                                       <label>Enter Price (Enter 0 for rejected order)</label>
                                       <input type="number" class="form-control" name="cakePrice" required>
                                       @endif
+
+                                      @php
+                                        $userType = auth()->user()->role_id;
+                                      @endphp
                                       
                                       <div class="modal-footer">
                                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                          @if ($userType == '3' || $userType == '4')
                                           <button type="submit" class="btn badge-outline-success approve-button" name="action" value="approve">Approved</button>
                                           <button type="submit" class="btn badge-outline-danger cancel-button" name="action" value="reject">Reject</button>
+                                          @endif
                                       </div>
                                   </form>
                                 </div>

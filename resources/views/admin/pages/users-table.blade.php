@@ -2,6 +2,10 @@
 // Assuming you have a $users variable containing the user data retrieved from the database
 $count = 1;
 @endphp
+@php
+    $userType = auth()->user()->role_id;
+@endphp
+
 @foreach ($users as $user)
 <tr>
   <td>{{ $count++ }}</td>
@@ -16,17 +20,21 @@ $count = 1;
   <td>{{ $user->created_at->format('d M Y') }}</td>
   <td><label class="badge badge-danger">Pending</label></td>
   <td>
+    @if ($userType == '1' || $userType == '4')
     <div class="btn-group">
       <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown"
         aria-expanded="false">Action</button>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">Profile</a>
         <a class="dropdown-item" href="{{ route('user.edit', ['id' => $user->id]) }}">Edit</a>
+        @if ($userType == '4')
         <a class="dropdown-item" class="btn btn-danger"
           onclick="return confirm('Are you sure you want to delete this user?')"
           href="{{ route('user.delete', ['id' => $user->id]) }}"style="color: red;">Delete</a>
+          @endif
       </div>
     </div>
+    @else 
+    @endif
   </td>
 </tr>
 @endforeach
