@@ -33,7 +33,13 @@
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Products List</h4>
-                <a href="{{ route('admin.addProducts') }}" class="btn btn-primary btn-fw">+ Add Product</a>
+                <div class="d-flex">
+                <a href="{{ route('admin.addProducts') }}" class="btn btn-primary me-2">+ Add Product</a>
+                <a href="{{ route('exportProductsData') }}" target="__blank" class="btn btn-success me-2">
+                      <i class="fas fa-download"></i> Export
+                  </a>
+                </div>
+             
               </div>
               <div class="col-lg-3">
                 <div class="input-group mb-3">

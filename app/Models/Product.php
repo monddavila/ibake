@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Product extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -40,6 +43,13 @@ class Product extends Model
     {
         return $this->hasMany(OrderItem::class, 'product_id');
     }
+
+    public static function getAllProduct(){
+        $result = DB::table('products')
+        ->select('id','name','price','item_description','category_id','rating','available_qty','availability','isfeatured','created_at')
+        ->get()->toArray();
+        return $result;
+      }
 
     
 }

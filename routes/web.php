@@ -149,7 +149,9 @@ Route::get('/transactions', [ReportsController::class, 'transactionRecords'])->n
 
 });
 
+/** Export Data- Reports*/
 Route::get('/users-export', [ExportDataController::class, 'exportUsersData'])->name('exportUsersData');
+Route::get('/products-export', [ExportDataController::class, 'exportProductsData'])->name('exportProductsData');
 
 /** Custom Cake Reviews*/
 Route::post('/customize-cake-review/{id}', [ReviewsController::class, 'addCustomCakeReview'])->name('addCustomCakeReview');
