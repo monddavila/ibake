@@ -160,10 +160,15 @@
                                       <form action="{{ route('processOrderStatus', ['id' => $order->order_id]) }}" method="post"> 
                                           @csrf
                                           <input type="hidden" value="1" name="isSelectionOrder">
+                                          @php
+                                              $userType = auth()->user()->role_id;
+                                          @endphp
                                           
                                           <div class="modal-footer">
                                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                              @if ($userType == '3' || $userType == '4')
                                               <button type="submit" class="btn badge-outline-success ready-button" name="action" value="Complete">Complete Order</button>
+                                              @endif
 
                                           </div>
                                       </form>
@@ -422,40 +427,52 @@
                                                       <span>Price: &#8369; {{ number_format($order->customizeOrder->cakePrice, 2) }}</span>
                                                     </div>
                                     @endif
-                                    <form action="{{ route('processOrderStatus', ['id' => $order->customizeOrder->orderID]) }}" method="post"> 
-                                        @csrf
-                                        <input type="hidden" value="2" name="isSelectionOrder">
 
-                                        {{--Validate payment status before proceeding to complete order--}}
+                                    @php
+                                          $userType = auth()->user()->role_id;
+                                    @endphp
+                                  
+                                    @if ($userType == '3' || $userType == '4')
 
-                                        @if ($order->payment_status == "Partially Paid" && $order->payment_option == "Half-online")
-                                        <hr>
-                                        <p> The customer's payment balance has not yet been processed, so their order cannot be completed. Please ask the customer to pay their balance online to complete their order.</p>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        </div>
-                                        @elseif ($order->payment_status == "Partially Paid" && $order->payment_option == "Half-cod")
-      
-                                        <hr>
-                                            <div class="d-flex justify-content-center">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="confirmPayment" required>
-                                                    <label class="form-check-label" for="confirmPayment" style="color:blue">Check to confirm that the balance payment is already settled<br>
-                                                    <span style="color:black">(Payment balance due upon delivery or pickup)</span></label>
-                                                </div>
-                                            </div>
+                                      <form action="{{ route('processOrderStatus', ['id' => $order->customizeOrder->orderID]) }}" method="post"> 
+                                          @csrf
+                                          <input type="hidden" value="2" name="isSelectionOrder">
 
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn badge-outline-success ready-button" id="confirmPaymentButton" name="action" value="Complete" disabled>Complete Order</button>
-                                            </div>
-                                        @else
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn badge-outline-success ready-button"  name="action" value="Complete">Complete Order</button>
-                                            </div>
-                                        @endif
-                                    </form>
+                                          {{--Validate payment status before proceeding to complete order--}}
+
+                                          @if ($order->payment_status == "Partially Paid" && $order->payment_option == "Half-online")
+                                          <hr>
+                                          <p> The customer's payment balance has not yet been processed, so their order cannot be completed. Please ask the customer to pay their balance online to complete their order.</p>
+                                          <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                          </div>
+                                          @elseif ($order->payment_status == "Partially Paid" && $order->payment_option == "Half-cod")
+        
+                                          <hr>
+                                          
+                                              <div class="d-flex justify-content-center">
+                                                  <div class="form-check">
+                                                      <input type="checkbox" class="form-check-input" id="confirmPayment" required>
+                                                      <label class="form-check-label" for="confirmPayment" style="color:blue">Check to confirm that the balance payment is already settled<br>
+                                                      <span style="color:black">(Payment balance due upon delivery or pickup)</span></label>
+                                                  </div>
+                                              </div>
+
+                                              <div class="modal-footer">
+                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                  <button type="submit" class="btn badge-outline-success ready-button" id="confirmPaymentButton" name="action" value="Complete" disabled>Complete Order</button>
+                                              </div>
+                                          @else
+                                              <div class="modal-footer">
+                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                  
+                                                  <button type="submit" class="btn badge-outline-success ready-button"  name="action" value="Complete">Complete Order</button>
+                                                  
+                                              </div>
+                                          @endif
+                                      </form>
+                                    @endif
+                                    
 
                                   </div>
                                 </div>

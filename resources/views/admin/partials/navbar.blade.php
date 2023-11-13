@@ -1,3 +1,7 @@
+@php
+    $userType = auth()->user()->role_id;
+@endphp
+
 <nav class="navbar p-0 fixed-top d-flex flex-row">
     <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
         <a class="navbar-brand brand-logo-mini" href="/"><img src="{{ asset('admin/assets/images/logo-mini.png') }}"
@@ -10,6 +14,7 @@
         </button>
 
         <ul class="navbar-nav navbar-nav-right">
+        @if ($userType == '3' || $userType == '4')
             <li class="nav-item dropdown d-none d-lg-block">
                 <a href="{{ route('customOrders') }}" class="nav-link btn btn-primary create-new-button">
                     <i class="fas fa-eye"></i> View Order Requests
@@ -27,6 +32,7 @@
                     <i class="fas fa-plus-circle"></i> Add New Product
                 </a>
             </li>
+        @endif
 
         
 
