@@ -447,5 +447,13 @@ public function SearchCustomOrders(Request $request)
     
   }
 
+  public function viewSystemSettings(){
+
+    $users = 1;
+
+    return view('admin.pages.settings.system-settings')->with(['users' => $users]);
+
+  }
+
 }
 ?>

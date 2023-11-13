@@ -148,6 +148,13 @@ Route::get('/custom-orders-list', [ReportsController::class, 'customOrderSummary
 Route::get('/transactions', [ReportsController::class, 'transactionRecords'])->name('transactionRecords');
 
 });
+/*Admin Panel Settings Section*/
+Route::group(['prefix' => 'system', 'middleware' => ['auth']], function () {
+
+Route::get('/settings', [AdminController::class, 'viewSystemSettings'])->name('viewSystemSettings');
+
+
+});
 
 /** Export Data- Reports*/
 Route::get('/users-export', [ExportDataController::class, 'exportUsersData'])->name('exportUsersData');

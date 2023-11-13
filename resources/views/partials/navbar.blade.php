@@ -94,6 +94,12 @@
                                   <a href="{{ route('customer') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-user"></i> My Account</a>
                                 <?php elseif(Auth::user()->role_id == 3): ?>
                                   <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-dashboard"></i> Admin Panel</a>
+                                <?php elseif(Auth::user()->role_id == 4): ?>
+                                  <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-dashboard"></i> Admin Panel</a>
+                                <?php elseif(Auth::user()->role_id == 5): ?>
+                                  <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-dashboard"></i> View Tasks</a>
+                                <?php elseif(Auth::user()->role_id == 6): ?>
+                                  <a href="{{ route('redirect') }}" style="margin-right:10px;" class="theme-btn auth-btn"><i class="fa fa-dashboard"></i> View Tasks</a>
                                 <?php endif ?>
                                 {{-- Logout only works in a form --}}
                                 <form method="POST" action="{{ route('logout') }}">

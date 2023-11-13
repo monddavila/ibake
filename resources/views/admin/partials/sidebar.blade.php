@@ -252,10 +252,9 @@
       </a>
       <div class="collapse" id="auth">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="admin/pages/samples/blank-page.html"> Account
+          <li class="nav-item"> <a class="nav-link" href="{{ route('viewSystemSettings') }}">System
             </a></li>
-          <li class="nav-item"> <a class="nav-link" href="admin/pages/samples/error-500.html">Privileges</a>
-          </li>
+
         </ul>
       </div>
     </li>
