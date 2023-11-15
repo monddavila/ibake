@@ -61,6 +61,7 @@
                                             <input type="text" name="token" value="{{$token}}" hidden>
                                 
                                             <div class="form-group">
+                                            <span style="color:grey"> At least 8 characters, one uppercase and lowercase letter, and no spaces.</span><br>
                                                 <label for="password">New Password</label>
                                                 <input type="password" class="form-control" id="password" name="password"
                                                 placeholder="Enter new password">

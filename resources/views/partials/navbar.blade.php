@@ -106,6 +106,7 @@
                                   @csrf
                                   <button class="theme-btn auth-btn" type="submit"><i class="fa fa-sign-out"></i> Logout</button>
                                 </form>
+                                
                             </div>
                           </div>
                             @else

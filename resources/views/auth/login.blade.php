@@ -38,6 +38,9 @@
                     <!-- Login Form -->
                     <div class="login-form">
                         <h2>Login</h2>
+                        @if(session('message'))
+                            <p>{{ session('message') }}</p>
+                        @endif
                         <!--Login Form-->
                         <form method="post" action="{{ route('login') }}">
                             @csrf
