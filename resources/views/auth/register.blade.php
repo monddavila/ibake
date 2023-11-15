@@ -76,7 +76,8 @@
 
                                     {{-- User Passsword --}}
                                     <div class="form-group">
-                                        <x-label for="password" value="{{ __('Password*') }}" />
+                                        <x-label for="password" value="{{ __('Password*') }}" /><br>
+                                        <span style="color:grey"> At least 8 characters, one uppercase and lowercase letter, and no spaces</span>
                                         <x-input id="password" class="block mt-1 w-full" type="password" name="password"
                                             required />
                                         @error('password')
@@ -97,12 +98,14 @@
                                     {{-- User Phone --}}
                                     <div class="form-group">
                                         <x-label for="phone" value="{{ __('Phone*') }}" />
-                                        <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" placeholder="11 Digit Phone Number" required
-                                            autofocus />
+                                        <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" placeholder="11 Digit Phone Number"
+                                            maxlength="11" pattern="[0-9]+" title="Please enter only numbers" required autofocus />
                                         @error('phone')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+
+
 
                                     {{-- User Address --}}
                                     <div class="form-group">

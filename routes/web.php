@@ -24,6 +24,8 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\ExportDataController;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -324,6 +326,9 @@ Route::get('/switch-user', [LoginController::class, 'switchUser'])->name('switch
 Route::get('/register', [LoginController::class, 'create'])->name('register')->withoutMiddleware('auth');
 // For storing new account to database
 Route::post('/register', [LoginController::class, 'store'])->name('register.store');
+
+Route::get('/email-verification', [LoginController::class, 'showVerifyEmail'])->name('showVerifyEmail')->withoutMiddleware('auth');
+Route::get('/account-activation/{token}', [LoginController::class, 'activateAccount'])->name('activate-account')->middleware('guest');
 
 /*Forgot Password*/
 Route::get('/forgot-password', [ForgotPasswordController::class, 'forgotPassword'])->name('forgotPassword')->middleware('guest');

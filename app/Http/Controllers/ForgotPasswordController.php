@@ -72,8 +72,17 @@ class ForgotPasswordController extends Controller
  
 
         $request->validate([
-            'password' => 'required|string|min:8|max:16|confirmed',
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'max:16',
+                'confirmed',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?!.*\s).+$/',
+            ],
             'password_confirmation' => 'required',
+        ], [
+            'password.regex' => 'The password format is invalid. Please ensure it contains 8 characters and at least one uppercase letter, one lowercase letter, and no spaces.',
         ]);
 
         $newPassword = Hash::make($request->password);
