@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCartsRequest;
 use App\Http\Requests\UpdateCartsRequest;
 use App\Models\Cart;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Http\Controllers\CartItemsController as CartItemsCtrl;
 use App\Models\CartItem;
@@ -38,6 +39,59 @@ class CartsController extends Controller
         'cartItems' => $cartItems,
         'totalPrice' => $totalPrice
       ]);
+    }
+  }
+
+  public function applyCoupon(Request $request)
+  {
+    //dd($request->coupon);
+
+    if(!Coupon::where('code', $request->coupon)->exists()){
+      return redirect()->back()->withErrors(['coupon' => 'Invalid coupon code.']);
+    }
+
+    if (!Cart::where('user_id', auth()->user()->id)->exists()) {
+      return view('shop.shopping-cart')->with([
+        'cartItems' => false,
+        'totalPrice' => 0
+      ]);
+    } else {
+      $cartItems = $this->userCart();
+      $totalPrice = 0;
+      foreach ($cartItems as $cartItem) {
+        # code...
+        $totalPrice += ($cartItem->price * $cartItem->quantity);
+      }
+
+    $coupon = Coupon::where('code', $request->coupon)->first();
+
+    $couponCode = $request->coupon;
+
+    if ($coupon) {
+        // Coupon is valid, you can access the data using $coupon
+        $discountType = $coupon->discount_type;
+        $discountValue = $coupon->discount_value;
+        $discountedAmount = 0;
+
+        if($discountType == 'percentage'){
+          $discountedAmount = $totalPrice - (($discountValue / 100) * $totalPrice);
+          $discountApplied = ($discountValue / 100) * $totalPrice;
+        }elseif($discountType == 'fixed'){
+          $discountedAmount = $totalPrice - $discountValue;
+          $discountApplied = $discountValue;
+        }
+
+        session()->flash('couponSuccess', 'Coupon discount applied.');
+      }
+
+    
+      return view('shop.shopping-cart')->with([
+        'couponCode' => $couponCode,
+        'discountApplied' => $discountApplied,
+        'discountedAmount' => $discountedAmount,
+        'cartItems' => $cartItems,
+        'totalPrice' => $totalPrice,
+      ])->with('couponSuccess', 'Coupon discount applied.');
     }
   }
 

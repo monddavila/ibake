@@ -114,22 +114,44 @@
           </div>
 
           <div class="cart-options clearfix">
-            <div class="pull-left">
+          @error('coupon')
+              <div class="text-danger">{{ $message }}</div>
+          @enderror
+          @if(session('couponSuccess'))
+              <div class="alert alert-success">
+                  {{ session('couponSuccess') }}
+              </div>
+          @endif
+
+          
+          @if(count($cartItems)>0)
+            
+            <div class="pull-left" @if(isset($discountApplied))style="display: none;"@endif>
               <div class="apply-coupon clearfix">
+              <form action="{{ route('applyCoupon') }}" method="POST">
+                @csrf
                 <div class="form-group clearfix">
-                  <input type="text" name="coupon-code" value="" placeholder="Coupon Code">
+                  <input type="text" name="coupon" value="" placeholder="Coupon Code">
                 </div>
-                  {{--<div class="form-group clearfix">
-                  <button type="button" class="theme-btn coupon-btn">Apply Coupon</button>
-                </div>--}}
+                  <div class="form-group clearfix">
+                  <button type="submit" class="theme-btn coupon-btn">Apply Coupon</button>
+                </div>
               </div>
             </div>
+              </form>
+            
+            
 
               <div class="pull-right">
                 <button type="button" class="theme-btn cart-btn" onclick="window.location.reload();">Update Cart</button>
               </div>
 
           </div>
+          @else
+          <div id="no-items-message" style="text-align: center;">
+          No items added in your cart.
+          </div>
+          @endif
         </div>
 
         <div class="row justify-content-between">
@@ -142,11 +164,42 @@
               <li class="clearfix"><span class="col">Subtotal</span><span class="col price">Php
                   {{ number_format($totalPrice, 2) }}</span>
               </li>
+              @if(isset($discountApplied))
+              <li class="clearfix"><span class="col">Coupon Discount</span><span class="col price">(Php
+                  {{ number_format($discountApplied, 2) }})</span>
+              </li>
+              @endif
+              @if(isset($discountedAmount))
+              <li class="clearfix"><span class="col">Total</span><span class="col total-price">Php
+                  {{ number_format($discountedAmount, 2) }}</span>
+              </li>
+              @else
               <li class="clearfix"><span class="col">Total</span><span class="col total-price">Php
                   {{ number_format($totalPrice, 2) }}</span>
               </li>
-              <li class="text-right"><a href="{{ route('checkout') }}"><button class="theme-btn proceed-btn">Proceed to
-                    Checkout</button></a></li>
+              @endif
+
+              <form action="{{ route('checkout') }}" method="POST">
+              @csrf
+
+
+              @if(isset($couponCode))
+              <input type="hidden" name="couponCode" value="{{$couponCode}}">
+              @endif
+              @if(isset($totalPrice))
+              <input type="hidden" name="totalPrice" value="{{$totalPrice}}">
+              @endif
+              @if(isset($discountApplied))
+              <input type="hidden" name="discountApplied" value="{{$discountApplied}}">
+              @endif
+              @if(isset($discountedAmount))
+              <input type="hidden" name="discountedAmount" value="{{$discountedAmount}}">
+              @endif
+
+              <li class="text-right">
+                  <button type="submit" class="theme-btn proceed-btn">Proceed to Checkout</button>
+              </li>
+              </form>
             </ul>
           </div>
         </div>
