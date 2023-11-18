@@ -21,6 +21,7 @@ class PaymentController extends Controller
 
     public function placeOrder(Request $request)
     {
+        //dd('called');
         //Validate ordered products qty should not exceed product qty available
         $cartItems = (new CartsController())->userCart();
 
@@ -161,23 +162,37 @@ class PaymentController extends Controller
 
     $orderData = Session::get('order_data');
     $token = $orderData['check_token'];
+    if (isset($orderData['selected_fee'])) {
+        $deliveryFee = $orderData['selected_fee'];}
+    if (isset($orderData['discount'])) {
+        $discount = $orderData['discount'];}
 
     // Initialize an array to store line items
     $lineItems = [];
 
     foreach ($cartItems as $cartItem) {
         // Calculate the total price
-        $totalPrice += ($cartItem->price * $cartItem->quantity);
+        $totalPrice += ($cartItem->price * $cartItem->quantity) - $discount;
 
         // Add each cart item as a line item
         $lineItems[] = [
             'currency' => 'PHP',
-            'amount' => $cartItem->price * 100, // Amount in cents
+            'amount' => $totalPrice * 100, // Amount in cents
             'description' => 'Shop Item Order',
             'name' => $cartItem->name,
             'quantity' => $cartItem->quantity,
         ];
     }
+
+    // Add another line item outside the loop
+    $lineItems[] = [
+        'currency' => 'PHP',
+        'amount' => $deliveryFee * 100, // Replace with the actual amount
+        'description' => 'Delivery Fee',
+        'name' => 'Delivery Fee',
+        'quantity' => 1,
+    ];
+
 
     // Determine the payment method types based on the selected payment method
     $paymentType = session('payment_method');

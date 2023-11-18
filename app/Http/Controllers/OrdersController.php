@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Order;
+use App\Models\DeliveryFee;
 use App\Http\Requests\StoreOrdersRequest;
 use App\Http\Requests\UpdateOrdersRequest;
 use App\Http\Controllers\CartsController;
@@ -37,8 +38,15 @@ class OrdersController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function create()
+  public function create(Request $request)
 {
+  //dd($request);
+    $coupon = $request->couponCode;
+    $originalPrice = $request->totalPrice;
+    $discountApplied = $request->discountApplied;
+    $discountedAmount = $request->discountedAmount;
+
+
     $user = Auth::user();
     $cartItems = (new CartsController())->userCart();
 
@@ -61,11 +69,17 @@ class OrdersController extends Controller
         $totalPrice += ($cartItem->price * $cartItem->quantity);
     }
 
+    $deliveryFees = DeliveryFee::all();
+
     return view('checkout.checkout')->with([
         'user' => $user,
         'cartItems' => $cartItems,
         'totalPrice' => $totalPrice,
         'token' => $token,
+        'deliveryFees' => $deliveryFees,
+        'coupon' => $coupon,
+        'discountApplied' => $discountApplied,
+        'discountedAmount' => $discountedAmount,
     ]);
 }
 

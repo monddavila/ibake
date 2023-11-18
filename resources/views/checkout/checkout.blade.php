@@ -81,28 +81,15 @@
                   <!-- Form Group -->
                   <div class="form-group">
                       <div class="field-label">Town / City <sup>*</sup><sup style="font-style: italic; color: #5fcac7; font-size: smaller;"> Required for Delivery</sup></div>
-                      <select name="town">
+                      <select name="town" id="town-select">
                           <option value="" disabled selected>Select</option>
-                          <option value="Alfonso Castañeda">Alfonso Castañeda</option>
-                          <option value="Ambaguio">Ambaguio</option>
-                          <option value="Aritao">Aritao</option>
-                          <option value="Bambang">Bambang</option>
-                          <option value="Bayombong">Bayombong</option>
-                          <option value="Diadi">Diadi</option>
-                          <option value="	Dupax del Norte">	Dupax del Norte</option>
-                          <option value="	Dupax del Sur">	Dupax del Sur</option>
-                          <option value="Kasibu">Kasibu</option>
-                          <option value="Kayapa">Kayapa</option>
-                          <option value="Quezon">Quezon</option>
-                          <option value="Santa Fe">Santa Fe</option>
-                          <option value="Solano">Solano</option>
-                          <option value="Villaverde">Villaverde</option>
-
-                          <!-- Add more options as needed -->
+                          @foreach ($deliveryFees as $town)
+                              <option value="{{ $town->town }}" data-fee="{{ $town->fee }}">{{ $town->town }}</option>
+                          @endforeach
                       </select>
-                                      @error('town')
-                                      <div class="text-danger">{{ $message }}</div>
-                                      @enderror
+                      @error('town')
+                          <div class="text-danger">{{ $message }}</div>
+                      @enderror
                   </div>
 
 
@@ -123,6 +110,15 @@
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                   </div>
+
+                  <!--Form Group-->
+                  <div class="form-group">
+                    <div class="field-label">Coupon Code</div>
+                    <input type="text" name="couponcode" value="{{ isset($coupon) ? $coupon : '' }}" readonly>
+
+             
+                  </div>
+
                 </div>
               </div>
 
@@ -227,20 +223,46 @@
                     </td>
                     <td class="product-total">
                       <span class="woocommerce-Price-amount amount"><span
-                          class="woocommerce-Price-currencySymbol">Php</span>{{ number_format($cartItem->price * $cartItem->quantity, 2) }}</span>
+                          class="woocommerce-Price-currencySymbol"></span>{{ number_format($cartItem->price * $cartItem->quantity, 2) }}</span>
                     </td>
                   </tr>
                   @endforeach
                 </tbody>
                 <tfoot>
-                  {{-- <tr class="cart-subtotal">
+                  <tr class="cart-subtotal">
                     <th>Subtotal</th>
-                    <td><span class="amount">Php {{ number_format($totalPrice, 2) }}</span></td>
-                  </tr> --}}
-                  <tr class="order-total">
-                    <th><strong>Total</strong></th>
-                    <td><strong class="amount">Php {{ number_format($totalPrice, 2) }}</strong> </td>
+                    <td><span class="amount">{{ number_format($totalPrice, 2) }}</span></td>
                   </tr>
+
+                  <tr class="cart-subtotal">
+                    <th>Delivery Fee</th>
+                    <td><span id="delivery-fee">0</span></td>
+                  </tr>
+                  @if(isset($discountApplied))
+                  <tr class="cart-subtotal">
+                    <th>Coupon Discount</th>
+                    <td><span class="amount">({{$discountApplied}})</span></td>
+                  </tr>
+
+                  <input type="hidden" id="discount" name="discount" value="{{$discountApplied}}">
+                  @endif
+
+                  <input type="hidden" id="selected-fee" name="selected_fee" value="0">
+                  
+
+
+                  @php
+                      $totalPayment = $totalPrice + (isset($deliveryFee) ? $deliveryFee : 0) - $discountApplied;
+                  @endphp
+
+
+
+
+                  <tr class="order-total">
+                    <th><strong>Total Payment</strong></th>
+                    <td><strong id="total-payment" class="amount">Php {{ number_format($totalPayment, 2) }}</strong></td>
+                  </tr>
+
                 </tfoot>
               </table>
             </div>
@@ -408,6 +430,45 @@
       });
     });
   </script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // On change event of the town dropdown
+    $('#town-select').on('change', function () {
+      var selectedTown = $(this).val();
+      var selectedFee = $('#town-select option:selected').data('fee');
+
+      // Update the displayed delivery fee
+      $('#delivery-fee').text(selectedFee);
+
+      // Store the selected fee in the hidden input field
+      $('#selected-fee').val(selectedFee);
+
+      // Update the total payment
+      updateTotalPayment();
+    });
+
+    // Function to update the total payment
+    function updateTotalPayment() {
+      var totalPrice = parseFloat("{{ $totalPrice }}");
+      var deliveryFee = parseFloat($('#selected-fee').val());
+      var discountApplied = parseFloat("{{ $discountApplied ?? 0 }}");
+
+      // Calculate the total payment
+      var totalPayment = (totalPrice - discountApplied) + (isNaN(deliveryFee) ? 0 : deliveryFee);
+
+      // Update the displayed total payment
+      $('#total-payment').text('Php ' + totalPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+
+    }
+
+    // Initial update when the page loads
+    updateTotalPayment();
+  });
+</script>
+
+
 
   <script src="js/jquery.js"></script>
   <script src="js/popper.min.js"></script>

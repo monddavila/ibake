@@ -261,6 +261,12 @@ Route::group(['prefix' => 'cart'], function () {
   Route::middleware(['auth'])
     ->get('/', [CartsController::class, 'index'])
     ->name('showCart');
+
+  Route::middleware(['auth'])
+    ->post('/', [CartsController::class, 'applyCoupon'])
+    ->name('applyCoupon');
+
+    
   Route::get('/userCartWidget', [CartsController::class, 'userCartWidget'])
     ->name('userCartWidget');
   Route::post('/add-to-cart', [CartsController::class, 'store'])
@@ -277,6 +283,9 @@ Route::group(['prefix' => 'cart'], function () {
  * Regular Shop Checkout
  */
 Route::group(['prefix' => 'checkout'], function () {
+  Route::middleware(['auth'])
+    ->post('/', [OrdersController::class, 'create'])
+    ->name('checkout');
   Route::middleware(['auth'])
     ->get('/', [OrdersController::class, 'create'])
     ->name('checkout');
