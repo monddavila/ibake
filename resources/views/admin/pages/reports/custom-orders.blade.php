@@ -29,6 +29,56 @@
                       <i class="fas fa-download"></i> Export
                   </a>
                   </div>
+
+                  <div class="col-lg-3">
+                    <div class="add-product-td">
+                        <form id="showShopOrdersForm" method="GET" action="{{ route('filterCustomOrderSummary') }}">
+                            @csrf
+                            <div class="row"> <!-- Fix: Changed "row" to "<div class="row">" -->
+                                <div class="col-lg-6"> <!-- Fix: Changed "col-lg-3" to "col-lg-6" for each dropdown to fit side by side -->
+                                    <label for="month" class="product-input-label">Select Month</label>
+                                    <select class="js-example-basic-single" style="width: 100%" name="month">
+                                        <option value="">Choose Month</option>
+                                        <option value="1">January</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-6"> <!-- Fix: Changed "col-lg-3" to "col-lg-6" for each dropdown to fit side by side -->
+                                    <label for="year" class="product-input-label">Select Year</label>
+                                    <select class="js-example-basic-single" style="width: 100%" name="year">
+                                        <option value="">Choose Year</option>
+                                        <!-- Add your list of years here -->
+                                        <!-- Example: -->
+                                        <option value="2022">2022</option>
+                                        <option value="2023">2023</option>
+                                        <!-- Add more years as needed -->
+                                    </select>
+                                </div>
+                            </div>
+
+                            @if(session()->has('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    {{ session()->get('error') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            @endif
+                            <button type="submit" class="btn btn-primary btn-fw mt-3">Show</button>
+                            <a href="{{ route('customOrderSummary') }}" class="btn btn-secondary btn-fw mt-3">Reset</a>
+                        </form>
+                    </div>
+                </div>
+
                   <div class="table-responsive">
                     <table class="table" id="orders-table">
                       <thead>

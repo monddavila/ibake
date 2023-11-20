@@ -143,10 +143,13 @@ Route::get('/customer-records', [ReportsController::class, 'viewCustomerRecords'
 Route::get('/search', [ReportsController::class, 'searchCustomer'])->name('searchCustomer');
 
 Route::get('/sales-report', [ReportsController::class, 'viewSalesReport'])->name('viewSalesReport');
+Route::get('/filtered-sales-report', [ReportsController::class, 'filterSalesReport'])->name('filterSalesReport');
 Route::get('/sales-record', [ReportsController::class, 'searchSalesRecord'])->name('searchSalesRecord');
 
 Route::get('/shop-orders-list', [ReportsController::class, 'shopOrders'])->name('shopOrders');
+Route::get('/filtered-shop-orders-list', [ReportsController::class, 'filterShopOrders'])->name('filterShopOrders');
 Route::get('/custom-orders-list', [ReportsController::class, 'customOrderSummary'])->name('customOrderSummary');
+Route::get('/filtered-custom-orders-list', [ReportsController::class, 'filterCustomOrderSummary'])->name('filterCustomOrderSummary');
 Route::get('/transactions', [ReportsController::class, 'transactionRecords'])->name('transactionRecords');
 
 });
