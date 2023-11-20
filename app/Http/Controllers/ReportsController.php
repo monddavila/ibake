@@ -162,6 +162,65 @@ class ReportsController extends Controller
         ]);
     }
 
+    public function filterSalesReport(Request $request)
+    {
+
+        $selectedMonth = $request->input('month');
+        $selectedYear = $request->input('year');
+
+    
+        $orders = Order::with('user')
+            ->where('payment_status', 'Fully Paid')
+            ->where('order_status', '!=', 'Cancelled')
+            ->orderBy('created_at', 'desc')
+            ->whereYear('created_at', $selectedYear)
+            ->whereMonth('created_at', $selectedMonth)
+            ->get()
+            ->map(function ($order) {
+                $order->order_date = Carbon::parse($order->created_at)->format('d M Y');
+                $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
+                $order->name = $order->user->firstname . ' ' . $order->user->lastname;
+                $order->type = 'Shop Order';
+                $order->payment_balance = null;
+                return $order;
+            });
+
+
+        $customOrderDetails = CustomizeOrderDetail::with('user')
+            ->whereIn('payment_status', ['Fully Paid', 'Partially Paid'])
+            ->where('order_status', '!=', 'Cancelled')
+            ->whereYear('created_at', $selectedYear)
+            ->whereMonth('created_at', $selectedMonth)
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($order) {
+                $order->order_date = Carbon::parse($order->created_at)->format('d M Y');
+                $order->delivery_date = Carbon::parse($order->delivery_date)->format('d M Y');
+                $order->name = $order->user->firstname . ' ' . $order->user->lastname;
+                $order->type = 'Custom Order';
+                return $order;
+            });
+
+        $allOrders = $orders->concat($customOrderDetails);
+
+        $shopPaymentsReceived = Order::where('payment_status', 'Fully Paid')->where('order_status', '!=', 'Cancelled')->sum('total_price');
+        $customPaymentsReceived = CustomizeOrderDetail::where('payment_status', 'Fully Paid')->where('order_status', '!=', 'Cancelled')->sum('total_price');
+        $customPaymentsReceivedHalf = CustomizeOrderDetail::where('payment_status', 'Partially Paid')->where('order_status', '!=', 'Cancelled')->sum('payment_balance');
+    
+        $paymentsReceived = $shopPaymentsReceived + $customPaymentsReceived + $customPaymentsReceivedHalf ;
+    
+        $totalSales = $paymentsReceived + $customPaymentsReceivedHalf;
+    
+
+        return view('admin.pages.reports.sales-report')->with([
+            'allOrders' => $allOrders,
+            'paymentsReceived' => $paymentsReceived,
+            'customPaymentsReceivedHalf' => $customPaymentsReceivedHalf,
+            'totalSales' => $totalSales,
+
+        ]);
+    }
+
 
     public function searchSalesRecord(Request $request)
     {
@@ -237,6 +296,35 @@ class ReportsController extends Controller
         ]);
     }
 
+    function filterShopOrders(Request $request)
+    { 
+
+        $selectedMonth = $request->input('month');
+        $selectedYear = $request->input('year');
+
+        // Completed Shop Orders
+        $shopOrders = Order::with('orderItems.product')
+        ->whereYear('created_at', $selectedYear)
+        ->whereMonth('created_at', $selectedMonth);
+
+            if (isset($request->sort_by) && isset($request->order_by)) {
+            $shopOrders = $shopOrders->orderBy($request->sort_by, $request->order_by);
+            }
+
+        $shopOrders = $shopOrders->paginate(15);
+
+        
+
+        $orderDetails = CustomizeOrderDetail::where('order_status', 'Completed')
+            ->with('CustomizeOrder')
+            ->get();
+
+        return view('admin.pages.reports.shop-orders')->with([
+            'shopOrders' => $shopOrders,
+            'orderDetails' => $orderDetails,
+        ]);
+    }
+
     public function customOrderSummary(Request $request)
     {
         // Completed Custom Cake Orders
@@ -245,6 +333,36 @@ class ReportsController extends Controller
         if (isset($request->sort_by) && isset($request->order_by)) {
             $shopCustomOrders = CustomizeOrderDetail::orderBy($request->sort_by, $request->order_by)->paginate(15);
         }
+
+        $orderDetails = CustomizeOrderDetail::where('order_status', 'Completed')
+            ->with('CustomizeOrder')
+            ->get();
+
+        return view('admin.pages.reports.custom-orders')->with([
+            'shopCustomOrders' => $shopCustomOrders,
+            'orderDetails' => $orderDetails,
+        ]);
+    }
+
+    public function filterCustomOrderSummary(Request $request)
+    {
+
+        $selectedMonth = $request->input('month');
+        $selectedYear = $request->input('year');
+
+        // Completed Custom Cake Orders
+        $shopCustomOrders = CustomizeOrderDetail::
+        whereYear('created_at', $selectedYear)
+        ->whereMonth('created_at', $selectedMonth)
+        ->orderBy('created_at', 'desc');
+
+
+        if (isset($request->sort_by) && isset($request->order_by)) {
+            $shopCustomOrders = CustomizeOrderDetail::orderBy($request->sort_by, $request->order_by);
+        }
+
+        $shopCustomOrders = $shopCustomOrders->paginate(15);
+
 
         $orderDetails = CustomizeOrderDetail::where('order_status', 'Completed')
             ->with('CustomizeOrder')
